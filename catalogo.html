@@ -514,6 +514,22 @@
     border: 1px solid var(--line);
   }
 
+  .badge-oferta {
+    position: absolute;
+    margin: 8px;
+    top: 0;
+    right: 0;
+    background: var(--ember);
+    color: #1a0d05;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+
   .tarjeta-img { position: relative; }
 
   /* ---------- Cargar más ---------- */
@@ -565,8 +581,8 @@
       </div>
 
       <label class="filtro-check">
-        <input type="checkbox" id="input-solo-disponibles">
-        Solo disponibles
+        <input type="checkbox" id="input-solo-ofertas">
+        Solo ofertas
       </label>
 
       <button class="btn-limpiar-filtros" id="btn-limpiar-filtros">Limpiar filtros</button>
@@ -599,7 +615,7 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwNjexYrUHVn8lfyWjL5NCjBU8sbM5PaBO32CjZkUftfeEICPnpQg7mdT5EnQiWmL-6wg/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxPw6xZDTykK-AJ_iuWoJtjvRWwBxBw79maSj8UbjpHVsON5xMca7WntgJEExmM8veVcQ/exec";
     const NUMERO_WHATSAPP = "51978821080";
     const LOTE = 24; // cuántos productos se pintan por tanda
 
@@ -617,7 +633,7 @@
     const elBtnCargarMas = document.getElementById("btn-cargar-mas");
     const elPrecioMin = document.getElementById("input-precio-min");
     const elPrecioMax = document.getElementById("input-precio-max");
-    const elSoloDisponibles = document.getElementById("input-solo-disponibles");
+    const elSoloOfertas = document.getElementById("input-solo-ofertas");
     const elBtnLimpiarFiltros = document.getElementById("btn-limpiar-filtros");
     const elModalFondo = document.getElementById("modal-fondo");
     const elModalContenido = document.getElementById("modal-contenido");
@@ -652,7 +668,7 @@
       const imagenHtml = producto.imagen
         ? `<img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">`
         : `<span class="sin-foto">Sin foto</span>`;
-      const badge = producto.disponible ? "" : `<span class="badge-agotado">Agotado</span>`;
+      const badge = producto.oferta ? `<span class="badge-oferta">Oferta</span>` : "";
 
       return `
         <div class="tarjeta" data-sku="${producto.sku}">
@@ -690,7 +706,7 @@
       const texto = elBuscar.value.trim().toLowerCase();
       const precioMin = elPrecioMin.value !== "" ? Number(elPrecioMin.value) : null;
       const precioMax = elPrecioMax.value !== "" ? Number(elPrecioMax.value) : null;
-      const soloDisponibles = elSoloDisponibles.checked;
+      const soloOfertas = elSoloOfertas.checked;
 
       productosFiltrados = todosLosProductos.filter(p => {
         const coincideCategoria = categoriaActiva === "Todos" || p.categoria === categoriaActiva;
@@ -701,9 +717,9 @@
         const precio = extraerPrecio(p);
         const coincidePrecioMin = precioMin === null || precio >= precioMin;
         const coincidePrecioMax = precioMax === null || precio <= precioMax;
-        const coincideDisponibilidad = !soloDisponibles || p.disponible;
+        const coincideOferta = !soloOfertas || p.oferta;
 
-        return coincideCategoria && coincideTexto && coincidePrecioMin && coincidePrecioMax && coincideDisponibilidad;
+        return coincideCategoria && coincideTexto && coincidePrecioMin && coincidePrecioMax && coincideOferta;
       });
 
       elGrilla.innerHTML = "";
@@ -787,6 +803,10 @@
         elContenido.style.display = "block";
 
         construirCategorias();
+
+        const buscarUrl = new URLSearchParams(window.location.search).get("buscar");
+        if (buscarUrl) elBuscar.value = buscarUrl;
+
         aplicarFiltros();
 
       } catch (error) {
@@ -895,12 +915,12 @@
     elBtnCargarMas.addEventListener("click", renderizarLote);
     elPrecioMin.addEventListener("input", aplicarFiltros);
     elPrecioMax.addEventListener("input", aplicarFiltros);
-    elSoloDisponibles.addEventListener("change", aplicarFiltros);
+    elSoloOfertas.addEventListener("change", aplicarFiltros);
     elBtnLimpiarFiltros.addEventListener("click", () => {
       elBuscar.value = "";
       elPrecioMin.value = "";
       elPrecioMax.value = "";
-      elSoloDisponibles.checked = false;
+      elSoloOfertas.checked = false;
       categoriaActiva = "Todos";
       elCategorias.querySelectorAll(".chip").forEach(c => c.classList.remove("activo"));
       elCategorias.querySelector('.chip[data-cat="Todos"]')?.classList.add("activo");

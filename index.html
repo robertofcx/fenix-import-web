@@ -346,6 +346,278 @@
   .btn-whatsapp:hover { background: var(--whatsapp-dark); }
   .btn svg { width: 18px; height: 18px; }
 
+  /* ---------- Buscador en el hero ---------- */
+
+  .buscador-hero {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-elevada);
+    border: 1px solid var(--linea);
+    border-radius: 14px;
+    padding: 6px 6px 6px 18px;
+    margin: 0 auto 26px;
+    max-width: 520px;
+  }
+
+  .buscador-hero svg { flex-shrink: 0; opacity: 0.55; width: 18px; height: 18px; }
+
+  .buscador-hero input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--texto);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    padding: 10px 0;
+  }
+
+  .buscador-hero input::placeholder { color: var(--texto-muted); }
+
+  .buscador-hero button {
+    background: var(--azul);
+    color: var(--texto-sobre-azul);
+    border: none;
+    border-radius: 9px;
+    padding: 11px 18px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .buscador-hero button:hover { background: var(--azul-hover); }
+
+  /* ---------- Grilla de productos (secciones dinámicas) ---------- */
+
+  .grilla-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  .tarjeta-producto {
+    background: var(--bg-elevada);
+    border: 1px solid var(--linea);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .tarjeta-producto:hover {
+    border-color: rgba(247, 148, 30, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .tarjeta-producto-img {
+    aspect-ratio: 1;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .tarjeta-producto-img img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
+  .tarjeta-producto-img .sin-foto { color: var(--texto-muted); font-size: 0.7rem; font-family: 'IBM Plex Mono', monospace; }
+
+  .badge-oferta {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--ember);
+    color: var(--texto-sobre-ember);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+
+  .tarjeta-producto-body { padding: 12px; display: flex; flex-direction: column; flex: 1; }
+
+  .tarjeta-producto-categoria {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 4px;
+  }
+
+  .tarjeta-producto-nombre {
+    font-size: 0.83rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin: 0 0 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  .tarjeta-producto-precio {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--texto);
+    margin: 0;
+  }
+
+  .seccion-encabezado {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 12px;
+  }
+
+  .seccion-encabezado .seccion-titulo { text-align: left; margin: 0; }
+  .seccion-encabezado .ver-mas { font-size: 0.85rem; font-weight: 600; color: var(--azul); white-space: nowrap; }
+  .seccion-encabezado .ver-mas:hover { text-decoration: underline; }
+
+  .estado-seccion { text-align: center; color: var(--texto-muted); font-size: 0.85rem; padding: 20px 0; }
+
+  /* ---------- Modal de detalle de producto ---------- */
+
+  .modal-fondo {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 8, 20, 0.55);
+    backdrop-filter: blur(3px);
+    z-index: 100;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .modal-fondo.abierto { display: flex; }
+
+  @media (min-width: 640px) {
+    .modal-fondo { align-items: center; }
+  }
+
+  .modal-panel {
+    background: var(--bg-elevada);
+    border: 1px solid var(--linea);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 560px;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 20px;
+    position: relative;
+  }
+
+  @media (min-width: 640px) {
+    .modal-panel { border-radius: 18px; max-height: 80vh; }
+  }
+
+  .modal-cerrar {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--linea);
+    color: var(--texto);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    z-index: 2;
+  }
+
+  .modal-img {
+    width: 100%;
+    aspect-ratio: 1.4;
+    background: var(--bg);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .modal-img img { width: 100%; height: 100%; object-fit: contain; padding: 16px; }
+
+  .modal-categoria {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin: 0 0 6px;
+  }
+
+  .modal-nombre {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    line-height: 1.15;
+    margin: 0 0 10px;
+  }
+
+  .modal-precio {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: var(--texto);
+    margin: 0 0 4px;
+  }
+
+  .modal-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 18px; }
+
+  .modal-meta span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--texto-muted);
+    background: var(--bg);
+    border: 1px solid var(--linea);
+    border-radius: 8px;
+    padding: 5px 10px;
+  }
+
+  .modal-seccion-titulo {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--texto-muted);
+    margin: 18px 0 8px;
+  }
+
+  .modal-texto { font-size: 0.9rem; line-height: 1.6; color: var(--texto); white-space: pre-line; margin: 0; }
+
+  .modal-btn-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--whatsapp);
+    color: #0d1f13;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 13px;
+    border-radius: 11px;
+    margin-top: 20px;
+  }
+
+  .modal-btn-whatsapp svg { width: 18px; height: 18px; }
+
   /* ---------- Beneficios ---------- */
 
   .beneficios {
@@ -614,6 +886,13 @@
       Más de <strong>2000 productos</strong> en catálogo. Compara, cotiza y
       cierra tu compra directo por WhatsApp con uno de nuestros asesores.
     </p>
+
+    <form class="buscador-hero" id="form-buscador-hero">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="input-buscador-hero" placeholder="Busca un producto o código Fenix (ej. linterna, ADA_002)">
+      <button type="submit">Buscar</button>
+    </form>
+
     <div class="hero-botones">
       <a class="btn btn-principal" href="catalogo.html">Ver catálogo completo</a>
       <a class="btn btn-whatsapp" href="#" id="hero-whatsapp" target="_blank" rel="noopener">
@@ -623,9 +902,50 @@
     </div>
   </section>
 
+  <section>
+    <div class="seccion-interior">
+      <div class="seccion-encabezado">
+        <h2 class="seccion-titulo">Recién llegados</h2>
+        <a class="ver-mas" href="catalogo.html">Ver todo →</a>
+      </div>
+      <div id="estado-recientes" class="estado-seccion">Cargando...</div>
+      <div class="grilla-productos" id="grilla-recientes"></div>
+    </div>
+  </section>
+
+  <section id="seccion-ofertas" style="display:none;">
+    <div class="seccion-interior">
+      <div class="seccion-encabezado">
+        <h2 class="seccion-titulo">Ofertas</h2>
+        <a class="ver-mas" href="catalogo.html">Ver todo →</a>
+      </div>
+      <div class="grilla-productos" id="grilla-ofertas"></div>
+    </div>
+  </section>
+
+  <section id="seccion-destacada" style="display:none;">
+    <div class="seccion-interior">
+      <div class="seccion-encabezado">
+        <h2 class="seccion-titulo" id="titulo-destacada">Destacados</h2>
+        <a class="ver-mas" id="ver-mas-destacada" href="catalogo.html">Ver todo →</a>
+      </div>
+      <div class="grilla-productos" id="grilla-destacada"></div>
+    </div>
+  </section>
+
+  <div class="modal-fondo" id="modal-fondo">
+    <div class="modal-panel" id="modal-panel">
+      <button class="modal-cerrar" id="modal-cerrar" aria-label="Cerrar">✕</button>
+      <div id="modal-contenido">
+        <div class="estado-seccion">Cargando producto...</div>
+      </div>
+    </div>
+  </div>
+
   <div class="beneficios">
     <div class="beneficio">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+
       <p>Pago Seguro</p>
     </div>
     <div class="beneficio">
@@ -862,7 +1182,181 @@
       }
     }
 
+    // ---------- Buscador del hero ----------
+
+    document.getElementById("form-buscador-hero").addEventListener("submit", (evento) => {
+      evento.preventDefault();
+      const valor = document.getElementById("input-buscador-hero").value.trim();
+      if (!valor) return;
+      window.location.href = "catalogo.html?buscar=" + encodeURIComponent(valor);
+    });
+
+    // ---------- Tarjetas de producto (reutilizadas en las 3 secciones) ----------
+
+    function urlWhatsAppProducto(producto) {
+      const mensaje = `¡Hola Fenix Import Perú!\nMe interesa este producto de su catálogo:\n\n${producto.nombre}\nSKU: ${producto.sku}\n\n¿Me brinda mayor información por favor?`;
+      return "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
+    }
+
+    function crearTarjetaProducto(producto) {
+      const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+      const imagenHtml = producto.imagen
+        ? `<img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">`
+        : `<span class="sin-foto">Sin foto</span>`;
+      const badge = producto.oferta ? `<span class="badge-oferta">Oferta</span>` : "";
+
+      return `
+        <div class="tarjeta-producto" data-sku="${producto.sku}">
+          <div class="tarjeta-producto-img">
+            ${badge}
+            ${imagenHtml}
+          </div>
+          <div class="tarjeta-producto-body">
+            <p class="tarjeta-producto-categoria">${producto.categoria || ""}</p>
+            <p class="tarjeta-producto-nombre">${producto.nombre}</p>
+            <p class="tarjeta-producto-precio">S/ ${precio}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    async function cargarSeccionProductos(url, idGrilla, idEstado) {
+      const elGrilla = document.getElementById(idGrilla);
+      const elEstado = idEstado ? document.getElementById(idEstado) : null;
+
+      try {
+        const datos = await cargarViaJSONP(url);
+
+        if (datos.error || !datos.productos || datos.productos.length === 0) {
+          if (elEstado) elEstado.textContent = "Aún no hay productos para mostrar aquí.";
+          return [];
+        }
+
+        if (elEstado) elEstado.style.display = "none";
+        elGrilla.innerHTML = datos.productos.map(crearTarjetaProducto).join("");
+        return datos.productos;
+
+      } catch (error) {
+        if (elEstado) elEstado.textContent = "No se pudo cargar esta sección.";
+        console.error(error);
+        return [];
+      }
+    }
+
+    // ---------- Modal de detalle (igual que en catalogo.html) ----------
+
+    const elModalFondo = document.getElementById("modal-fondo");
+    const elModalContenido = document.getElementById("modal-contenido");
+
+    function mostrarErrorModal(mensaje) {
+      elModalContenido.innerHTML = `
+        <div class="estado-seccion">${mensaje}</div>
+      `;
+    }
+
+    function renderizarDetalle(producto) {
+      const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+      const imagenHtml = producto.imagen
+        ? `<img src="${producto.imagen}" alt="${producto.nombre}">`
+        : `<span class="sin-foto">Sin foto</span>`;
+
+      const meta = [];
+      if (producto.marca) meta.push(producto.marca);
+      if (producto.color) meta.push(producto.color);
+      if (producto.oferta) meta.push("Oferta");
+      meta.push(producto.sku);
+
+      const descripcionHtml = producto.descripcion
+        ? `<p class="modal-seccion-titulo">Descripción</p><p class="modal-texto">${producto.descripcion}</p>`
+        : "";
+
+      const caracteristicasHtml = producto.caracteristicas
+        ? `<p class="modal-seccion-titulo">Características</p><p class="modal-texto">${producto.caracteristicas}</p>`
+        : "";
+
+      const incluyeHtml = producto.incluye
+        ? `<p class="modal-seccion-titulo">Incluye</p><p class="modal-texto">${producto.incluye}</p>`
+        : "";
+
+      elModalContenido.innerHTML = `
+        <div class="modal-img">${imagenHtml}</div>
+        <p class="modal-categoria">${producto.categoria || ""}${producto.subcategoria ? " · " + producto.subcategoria : ""}</p>
+        <h2 class="modal-nombre">${producto.nombre}</h2>
+        <p class="modal-precio">S/ ${precio}</p>
+        <div class="modal-meta">${meta.map(m => `<span>${m}</span>`).join("")}</div>
+        ${descripcionHtml}
+        ${caracteristicasHtml}
+        ${incluyeHtml}
+        <a class="modal-btn-whatsapp" href="${urlWhatsAppProducto(producto)}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+          Consultar por WhatsApp
+        </a>
+      `;
+    }
+
+    async function abrirDetalle(sku) {
+      elModalFondo.classList.add("abierto");
+      document.body.style.overflow = "hidden";
+      elModalContenido.innerHTML = `<div class="estado-seccion">Cargando producto...</div>`;
+
+      try {
+        const url = API_URL + "?sku=" + encodeURIComponent(sku);
+        const detalle = await cargarViaJSONP(url);
+        if (detalle.error) throw new Error(detalle.error);
+        renderizarDetalle(detalle);
+      } catch (error) {
+        mostrarErrorModal("No pudimos cargar la información de este producto. Intenta de nuevo.");
+        console.error(error);
+      }
+    }
+
+    function cerrarModal() {
+      elModalFondo.classList.remove("abierto");
+      document.body.style.overflow = "";
+    }
+
+    document.getElementById("modal-cerrar").addEventListener("click", cerrarModal);
+    elModalFondo.addEventListener("click", (e) => { if (e.target === elModalFondo) cerrarModal(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarModal(); });
+
+    document.addEventListener("click", (evento) => {
+      const tarjeta = evento.target.closest(".tarjeta-producto");
+      if (tarjeta) abrirDetalle(tarjeta.dataset.sku);
+    });
+
+    // ---------- Cargar las 3 secciones de productos ----------
+
+    // Edita esta constante para cambiar qué categoría se destaca en la home.
+    const CATEGORIA_DESTACADA = "Iluminación";
+
+    async function cargarSeccionesDeProductos() {
+      await cargarSeccionProductos(
+        API_URL + "?orden=recientes&limite=8",
+        "grilla-recientes",
+        "estado-recientes"
+      );
+
+      const ofertas = await cargarSeccionProductos(
+        API_URL + "?soloOfertas=1&limite=8",
+        "grilla-ofertas"
+      );
+      if (ofertas.length > 0) {
+        document.getElementById("seccion-ofertas").style.display = "block";
+      }
+
+      const destacados = await cargarSeccionProductos(
+        API_URL + "?categoria=" + encodeURIComponent(CATEGORIA_DESTACADA) + "&limite=8",
+        "grilla-destacada"
+      );
+      if (destacados.length > 0) {
+        document.getElementById("seccion-destacada").style.display = "block";
+        document.getElementById("titulo-destacada").textContent = CATEGORIA_DESTACADA;
+        document.getElementById("ver-mas-destacada").href = "catalogo.html?categoria=" + encodeURIComponent(CATEGORIA_DESTACADA);
+      }
+    }
+
     cargarCategorias();
+    cargarSeccionesDeProductos();
   </script>
 
 </body>
