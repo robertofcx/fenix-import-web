@@ -599,13 +599,13 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbx4RfQZfCXte3UC8w3XSKIQYYSoCIZbXWnDhLBv8NyvwrQ1HHynzY6Na6JI5PrZNmjokg/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbwNjexYrUHVn8lfyWjL5NCjBU8sbM5PaBO32CjZkUftfeEICPnpQg7mdT5EnQiWmL-6wg/exec";
     const NUMERO_WHATSAPP = "51978821080";
     const LOTE = 24; // cuántos productos se pintan por tanda
 
     let todosLosProductos = [];
     let productosFiltrados = [];
-    let categoriaActiva = "Todos";
+    let categoriaActiva = new URLSearchParams(window.location.search).get("categoria") || "Todos";
     let cantidadMostrada = 0;
 
     const elEstadoCarga = document.getElementById("estado-carga");
