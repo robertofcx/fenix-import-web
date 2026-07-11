@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo — Fenix Import Perú</title>
+<meta name="description" content="Catálogo de productos Fenix Import Perú: tecnología, iluminación, seguridad y más.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14100d;
+    --bg-card: #1c1610;
+    --bg-card-hover: #241b13;
+    --ember: #ff5a2b;
+    --ember-soft: #ffb020;
+    --ash: #f5ede4;
+    --ash-muted: #b7a99b;
+    --line: rgba(255, 176, 32, 0.14);
+    --whatsapp: #25d366;
+    --whatsapp-dark: #1ea952;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ash);
+    font-family: 'Inter', sans-serif;
+  }
+
+  a { color: inherit; }
+
+  /* ---------- Header ---------- */
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(20, 16, 13, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 20px;
+  }
+
+  .marca-fila {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .chispa {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--ember);
+    box-shadow: 0 0 10px 2px rgba(255, 90, 43, 0.7);
+    flex-shrink: 0;
+    animation: parpadeo 2.4s ease-in-out infinite;
+  }
+
+  @keyframes parpadeo {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .marca-nombre {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ash-muted);
+  }
+
+  h1.titulo {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    margin: 0 0 14px;
+    background: linear-gradient(180deg, var(--ash) 45%, var(--ember-soft) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .buscador {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+  }
+
+  .buscador svg { flex-shrink: 0; opacity: 0.6; width: 18px; height: 18px; }
+
+  .buscador input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--ash);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+  }
+
+  .buscador input::placeholder { color: var(--ash-muted); }
+
+  .categorias {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .categorias::-webkit-scrollbar { height: 4px; }
+  .categorias::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+
+  .chip {
+    flex-shrink: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--ash-muted);
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .chip:hover { color: var(--ash); border-color: rgba(255, 176, 32, 0.35); }
+
+  .chip.activo {
+    background: var(--ember);
+    color: #1a0d05;
+    border-color: var(--ember);
+    font-weight: 600;
+  }
+
+  /* ---------- Estado (carga / error / vacío) ---------- */
+
+  .estado {
+    max-width: 420px;
+    margin: 60px auto;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  .estado-icono { font-size: 2rem; margin-bottom: 12px; }
+  .estado-titulo { font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 1.4rem; margin: 0 0 8px; }
+  .estado-texto { color: var(--ash-muted); font-size: 0.9rem; line-height: 1.5; }
+
+  .spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid var(--line);
+    border-top-color: var(--ember);
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    animation: girar 0.8s linear infinite;
+  }
+
+  @keyframes girar { to { transform: rotate(360deg); } }
+
+  /* ---------- Grilla de productos ---------- */
+
+  main { padding: 20px; max-width: 1200px; margin: 0 auto; }
+
+  .contador {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--ash-muted);
+    margin: 4px 0 16px;
+  }
+
+  .grilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  .tarjeta {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .tarjeta:hover {
+    border-color: rgba(255, 176, 32, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .tarjeta-img {
+    aspect-ratio: 1;
+    background: #0d0a08;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .tarjeta-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+  }
+
+  .tarjeta-img .sin-foto {
+    color: var(--ash-muted);
+    font-size: 0.7rem;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .tarjeta-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .tarjeta-categoria {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ember-soft);
+    margin-bottom: 4px;
+  }
+
+  .tarjeta-nombre {
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin: 0 0 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  .tarjeta-precio {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--ash);
+    margin: 0 0 10px;
+  }
+
+  .tarjeta-precio span {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--ash-muted);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-consultar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: var(--whatsapp);
+    color: #0d1f13;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 9px;
+    border-radius: 9px;
+    transition: background 0.15s ease;
+  }
+
+  .btn-consultar:hover { background: var(--whatsapp-dark); }
+  .btn-consultar svg { width: 14px; height: 14px; }
+
+  .badge-agotado {
+    position: absolute;
+    margin: 8px;
+    background: rgba(20, 16, 13, 0.85);
+    color: var(--ash-muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+
+  .tarjeta-img { position: relative; }
+
+  /* ---------- Cargar más ---------- */
+
+  .cargar-mas {
+    display: block;
+    margin: 28px auto 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    color: var(--ash);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+
+  .cargar-mas:hover { border-color: rgba(255, 176, 32, 0.4); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chispa, .spinner { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="marca-fila">
+      <span class="chispa"></span>
+      <span class="marca-nombre">Fenix Import Perú</span>
+    </div>
+    <h1 class="titulo">Catálogo</h1>
+
+    <div class="buscador">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="input-buscar" placeholder="Buscar producto por nombre...">
+    </div>
+
+    <div class="categorias" id="lista-categorias"></div>
+  </header>
+
+  <main>
+    <div id="estado-carga" class="estado">
+      <div class="spinner"></div>
+      <p class="estado-texto">Cargando catálogo...</p>
+    </div>
+
+    <div id="contenido" style="display:none;">
+      <p class="contador" id="contador"></p>
+      <div class="grilla" id="grilla"></div>
+      <button class="cargar-mas" id="btn-cargar-mas" style="display:none;">Cargar más productos</button>
+    </div>
+  </main>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbz3zHxHAAbs4mRZvgswFg9IIQP2yrCosxdV9RJNQyRsil0EWvQCqQU68FapmWBuVE2WmA/exec";
+    const NUMERO_WHATSAPP = "51978821080";
+    const LOTE = 24; // cuántos productos se pintan por tanda
+
+    let todosLosProductos = [];
+    let productosFiltrados = [];
+    let categoriaActiva = "Todos";
+    let cantidadMostrada = 0;
+
+    const elEstadoCarga = document.getElementById("estado-carga");
+    const elContenido = document.getElementById("contenido");
+    const elGrilla = document.getElementById("grilla");
+    const elContador = document.getElementById("contador");
+    const elCategorias = document.getElementById("lista-categorias");
+    const elBuscar = document.getElementById("input-buscar");
+    const elBtnCargarMas = document.getElementById("btn-cargar-mas");
+
+    function mostrarError(mensaje) {
+      elEstadoCarga.innerHTML = `
+        <div class="estado-icono">⚠️</div>
+        <p class="estado-titulo">No se pudo cargar el catálogo</p>
+        <p class="estado-texto">${mensaje}</p>
+      `;
+    }
+
+    function mostrarVacio() {
+      elGrilla.innerHTML = `
+        <div class="estado" style="grid-column: 1 / -1;">
+          <div class="estado-icono">🔦</div>
+          <p class="estado-titulo">No encontramos productos</p>
+          <p class="estado-texto">Prueba con otra palabra o revisa otra categoría.</p>
+        </div>
+      `;
+      elBtnCargarMas.style.display = "none";
+    }
+
+    function urlWhatsApp(producto) {
+      const mensaje = `¡Hola Fenix Import Perú!\nMe interesa este producto de su catálogo:\n\n${producto.nombre}\nSKU: ${producto.sku}\n\n¿Me brinda mayor información por favor?`;
+      return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
+    }
+
+    function crearTarjeta(producto) {
+      const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+      const imagenHtml = producto.imagen
+        ? `<img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">`
+        : `<span class="sin-foto">Sin foto</span>`;
+      const badge = producto.disponible ? "" : `<span class="badge-agotado">Agotado</span>`;
+
+      return `
+        <div class="tarjeta">
+          <div class="tarjeta-img">
+            ${badge}
+            ${imagenHtml}
+          </div>
+          <div class="tarjeta-body">
+            <p class="tarjeta-categoria">${producto.categoria || ""}</p>
+            <p class="tarjeta-nombre">${producto.nombre}</p>
+            <p class="tarjeta-precio">S/ ${precio}</p>
+            <a class="btn-consultar" href="${urlWhatsApp(producto)}" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+              Consultar
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderizarLote() {
+      const siguienteLote = productosFiltrados.slice(cantidadMostrada, cantidadMostrada + LOTE);
+      elGrilla.insertAdjacentHTML("beforeend", siguienteLote.map(crearTarjeta).join(""));
+      cantidadMostrada += siguienteLote.length;
+
+      elBtnCargarMas.style.display = cantidadMostrada < productosFiltrados.length ? "block" : "none";
+      elContador.textContent = `${productosFiltrados.length} producto${productosFiltrados.length === 1 ? "" : "s"} encontrado${productosFiltrados.length === 1 ? "" : "s"}`;
+    }
+
+    function aplicarFiltros() {
+      const texto = elBuscar.value.trim().toLowerCase();
+
+      productosFiltrados = todosLosProductos.filter(p => {
+        const coincideCategoria = categoriaActiva === "Todos" || p.categoria === categoriaActiva;
+        const coincideTexto = !texto || p.nombre.toLowerCase().includes(texto);
+        return coincideCategoria && coincideTexto;
+      });
+
+      elGrilla.innerHTML = "";
+      cantidadMostrada = 0;
+
+      if (productosFiltrados.length === 0) {
+        mostrarVacio();
+        elContador.textContent = "0 productos encontrados";
+        return;
+      }
+
+      renderizarLote();
+    }
+
+    function construirCategorias() {
+      const categoriasUnicas = ["Todos", ...new Set(todosLosProductos.map(p => p.categoria).filter(Boolean))];
+
+      elCategorias.innerHTML = categoriasUnicas.map(cat => {
+        const activo = cat === categoriaActiva ? "activo" : "";
+        return `<button class="chip ${activo}" data-cat="${cat}">${cat}</button>`;
+      }).join("");
+
+      elCategorias.querySelectorAll(".chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          categoriaActiva = chip.dataset.cat;
+          elCategorias.querySelectorAll(".chip").forEach(c => c.classList.remove("activo"));
+          chip.classList.add("activo");
+          aplicarFiltros();
+        });
+      });
+    }
+
+    async function cargarCatalogo() {
+      try {
+        const respuesta = await fetch(API_URL);
+
+        if (!respuesta.ok) {
+          throw new Error("El servidor respondió con un error (" + respuesta.status + ")");
+        }
+
+        const datos = await respuesta.json();
+
+        if (datos.error) {
+          throw new Error(datos.error);
+        }
+
+        todosLosProductos = datos.productos || [];
+
+        if (todosLosProductos.length === 0) {
+          mostrarError("El catálogo está vacío por ahora. Vuelve a intentarlo más tarde.");
+          return;
+        }
+
+        elEstadoCarga.style.display = "none";
+        elContenido.style.display = "block";
+
+        construirCategorias();
+        aplicarFiltros();
+
+      } catch (error) {
+        mostrarError("Ocurrió un problema al conectar con el catálogo. Intenta recargar la página en unos minutos.");
+        console.error(error);
+      }
+    }
+
+    elBuscar.addEventListener("input", aplicarFiltros);
+    elBtnCargarMas.addEventListener("click", renderizarLote);
+
+    cargarCatalogo();
+  </script>
+
+</body>
+</html>
