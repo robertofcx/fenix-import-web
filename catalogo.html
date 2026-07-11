@@ -147,6 +147,75 @@
     font-weight: 600;
   }
 
+  /* ---------- Fila de filtros (precio / disponibilidad) ---------- */
+
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .filtro-precio {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 12px;
+  }
+
+  .filtro-precio span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ash-muted);
+  }
+
+  .filtro-precio input[type="number"] {
+    width: 64px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--ash);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+  }
+
+  .filtro-precio input[type="number"]::-webkit-inner-spin-button {
+    opacity: 0.5;
+  }
+
+  .filtro-check {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 9px 12px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--ash-muted);
+    user-select: none;
+  }
+
+  .filtro-check input { accent-color: var(--ember); width: 15px; height: 15px; }
+
+  .btn-limpiar-filtros {
+    background: none;
+    border: none;
+    color: var(--ember-soft);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 4px;
+  }
+
+  .btn-limpiar-filtros:hover { text-decoration: underline; }
+
   /* ---------- Estado (carga / error / vacío) ---------- */
 
   .estado {
@@ -196,8 +265,152 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
     transition: border-color 0.15s ease, transform 0.15s ease;
   }
+
+  /* ---------- Modal de detalle de producto ---------- */
+
+  .modal-fondo {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 8, 6, 0.75);
+    backdrop-filter: blur(3px);
+    z-index: 100;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .modal-fondo.abierto { display: flex; }
+
+  @media (min-width: 640px) {
+    .modal-fondo { align-items: center; }
+  }
+
+  .modal-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 560px;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 20px;
+    position: relative;
+  }
+
+  @media (min-width: 640px) {
+    .modal-panel { border-radius: 18px; max-height: 80vh; }
+  }
+
+  .modal-cerrar {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--ash);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    z-index: 2;
+  }
+
+  .modal-img {
+    width: 100%;
+    aspect-ratio: 1.4;
+    background: #0d0a08;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .modal-img img { width: 100%; height: 100%; object-fit: contain; padding: 16px; }
+
+  .modal-categoria {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ember-soft);
+    margin: 0 0 6px;
+  }
+
+  .modal-nombre {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    line-height: 1.15;
+    margin: 0 0 10px;
+  }
+
+  .modal-precio {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: var(--ash);
+    margin: 0 0 4px;
+  }
+
+  .modal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 18px;
+  }
+
+  .modal-meta span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ash-muted);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 5px 10px;
+  }
+
+  .modal-seccion-titulo {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ash-muted);
+    margin: 18px 0 8px;
+  }
+
+  .modal-texto {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--ash);
+    white-space: pre-line;
+    margin: 0;
+  }
+
+  .modal-btn-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--whatsapp);
+    color: #0d1f13;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 13px;
+    border-radius: 11px;
+    margin-top: 20px;
+  }
+
+  .modal-btn-whatsapp svg { width: 18px; height: 18px; }
 
   .tarjeta:hover {
     border-color: rgba(255, 176, 32, 0.35);
@@ -342,6 +555,22 @@
     </div>
 
     <div class="categorias" id="lista-categorias"></div>
+
+    <div class="filtros">
+      <div class="filtro-precio">
+        <span>S/</span>
+        <input type="number" id="input-precio-min" placeholder="Mín" min="0">
+        <span>—</span>
+        <input type="number" id="input-precio-max" placeholder="Máx" min="0">
+      </div>
+
+      <label class="filtro-check">
+        <input type="checkbox" id="input-solo-disponibles">
+        Solo disponibles
+      </label>
+
+      <button class="btn-limpiar-filtros" id="btn-limpiar-filtros">Limpiar filtros</button>
+    </div>
   </header>
 
   <main>
@@ -357,8 +586,20 @@
     </div>
   </main>
 
+  <div class="modal-fondo" id="modal-fondo">
+    <div class="modal-panel" id="modal-panel">
+      <button class="modal-cerrar" id="modal-cerrar" aria-label="Cerrar">✕</button>
+      <div id="modal-contenido">
+        <div class="estado">
+          <div class="spinner"></div>
+          <p class="estado-texto">Cargando producto...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwBmG6hJaBkFruMpIvl6yfubNjh46IODaW5jY2FOiMcoSjYvktVoEcO6kZoY8CdXF8uuA/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbx4RfQZfCXte3UC8w3XSKIQYYSoCIZbXWnDhLBv8NyvwrQ1HHynzY6Na6JI5PrZNmjokg/exec";
     const NUMERO_WHATSAPP = "51978821080";
     const LOTE = 24; // cuántos productos se pintan por tanda
 
@@ -374,6 +615,13 @@
     const elCategorias = document.getElementById("lista-categorias");
     const elBuscar = document.getElementById("input-buscar");
     const elBtnCargarMas = document.getElementById("btn-cargar-mas");
+    const elPrecioMin = document.getElementById("input-precio-min");
+    const elPrecioMax = document.getElementById("input-precio-max");
+    const elSoloDisponibles = document.getElementById("input-solo-disponibles");
+    const elBtnLimpiarFiltros = document.getElementById("btn-limpiar-filtros");
+    const elModalFondo = document.getElementById("modal-fondo");
+    const elModalContenido = document.getElementById("modal-contenido");
+    const elModalCerrar = document.getElementById("modal-cerrar");
 
     function mostrarError(mensaje) {
       elEstadoCarga.innerHTML = `
@@ -407,7 +655,7 @@
       const badge = producto.disponible ? "" : `<span class="badge-agotado">Agotado</span>`;
 
       return `
-        <div class="tarjeta">
+        <div class="tarjeta" data-sku="${producto.sku}">
           <div class="tarjeta-img">
             ${badge}
             ${imagenHtml}
@@ -434,15 +682,28 @@
       elContador.textContent = `${productosFiltrados.length} producto${productosFiltrados.length === 1 ? "" : "s"} encontrado${productosFiltrados.length === 1 ? "" : "s"}`;
     }
 
+    function extraerPrecio(producto) {
+      return Number(String(producto.precio).replace(/[^0-9.]/g, "")) || 0;
+    }
+
     function aplicarFiltros() {
       const texto = elBuscar.value.trim().toLowerCase();
+      const precioMin = elPrecioMin.value !== "" ? Number(elPrecioMin.value) : null;
+      const precioMax = elPrecioMax.value !== "" ? Number(elPrecioMax.value) : null;
+      const soloDisponibles = elSoloDisponibles.checked;
 
       productosFiltrados = todosLosProductos.filter(p => {
         const coincideCategoria = categoriaActiva === "Todos" || p.categoria === categoriaActiva;
         const coincideTexto = !texto
           || p.nombre.toLowerCase().includes(texto)
           || (p.sku && p.sku.toLowerCase().includes(texto));
-        return coincideCategoria && coincideTexto;
+
+        const precio = extraerPrecio(p);
+        const coincidePrecioMin = precioMin === null || precio >= precioMin;
+        const coincidePrecioMax = precioMax === null || precio <= precioMax;
+        const coincideDisponibilidad = !soloDisponibles || p.disponible;
+
+        return coincideCategoria && coincideTexto && coincidePrecioMin && coincidePrecioMax && coincideDisponibilidad;
       });
 
       elGrilla.innerHTML = "";
@@ -534,8 +795,117 @@
       }
     }
 
+    // ---------- Modal de detalle de producto ----------
+
+    function urlWhatsAppDetalle(producto) {
+      const mensaje = `¡Hola Fenix Import Perú!\nMe interesa este producto de su catálogo:\n\n${producto.nombre}\nSKU: ${producto.sku}\n\n¿Me brinda mayor información por favor?`;
+      return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
+    }
+
+    function mostrarErrorModal(mensaje) {
+      elModalContenido.innerHTML = `
+        <div class="estado" style="margin: 30px auto;">
+          <div class="estado-icono">⚠️</div>
+          <p class="estado-titulo">No se pudo cargar</p>
+          <p class="estado-texto">${mensaje}</p>
+        </div>
+      `;
+    }
+
+    function renderizarDetalle(producto) {
+      const precio = extraerPrecio(producto).toFixed(2);
+      const imagenHtml = producto.imagen
+        ? `<img src="${producto.imagen}" alt="${producto.nombre}">`
+        : `<span class="sin-foto">Sin foto</span>`;
+
+      const meta = [];
+      if (producto.marca) meta.push(producto.marca);
+      if (producto.color) meta.push(producto.color);
+      meta.push(producto.disponible ? "Disponible" : "Agotado");
+      meta.push(producto.sku);
+
+      const descripcionHtml = producto.descripcion
+        ? `<p class="modal-seccion-titulo">Descripción</p><p class="modal-texto">${producto.descripcion}</p>`
+        : "";
+
+      const caracteristicasHtml = producto.caracteristicas
+        ? `<p class="modal-seccion-titulo">Características</p><p class="modal-texto">${producto.caracteristicas}</p>`
+        : "";
+
+      elModalContenido.innerHTML = `
+        <div class="modal-img">${imagenHtml}</div>
+        <p class="modal-categoria">${producto.categoria || ""}${producto.subcategoria ? " · " + producto.subcategoria : ""}</p>
+        <h2 class="modal-nombre">${producto.nombre}</h2>
+        <p class="modal-precio">S/ ${precio}</p>
+        <div class="modal-meta">${meta.map(m => `<span>${m}</span>`).join("")}</div>
+        ${descripcionHtml}
+        ${caracteristicasHtml}
+        <a class="modal-btn-whatsapp" href="${urlWhatsAppDetalle(producto)}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+          Consultar por WhatsApp
+        </a>
+      `;
+    }
+
+    async function abrirDetalle(sku) {
+      elModalFondo.classList.add("abierto");
+      document.body.style.overflow = "hidden";
+      elModalContenido.innerHTML = `
+        <div class="estado" style="margin: 30px auto;">
+          <div class="spinner"></div>
+          <p class="estado-texto">Cargando producto...</p>
+        </div>
+      `;
+
+      try {
+        const url = API_URL + "?sku=" + encodeURIComponent(sku);
+        const detalle = await cargarViaJSONP(url);
+
+        if (detalle.error) {
+          throw new Error(detalle.error);
+        }
+
+        renderizarDetalle(detalle);
+      } catch (error) {
+        mostrarErrorModal("No pudimos cargar la información de este producto. Intenta de nuevo.");
+        console.error(error);
+      }
+    }
+
+    function cerrarModal() {
+      elModalFondo.classList.remove("abierto");
+      document.body.style.overflow = "";
+    }
+
+    elGrilla.addEventListener("click", (evento) => {
+      if (evento.target.closest(".btn-consultar")) return; // el botón de WhatsApp tiene su propio link
+      const tarjeta = evento.target.closest(".tarjeta");
+      if (tarjeta) abrirDetalle(tarjeta.dataset.sku);
+    });
+
+    elModalCerrar.addEventListener("click", cerrarModal);
+    elModalFondo.addEventListener("click", (evento) => {
+      if (evento.target === elModalFondo) cerrarModal();
+    });
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape") cerrarModal();
+    });
+
     elBuscar.addEventListener("input", aplicarFiltros);
     elBtnCargarMas.addEventListener("click", renderizarLote);
+    elPrecioMin.addEventListener("input", aplicarFiltros);
+    elPrecioMax.addEventListener("input", aplicarFiltros);
+    elSoloDisponibles.addEventListener("change", aplicarFiltros);
+    elBtnLimpiarFiltros.addEventListener("click", () => {
+      elBuscar.value = "";
+      elPrecioMin.value = "";
+      elPrecioMax.value = "";
+      elSoloDisponibles.checked = false;
+      categoriaActiva = "Todos";
+      elCategorias.querySelectorAll(".chip").forEach(c => c.classList.remove("activo"));
+      elCategorias.querySelector('.chip[data-cat="Todos"]')?.classList.add("activo");
+      aplicarFiltros();
+    });
 
     cargarCatalogo();
   </script>
