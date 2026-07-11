@@ -902,46 +902,6 @@
     </div>
   </section>
 
-  <section>
-    <div class="seccion-interior">
-      <div class="seccion-encabezado">
-        <h2 class="seccion-titulo">Recién llegados</h2>
-        <a class="ver-mas" href="catalogo.html">Ver todo →</a>
-      </div>
-      <div id="estado-recientes" class="estado-seccion">Cargando...</div>
-      <div class="grilla-productos" id="grilla-recientes"></div>
-    </div>
-  </section>
-
-  <section id="seccion-ofertas" style="display:none;">
-    <div class="seccion-interior">
-      <div class="seccion-encabezado">
-        <h2 class="seccion-titulo">Ofertas</h2>
-        <a class="ver-mas" href="catalogo.html">Ver todo →</a>
-      </div>
-      <div class="grilla-productos" id="grilla-ofertas"></div>
-    </div>
-  </section>
-
-  <section id="seccion-destacada" style="display:none;">
-    <div class="seccion-interior">
-      <div class="seccion-encabezado">
-        <h2 class="seccion-titulo" id="titulo-destacada">Destacados</h2>
-        <a class="ver-mas" id="ver-mas-destacada" href="catalogo.html">Ver todo →</a>
-      </div>
-      <div class="grilla-productos" id="grilla-destacada"></div>
-    </div>
-  </section>
-
-  <div class="modal-fondo" id="modal-fondo">
-    <div class="modal-panel" id="modal-panel">
-      <button class="modal-cerrar" id="modal-cerrar" aria-label="Cerrar">✕</button>
-      <div id="modal-contenido">
-        <div class="estado-seccion">Cargando producto...</div>
-      </div>
-    </div>
-  </div>
-
   <div class="beneficios">
     <div class="beneficio">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
@@ -1063,7 +1023,7 @@
   </a>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwBmG6hJaBkFruMpIvl6yfubNjh46IODaW5jY2FOiMcoSjYvktVoEcO6kZoY8CdXF8uuA/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxPw6xZDTykK-AJ_iuWoJtjvRWwBxBw79maSj8UbjpHVsON5xMca7WntgJEExmM8veVcQ/exec";
     const NUMERO_WHATSAPP = "51978821080";
 
     document.getElementById("anio").textContent = new Date().getFullYear();
@@ -1191,172 +1151,8 @@
       window.location.href = "catalogo.html?buscar=" + encodeURIComponent(valor);
     });
 
-    // ---------- Tarjetas de producto (reutilizadas en las 3 secciones) ----------
-
-    function urlWhatsAppProducto(producto) {
-      const mensaje = `¡Hola Fenix Import Perú!\nMe interesa este producto de su catálogo:\n\n${producto.nombre}\nSKU: ${producto.sku}\n\n¿Me brinda mayor información por favor?`;
-      return "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
-    }
-
-    function crearTarjetaProducto(producto) {
-      const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
-      const imagenHtml = producto.imagen
-        ? `<img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">`
-        : `<span class="sin-foto">Sin foto</span>`;
-      const badge = producto.oferta ? `<span class="badge-oferta">Oferta</span>` : "";
-
-      return `
-        <div class="tarjeta-producto" data-sku="${producto.sku}">
-          <div class="tarjeta-producto-img">
-            ${badge}
-            ${imagenHtml}
-          </div>
-          <div class="tarjeta-producto-body">
-            <p class="tarjeta-producto-categoria">${producto.categoria || ""}</p>
-            <p class="tarjeta-producto-nombre">${producto.nombre}</p>
-            <p class="tarjeta-producto-precio">S/ ${precio}</p>
-          </div>
-        </div>
-      `;
-    }
-
-    async function cargarSeccionProductos(url, idGrilla, idEstado) {
-      const elGrilla = document.getElementById(idGrilla);
-      const elEstado = idEstado ? document.getElementById(idEstado) : null;
-
-      try {
-        const datos = await cargarViaJSONP(url);
-
-        if (datos.error || !datos.productos || datos.productos.length === 0) {
-          if (elEstado) elEstado.textContent = "Aún no hay productos para mostrar aquí.";
-          return [];
-        }
-
-        if (elEstado) elEstado.style.display = "none";
-        elGrilla.innerHTML = datos.productos.map(crearTarjetaProducto).join("");
-        return datos.productos;
-
-      } catch (error) {
-        if (elEstado) elEstado.textContent = "No se pudo cargar esta sección.";
-        console.error(error);
-        return [];
-      }
-    }
-
-    // ---------- Modal de detalle (igual que en catalogo.html) ----------
-
-    const elModalFondo = document.getElementById("modal-fondo");
-    const elModalContenido = document.getElementById("modal-contenido");
-
-    function mostrarErrorModal(mensaje) {
-      elModalContenido.innerHTML = `
-        <div class="estado-seccion">${mensaje}</div>
-      `;
-    }
-
-    function renderizarDetalle(producto) {
-      const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
-      const imagenHtml = producto.imagen
-        ? `<img src="${producto.imagen}" alt="${producto.nombre}">`
-        : `<span class="sin-foto">Sin foto</span>`;
-
-      const meta = [];
-      if (producto.marca) meta.push(producto.marca);
-      if (producto.color) meta.push(producto.color);
-      if (producto.oferta) meta.push("Oferta");
-      meta.push(producto.sku);
-
-      const descripcionHtml = producto.descripcion
-        ? `<p class="modal-seccion-titulo">Descripción</p><p class="modal-texto">${producto.descripcion}</p>`
-        : "";
-
-      const caracteristicasHtml = producto.caracteristicas
-        ? `<p class="modal-seccion-titulo">Características</p><p class="modal-texto">${producto.caracteristicas}</p>`
-        : "";
-
-      const incluyeHtml = producto.incluye
-        ? `<p class="modal-seccion-titulo">Incluye</p><p class="modal-texto">${producto.incluye}</p>`
-        : "";
-
-      elModalContenido.innerHTML = `
-        <div class="modal-img">${imagenHtml}</div>
-        <p class="modal-categoria">${producto.categoria || ""}${producto.subcategoria ? " · " + producto.subcategoria : ""}</p>
-        <h2 class="modal-nombre">${producto.nombre}</h2>
-        <p class="modal-precio">S/ ${precio}</p>
-        <div class="modal-meta">${meta.map(m => `<span>${m}</span>`).join("")}</div>
-        ${descripcionHtml}
-        ${caracteristicasHtml}
-        ${incluyeHtml}
-        <a class="modal-btn-whatsapp" href="${urlWhatsAppProducto(producto)}" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
-          Consultar por WhatsApp
-        </a>
-      `;
-    }
-
-    async function abrirDetalle(sku) {
-      elModalFondo.classList.add("abierto");
-      document.body.style.overflow = "hidden";
-      elModalContenido.innerHTML = `<div class="estado-seccion">Cargando producto...</div>`;
-
-      try {
-        const url = API_URL + "?sku=" + encodeURIComponent(sku);
-        const detalle = await cargarViaJSONP(url);
-        if (detalle.error) throw new Error(detalle.error);
-        renderizarDetalle(detalle);
-      } catch (error) {
-        mostrarErrorModal("No pudimos cargar la información de este producto. Intenta de nuevo.");
-        console.error(error);
-      }
-    }
-
-    function cerrarModal() {
-      elModalFondo.classList.remove("abierto");
-      document.body.style.overflow = "";
-    }
-
-    document.getElementById("modal-cerrar").addEventListener("click", cerrarModal);
-    elModalFondo.addEventListener("click", (e) => { if (e.target === elModalFondo) cerrarModal(); });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarModal(); });
-
-    document.addEventListener("click", (evento) => {
-      const tarjeta = evento.target.closest(".tarjeta-producto");
-      if (tarjeta) abrirDetalle(tarjeta.dataset.sku);
-    });
-
-    // ---------- Cargar las 3 secciones de productos ----------
-
-    // Edita esta constante para cambiar qué categoría se destaca en la home.
-    const CATEGORIA_DESTACADA = "Iluminación";
-
-    async function cargarSeccionesDeProductos() {
-      await cargarSeccionProductos(
-        API_URL + "?orden=recientes&limite=8",
-        "grilla-recientes",
-        "estado-recientes"
-      );
-
-      const ofertas = await cargarSeccionProductos(
-        API_URL + "?soloOfertas=1&limite=8",
-        "grilla-ofertas"
-      );
-      if (ofertas.length > 0) {
-        document.getElementById("seccion-ofertas").style.display = "block";
-      }
-
-      const destacados = await cargarSeccionProductos(
-        API_URL + "?categoria=" + encodeURIComponent(CATEGORIA_DESTACADA) + "&limite=8",
-        "grilla-destacada"
-      );
-      if (destacados.length > 0) {
-        document.getElementById("seccion-destacada").style.display = "block";
-        document.getElementById("titulo-destacada").textContent = CATEGORIA_DESTACADA;
-        document.getElementById("ver-mas-destacada").href = "catalogo.html?categoria=" + encodeURIComponent(CATEGORIA_DESTACADA);
-      }
-    }
 
     cargarCategorias();
-    cargarSeccionesDeProductos();
   </script>
 
 </body>
