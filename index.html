@@ -3,19 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fenix Import Perú — Tienda en construcción</title>
-<meta name="description" content="Fenix Import Perú está preparando su nuevo catálogo online. Escríbenos por WhatsApp mientras tanto.">
+<title>Fenix Import Perú — Tecnología, iluminación y seguridad</title>
+<meta name="description" content="Fenix Import Perú: más de 2000 productos de tecnología, iluminación y seguridad. Cotiza directo por WhatsApp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #14100d;
-    --bg-card: #201811;
+    --bg-card: #1c1610;
+    --bg-card-hover: #241b13;
     --ember: #ff5a2b;
     --ember-soft: #ffb020;
     --ash: #f5ede4;
     --ash-muted: #b7a99b;
+    --line: rgba(255, 176, 32, 0.14);
     --whatsapp: #25d366;
     --whatsapp-dark: #1ea952;
   }
@@ -28,67 +30,85 @@
     background: var(--bg);
     color: var(--ash);
     font-family: 'Inter', sans-serif;
-    min-height: 100vh;
   }
 
-  body {
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- Header / nav ---------- */
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(20, 16, 13, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 24px;
-    position: relative;
-    overflow-x: hidden;
+    justify-content: space-between;
   }
 
-  /* Fondo: brasa difusa detrás del contenido */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 900px;
-    height: 900px;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(255, 90, 43, 0.16) 0%, rgba(255, 90, 43, 0) 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .contenedor {
-    position: relative;
-    z-index: 1;
-    max-width: 560px;
-    width: 100%;
-    text-align: center;
-  }
-
-  .marca {
-    display: inline-flex;
+  .marca-fila {
+    display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 40px;
   }
 
-  .marca-chispa {
-    width: 10px;
-    height: 10px;
+  .chispa {
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
     background: var(--ember);
-    box-shadow: 0 0 12px 3px rgba(255, 90, 43, 0.7);
+    box-shadow: 0 0 10px 2px rgba(255, 90, 43, 0.7);
+    flex-shrink: 0;
     animation: parpadeo 2.4s ease-in-out infinite;
   }
 
   @keyframes parpadeo {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.55; transform: scale(0.8); }
+    50% { opacity: 0.5; transform: scale(0.8); }
   }
 
-  .marca-texto {
+  .marca-nombre {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--ash-muted);
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  nav a.link-catalogo {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ash);
+  }
+
+  nav a.btn-nav-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--whatsapp);
+  }
+
+  nav a.btn-nav-whatsapp svg { width: 18px; height: 18px; fill: #0d1f13; }
+
+  /* ---------- Hero ---------- */
+
+  .hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 24px 48px;
+    text-align: center;
   }
 
   .eyebrow {
@@ -103,7 +123,7 @@
   h1 {
     font-family: 'Big Shoulders Display', sans-serif;
     font-weight: 800;
-    font-size: clamp(2.4rem, 8vw, 3.6rem);
+    font-size: clamp(2.4rem, 7vw, 3.8rem);
     line-height: 1.02;
     letter-spacing: -0.01em;
     margin: 0 0 20px;
@@ -113,128 +133,258 @@
     color: transparent;
   }
 
-  p.sub {
+  .hero p.sub {
     font-size: 1.05rem;
     line-height: 1.6;
     color: var(--ash-muted);
-    margin: 0 0 40px;
+    margin: 0 0 32px;
   }
 
-  p.sub strong {
-    color: var(--ash);
-    font-weight: 600;
+  .hero p.sub strong { color: var(--ash); font-weight: 600; }
+
+  .hero-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
   }
 
-  .tarjeta {
-    background: var(--bg-card);
-    border: 1px solid rgba(255, 176, 32, 0.14);
-    border-radius: 18px;
-    padding: 28px 24px;
-  }
-
-  .tarjeta-titulo {
-    font-size: 0.95rem;
-    color: var(--ash-muted);
-    margin: 0 0 20px;
-  }
-
-  .boton-whatsapp {
+  .btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    width: 100%;
-    background: var(--whatsapp);
-    color: #0d1f13;
+    gap: 9px;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 1.05rem;
-    text-decoration: none;
-    padding: 16px 20px;
+    font-size: 0.98rem;
+    padding: 15px 26px;
     border-radius: 12px;
-    transition: background 0.15s ease, transform 0.15s ease;
+    transition: transform 0.15s ease, background 0.15s ease;
   }
 
-  .boton-whatsapp:hover {
-    background: var(--whatsapp-dark);
-    transform: translateY(-1px);
+  .btn:hover { transform: translateY(-1px); }
+
+  .btn-principal {
+    background: var(--ember);
+    color: #1a0d05;
   }
 
-  .boton-whatsapp:active {
-    transform: translateY(0);
+  .btn-principal:hover { background: #ff6b40; }
+
+  .btn-whatsapp {
+    background: var(--whatsapp);
+    color: #0d1f13;
   }
 
-  .boton-whatsapp svg {
-    width: 22px;
-    height: 22px;
-    flex-shrink: 0;
+  .btn-whatsapp:hover { background: var(--whatsapp-dark); }
+  .btn svg { width: 18px; height: 18px; }
+
+  /* ---------- Categorías destacadas ---------- */
+
+  .seccion-categorias {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 24px 70px;
   }
 
-  .numero {
-    margin-top: 14px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.85rem;
+  .seccion-titulo {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    margin: 0 0 4px;
+    text-align: center;
+  }
+
+  .seccion-subtitulo {
+    text-align: center;
     color: var(--ash-muted);
+    font-size: 0.9rem;
+    margin: 0 0 32px;
   }
+
+  .grilla-categorias {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  .tarjeta-categoria {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+  }
+
+  .tarjeta-categoria:hover {
+    border-color: rgba(255, 176, 32, 0.4);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+  }
+
+  .tarjeta-categoria .nombre {
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.3;
+  }
+
+  .tarjeta-categoria .cantidad {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ember-soft);
+  }
+
+  .estado-categorias {
+    text-align: center;
+    color: var(--ash-muted);
+    font-size: 0.85rem;
+    padding: 30px 0;
+  }
+
+  .ver-todo {
+    display: block;
+    text-align: center;
+    margin-top: 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ember-soft);
+  }
+
+  .ver-todo:hover { text-decoration: underline; }
+
+  /* ---------- Footer ---------- */
 
   footer {
-    margin-top: 36px;
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid var(--line);
     font-size: 0.8rem;
     color: rgba(183, 169, 155, 0.6);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .marca-chispa { animation: none; }
+    .chispa { animation: none; }
   }
 </style>
 </head>
 <body>
 
-  <div class="contenedor">
-
-    <div class="marca">
-      <span class="marca-chispa"></span>
-      <span class="marca-texto">Fenix Import Perú</span>
+  <header>
+    <div class="marca-fila">
+      <span class="chispa"></span>
+      <span class="marca-nombre">Fenix Import Perú</span>
     </div>
+    <nav>
+      <a class="link-catalogo" href="catalogo.html">Catálogo</a>
+      <a class="btn-nav-whatsapp" href="#" id="nav-whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+      </a>
+    </nav>
+  </header>
 
-    <p class="eyebrow">Tienda en línea · en construcción</p>
-
-    <h1>Estamos<br>reencendiendo<br>la tienda.</h1>
-
+  <section class="hero">
+    <p class="eyebrow">Tecnología · Iluminación · Seguridad</p>
+    <h1>Todo lo que buscas,<br>a un mensaje de distancia.</h1>
     <p class="sub">
-      Preparamos un catálogo con <strong>más de 2000 productos</strong> de
-      tecnología, iluminación y seguridad. Mientras lo terminamos,
-      escríbenos directo y te ayudamos con lo que buscas.
+      Más de <strong>2000 productos</strong> en catálogo. Compara, cotiza y
+      cierra tu compra directo por WhatsApp con uno de nuestros asesores.
     </p>
-
-    <div class="tarjeta">
-      <p class="tarjeta-titulo">Habla con nosotros ahora mismo</p>
-
-      <a
-        class="boton-whatsapp"
-        id="btn-whatsapp"
-        href="#"
-        target="_blank"
-        rel="noopener"
-      >
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/>
-        </svg>
+    <div class="hero-botones">
+      <a class="btn btn-principal" href="catalogo.html">
+        Ver catálogo completo
+      </a>
+      <a class="btn btn-whatsapp" href="#" id="hero-whatsapp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
         Escríbenos por WhatsApp
       </a>
-
-      <p class="numero">+51 978 821 080</p>
     </div>
+  </section>
 
-    <footer>Fenix Import Perú &middot; Tecnología, iluminación y seguridad</footer>
+  <section class="seccion-categorias">
+    <h2 class="seccion-titulo">Explora por categoría</h2>
+    <p class="seccion-subtitulo">Elige un rubro y llega directo a esos productos</p>
 
-  </div>
+    <div id="estado-categorias" class="estado-categorias">Cargando categorías...</div>
+    <div class="grilla-categorias" id="grilla-categorias"></div>
+
+    <a class="ver-todo" href="catalogo.html">Ver catálogo completo →</a>
+  </section>
+
+  <footer>
+    Fenix Import Perú &middot; Tecnología, iluminación y seguridad
+  </footer>
 
   <script>
-    const numero = "51978821080";
-    const mensaje = "¡Hola Fenix Import Perú!\nEntré a la web en construcción, me interesa un producto de su catálogo que vi.\n¿Me brinda mayor información por favor?";
-    const url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensaje);
-    document.getElementById("btn-whatsapp").href = url;
+    const API_URL = "https://script.google.com/macros/s/AKfycbwBmG6hJaBkFruMpIvl6yfubNjh46IODaW5jY2FOiMcoSjYvktVoEcO6kZoY8CdXF8uuA/exec";
+    const NUMERO_WHATSAPP = "51978821080";
+
+    const mensajeWhatsApp = "¡Hola Fenix Import Perú!\nMe gustaría más información sobre sus productos.";
+    const urlWhatsApp = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensajeWhatsApp);
+    document.getElementById("nav-whatsapp").href = urlWhatsApp;
+    document.getElementById("hero-whatsapp").href = urlWhatsApp;
+
+    function cargarViaJSONP(url) {
+      return new Promise((resolve, reject) => {
+        const nombreCallback = "callback_home_" + Date.now();
+
+        window[nombreCallback] = function(datos) {
+          limpiar();
+          resolve(datos);
+        };
+
+        const script = document.createElement("script");
+        script.src = url + (url.includes("?") ? "&" : "?") + "callback=" + nombreCallback;
+
+        script.onerror = () => {
+          limpiar();
+          reject(new Error("No se pudo conectar."));
+        };
+
+        const temporizador = setTimeout(() => {
+          limpiar();
+          reject(new Error("Tiempo de espera agotado."));
+        }, 15000);
+
+        function limpiar() {
+          clearTimeout(temporizador);
+          delete window[nombreCallback];
+          script.remove();
+        }
+
+        document.body.appendChild(script);
+      });
+    }
+
+    async function cargarCategorias() {
+      const elEstado = document.getElementById("estado-categorias");
+      const elGrilla = document.getElementById("grilla-categorias");
+
+      try {
+        const datos = await cargarViaJSONP(API_URL + "?modo=categorias");
+
+        if (datos.error || !datos.categorias || datos.categorias.length === 0) {
+          throw new Error(datos.error || "Sin categorías");
+        }
+
+        elEstado.style.display = "none";
+
+        elGrilla.innerHTML = datos.categorias.map(cat => `
+          <a class="tarjeta-categoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}">
+            <span class="nombre">${cat.nombre}</span>
+            <span class="cantidad">${cat.cantidad} producto${cat.cantidad === 1 ? "" : "s"}</span>
+          </a>
+        `).join("");
+
+      } catch (error) {
+        elEstado.textContent = "No se pudieron cargar las categorías. Puedes ir directo al catálogo completo.";
+        console.error(error);
+      }
+    }
+
+    cargarCategorias();
   </script>
 
 </body>
