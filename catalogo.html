@@ -473,15 +473,41 @@
       });
     }
 
-    async function cargarCatalogo() {
-      try {
-        const respuesta = await fetch(API_URL);
+    function cargarViaJSONP(url) {
+      return new Promise((resolve, reject) => {
+        const nombreCallback = "callback_catalogo_" + Date.now();
 
-        if (!respuesta.ok) {
-          throw new Error("El servidor respondió con un error (" + respuesta.status + ")");
+        window[nombreCallback] = function(datos) {
+          limpiar();
+          resolve(datos);
+        };
+
+        const script = document.createElement("script");
+        script.src = url + (url.includes("?") ? "&" : "?") + "callback=" + nombreCallback;
+
+        script.onerror = () => {
+          limpiar();
+          reject(new Error("No se pudo conectar con el servidor del catálogo."));
+        };
+
+        const temporizador = setTimeout(() => {
+          limpiar();
+          reject(new Error("El catálogo tardó demasiado en responder."));
+        }, 15000);
+
+        function limpiar() {
+          clearTimeout(temporizador);
+          delete window[nombreCallback];
+          script.remove();
         }
 
-        const datos = await respuesta.json();
+        document.body.appendChild(script);
+      });
+    }
+
+    async function cargarCatalogo() {
+      try {
+        const datos = await cargarViaJSONP(API_URL);
 
         if (datos.error) {
           throw new Error(datos.error);
