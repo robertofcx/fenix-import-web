@@ -615,13 +615,14 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbzfMcCO40eX1IZtj1ta3tOoRRHZe4mHE5nJPtM-EJGO8jIpT4loCYwOEKPu5JW3psbDew/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz1BoYvznEod-IT0tdPBT-4NqnGKKQkoOtFghi9COZ2txGmTl__zWFqCFkPTategoH05g/exec";
     const NUMERO_WHATSAPP = "51978821080";
     const LOTE = 24; // cuántos productos se pintan por tanda
 
     let todosLosProductos = [];
     let productosFiltrados = [];
     let categoriaActiva = new URLSearchParams(window.location.search).get("categoria") || "Todos";
+    let subcategoriaActiva = new URLSearchParams(window.location.search).get("subcategoria") || null;
     let cantidadMostrada = 0;
 
     const elEstadoCarga = document.getElementById("estado-carga");
@@ -710,6 +711,7 @@
 
       productosFiltrados = todosLosProductos.filter(p => {
         const coincideCategoria = categoriaActiva === "Todos" || p.categoria === categoriaActiva;
+        const coincideSubcategoria = !subcategoriaActiva || p.subcategoria === subcategoriaActiva;
         const coincideTexto = !texto
           || p.nombre.toLowerCase().includes(texto)
           || (p.sku && p.sku.toLowerCase().includes(texto));
@@ -719,7 +721,7 @@
         const coincidePrecioMax = precioMax === null || precio <= precioMax;
         const coincideOferta = !soloOfertas || p.oferta;
 
-        return coincideCategoria && coincideTexto && coincidePrecioMin && coincidePrecioMax && coincideOferta;
+        return coincideCategoria && coincideSubcategoria && coincideTexto && coincidePrecioMin && coincidePrecioMax && coincideOferta;
       });
 
       elGrilla.innerHTML = "";
@@ -922,6 +924,7 @@
       elPrecioMax.value = "";
       elSoloOfertas.checked = false;
       categoriaActiva = "Todos";
+      subcategoriaActiva = null;
       elCategorias.querySelectorAll(".chip").forEach(c => c.classList.remove("activo"));
       elCategorias.querySelector('.chip[data-cat="Todos"]')?.classList.add("activo");
       aplicarFiltros();

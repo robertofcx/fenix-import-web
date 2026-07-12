@@ -248,18 +248,83 @@
 
   .drawer-link:hover { background: var(--bg-elevada-hover); }
 
-  .drawer-categoria {
+  /* ---------- Acordeón de categorías (estilo Falabella) ---------- */
+
+  .drawer-item { border-bottom: 1px solid var(--linea); }
+  .drawer-item:last-child { border-bottom: none; }
+
+  .drawer-categoria-fila {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 9px 10px;
-    border-radius: 8px;
-    font-size: 0.86rem;
-    color: var(--texto-muted);
+    gap: 8px;
+    padding: 13px 10px;
+    background: none;
+    border: none;
+    color: var(--texto);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
   }
 
-  .drawer-categoria:hover { background: var(--bg-elevada-hover); color: var(--texto); }
-  .drawer-categoria .n { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; }
+  .drawer-categoria-fila:hover { color: var(--azul); }
+
+  .drawer-categoria-fila .cantidad {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem;
+    color: var(--texto-muted);
+    margin-right: auto;
+    margin-left: 8px;
+  }
+
+  .drawer-categoria-fila .chevron {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    color: var(--texto-muted);
+    transition: transform 0.2s ease;
+  }
+
+  .drawer-item.abierto .drawer-categoria-fila .chevron { transform: rotate(90deg); }
+  .drawer-item.abierto .drawer-categoria-fila { color: var(--azul); }
+
+  .drawer-subcategorias {
+    display: none;
+    flex-direction: column;
+    padding: 0 10px 10px 18px;
+  }
+
+  .drawer-item.abierto .drawer-subcategorias { display: flex; }
+
+  .drawer-subcategoria {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.82rem;
+    color: var(--texto-muted);
+    border-left: 2px solid var(--linea);
+    padding-left: 12px;
+  }
+
+  .drawer-subcategoria:hover { color: var(--ember); }
+
+  .drawer-subcategoria .n { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; }
+
+  .drawer-categoria-sola {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--texto);
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .drawer-categoria-sola:hover { color: var(--azul); }
+  .drawer-categoria-sola .cantidad { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; color: var(--texto-muted); }
 
   .drawer-redes {
     display: flex;
@@ -1023,7 +1088,7 @@
   </a>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbzfMcCO40eX1IZtj1ta3tOoRRHZe4mHE5nJPtM-EJGO8jIpT4loCYwOEKPu5JW3psbDew/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz1BoYvznEod-IT0tdPBT-4NqnGKKQkoOtFghi9COZ2txGmTl__zWFqCFkPTategoH05g/exec";
     const NUMERO_WHATSAPP = "51978821080";
 
     document.getElementById("anio").textContent = new Date().getFullYear();
@@ -1129,11 +1194,47 @@
           </a>
         `).join("");
 
-        elDrawerCategorias.innerHTML = datos.categorias.map(cat => `
-          <a class="drawer-categoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}">
-            ${cat.nombre} <span class="n">${cat.cantidad}</span>
-          </a>
-        `).join("");
+        elDrawerCategorias.innerHTML = datos.categorias.map((cat, indice) => {
+          const tieneSubcategorias = cat.subcategorias && cat.subcategorias.length > 0;
+
+          if (!tieneSubcategorias) {
+            return `
+              <a class="drawer-categoria-sola" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}">
+                <span>${cat.nombre}</span>
+                <span class="cantidad">${cat.cantidad}</span>
+              </a>
+            `;
+          }
+
+          const subcategoriasHtml = cat.subcategorias.map(sub => `
+            <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}&subcategoria=${encodeURIComponent(sub.nombre)}">
+              <span>${sub.nombre}</span>
+              <span class="n">${sub.cantidad}</span>
+            </a>
+          `).join("");
+
+          return `
+            <div class="drawer-item" id="drawer-item-${indice}">
+              <button class="drawer-categoria-fila" data-indice="${indice}">
+                <span>${cat.nombre}</span>
+                <span class="cantidad">${cat.cantidad}</span>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="drawer-subcategorias">
+                <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}" style="font-weight:600; color:var(--texto);">
+                  <span>Ver todo en ${cat.nombre}</span>
+                </a>
+                ${subcategoriasHtml}
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        elDrawerCategorias.querySelectorAll(".drawer-categoria-fila").forEach(boton => {
+          boton.addEventListener("click", () => {
+            document.getElementById("drawer-item-" + boton.dataset.indice).classList.toggle("abierto");
+          });
+        });
 
       } catch (error) {
         elEstado.textContent = "No se pudieron cargar las categorías. Puedes ir directo al catálogo completo.";
