@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finalizar pedido — Fenix Import Perú</title>
+<meta name="description" content="Completa tus datos para finalizar tu pedido con Fenix Import Perú.">
+<link rel="icon" href="logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-elevada: #f5f6fb;
+    --bg-elevada-hover: #ebedf7;
+    --texto: #14152b;
+    --texto-muted: #5c5e78;
+    --linea: rgba(30, 33, 166, 0.12);
+    --azul: #1E21A6;
+    --azul-hover: #15187e;
+    --ember: #F7941E;
+    --ember-hover: #dd8210;
+    --texto-sobre-azul: #ffffff;
+    --texto-sobre-ember: #241300;
+    --whatsapp: #25d366;
+    --whatsapp-dark: #1ea952;
+    --sombra: rgba(20, 21, 43, 0.14);
+    --error: #d92d20;
+  }
+
+  html[data-tema="oscuro"] {
+    --bg: #0b0c1e;
+    --bg-elevada: #14152c;
+    --bg-elevada-hover: #1c1e3d;
+    --texto: #f1f1fa;
+    --texto-muted: #9294b8;
+    --linea: rgba(130, 140, 255, 0.18);
+    --azul: #4d52e0;
+    --azul-hover: #6266e0;
+    --ember: #ffab3d;
+    --ember-hover: #ffbd66;
+    --texto-sobre-azul: #ffffff;
+    --texto-sobre-ember: #1a0f00;
+    --sombra: rgba(0, 0, 0, 0.5);
+    --error: #f97066;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--texto);
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; }
+
+  /* ---------- Header ---------- */
+
+  header {
+    position: sticky; top: 0; z-index: 30;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--linea);
+  }
+  html[data-tema="oscuro"] header { background: rgba(11, 12, 30, 0.92); }
+
+  .header-fila {
+    padding: 12px 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+
+  .logo-chip {
+    background: #ffffff; padding: 6px 12px; border-radius: 10px;
+    display: flex; align-items: center;
+  }
+  .logo-chip img { height: 30px; width: auto; display: block; }
+
+  .header-derecha { display: flex; align-items: center; gap: 8px; }
+
+  .btn-tema, .btn-carrito {
+    position: relative;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--bg-elevada); border: 1px solid var(--linea); color: var(--texto);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;
+  }
+  .btn-tema svg, .btn-carrito svg { width: 19px; height: 19px; }
+  .icono-luna { display: none; }
+  html[data-tema="claro"] .icono-sol { display: none; }
+  html[data-tema="claro"] .icono-luna { display: block; }
+
+  .badge-carrito {
+    position: absolute; top: -4px; right: -4px;
+    min-width: 18px; height: 18px; padding: 0 4px; border-radius: 999px;
+    background: var(--ember); color: var(--texto-sobre-ember);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .btn-nav-whatsapp {
+    display: flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%; background: var(--whatsapp); flex-shrink: 0;
+  }
+  .btn-nav-whatsapp svg { width: 19px; height: 19px; fill: #0d1f13; }
+
+  /* ---------- Breadcrumb + título ---------- */
+
+  .barra-titulo { max-width: 1100px; margin: 0 auto; padding: 18px 20px 0; }
+
+  .breadcrumb { font-size: 0.8rem; color: var(--texto-muted); margin-bottom: 6px; }
+  .breadcrumb a:hover { color: var(--azul); }
+  .breadcrumb .sep { opacity: 0.5; margin: 0 4px; }
+  .breadcrumb .actual { color: var(--texto); font-weight: 500; }
+
+  .titulo-pagina {
+    font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 1.7rem; margin: 0 0 20px;
+  }
+
+  /* ---------- Layout principal ---------- */
+
+  main {
+    max-width: 1100px; margin: 0 auto; padding: 0 20px 60px;
+    display: grid; grid-template-columns: 1fr; gap: 28px;
+  }
+
+  @media (min-width: 900px) {
+    main { grid-template-columns: 1fr 380px; align-items: start; }
+  }
+
+  /* ---------- Secciones del formulario ---------- */
+
+  .seccion-form {
+    background: var(--bg-elevada);
+    border: 1px solid var(--linea);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .seccion-form-titulo {
+    font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 1.05rem;
+    margin: 0 0 4px;
+  }
+  .seccion-form-subtitulo { font-size: 0.8rem; color: var(--texto-muted); margin: 0 0 16px; }
+
+  .campo { margin-bottom: 14px; }
+  .campo:last-child { margin-bottom: 0; }
+
+  .campo label {
+    display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 6px;
+  }
+  .campo label .opcional { font-weight: 400; color: var(--texto-muted); text-transform: none; }
+
+  .campo input[type="text"],
+  .campo input[type="tel"],
+  .campo select,
+  .campo textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--linea);
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--texto);
+  }
+  .campo input:focus, .campo select:focus, .campo textarea:focus {
+    outline: none; border-color: var(--azul);
+  }
+  .campo textarea { resize: vertical; min-height: 70px; }
+
+  .campo-error {
+    display: none;
+    font-size: 0.76rem;
+    color: var(--error);
+    margin-top: 5px;
+  }
+  .campo.con-error input,
+  .campo.con-error select { border-color: var(--error); }
+  .campo.con-error .campo-error { display: block; }
+
+  .fila-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .fila-2 { grid-template-columns: 1fr; } }
+
+  .opciones-comprobante { display: flex; flex-direction: column; gap: 8px; }
+
+  .opcion-radio {
+    display: flex; align-items: flex-start; gap: 10px;
+    border: 1px solid var(--linea);
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+  }
+  .opcion-radio:has(input:checked) { border-color: var(--azul); background: var(--bg); }
+  .opcion-radio input { margin-top: 3px; accent-color: var(--azul); }
+  .opcion-radio-texto strong { display: block; font-size: 0.88rem; }
+  .opcion-radio-texto span { font-size: 0.78rem; color: var(--texto-muted); }
+
+  .btn-gps {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    width: 100%;
+    background: var(--bg);
+    border: 1px dashed var(--linea);
+    border-radius: 10px;
+    padding: 11px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--azul);
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  .btn-gps svg { width: 16px; height: 16px; }
+  .btn-gps.capturado { border-style: solid; border-color: var(--whatsapp); color: var(--whatsapp-dark); }
+
+  .contacto-bloque {
+    border-top: 1px solid var(--linea);
+    padding-top: 14px;
+    margin-top: 14px;
+  }
+  .contacto-bloque:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+  .contacto-bloque-titulo {
+    font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--texto-muted); margin: 0 0 10px;
+  }
+
+  /* ---------- Resumen (sticky) ---------- */
+
+  .resumen {
+    background: var(--bg-elevada);
+    border: 1px solid var(--linea);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  @media (min-width: 900px) {
+    .resumen { position: sticky; top: 90px; }
+  }
+
+  .resumen-titulo {
+    font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 1.1rem; margin: 0 0 14px;
+  }
+
+  .resumen-item {
+    display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--linea);
+  }
+  .resumen-item:last-of-type { border-bottom: none; }
+
+  .resumen-item-img {
+    width: 44px; height: 44px; flex-shrink: 0; border-radius: 8px;
+    background: var(--bg); display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .resumen-item-img img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+
+  .resumen-item-info { flex: 1; min-width: 0; }
+  .resumen-item-nombre {
+    font-size: 0.78rem; font-weight: 500; margin: 0 0 2px;
+    display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .resumen-item-meta { font-size: 0.74rem; color: var(--texto-muted); font-family: 'IBM Plex Mono', monospace; }
+  .resumen-item-subtotal { font-size: 0.82rem; font-weight: 700; white-space: nowrap; }
+
+  .resumen-linea {
+    display: flex; justify-content: space-between; font-size: 0.85rem;
+    padding: 6px 0; color: var(--texto-muted);
+  }
+  .resumen-linea.destacada { color: var(--texto); font-weight: 600; }
+  .resumen-linea .valor-cotizar { color: var(--ember); font-weight: 600; font-size: 0.78rem; }
+
+  .resumen-total {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--linea);
+    font-family: 'Big Shoulders Display', sans-serif;
+  }
+  .resumen-total span:first-child { font-size: 0.85rem; font-weight: 600; color: var(--texto-muted); font-family: 'Inter', sans-serif; }
+  .resumen-total span:last-child { font-size: 1.6rem; font-weight: 800; color: var(--texto); }
+
+  .btn-enviar-checkout {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; background: var(--whatsapp); color: #0d1f13; border: none;
+    font-weight: 700; font-size: 0.98rem; padding: 15px; border-radius: 12px; cursor: pointer;
+    margin-top: 16px;
+  }
+  .btn-enviar-checkout:hover { background: var(--whatsapp-dark); }
+  .btn-enviar-checkout svg { width: 19px; height: 19px; }
+
+  .nota-checkout {
+    font-size: 0.74rem; color: var(--texto-muted); text-align: center; margin: 10px 0 0;
+  }
+
+  .estado-vacio {
+    text-align: center;
+    padding: 70px 20px;
+    color: var(--texto-muted);
+  }
+  .estado-vacio .icono { font-size: 2rem; margin-bottom: 12px; }
+  .estado-vacio a { color: var(--azul); font-weight: 600; }
+
+  footer { background: var(--bg-elevada); border-top: 1px solid var(--linea); padding: 30px 24px; margin-top: 20px; }
+  .footer-abajo { max-width: 1100px; margin: 0 auto; text-align: center; font-size: 0.78rem; color: var(--texto-muted); }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="header-fila">
+      <a class="logo-chip" href="index.html"><img src="logo.webp" alt="Fenix Import Perú"></a>
+      <div class="header-derecha">
+        <button class="btn-tema" id="btn-tema" aria-label="Cambiar tema">
+          <svg class="icono-sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icono-luna" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="btn-carrito" id="btn-abrir-carrito" aria-label="Ver carrito">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"/><circle cx="19" cy="21" r="1.5"/><path d="M2.5 3h2l2.6 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
+          <span class="badge-carrito" id="badge-carrito" style="display:none;">0</span>
+        </button>
+        <a class="btn-nav-whatsapp" href="#" id="nav-whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="barra-titulo">
+    <p class="breadcrumb">
+      <a href="index.html">Inicio</a> <span class="sep">›</span>
+      <a href="catalogo.html">Catálogo</a> <span class="sep">›</span>
+      <span class="actual">Finalizar pedido</span>
+    </p>
+    <h1 class="titulo-pagina">Finalizar pedido</h1>
+  </div>
+
+  <main id="main-contenido">
+    <!-- Se llena con JS: o el formulario, o el estado vacío -->
+  </main>
+
+  <footer>
+    <div class="footer-abajo">© <span id="anio"></span> Fenix Import Perú &middot; Tecnología, iluminación y seguridad</div>
+  </footer>
+
+<script>
+  const NUMERO_WHATSAPP = "51978821080";
+  const URL_SITIO = "https://fenix-import-peru.onrender.com";
+  const CARRITO_KEY = "fenix_carrito";
+
+  document.getElementById("anio").textContent = new Date().getFullYear();
+
+  const mensajeGenerico = "¡Hola Fenix Import Perú!\nMe gustaría más información sobre sus productos.";
+  document.getElementById("nav-whatsapp").href = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensajeGenerico);
+
+  // ---------- Tema oscuro / claro ----------
+  const raiz = document.documentElement;
+  function aplicarTema(tema) { raiz.setAttribute("data-tema", tema); localStorage.setItem("fenix-tema", tema); }
+  aplicarTema(localStorage.getItem("fenix-tema") || "claro");
+  document.getElementById("btn-tema").addEventListener("click", () => {
+    aplicarTema(raiz.getAttribute("data-tema") === "claro" ? "oscuro" : "claro");
+  });
+
+  // ---------- Carrito (lectura) ----------
+  function obtenerCarrito() {
+    try { return JSON.parse(localStorage.getItem(CARRITO_KEY)) || []; }
+    catch (e) { return []; }
+  }
+
+  function actualizarBadgeCarrito() {
+    const carrito = obtenerCarrito();
+    const total = carrito.reduce((s, i) => s + i.cantidad, 0);
+    const elBadge = document.getElementById("badge-carrito");
+    if (total > 0) { elBadge.textContent = total; elBadge.style.display = "flex"; }
+    else { elBadge.style.display = "none"; }
+  }
+
+  document.getElementById("btn-abrir-carrito").addEventListener("click", () => {
+    window.location.href = "catalogo.html";
+  });
+
+  function extraerPrecioNumerico(precio) {
+    return Number(String(precio).replace(/[^0-9.]/g, "")) || 0;
+  }
+
+  // ---------- Estado ----------
+  let productosCatalogo = [];
+  let distritos = [];
+  let ubicacionGps = null;
+
+  function mostrarVacio() {
+    document.getElementById("main-contenido").innerHTML = `
+      <div class="estado-vacio" style="grid-column: 1 / -1;">
+        <div class="icono">🛒</div>
+        <p>Tu pedido está vacío.</p>
+        <a href="catalogo.html">Ver catálogo →</a>
+      </div>
+    `;
+  }
+
+  function renderizarFormulario() {
+    const elMain = document.getElementById("main-contenido");
+
+    elMain.innerHTML = `
+      <div>
+        <div class="seccion-form">
+          <p class="seccion-form-titulo">Tus datos</p>
+          <p class="seccion-form-subtitulo">Para saber a nombre de quién va el pedido</p>
+          <div class="campo" id="campo-nombre">
+            <label>Nombre completo</label>
+            <input type="text" id="input-nombre" placeholder="Ej. María Gómez">
+            <p class="campo-error">Ingresa tu nombre</p>
+          </div>
+        </div>
+
+        <div class="seccion-form">
+          <p class="seccion-form-titulo">Comprobante de pago</p>
+          <p class="seccion-form-subtitulo">Si necesitas factura/boleta, se agrega el IGV (18%)</p>
+          <div class="opciones-comprobante">
+            <label class="opcion-radio">
+              <input type="radio" name="comprobante" value="libre" checked>
+              <span class="opcion-radio-texto"><strong>Precio libre</strong><span>Sin comprobante, precio tal cual se muestra</span></span>
+            </label>
+            <label class="opcion-radio">
+              <input type="radio" name="comprobante" value="con_comprobante">
+              <span class="opcion-radio-texto"><strong>Con comprobante (Boleta/Factura)</strong><span>Se agrega 18% de IGV al total</span></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="seccion-form">
+          <p class="seccion-form-titulo">Entrega</p>
+          <p class="seccion-form-subtitulo">Para calcular el costo de envío y coordinar la entrega</p>
+
+          <div class="campo" id="campo-distrito">
+            <label>Distrito</label>
+            <select id="input-distrito">
+              <option value="">Selecciona tu distrito...</option>
+            </select>
+            <p class="campo-error">Selecciona tu distrito</p>
+          </div>
+
+          <div class="campo" id="campo-direccion">
+            <label>Dirección</label>
+            <input type="text" id="input-direccion" placeholder="Av./Jr./Calle, número, urbanización...">
+            <p class="campo-error">Ingresa tu dirección</p>
+          </div>
+
+          <div class="campo">
+            <label>Referencia <span class="opcional">(opcional)</span></label>
+            <input type="text" id="input-referencia" placeholder="Ej. frente al parque, casa de rejas negras...">
+          </div>
+
+          <button type="button" class="btn-gps" id="btn-gps">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+            Compartir mi ubicación GPS
+          </button>
+        </div>
+
+        <div class="seccion-form">
+          <p class="seccion-form-titulo">Contacto</p>
+          <p class="seccion-form-subtitulo">Hasta 2 — por si otra persona recibe el pedido</p>
+
+          <div class="contacto-bloque">
+            <p class="contacto-bloque-titulo">Contacto 1</p>
+            <div class="fila-2">
+              <div class="campo" id="campo-contacto1-nombre">
+                <label>Nombre</label>
+                <input type="text" id="input-contacto1-nombre" placeholder="Nombre">
+                <p class="campo-error">Requerido</p>
+              </div>
+              <div class="campo" id="campo-contacto1-telefono">
+                <label>Teléfono</label>
+                <input type="tel" id="input-contacto1-telefono" placeholder="9XXXXXXXX">
+                <p class="campo-error">Requerido</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="contacto-bloque">
+            <p class="contacto-bloque-titulo">Contacto 2 <span class="opcional" style="text-transform:none; font-weight:400;">(opcional)</span></p>
+            <div class="fila-2">
+              <div class="campo">
+                <label>Nombre</label>
+                <input type="text" id="input-contacto2-nombre" placeholder="Nombre">
+              </div>
+              <div class="campo">
+                <label>Teléfono</label>
+                <input type="tel" id="input-contacto2-telefono" placeholder="9XXXXXXXX">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seccion-form">
+          <p class="seccion-form-titulo">Notas adicionales <span class="opcional">(opcional)</span></p>
+          <div class="campo">
+            <textarea id="input-notas" placeholder="Cualquier detalle adicional para tu pedido..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="resumen">
+        <p class="resumen-titulo">Resumen del pedido</p>
+        <div id="resumen-items"></div>
+        <div class="resumen-linea"><span>Subtotal</span><span id="resumen-subtotal">S/ 0.00</span></div>
+        <div class="resumen-linea" id="linea-igv" style="display:none;"><span>IGV (18%)</span><span id="resumen-igv">S/ 0.00</span></div>
+        <div class="resumen-linea destacada"><span>Envío</span><span id="resumen-envio">Elige tu distrito</span></div>
+        <div class="resumen-total"><span>Total</span><span id="resumen-total">S/ 0.00</span></div>
+
+        <button class="btn-enviar-checkout" id="btn-enviar-checkout">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+          Enviar pedido por WhatsApp
+        </button>
+        <p class="nota-checkout">Al enviar, se abre WhatsApp con todo el detalle. La compra se confirma coordinando ahí con un asesor.</p>
+      </div>
+    `;
+
+    document.querySelectorAll('input[name="comprobante"]').forEach(r => r.addEventListener("change", actualizarResumen));
+    document.getElementById("input-distrito").addEventListener("change", actualizarResumen);
+    document.getElementById("btn-gps").addEventListener("click", capturarUbicacionGps);
+    document.getElementById("btn-enviar-checkout").addEventListener("click", intentarEnviarPedido);
+
+    poblarDistritos();
+    renderizarResumenItems();
+    actualizarResumen();
+  }
+
+  function poblarDistritos() {
+    const elSelect = document.getElementById("input-distrito");
+    distritos.forEach(d => {
+      const opt = document.createElement("option");
+      opt.value = d.nombre;
+      opt.textContent = d.nombre;
+      opt.dataset.costo = d.costo;
+      elSelect.appendChild(opt);
+    });
+  }
+
+  function renderizarResumenItems() {
+    const carrito = obtenerCarrito();
+    document.getElementById("resumen-items").innerHTML = carrito.map(item => {
+      const precioUnit = extraerPrecioNumerico(item.precio);
+      const imagenHtml = item.imagen ? `<img src="${item.imagen}" alt="${item.nombre}">` : "";
+      return `
+        <div class="resumen-item">
+          <div class="resumen-item-img">${imagenHtml}</div>
+          <div class="resumen-item-info">
+            <p class="resumen-item-nombre">${item.nombre}</p>
+            <p class="resumen-item-meta">${item.cantidad} × S/ ${precioUnit.toFixed(2)}</p>
+          </div>
+          <p class="resumen-item-subtotal">S/ ${(precioUnit * item.cantidad).toFixed(2)}</p>
+        </div>
+      `;
+    }).join("");
+  }
+
+  // Busca si algún producto del carrito requiere cotización manual (recargo "COTIZAR")
+  function buscarRecargoCotizarManual() {
+    const carrito = obtenerCarrito();
+    return carrito.some(item => {
+      const productoCompleto = productosCatalogo.find(p => p.sku === item.sku);
+      return productoCompleto && productoCompleto.recargo === "COTIZAR";
+    });
+  }
+
+  function calcularRecargoVolumen() {
+    const carrito = obtenerCarrito();
+    let total = 0;
+    carrito.forEach(item => {
+      const productoCompleto = productosCatalogo.find(p => p.sku === item.sku);
+      if (productoCompleto && typeof productoCompleto.recargo === "number") {
+        total += productoCompleto.recargo * item.cantidad;
+      }
+    });
+    return total;
+  }
+
+  function actualizarResumen() {
+    const carrito = obtenerCarrito();
+    const subtotal = carrito.reduce((s, i) => s + extraerPrecioNumerico(i.precio) * i.cantidad, 0);
+    const conComprobante = document.querySelector('input[name="comprobante"]:checked')?.value === "con_comprobante";
+    const igv = conComprobante ? subtotal * 0.18 : 0;
+
+    document.getElementById("resumen-subtotal").textContent = "S/ " + subtotal.toFixed(2);
+    document.getElementById("linea-igv").style.display = conComprobante ? "flex" : "none";
+    document.getElementById("resumen-igv").textContent = "S/ " + igv.toFixed(2);
+
+    const elDistrito = document.getElementById("input-distrito");
+    const opcionSeleccionada = elDistrito.selectedOptions[0];
+    const distritoElegido = elDistrito.value;
+
+    const requiereCotizacionManual = buscarRecargoCotizarManual();
+    const elResumenEnvio = document.getElementById("resumen-envio");
+
+    let envio = 0;
+
+    if (requiereCotizacionManual) {
+      elResumenEnvio.innerHTML = `<span class="valor-cotizar">A cotizar</span>`;
+    } else if (!distritoElegido) {
+      elResumenEnvio.textContent = "Elige tu distrito";
+    } else {
+      const costoDistrito = Number(opcionSeleccionada.dataset.costo) || 0;
+      const recargoVolumen = calcularRecargoVolumen();
+      envio = costoDistrito + recargoVolumen;
+      elResumenEnvio.textContent = "S/ " + envio.toFixed(2);
+    }
+
+    const total = subtotal + igv + (requiereCotizacionManual ? 0 : envio);
+    document.getElementById("resumen-total").textContent = "S/ " + total.toFixed(2) + (requiereCotizacionManual ? " + envío" : "");
+  }
+
+  function capturarUbicacionGps() {
+    const elBtn = document.getElementById("btn-gps");
+
+    if (!navigator.geolocation) {
+      alert("Tu navegador no permite compartir ubicación. Puedes escribir la referencia manualmente.");
+      return;
+    }
+
+    elBtn.textContent = "Obteniendo ubicación...";
+
+    navigator.geolocation.getCurrentPosition(
+      (posicion) => {
+        ubicacionGps = `https://maps.google.com/?q=${posicion.coords.latitude},${posicion.coords.longitude}`;
+        elBtn.innerHTML = `✓ Ubicación capturada`;
+        elBtn.classList.add("capturado");
+      },
+      () => {
+        elBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg> Compartir mi ubicación GPS`;
+        alert("No pudimos obtener tu ubicación. Puedes escribir la referencia manualmente, o intentar de nuevo.");
+      }
+    );
+  }
+
+  function marcarError(idCampo, tieneError) {
+    document.getElementById(idCampo).classList.toggle("con-error", tieneError);
+  }
+
+  function validarFormulario() {
+    let valido = true;
+
+    const nombre = document.getElementById("input-nombre").value.trim();
+    marcarError("campo-nombre", !nombre);
+    if (!nombre) valido = false;
+
+    const distrito = document.getElementById("input-distrito").value;
+    marcarError("campo-distrito", !distrito);
+    if (!distrito) valido = false;
+
+    const direccion = document.getElementById("input-direccion").value.trim();
+    marcarError("campo-direccion", !direccion);
+    if (!direccion) valido = false;
+
+    const contacto1Nombre = document.getElementById("input-contacto1-nombre").value.trim();
+    marcarError("campo-contacto1-nombre", !contacto1Nombre);
+    if (!contacto1Nombre) valido = false;
+
+    const contacto1Telefono = document.getElementById("input-contacto1-telefono").value.trim();
+    marcarError("campo-contacto1-telefono", !contacto1Telefono);
+    if (!contacto1Telefono) valido = false;
+
+    return valido;
+  }
+
+  function intentarEnviarPedido() {
+    if (!validarFormulario()) {
+      document.querySelector(".con-error")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    const carrito = obtenerCarrito();
+    const nombre = document.getElementById("input-nombre").value.trim();
+    const conComprobante = document.querySelector('input[name="comprobante"]:checked').value === "con_comprobante";
+    const distrito = document.getElementById("input-distrito").value;
+    const direccion = document.getElementById("input-direccion").value.trim();
+    const referencia = document.getElementById("input-referencia").value.trim();
+    const contacto1Nombre = document.getElementById("input-contacto1-nombre").value.trim();
+    const contacto1Telefono = document.getElementById("input-contacto1-telefono").value.trim();
+    const contacto2Nombre = document.getElementById("input-contacto2-nombre").value.trim();
+    const contacto2Telefono = document.getElementById("input-contacto2-telefono").value.trim();
+    const notas = document.getElementById("input-notas").value.trim();
+
+    const subtotal = carrito.reduce((s, i) => s + extraerPrecioNumerico(i.precio) * i.cantidad, 0);
+    const igv = conComprobante ? subtotal * 0.18 : 0;
+    const requiereCotizacionManual = buscarRecargoCotizarManual();
+    const opcionDistrito = document.getElementById("input-distrito").selectedOptions[0];
+    const costoDistrito = Number(opcionDistrito.dataset.costo) || 0;
+    const recargoVolumen = calcularRecargoVolumen();
+    const envio = requiereCotizacionManual ? null : costoDistrito + recargoVolumen;
+    const total = subtotal + igv + (envio || 0);
+
+    let mensaje = "¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n\n";
+
+    carrito.forEach(item => {
+      const precioUnit = extraerPrecioNumerico(item.precio);
+      const link = URL_SITIO + "/producto.html?sku=" + encodeURIComponent(item.sku);
+      mensaje += `${item.nombre}\nPrecio: S/ ${precioUnit.toFixed(2)} c/u — Cantidad: ${item.cantidad}\nSKU: ${item.sku}\n${link}\n\n`;
+    });
+
+    mensaje += `Subtotal: S/ ${subtotal.toFixed(2)}\n`;
+    if (conComprobante) mensaje += `IGV (18%): S/ ${igv.toFixed(2)}\n`;
+    mensaje += envio !== null ? `Envío: S/ ${envio.toFixed(2)}\n` : `Envío: A cotizar (pedido incluye artículo grande/pesado)\n`;
+    mensaje += `Total: S/ ${total.toFixed(2)}${envio === null ? " + envío" : ""}\n\n`;
+
+    mensaje += `Datos del cliente:\n`;
+    mensaje += `Nombre: ${nombre}\n`;
+    mensaje += `Comprobante: ${conComprobante ? "Con comprobante (Boleta/Factura)" : "Precio libre, sin comprobante"}\n`;
+    mensaje += `Distrito: ${distrito}\n`;
+    mensaje += `Dirección: ${direccion}\n`;
+    if (referencia) mensaje += `Referencia: ${referencia}\n`;
+    if (ubicacionGps) mensaje += `Ubicación GPS: ${ubicacionGps}\n`;
+
+    mensaje += `\nContacto 1: ${contacto1Nombre} - ${contacto1Telefono}\n`;
+    if (contacto2Nombre || contacto2Telefono) {
+      mensaje += `Contacto 2: ${contacto2Nombre || "-"} - ${contacto2Telefono || "-"}\n`;
+    }
+
+    if (notas) mensaje += `\nNotas: ${notas}\n`;
+
+    mensaje += `\n¿Me confirman disponibilidad y coordinamos la entrega?`;
+
+    window.open("https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje), "_blank");
+  }
+
+  // ---------- Carga inicial ----------
+  async function iniciar() {
+    actualizarBadgeCarrito();
+
+    const carrito = obtenerCarrito();
+    if (carrito.length === 0) {
+      mostrarVacio();
+      return;
+    }
+
+    try {
+      const [respuestaProductos, respuestaDistritos] = await Promise.all([
+        fetch("productos.json"),
+        fetch("distritos.json")
+      ]);
+
+      const datosProductos = await respuestaProductos.json();
+      const datosDistritos = await respuestaDistritos.json();
+
+      productosCatalogo = datosProductos.productos || [];
+      distritos = datosDistritos.distritos || [];
+
+    } catch (error) {
+      console.error(error);
+    }
+
+    renderizarFormulario();
+  }
+
+  iniciar();
+</script>
+
+</body>
+</html>
