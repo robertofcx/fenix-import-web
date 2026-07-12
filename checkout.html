@@ -356,10 +356,8 @@
   const CARRITO_KEY = "fenix_carrito";
   const DIRECCION_ALMACEN = "Jirón Cajabamba 313, Independencia, Lima";
 
-  // Dataset público de departamentos/provincias/distritos del Perú (verificado, de uso libre)
-  const URL_REGIONES = "https://raw.githubusercontent.com/ernestorivero/Ubigeo-Peru/master/regions.json";
-  const URL_PROVINCIAS = "https://raw.githubusercontent.com/ernestorivero/Ubigeo-Peru/master/provinces.json";
-  const URL_DISTRITOS_PERU = "https://raw.githubusercontent.com/ernestorivero/Ubigeo-Peru/master/districts.json";
+  // Ubigeo propio (Departamento → Provincia → Distrito), publicado desde tu Sheet
+  const URL_UBIGEO = "ubigeo.json";
 
   document.getElementById("anio").textContent = new Date().getFullYear();
 
@@ -403,10 +401,8 @@
   let mapaLeaflet = null;
   let marcadorMapa = null;
 
-  // Ubigeo Perú (para envíos a provincia) — se cargan solo si el cliente elige esa opción
-  let regionesPeru = [];
-  let provinciasPeru = [];
-  let distritosPeru = [];
+  // Ubigeo Perú (para envíos a provincia) — se carga solo si el cliente elige esa opción
+  let ubigeo = {};
   let ubigeoCargado = false;
 
   function mostrarVacio() {
@@ -739,33 +735,19 @@
     }, 900);
   }
 
-  // ---------- Ubigeo (departamentos / provincias / distritos reales del Perú) ----------
-
-  function detectarCampo(obj, patrones) {
-    const claves = Object.keys(obj);
-    for (const patron of patrones) {
-      const encontrada = claves.find(k => new RegExp(patron, "i").test(k));
-      if (encontrada) return encontrada;
-    }
-    return claves[0];
-  }
+  // ---------- Ubigeo (departamentos / provincias / distritos reales, desde tu Sheet) ----------
 
   async function cargarUbigeoPeru() {
     const elDepartamento = document.getElementById("input-departamento");
     try {
-      const [rRegiones, rProvincias, rDistritos] = await Promise.all([
-        fetch(URL_REGIONES), fetch(URL_PROVINCIAS), fetch(URL_DISTRITOS_PERU)
-      ]);
-      regionesPeru = await rRegiones.json();
-      provinciasPeru = await rProvincias.json();
-      distritosPeru = await rDistritos.json();
+      const respuesta = await fetch(URL_UBIGEO);
+      ubigeo = await respuesta.json();
       ubigeoCargado = true;
 
-      const campoIdRegion = detectarCampo(regionesPeru[0], ["^id$"]);
-      const campoNombreRegion = detectarCampo(regionesPeru[0], ["nombre", "name"]);
+      const departamentos = Object.keys(ubigeo).sort();
 
       elDepartamento.innerHTML = '<option value="">Selecciona tu departamento...</option>' +
-        regionesPeru.map(r => `<option value="${r[campoIdRegion]}">${r[campoNombreRegion]}</option>`).join("");
+        departamentos.map(dep => `<option value="${dep}">${dep}</option>`).join("");
 
     } catch (error) {
       elDepartamento.innerHTML = '<option value="">No se pudo cargar la lista</option>';
@@ -774,53 +756,46 @@
   }
 
   function alCambiarDepartamento() {
-    const idRegion = document.getElementById("input-departamento").value;
+    const departamento = document.getElementById("input-departamento").value;
     const elProvincia = document.getElementById("input-provincia");
     const elDistrito = document.getElementById("input-distrito-provincia");
 
     elDistrito.innerHTML = '<option value="">Elige una provincia primero</option>';
     elDistrito.disabled = true;
 
-    if (!idRegion) {
+    if (!departamento || !ubigeo[departamento]) {
       elProvincia.innerHTML = '<option value="">Elige un departamento primero</option>';
       elProvincia.disabled = true;
       actualizarResumen();
       return;
     }
 
-    const campoIdProvincia = detectarCampo(provinciasPeru[0], ["^id$"]);
-    const campoNombreProvincia = detectarCampo(provinciasPeru[0], ["nombre", "name"]);
-    const campoPadreProvincia = detectarCampo(provinciasPeru[0], ["region", "department"]);
-
-    const provinciasFiltradas = provinciasPeru.filter(p => String(p[campoPadreProvincia]) === String(idRegion));
+    const provincias = Object.keys(ubigeo[departamento]).sort();
 
     elProvincia.disabled = false;
     elProvincia.innerHTML = '<option value="">Selecciona tu provincia...</option>' +
-      provinciasFiltradas.map(p => `<option value="${p[campoIdProvincia]}">${p[campoNombreProvincia]}</option>`).join("");
+      provincias.map(prov => `<option value="${prov}">${prov}</option>`).join("");
 
     actualizarResumen();
   }
 
   function alCambiarProvincia() {
-    const idProvincia = document.getElementById("input-provincia").value;
+    const departamento = document.getElementById("input-departamento").value;
+    const provincia = document.getElementById("input-provincia").value;
     const elDistrito = document.getElementById("input-distrito-provincia");
 
-    if (!idProvincia) {
+    if (!provincia || !ubigeo[departamento] || !ubigeo[departamento][provincia]) {
       elDistrito.innerHTML = '<option value="">Elige una provincia primero</option>';
       elDistrito.disabled = true;
       actualizarResumen();
       return;
     }
 
-    const campoIdDistrito = detectarCampo(distritosPeru[0], ["^id$"]);
-    const campoNombreDistrito = detectarCampo(distritosPeru[0], ["nombre", "name"]);
-    const campoPadreDistrito = detectarCampo(distritosPeru[0], ["provinc"]);
-
-    const distritosFiltrados = distritosPeru.filter(d => String(d[campoPadreDistrito]) === String(idProvincia));
+    const distritos = [...ubigeo[departamento][provincia]].sort();
 
     elDistrito.disabled = false;
     elDistrito.innerHTML = '<option value="">Selecciona tu distrito...</option>' +
-      distritosFiltrados.map(d => `<option value="${d[campoIdDistrito]}">${d[campoNombreDistrito]}</option>`).join("");
+      distritos.map(d => `<option value="${d}">${d}</option>`).join("");
 
     actualizarResumen();
   }
