@@ -1220,6 +1220,7 @@
   <script>
     const RUTA_PRODUCTOS = "productos.json";
     const NUMERO_WHATSAPP = "51978821080";
+    const URL_SITIO = "https://fenix-import-peru.onrender.com";
     let catalogoCompleto = null;
     let fuse = null;
 
@@ -1608,11 +1609,12 @@
       const carrito = obtenerCarrito();
       if (carrito.length === 0) return;
 
-      let mensaje = "¡Hola Fenix Import Perú! Quiero hacer este pedido:\n\n";
+      let mensaje = "¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n\n";
 
       carrito.forEach(item => {
         const precioUnit = extraerPrecioNumerico(item.precio);
-        mensaje += `• ${item.nombre} (SKU: ${item.sku})\n  Cantidad: ${item.cantidad} — S/ ${(precioUnit * item.cantidad).toFixed(2)}\n\n`;
+        const link = URL_SITIO + "/producto.html?sku=" + encodeURIComponent(item.sku);
+        mensaje += `${item.nombre}\nPrecio: S/ ${precioUnit.toFixed(2)} c/u — Cantidad: ${item.cantidad}\nSKU: ${item.sku}\n${link}\n\n`;
       });
 
       const total = carrito.reduce((suma, item) => suma + extraerPrecioNumerico(item.precio) * item.cantidad, 0);

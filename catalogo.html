@@ -672,6 +672,7 @@
   <script>
     const RUTA_PRODUCTOS = "productos.json";
     const NUMERO_WHATSAPP = "51978821080";
+    const URL_SITIO = "https://fenix-import-peru.onrender.com";
     const LOTE = 24;
     let fuse = null;
 
@@ -743,7 +744,9 @@
     }
 
     function urlWhatsApp(producto) {
-      const mensaje = `¡Hola Fenix Import Perú!\nMe interesa este producto de su catálogo:\n\n${producto.nombre}\nSKU: ${producto.sku}\n\n¿Me brinda mayor información por favor?`;
+      const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+      const link = URL_SITIO + "/producto.html?sku=" + encodeURIComponent(producto.sku);
+      const mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${producto.nombre}\nPrecio: S/ ${precio}\nSKU: ${producto.sku}\n${link}`;
       return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
     }
 
@@ -1055,11 +1058,12 @@
       const carrito = obtenerCarrito();
       if (carrito.length === 0) return;
 
-      let mensaje = "¡Hola Fenix Import Perú! Quiero hacer este pedido:\n\n";
+      let mensaje = "¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n\n";
 
       carrito.forEach(item => {
         const precioUnit = extraerPrecioNumerico(item.precio);
-        mensaje += `• ${item.nombre} (SKU: ${item.sku})\n  Cantidad: ${item.cantidad} — S/ ${(precioUnit * item.cantidad).toFixed(2)}\n\n`;
+        const link = URL_SITIO + "/producto.html?sku=" + encodeURIComponent(item.sku);
+        mensaje += `${item.nombre}\nPrecio: S/ ${precioUnit.toFixed(2)} c/u — Cantidad: ${item.cantidad}\nSKU: ${item.sku}\n${link}\n\n`;
       });
 
       const total = carrito.reduce((suma, item) => suma + extraerPrecioNumerico(item.precio) * item.cantidad, 0);
