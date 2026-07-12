@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo — Fenix Import Perú</title>
-<meta name="description" content="Catálogo de productos Fenix Import Perú: tecnología, iluminación, seguridad y más.">
+<title id="titulo-pagina">Producto — Fenix Import Perú</title>
+<meta name="description" id="meta-descripcion" content="Producto de Fenix Import Perú">
 <link rel="icon" href="logo.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,9 +114,11 @@
   }
   .btn-nav-whatsapp svg { width: 19px; height: 19px; fill: #0d1f13; }
 
-  .header-buscador-fila { padding: 0 20px 12px; }
+  .header-buscador-fila {
+    padding: 0 20px 12px;
+  }
 
-  .buscador {
+  .buscador-header {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -128,13 +130,19 @@
     margin: 0 auto;
   }
 
-  .buscador svg { flex-shrink: 0; opacity: 0.55; width: 17px; height: 17px; }
+  .buscador-header svg { flex-shrink: 0; opacity: 0.55; width: 17px; height: 17px; }
 
-  .buscador input {
+  .buscador-header input {
     flex: 1; background: transparent; border: none; outline: none;
-    color: var(--texto); font-family: 'Inter', sans-serif; font-size: 0.9rem; padding: 9px 0;
+    color: var(--texto); font-family: 'Inter', sans-serif; font-size: 0.88rem; padding: 9px 0;
   }
-  .buscador input::placeholder { color: var(--texto-muted); }
+  .buscador-header input::placeholder { color: var(--texto-muted); }
+
+  .buscador-header button {
+    background: var(--azul); color: var(--texto-sobre-azul); border: none;
+    border-radius: 8px; padding: 9px 16px; font-weight: 600; font-size: 0.82rem; cursor: pointer; flex-shrink: 0;
+  }
+  .buscador-header button:hover { background: var(--azul-hover); }
 
   /* ---------- Menú lateral (drawer) ---------- */
 
@@ -203,198 +211,137 @@
   }
   .drawer-redes svg { width: 16px; height: 16px; }
 
-  /* ---------- Breadcrumb + título ---------- */
-
-  .barra-titulo {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 18px 20px 0;
-  }
+  /* ---------- Breadcrumb ---------- */
 
   .breadcrumb {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 16px 20px 0;
     font-size: 0.8rem;
     color: var(--texto-muted);
-    margin-bottom: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
   }
+
   .breadcrumb a:hover { color: var(--azul); }
-  .breadcrumb .sep { opacity: 0.5; margin: 0 4px; }
+  .breadcrumb .sep { opacity: 0.5; }
   .breadcrumb .actual { color: var(--texto); font-weight: 500; }
 
-  .titulo-catalogo {
+  /* ---------- Contenido del producto ---------- */
+
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .producto-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  @media (min-width: 760px) {
+    .producto-layout { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+
+  .producto-img {
+    background: var(--bg-elevada);
+    border: 1px solid var(--linea);
+    border-radius: 16px;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .producto-img img { width: 100%; height: 100%; object-fit: contain; padding: 24px; }
+  .producto-img .sin-foto { color: var(--texto-muted); font-size: 0.85rem; font-family: 'IBM Plex Mono', monospace; }
+
+  .badge-oferta-producto {
+    position: absolute; top: 14px; right: 14px;
+    background: var(--ember); color: var(--texto-sobre-ember);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase; padding: 6px 12px; border-radius: 8px;
+  }
+
+  .producto-categoria {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin: 0 0 8px;
+  }
+
+  .producto-nombre {
     font-family: 'Big Shoulders Display', sans-serif;
     font-weight: 800;
-    font-size: 1.6rem;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    line-height: 1.1;
     margin: 0 0 14px;
   }
 
-  /* ---------- Categorías (chips) ---------- */
-
-  .categorias {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 4px;
+  .producto-precio {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--texto);
+    margin: 0 0 16px;
   }
 
-  .categorias::-webkit-scrollbar { height: 4px; }
-  .categorias::-webkit-scrollbar-thumb { background: var(--linea); border-radius: 4px; }
+  .producto-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .producto-meta span {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--texto-muted);
+    background: var(--bg-elevada); border: 1px solid var(--linea); border-radius: 8px; padding: 6px 12px;
+  }
 
-  .chip {
-    flex-shrink: 0;
-    font-size: 0.82rem;
-    font-weight: 500;
+  .btn-whatsapp-producto {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--whatsapp); color: #0d1f13; text-decoration: none;
+    font-weight: 700; font-size: 1.02rem; padding: 16px; border-radius: 12px; margin-bottom: 10px;
+  }
+  .btn-whatsapp-producto:hover { background: var(--whatsapp-dark); }
+  .btn-whatsapp-producto svg { width: 20px; height: 20px; }
+
+  .nota-entrega {
+    font-size: 0.78rem;
     color: var(--texto-muted);
-    background: var(--bg-elevada);
-    border: 1px solid var(--linea);
-    border-radius: 999px;
-    padding: 7px 14px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    white-space: nowrap;
-  }
-
-  .chip:hover { color: var(--texto); border-color: var(--azul); }
-
-  .chip.activo {
-    background: var(--azul);
-    color: var(--texto-sobre-azul);
-    border-color: var(--azul);
-    font-weight: 600;
-  }
-
-  /* ---------- Filtros ---------- */
-
-  .filtros {
-    max-width: 1200px;
-    margin: 12px auto 0;
-    padding: 0 20px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .filtro-precio {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--bg-elevada);
-    border: 1px solid var(--linea);
-    border-radius: 10px;
-    padding: 8px 12px;
-  }
-
-  .filtro-precio span { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--texto-muted); }
-
-  .filtro-precio input[type="number"] {
-    width: 64px; background: transparent; border: none; outline: none;
-    color: var(--texto); font-family: 'Inter', sans-serif; font-size: 0.85rem;
-  }
-
-  .filtro-check {
-    display: flex; align-items: center; gap: 7px;
-    background: var(--bg-elevada); border: 1px solid var(--linea); border-radius: 10px;
-    padding: 9px 12px; cursor: pointer; font-size: 0.82rem; color: var(--texto-muted); user-select: none;
-  }
-  .filtro-check input { accent-color: var(--ember); width: 15px; height: 15px; }
-
-  .btn-limpiar-filtros {
-    background: none; border: none; color: var(--azul);
-    font-size: 0.8rem; font-weight: 600; cursor: pointer; padding: 8px 4px;
-  }
-  .btn-limpiar-filtros:hover { text-decoration: underline; }
-
-  /* ---------- Estado (carga / error / vacío) ---------- */
-
-  .estado {
-    max-width: 420px;
-    margin: 60px auto;
     text-align: center;
-    padding: 0 20px;
+    margin: 0;
   }
 
-  .estado-icono { font-size: 2rem; margin-bottom: 12px; }
-  .estado-titulo { font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 1.4rem; margin: 0 0 8px; }
-  .estado-texto { color: var(--texto-muted); font-size: 0.9rem; line-height: 1.5; }
+  .producto-secciones { margin-top: 36px; }
 
-  .spinner {
-    width: 28px; height: 28px;
-    border: 3px solid var(--linea); border-top-color: var(--azul); border-radius: 50%;
-    margin: 0 auto 16px; animation: girar 0.8s linear infinite;
-  }
-  @keyframes girar { to { transform: rotate(360deg); } }
-
-  /* ---------- Grilla de productos ---------- */
-
-  main { padding: 20px; max-width: 1200px; margin: 0 auto; }
-
-  .contador { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--texto-muted); margin: 4px 0 16px; }
-
-  .grilla {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 14px;
+  .producto-seccion-titulo {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    margin: 0 0 10px;
+    padding-top: 20px;
+    border-top: 1px solid var(--linea);
   }
 
-  .tarjeta {
-    background: var(--bg-elevada);
-    border: 1px solid var(--linea);
-    border-radius: 14px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: border-color 0.15s ease, transform 0.15s ease;
+  .producto-seccion-texto {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--texto-muted);
+    white-space: pre-line;
+    margin: 0;
   }
 
-  .tarjeta:hover { border-color: var(--azul); transform: translateY(-2px); }
-
-  .tarjeta-img {
-    aspect-ratio: 1; background: var(--bg);
-    display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
-  }
-  .tarjeta-img img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
-  .tarjeta-img .sin-foto { color: var(--texto-muted); font-size: 0.7rem; font-family: 'IBM Plex Mono', monospace; }
-
-  .badge-oferta {
-    position: absolute; top: 8px; right: 8px;
-    background: var(--ember); color: var(--texto-sobre-ember);
-    font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; font-weight: 700;
-    letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 8px; border-radius: 6px;
+  .estado-pagina {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--texto-muted);
   }
 
-  .tarjeta-body { padding: 12px; display: flex; flex-direction: column; flex: 1; }
-
-  .tarjeta-categoria {
-    font-family: 'IBM Plex Mono', monospace; font-size: 0.63rem; letter-spacing: 0.05em;
-    text-transform: uppercase; color: var(--ember); margin-bottom: 4px;
-  }
-
-  .tarjeta-nombre {
-    font-size: 0.85rem; font-weight: 500; line-height: 1.3; margin: 0 0 8px;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1;
-  }
-
-  .tarjeta-precio {
-    font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 1.25rem; color: var(--texto); margin: 0 0 10px;
-  }
-
-  .btn-consultar {
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    background: var(--whatsapp); color: #0d1f13; font-size: 0.78rem; font-weight: 600;
-    padding: 9px; border-radius: 9px; transition: background 0.15s ease;
-  }
-  .btn-consultar:hover { background: var(--whatsapp-dark); }
-  .btn-consultar svg { width: 14px; height: 14px; }
-
-  .cargar-mas {
-    display: block; margin: 28px auto 10px;
-    background: var(--bg-elevada); border: 1px solid var(--linea); color: var(--texto);
-    font-weight: 600; font-size: 0.9rem; padding: 12px 28px; border-radius: 10px; cursor: pointer;
-  }
-  .cargar-mas:hover { border-color: var(--azul); }
+  .estado-pagina .icono { font-size: 2rem; margin-bottom: 12px; }
+  .estado-pagina .titulo { font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--texto); margin: 0 0 8px; }
 
   /* ---------- Footer ---------- */
 
@@ -431,10 +378,11 @@
     </div>
 
     <div class="header-buscador-fila">
-      <div class="buscador">
+      <form class="buscador-header" id="form-buscador-header">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="input-buscar" placeholder="Buscar por nombre o código Fenix (ej. ADA_002)...">
-      </div>
+        <input type="text" id="input-buscador-header" placeholder="Busca un producto o código Fenix...">
+        <button type="submit">Buscar</button>
+      </form>
     </div>
   </header>
 
@@ -461,38 +409,17 @@
     </div>
   </nav>
 
-  <div class="barra-titulo">
-    <p class="breadcrumb" id="breadcrumb"><a href="index.html">Inicio</a> <span class="sep">›</span> <span class="actual">Catálogo</span></p>
-    <h1 class="titulo-catalogo">Catálogo</h1>
-  </div>
-
-  <div class="categorias" id="lista-categorias"></div>
-
-  <div class="filtros">
-    <div class="filtro-precio">
-      <span>S/</span>
-      <input type="number" id="input-precio-min" placeholder="Mín" min="0">
-      <span>—</span>
-      <input type="number" id="input-precio-max" placeholder="Máx" min="0">
-    </div>
-    <label class="filtro-check">
-      <input type="checkbox" id="input-solo-ofertas">
-      Solo ofertas
-    </label>
-    <button class="btn-limpiar-filtros" id="btn-limpiar-filtros">Limpiar filtros</button>
-  </div>
+  <nav class="breadcrumb" id="breadcrumb" style="display:none;">
+    <a href="index.html">Inicio</a>
+  </nav>
 
   <main>
-    <div id="estado-carga" class="estado">
-      <div class="spinner"></div>
-      <p class="estado-texto">Cargando catálogo...</p>
+    <div id="estado-carga" class="estado-pagina">
+      <div class="icono">⏳</div>
+      <p class="titulo">Cargando producto...</p>
     </div>
 
-    <div id="contenido" style="display:none;">
-      <p class="contador" id="contador"></p>
-      <div class="grilla" id="grilla"></div>
-      <button class="cargar-mas" id="btn-cargar-mas" style="display:none;">Cargar más productos</button>
-    </div>
+    <div id="contenido-producto" style="display:none;"></div>
   </main>
 
   <footer>
@@ -504,7 +431,6 @@
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbz1BoYvznEod-IT0tdPBT-4NqnGKKQkoOtFghi9COZ2txGmTl__zWFqCFkPTategoH05g/exec";
     const NUMERO_WHATSAPP = "51978821080";
-    const LOTE = 24;
 
     document.getElementById("anio").textContent = new Date().getFullYear();
 
@@ -530,180 +456,30 @@
     fondoDrawer.addEventListener("click", cerrarDrawer);
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarDrawer(); });
 
-    let todosLosProductos = [];
-    let productosFiltrados = [];
-    let categoriaActiva = new URLSearchParams(window.location.search).get("categoria") || "Todos";
-    let subcategoriaActiva = new URLSearchParams(window.location.search).get("subcategoria") || null;
-    let cantidadMostrada = 0;
+    // ---------- Buscador del header ----------
+    document.getElementById("form-buscador-header").addEventListener("submit", (evento) => {
+      evento.preventDefault();
+      const valor = document.getElementById("input-buscador-header").value.trim();
+      if (!valor) return;
+      window.location.href = "catalogo.html?buscar=" + encodeURIComponent(valor);
+    });
 
-    const elEstadoCarga = document.getElementById("estado-carga");
-    const elContenido = document.getElementById("contenido");
-    const elGrilla = document.getElementById("grilla");
-    const elContador = document.getElementById("contador");
-    const elCategorias = document.getElementById("lista-categorias");
-    const elBuscar = document.getElementById("input-buscar");
-    const elBtnCargarMas = document.getElementById("btn-cargar-mas");
-    const elPrecioMin = document.getElementById("input-precio-min");
-    const elPrecioMax = document.getElementById("input-precio-max");
-    const elSoloOfertas = document.getElementById("input-solo-ofertas");
-    const elBtnLimpiarFiltros = document.getElementById("btn-limpiar-filtros");
-    const elBreadcrumb = document.getElementById("breadcrumb");
-
-    function actualizarBreadcrumb() {
-      let html = `<a href="index.html">Inicio</a>`;
-      if (categoriaActiva !== "Todos") {
-        if (subcategoriaActiva) {
-          html += ` <span class="sep">›</span> <a href="catalogo.html?categoria=${encodeURIComponent(categoriaActiva)}">${categoriaActiva}</a>`;
-          html += ` <span class="sep">›</span> <span class="actual">${subcategoriaActiva}</span>`;
-        } else {
-          html += ` <span class="sep">›</span> <span class="actual">${categoriaActiva}</span>`;
-        }
-      } else {
-        html += ` <span class="sep">›</span> <span class="actual">Catálogo</span>`;
-      }
-      elBreadcrumb.innerHTML = html;
-    }
-
-    function mostrarError(mensaje) {
-      elEstadoCarga.innerHTML = `<div class="estado-icono">⚠️</div><p class="estado-titulo">No se pudo cargar el catálogo</p><p class="estado-texto">${mensaje}</p>`;
-    }
-
-    function mostrarVacio() {
-      elGrilla.innerHTML = `<div class="estado" style="grid-column: 1 / -1;"><div class="estado-icono">🔦</div><p class="estado-titulo">No encontramos productos</p><p class="estado-texto">Prueba con otra palabra o revisa otra categoría.</p></div>`;
-      elBtnCargarMas.style.display = "none";
-    }
-
-    function urlWhatsApp(producto) {
-      const mensaje = `¡Hola Fenix Import Perú!\nMe interesa este producto de su catálogo:\n\n${producto.nombre}\nSKU: ${producto.sku}\n\n¿Me brinda mayor información por favor?`;
-      return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
-    }
-
-    function crearTarjeta(producto) {
-      const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
-      const imagenHtml = producto.imagen
-        ? `<img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">`
-        : `<span class="sin-foto">Sin foto</span>`;
-      const badge = producto.oferta ? `<span class="badge-oferta">Oferta</span>` : "";
-
-      return `
-        <a class="tarjeta" href="producto.html?sku=${encodeURIComponent(producto.sku)}">
-          <div class="tarjeta-img">${badge}${imagenHtml}</div>
-          <div class="tarjeta-body">
-            <p class="tarjeta-categoria">${producto.categoria || ""}</p>
-            <p class="tarjeta-nombre">${producto.nombre}</p>
-            <p class="tarjeta-precio">S/ ${precio}</p>
-            <span class="btn-consultar" onclick="event.preventDefault(); window.open('${urlWhatsApp(producto)}', '_blank')">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
-              Consultar
-            </span>
-          </div>
-        </a>
-      `;
-    }
-
-    function renderizarLote() {
-      const siguienteLote = productosFiltrados.slice(cantidadMostrada, cantidadMostrada + LOTE);
-      elGrilla.insertAdjacentHTML("beforeend", siguienteLote.map(crearTarjeta).join(""));
-      cantidadMostrada += siguienteLote.length;
-      elBtnCargarMas.style.display = cantidadMostrada < productosFiltrados.length ? "block" : "none";
-      elContador.textContent = `${productosFiltrados.length} producto${productosFiltrados.length === 1 ? "" : "s"} encontrado${productosFiltrados.length === 1 ? "" : "s"}`;
-    }
-
-    function extraerPrecio(producto) {
-      return Number(String(producto.precio).replace(/[^0-9.]/g, "")) || 0;
-    }
-
-    function aplicarFiltros() {
-      const texto = elBuscar.value.trim().toLowerCase();
-      const precioMin = elPrecioMin.value !== "" ? Number(elPrecioMin.value) : null;
-      const precioMax = elPrecioMax.value !== "" ? Number(elPrecioMax.value) : null;
-      const soloOfertas = elSoloOfertas.checked;
-
-      productosFiltrados = todosLosProductos.filter(p => {
-        const coincideCategoria = categoriaActiva === "Todos" || p.categoria === categoriaActiva;
-        const coincideSubcategoria = !subcategoriaActiva || p.subcategoria === subcategoriaActiva;
-        const coincideTexto = !texto || p.nombre.toLowerCase().includes(texto) || (p.sku && p.sku.toLowerCase().includes(texto));
-        const precio = extraerPrecio(p);
-        const coincidePrecioMin = precioMin === null || precio >= precioMin;
-        const coincidePrecioMax = precioMax === null || precio <= precioMax;
-        const coincideOferta = !soloOfertas || p.oferta;
-        return coincideCategoria && coincideSubcategoria && coincideTexto && coincidePrecioMin && coincidePrecioMax && coincideOferta;
-      });
-
-      elGrilla.innerHTML = "";
-      cantidadMostrada = 0;
-
-      if (productosFiltrados.length === 0) {
-        mostrarVacio();
-        elContador.textContent = "0 productos encontrados";
-        return;
-      }
-
-      renderizarLote();
-    }
-
-    function construirCategorias() {
-      const categoriasUnicas = ["Todos", ...new Set(todosLosProductos.map(p => p.categoria).filter(Boolean))];
-
-      elCategorias.innerHTML = categoriasUnicas.map(cat => {
-        const activo = cat === categoriaActiva ? "activo" : "";
-        return `<button class="chip ${activo}" data-cat="${cat}">${cat}</button>`;
-      }).join("");
-
-      elCategorias.querySelectorAll(".chip").forEach(chip => {
-        chip.addEventListener("click", () => {
-          categoriaActiva = chip.dataset.cat;
-          subcategoriaActiva = null;
-          elCategorias.querySelectorAll(".chip").forEach(c => c.classList.remove("activo"));
-          chip.classList.add("activo");
-          actualizarBreadcrumb();
-          aplicarFiltros();
-        });
-      });
-    }
-
+    // ---------- JSONP ----------
     function cargarViaJSONP(url) {
       return new Promise((resolve, reject) => {
-        const nombreCallback = "callback_catalogo_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
+        const nombreCallback = "callback_producto_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
         window[nombreCallback] = function(datos) { limpiar(); resolve(datos); };
         const script = document.createElement("script");
         script.src = url + (url.includes("?") ? "&" : "?") + "callback=" + nombreCallback;
-        script.onerror = () => { limpiar(); reject(new Error("No se pudo conectar con el catálogo.")); };
-        const temporizador = setTimeout(() => { limpiar(); reject(new Error("El catálogo tardó demasiado en responder.")); }, 15000);
+        script.onerror = () => { limpiar(); reject(new Error("No se pudo conectar.")); };
+        const temporizador = setTimeout(() => { limpiar(); reject(new Error("Tiempo de espera agotado.")); }, 15000);
         function limpiar() { clearTimeout(temporizador); delete window[nombreCallback]; script.remove(); }
         document.body.appendChild(script);
       });
     }
 
-    async function cargarCatalogo() {
-      try {
-        const datos = await cargarViaJSONP(API_URL);
-        if (datos.error) throw new Error(datos.error);
-
-        todosLosProductos = datos.productos || [];
-        if (todosLosProductos.length === 0) {
-          mostrarError("El catálogo está vacío por ahora. Vuelve a intentarlo más tarde.");
-          return;
-        }
-
-        elEstadoCarga.style.display = "none";
-        elContenido.style.display = "block";
-
-        construirCategorias();
-
-        const buscarUrl = new URLSearchParams(window.location.search).get("buscar");
-        if (buscarUrl) elBuscar.value = buscarUrl;
-
-        actualizarBreadcrumb();
-        aplicarFiltros();
-
-      } catch (error) {
-        mostrarError("Ocurrió un problema al conectar con el catálogo. Intenta recargar la página en unos minutos.");
-        console.error(error);
-      }
-    }
-
-    async function cargarCategoriasDrawer() {
+    // ---------- Categorías del drawer ----------
+    async function cargarCategorias() {
       const elDrawerCategorias = document.getElementById("drawer-categorias");
       try {
         const datos = await cargarViaJSONP(API_URL + "?modo=categorias");
@@ -742,26 +518,105 @@
       }
     }
 
-    elBuscar.addEventListener("input", aplicarFiltros);
-    elBtnCargarMas.addEventListener("click", renderizarLote);
-    elPrecioMin.addEventListener("input", aplicarFiltros);
-    elPrecioMax.addEventListener("input", aplicarFiltros);
-    elSoloOfertas.addEventListener("change", aplicarFiltros);
-    elBtnLimpiarFiltros.addEventListener("click", () => {
-      elBuscar.value = "";
-      elPrecioMin.value = "";
-      elPrecioMax.value = "";
-      elSoloOfertas.checked = false;
-      categoriaActiva = "Todos";
-      subcategoriaActiva = null;
-      elCategorias.querySelectorAll(".chip").forEach(c => c.classList.remove("activo"));
-      elCategorias.querySelector('.chip[data-cat="Todos"]')?.classList.add("activo");
-      actualizarBreadcrumb();
-      aplicarFiltros();
-    });
+    // ---------- Cargar el producto ----------
+    function urlWhatsAppProducto(producto) {
+      const mensaje = `¡Hola Fenix Import Perú!\nMe interesa este producto de su catálogo:\n\n${producto.nombre}\nSKU: ${producto.sku}\n\n¿Me brinda mayor información por favor?`;
+      return "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
+    }
 
-    cargarCatalogo();
-    cargarCategoriasDrawer();
+    function mostrarError(mensaje) {
+      document.getElementById("estado-carga").innerHTML = `
+        <div class="icono">⚠️</div>
+        <p class="titulo">${mensaje}</p>
+        <a href="catalogo.html" style="color:var(--azul); font-weight:600;">Ver catálogo completo →</a>
+      `;
+    }
+
+    async function cargarProducto() {
+      const sku = new URLSearchParams(window.location.search).get("sku");
+
+      if (!sku) {
+        mostrarError("No se especificó qué producto mostrar.");
+        return;
+      }
+
+      try {
+        const producto = await cargarViaJSONP(API_URL + "?sku=" + encodeURIComponent(sku));
+
+        if (producto.error) throw new Error(producto.error);
+
+        // Título y meta de la pestaña
+        document.getElementById("titulo-pagina").textContent = producto.nombre + " — Fenix Import Perú";
+        document.getElementById("meta-descripcion").setAttribute("content", producto.nombre);
+
+        // Breadcrumb
+        const elBreadcrumb = document.getElementById("breadcrumb");
+        let breadcrumbHtml = `<a href="index.html">Inicio</a>`;
+        if (producto.categoria) {
+          breadcrumbHtml += ` <span class="sep">›</span> <a href="catalogo.html?categoria=${encodeURIComponent(producto.categoria)}">${producto.categoria}</a>`;
+        }
+        if (producto.subcategoria) {
+          breadcrumbHtml += ` <span class="sep">›</span> <a href="catalogo.html?categoria=${encodeURIComponent(producto.categoria)}&subcategoria=${encodeURIComponent(producto.subcategoria)}">${producto.subcategoria}</a>`;
+        }
+        breadcrumbHtml += ` <span class="sep">›</span> <span class="actual">${producto.nombre}</span>`;
+        elBreadcrumb.innerHTML = breadcrumbHtml;
+        elBreadcrumb.style.display = "flex";
+
+        // Contenido
+        const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+        const imagenHtml = producto.imagen
+          ? `<img src="${producto.imagen}" alt="${producto.nombre}">`
+          : `<span class="sin-foto">Sin foto disponible</span>`;
+        const badge = producto.oferta ? `<span class="badge-oferta-producto">Oferta</span>` : "";
+
+        const meta = [];
+        if (producto.marca) meta.push(producto.marca);
+        if (producto.color) meta.push(producto.color);
+        meta.push("SKU " + producto.sku);
+
+        const descripcionHtml = producto.descripcion
+          ? `<div><p class="producto-seccion-titulo">Descripción</p><p class="producto-seccion-texto">${producto.descripcion}</p></div>`
+          : "";
+        const caracteristicasHtml = producto.caracteristicas
+          ? `<div><p class="producto-seccion-titulo">Características</p><p class="producto-seccion-texto">${producto.caracteristicas}</p></div>`
+          : "";
+        const incluyeHtml = producto.incluye
+          ? `<div><p class="producto-seccion-titulo">Incluye</p><p class="producto-seccion-texto">${producto.incluye}</p></div>`
+          : "";
+
+        document.getElementById("contenido-producto").innerHTML = `
+          <div class="producto-layout">
+            <div class="producto-img">${badge}${imagenHtml}</div>
+            <div>
+              <p class="producto-categoria">${producto.categoria || ""}${producto.subcategoria ? " · " + producto.subcategoria : ""}</p>
+              <h1 class="producto-nombre">${producto.nombre}</h1>
+              <p class="producto-precio">S/ ${precio}</p>
+              <div class="producto-meta">${meta.map(m => `<span>${m}</span>`).join("")}</div>
+              <a class="btn-whatsapp-producto" href="${urlWhatsAppProducto(producto)}" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+                Consultar por WhatsApp
+              </a>
+              <p class="nota-entrega">Coordinamos entrega en Lima y envíos a todo el Perú.</p>
+            </div>
+          </div>
+          <div class="producto-secciones">
+            ${descripcionHtml}
+            ${caracteristicasHtml}
+            ${incluyeHtml}
+          </div>
+        `;
+
+        document.getElementById("estado-carga").style.display = "none";
+        document.getElementById("contenido-producto").style.display = "block";
+
+      } catch (error) {
+        mostrarError("No encontramos este producto. Puede que ya no esté disponible.");
+        console.error(error);
+      }
+    }
+
+    cargarCategorias();
+    cargarProducto();
   </script>
 
 </body>
