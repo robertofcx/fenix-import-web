@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/7.0.0/fuse.min.js"></script>
 <style>
   :root {
     --bg: #ffffff;
@@ -1168,8 +1169,10 @@
   </a>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbz1BoYvznEod-IT0tdPBT-4NqnGKKQkoOtFghi9COZ2txGmTl__zWFqCFkPTategoH05g/exec";
+    const RUTA_PRODUCTOS = "productos.json";
     const NUMERO_WHATSAPP = "51978821080";
+    let catalogoCompleto = null;
+    let fuse = null;
 
     document.getElementById("anio").textContent = new Date().getFullYear();
 
@@ -1219,106 +1222,88 @@
     fondoDrawer.addEventListener("click", cerrarDrawer);
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarDrawer(); });
 
-    // ---------- Categorías (dinámicas, vía API) ----------
+    // ---------- Categorías (desde el catálogo estático ya cargado) ----------
 
-    function cargarViaJSONP(url) {
-      return new Promise((resolve, reject) => {
-        const nombreCallback = "callback_home_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
-
-        window[nombreCallback] = function(datos) {
-          limpiar();
-          resolve(datos);
-        };
-
-        const script = document.createElement("script");
-        script.src = url + (url.includes("?") ? "&" : "?") + "callback=" + nombreCallback;
-
-        script.onerror = () => {
-          limpiar();
-          reject(new Error("No se pudo conectar."));
-        };
-
-        const temporizador = setTimeout(() => {
-          limpiar();
-          reject(new Error("Tiempo de espera agotado."));
-        }, 15000);
-
-        function limpiar() {
-          clearTimeout(temporizador);
-          delete window[nombreCallback];
-          script.remove();
-        }
-
-        document.body.appendChild(script);
-      });
-    }
-
-    async function cargarCategorias() {
+    function dibujarCategorias(categorias) {
       const elEstado = document.getElementById("estado-categorias");
       const elGrilla = document.getElementById("grilla-categorias");
       const elDrawerCategorias = document.getElementById("drawer-categorias");
 
-      try {
-        const datos = await cargarViaJSONP(API_URL + "?modo=categorias");
+      if (!categorias || categorias.length === 0) {
+        elEstado.textContent = "No se pudieron cargar las categorías. Puedes ir directo al catálogo completo.";
+        return;
+      }
 
-        if (datos.error || !datos.categorias || datos.categorias.length === 0) {
-          throw new Error(datos.error || "Sin categorías");
+      elEstado.style.display = "none";
+
+      elGrilla.innerHTML = categorias.map(cat => `
+        <a class="tarjeta-categoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}">
+          <span class="nombre">${cat.nombre}</span>
+          <span class="cantidad">${cat.cantidad} producto${cat.cantidad === 1 ? "" : "s"}</span>
+        </a>
+      `).join("");
+
+      elDrawerCategorias.innerHTML = categorias.map((cat, indice) => {
+        const tieneSubcategorias = cat.subcategorias && cat.subcategorias.length > 0;
+
+        if (!tieneSubcategorias) {
+          return `
+            <a class="drawer-categoria-sola" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}">
+              <span>${cat.nombre}</span>
+              <span class="cantidad">${cat.cantidad}</span>
+            </a>
+          `;
         }
 
-        elEstado.style.display = "none";
-
-        elGrilla.innerHTML = datos.categorias.map(cat => `
-          <a class="tarjeta-categoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}">
-            <span class="nombre">${cat.nombre}</span>
-            <span class="cantidad">${cat.cantidad} producto${cat.cantidad === 1 ? "" : "s"}</span>
+        const subcategoriasHtml = cat.subcategorias.map(sub => `
+          <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}&subcategoria=${encodeURIComponent(sub.nombre)}">
+            <span>${sub.nombre}</span>
+            <span class="n">${sub.cantidad}</span>
           </a>
         `).join("");
 
-        elDrawerCategorias.innerHTML = datos.categorias.map((cat, indice) => {
-          const tieneSubcategorias = cat.subcategorias && cat.subcategorias.length > 0;
-
-          if (!tieneSubcategorias) {
-            return `
-              <a class="drawer-categoria-sola" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}">
-                <span>${cat.nombre}</span>
-                <span class="cantidad">${cat.cantidad}</span>
+        return `
+          <div class="drawer-item" id="drawer-item-${indice}">
+            <button class="drawer-categoria-fila" data-indice="${indice}">
+              <span>${cat.nombre}</span>
+              <span class="cantidad">${cat.cantidad}</span>
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="drawer-subcategorias">
+              <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}" style="font-weight:600; color:var(--texto);">
+                <span>Ver todo en ${cat.nombre}</span>
               </a>
-            `;
-          }
-
-          const subcategoriasHtml = cat.subcategorias.map(sub => `
-            <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}&subcategoria=${encodeURIComponent(sub.nombre)}">
-              <span>${sub.nombre}</span>
-              <span class="n">${sub.cantidad}</span>
-            </a>
-          `).join("");
-
-          return `
-            <div class="drawer-item" id="drawer-item-${indice}">
-              <button class="drawer-categoria-fila" data-indice="${indice}">
-                <span>${cat.nombre}</span>
-                <span class="cantidad">${cat.cantidad}</span>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="drawer-subcategorias">
-                <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}" style="font-weight:600; color:var(--texto);">
-                  <span>Ver todo en ${cat.nombre}</span>
-                </a>
-                ${subcategoriasHtml}
-              </div>
+              ${subcategoriasHtml}
             </div>
-          `;
-        }).join("");
+          </div>
+        `;
+      }).join("");
 
-        elDrawerCategorias.querySelectorAll(".drawer-categoria-fila").forEach(boton => {
-          boton.addEventListener("click", () => {
-            document.getElementById("drawer-item-" + boton.dataset.indice).classList.toggle("abierto");
-          });
+      elDrawerCategorias.querySelectorAll(".drawer-categoria-fila").forEach(boton => {
+        boton.addEventListener("click", () => {
+          document.getElementById("drawer-item-" + boton.dataset.indice).classList.toggle("abierto");
         });
+      });
+    }
+
+    async function cargarCatalogoCompleto() {
+      const elEstado = document.getElementById("estado-categorias");
+      try {
+        const respuesta = await fetch(RUTA_PRODUCTOS);
+        if (!respuesta.ok) throw new Error("No se pudo cargar productos.json (" + respuesta.status + ")");
+
+        catalogoCompleto = await respuesta.json();
+
+        fuse = new Fuse(catalogoCompleto.productos, {
+          keys: ["nombre", "sku"],
+          threshold: 0.35,
+          ignoreLocation: true
+        });
+
+        dibujarCategorias(catalogoCompleto.categorias);
 
       } catch (error) {
         elEstado.textContent = "No se pudieron cargar las categorías. Puedes ir directo al catálogo completo.";
-        document.getElementById("drawer-categorias").innerHTML = "";
         console.error(error);
       }
     }
@@ -1370,19 +1355,11 @@
       elResultadosBusqueda.classList.add("abierto");
     }
 
-    async function buscarEnVivo(texto) {
-      elResultadosBusqueda.innerHTML = `<div class="resultado-estado">Buscando...</div>`;
-      elResultadosBusqueda.classList.add("abierto");
-
-      try {
-        const datos = await cargarViaJSONP(API_URL + "?buscar=" + encodeURIComponent(texto) + "&limite=6");
-        resultadosActuales = datos.productos || [];
-        indiceResaltado = -1;
-        renderizarResultados(resultadosActuales, texto);
-      } catch (error) {
-        elResultadosBusqueda.innerHTML = `<div class="resultado-estado">No se pudo buscar. Intenta de nuevo.</div>`;
-        console.error(error);
-      }
+    function buscarEnVivo(texto) {
+      if (!fuse) return;
+      const resultados = fuse.search(texto).slice(0, 6).map(r => r.item);
+      indiceResaltado = -1;
+      renderizarResultados(resultados, texto);
     }
 
     function cerrarResultados() {
@@ -1399,7 +1376,7 @@
         return;
       }
 
-      temporizadorBusqueda = setTimeout(() => buscarEnVivo(texto), 300);
+      temporizadorBusqueda = setTimeout(() => buscarEnVivo(texto), 120);
     });
 
     elInputBusqueda.addEventListener("keydown", (evento) => {
@@ -1440,7 +1417,7 @@
     });
 
 
-    cargarCategorias();
+    cargarCatalogoCompleto();
   </script>
 
 </body>

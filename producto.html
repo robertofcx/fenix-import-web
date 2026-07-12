@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/7.0.0/fuse.min.js"></script>
 <style>
   :root {
     --bg: #ffffff;
@@ -517,8 +518,10 @@
   <a class="whatsapp-flotante" href="#" id="whatsapp-flotante" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg></a>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbz1BoYvznEod-IT0tdPBT-4NqnGKKQkoOtFghi9COZ2txGmTl__zWFqCFkPTategoH05g/exec";
+    const RUTA_PRODUCTOS = "productos.json";
     const NUMERO_WHATSAPP = "51978821080";
+    let catalogoCompleto = null;
+    let fuse = null;
 
     document.getElementById("anio").textContent = new Date().getFullYear();
 
@@ -590,19 +593,11 @@
       elResultadosBusqueda.classList.add("abierto");
     }
 
-    async function buscarEnVivo(texto) {
-      elResultadosBusqueda.innerHTML = `<div class="resultado-estado">Buscando...</div>`;
-      elResultadosBusqueda.classList.add("abierto");
-
-      try {
-        const datos = await cargarViaJSONP(API_URL + "?buscar=" + encodeURIComponent(texto) + "&limite=6");
-        resultadosActuales = datos.productos || [];
-        indiceResaltado = -1;
-        renderizarResultados(resultadosActuales, texto);
-      } catch (error) {
-        elResultadosBusqueda.innerHTML = `<div class="resultado-estado">No se pudo buscar. Intenta de nuevo.</div>`;
-        console.error(error);
-      }
+    function buscarEnVivo(texto) {
+      if (!fuse) return;
+      const resultados = fuse.search(texto).slice(0, 6).map(r => r.item);
+      indiceResaltado = -1;
+      renderizarResultados(resultados, texto);
     }
 
     function cerrarResultados() {
@@ -619,7 +614,7 @@
         return;
       }
 
-      temporizadorBusqueda = setTimeout(() => buscarEnVivo(texto), 300);
+      temporizadorBusqueda = setTimeout(() => buscarEnVivo(texto), 120);
     });
 
     elInputBusqueda.addEventListener("keydown", (evento) => {
@@ -659,61 +654,40 @@
       window.location.href = "catalogo.html?buscar=" + encodeURIComponent(valor);
     });
 
-    // ---------- JSONP ----------
-    function cargarViaJSONP(url) {
-      return new Promise((resolve, reject) => {
-        const nombreCallback = "callback_producto_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
-        window[nombreCallback] = function(datos) { limpiar(); resolve(datos); };
-        const script = document.createElement("script");
-        script.src = url + (url.includes("?") ? "&" : "?") + "callback=" + nombreCallback;
-        script.onerror = () => { limpiar(); reject(new Error("No se pudo conectar.")); };
-        const temporizador = setTimeout(() => { limpiar(); reject(new Error("Tiempo de espera agotado.")); }, 15000);
-        function limpiar() { clearTimeout(temporizador); delete window[nombreCallback]; script.remove(); }
-        document.body.appendChild(script);
+    // ---------- Drawer de categorías (usa los datos ya cargados) ----------
+    function dibujarDrawerCategorias(categorias) {
+      const elDrawerCategorias = document.getElementById("drawer-categorias");
+
+      elDrawerCategorias.innerHTML = categorias.map((cat, indice) => {
+        const tieneSubcategorias = cat.subcategorias && cat.subcategorias.length > 0;
+        if (!tieneSubcategorias) {
+          return `<a class="drawer-categoria-sola" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}"><span>${cat.nombre}</span><span class="cantidad">${cat.cantidad}</span></a>`;
+        }
+        const subHtml = cat.subcategorias.map(sub => `
+          <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}&subcategoria=${encodeURIComponent(sub.nombre)}">
+            <span>${sub.nombre}</span><span class="n">${sub.cantidad}</span>
+          </a>`).join("");
+        return `
+          <div class="drawer-item" id="drawer-item-${indice}">
+            <button class="drawer-categoria-fila" data-indice="${indice}">
+              <span>${cat.nombre}</span><span class="cantidad">${cat.cantidad}</span>
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="drawer-subcategorias">
+              <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}" style="font-weight:600; color:var(--texto);"><span>Ver todo en ${cat.nombre}</span></a>
+              ${subHtml}
+            </div>
+          </div>`;
+      }).join("");
+
+      elDrawerCategorias.querySelectorAll(".drawer-categoria-fila").forEach(boton => {
+        boton.addEventListener("click", () => {
+          document.getElementById("drawer-item-" + boton.dataset.indice).classList.toggle("abierto");
+        });
       });
     }
 
-    // ---------- Categorías del drawer ----------
-    async function cargarCategorias() {
-      const elDrawerCategorias = document.getElementById("drawer-categorias");
-      try {
-        const datos = await cargarViaJSONP(API_URL + "?modo=categorias");
-        if (datos.error || !datos.categorias) throw new Error(datos.error || "Sin categorías");
-
-        elDrawerCategorias.innerHTML = datos.categorias.map((cat, indice) => {
-          const tieneSubcategorias = cat.subcategorias && cat.subcategorias.length > 0;
-          if (!tieneSubcategorias) {
-            return `<a class="drawer-categoria-sola" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}"><span>${cat.nombre}</span><span class="cantidad">${cat.cantidad}</span></a>`;
-          }
-          const subHtml = cat.subcategorias.map(sub => `
-            <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}&subcategoria=${encodeURIComponent(sub.nombre)}">
-              <span>${sub.nombre}</span><span class="n">${sub.cantidad}</span>
-            </a>`).join("");
-          return `
-            <div class="drawer-item" id="drawer-item-${indice}">
-              <button class="drawer-categoria-fila" data-indice="${indice}">
-                <span>${cat.nombre}</span><span class="cantidad">${cat.cantidad}</span>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="drawer-subcategorias">
-                <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}" style="font-weight:600; color:var(--texto);"><span>Ver todo en ${cat.nombre}</span></a>
-                ${subHtml}
-              </div>
-            </div>`;
-        }).join("");
-
-        elDrawerCategorias.querySelectorAll(".drawer-categoria-fila").forEach(boton => {
-          boton.addEventListener("click", () => {
-            document.getElementById("drawer-item-" + boton.dataset.indice).classList.toggle("abierto");
-          });
-        });
-      } catch (error) {
-        elDrawerCategorias.innerHTML = "";
-        console.error(error);
-      }
-    }
-
-    // ---------- Cargar el producto ----------
+    // ---------- Mostrar el producto ----------
     function urlWhatsAppProducto(producto) {
       const mensaje = `¡Hola Fenix Import Perú!\nMe interesa este producto de su catálogo:\n\n${producto.nombre}\nSKU: ${producto.sku}\n\n¿Me brinda mayor información por favor?`;
       return "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
@@ -727,7 +701,71 @@
       `;
     }
 
-    async function cargarProducto() {
+    function mostrarProducto(producto) {
+      document.getElementById("titulo-pagina").textContent = producto.nombre + " — Fenix Import Perú";
+      document.getElementById("meta-descripcion").setAttribute("content", producto.nombre);
+
+      const elBreadcrumb = document.getElementById("breadcrumb");
+      let breadcrumbHtml = `<a href="index.html">Inicio</a>`;
+      if (producto.categoria) {
+        breadcrumbHtml += ` <span class="sep">›</span> <a href="catalogo.html?categoria=${encodeURIComponent(producto.categoria)}">${producto.categoria}</a>`;
+      }
+      if (producto.subcategoria) {
+        breadcrumbHtml += ` <span class="sep">›</span> <a href="catalogo.html?categoria=${encodeURIComponent(producto.categoria)}&subcategoria=${encodeURIComponent(producto.subcategoria)}">${producto.subcategoria}</a>`;
+      }
+      breadcrumbHtml += ` <span class="sep">›</span> <span class="actual">${producto.nombre}</span>`;
+      elBreadcrumb.innerHTML = breadcrumbHtml;
+      elBreadcrumb.style.display = "flex";
+
+      const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+      const imagenHtml = producto.imagen
+        ? `<img src="${producto.imagen}" alt="${producto.nombre}">`
+        : `<span class="sin-foto">Sin foto disponible</span>`;
+      const badge = producto.oferta ? `<span class="badge-oferta-producto">Oferta</span>` : "";
+
+      const meta = [];
+      if (producto.marca) meta.push(producto.marca);
+      if (producto.color) meta.push(producto.color);
+      meta.push("SKU " + producto.sku);
+
+      const descripcionHtml = producto.descripcion
+        ? `<div><p class="producto-seccion-titulo">Descripción</p><p class="producto-seccion-texto">${producto.descripcion}</p></div>`
+        : "";
+      const caracteristicasHtml = producto.caracteristicas
+        ? `<div><p class="producto-seccion-titulo">Características</p><p class="producto-seccion-texto">${producto.caracteristicas}</p></div>`
+        : "";
+      const incluyeHtml = producto.incluye
+        ? `<div><p class="producto-seccion-titulo">Incluye</p><p class="producto-seccion-texto">${producto.incluye}</p></div>`
+        : "";
+
+      document.getElementById("contenido-producto").innerHTML = `
+        <div class="producto-layout">
+          <div class="producto-img">${badge}${imagenHtml}</div>
+          <div>
+            <p class="producto-categoria">${producto.categoria || ""}${producto.subcategoria ? " · " + producto.subcategoria : ""}</p>
+            <h1 class="producto-nombre">${producto.nombre}</h1>
+            <p class="producto-precio">S/ ${precio}</p>
+            <div class="producto-meta">${meta.map(m => `<span>${m}</span>`).join("")}</div>
+            <a class="btn-whatsapp-producto" href="${urlWhatsAppProducto(producto)}" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+              Consultar por WhatsApp
+            </a>
+            <p class="nota-entrega">Coordinamos entrega en Lima y envíos a todo el Perú.</p>
+          </div>
+        </div>
+        <div class="producto-secciones">
+          ${descripcionHtml}
+          ${caracteristicasHtml}
+          ${incluyeHtml}
+        </div>
+      `;
+
+      document.getElementById("estado-carga").style.display = "none";
+      document.getElementById("contenido-producto").style.display = "block";
+    }
+
+    // ---------- Carga única: productos.json ----------
+    async function iniciar() {
       const sku = new URLSearchParams(window.location.search).get("sku");
 
       if (!sku) {
@@ -736,82 +774,35 @@
       }
 
       try {
-        const producto = await cargarViaJSONP(API_URL + "?sku=" + encodeURIComponent(sku));
+        const respuesta = await fetch(RUTA_PRODUCTOS);
+        if (!respuesta.ok) throw new Error("No se pudo cargar productos.json (" + respuesta.status + ")");
 
-        if (producto.error) throw new Error(producto.error);
+        catalogoCompleto = await respuesta.json();
 
-        // Título y meta de la pestaña
-        document.getElementById("titulo-pagina").textContent = producto.nombre + " — Fenix Import Perú";
-        document.getElementById("meta-descripcion").setAttribute("content", producto.nombre);
+        fuse = new Fuse(catalogoCompleto.productos, {
+          keys: ["nombre", "sku"],
+          threshold: 0.35,
+          ignoreLocation: true
+        });
 
-        // Breadcrumb
-        const elBreadcrumb = document.getElementById("breadcrumb");
-        let breadcrumbHtml = `<a href="index.html">Inicio</a>`;
-        if (producto.categoria) {
-          breadcrumbHtml += ` <span class="sep">›</span> <a href="catalogo.html?categoria=${encodeURIComponent(producto.categoria)}">${producto.categoria}</a>`;
+        dibujarDrawerCategorias(catalogoCompleto.categorias || []);
+
+        const producto = catalogoCompleto.productos.find(p => p.sku === sku);
+
+        if (!producto) {
+          mostrarError("No encontramos este producto. Puede que ya no esté disponible.");
+          return;
         }
-        if (producto.subcategoria) {
-          breadcrumbHtml += ` <span class="sep">›</span> <a href="catalogo.html?categoria=${encodeURIComponent(producto.categoria)}&subcategoria=${encodeURIComponent(producto.subcategoria)}">${producto.subcategoria}</a>`;
-        }
-        breadcrumbHtml += ` <span class="sep">›</span> <span class="actual">${producto.nombre}</span>`;
-        elBreadcrumb.innerHTML = breadcrumbHtml;
-        elBreadcrumb.style.display = "flex";
 
-        // Contenido
-        const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
-        const imagenHtml = producto.imagen
-          ? `<img src="${producto.imagen}" alt="${producto.nombre}">`
-          : `<span class="sin-foto">Sin foto disponible</span>`;
-        const badge = producto.oferta ? `<span class="badge-oferta-producto">Oferta</span>` : "";
-
-        const meta = [];
-        if (producto.marca) meta.push(producto.marca);
-        if (producto.color) meta.push(producto.color);
-        meta.push("SKU " + producto.sku);
-
-        const descripcionHtml = producto.descripcion
-          ? `<div><p class="producto-seccion-titulo">Descripción</p><p class="producto-seccion-texto">${producto.descripcion}</p></div>`
-          : "";
-        const caracteristicasHtml = producto.caracteristicas
-          ? `<div><p class="producto-seccion-titulo">Características</p><p class="producto-seccion-texto">${producto.caracteristicas}</p></div>`
-          : "";
-        const incluyeHtml = producto.incluye
-          ? `<div><p class="producto-seccion-titulo">Incluye</p><p class="producto-seccion-texto">${producto.incluye}</p></div>`
-          : "";
-
-        document.getElementById("contenido-producto").innerHTML = `
-          <div class="producto-layout">
-            <div class="producto-img">${badge}${imagenHtml}</div>
-            <div>
-              <p class="producto-categoria">${producto.categoria || ""}${producto.subcategoria ? " · " + producto.subcategoria : ""}</p>
-              <h1 class="producto-nombre">${producto.nombre}</h1>
-              <p class="producto-precio">S/ ${precio}</p>
-              <div class="producto-meta">${meta.map(m => `<span>${m}</span>`).join("")}</div>
-              <a class="btn-whatsapp-producto" href="${urlWhatsAppProducto(producto)}" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
-                Consultar por WhatsApp
-              </a>
-              <p class="nota-entrega">Coordinamos entrega en Lima y envíos a todo el Perú.</p>
-            </div>
-          </div>
-          <div class="producto-secciones">
-            ${descripcionHtml}
-            ${caracteristicasHtml}
-            ${incluyeHtml}
-          </div>
-        `;
-
-        document.getElementById("estado-carga").style.display = "none";
-        document.getElementById("contenido-producto").style.display = "block";
+        mostrarProducto(producto);
 
       } catch (error) {
-        mostrarError("No encontramos este producto. Puede que ya no esté disponible.");
+        mostrarError("Ocurrió un problema al cargar el producto. Intenta recargar la página.");
         console.error(error);
       }
     }
 
-    cargarCategorias();
-    cargarProducto();
+    iniciar();
   </script>
 
 </body>

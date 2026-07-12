@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/7.0.0/fuse.min.js"></script>
 <style>
   :root {
     --bg: #ffffff;
@@ -502,9 +503,10 @@
   <a class="whatsapp-flotante" href="#" id="whatsapp-flotante" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg></a>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbz1BoYvznEod-IT0tdPBT-4NqnGKKQkoOtFghi9COZ2txGmTl__zWFqCFkPTategoH05g/exec";
+    const RUTA_PRODUCTOS = "productos.json";
     const NUMERO_WHATSAPP = "51978821080";
     const LOTE = 24;
+    let fuse = null;
 
     document.getElementById("anio").textContent = new Date().getFullYear();
 
@@ -614,20 +616,21 @@
     }
 
     function aplicarFiltros() {
-      const texto = elBuscar.value.trim().toLowerCase();
+      const texto = elBuscar.value.trim();
       const precioMin = elPrecioMin.value !== "" ? Number(elPrecioMin.value) : null;
       const precioMax = elPrecioMax.value !== "" ? Number(elPrecioMax.value) : null;
       const soloOfertas = elSoloOfertas.checked;
 
-      productosFiltrados = todosLosProductos.filter(p => {
+      const candidatos = (texto && fuse) ? fuse.search(texto).map(r => r.item) : todosLosProductos;
+
+      productosFiltrados = candidatos.filter(p => {
         const coincideCategoria = categoriaActiva === "Todos" || p.categoria === categoriaActiva;
         const coincideSubcategoria = !subcategoriaActiva || p.subcategoria === subcategoriaActiva;
-        const coincideTexto = !texto || p.nombre.toLowerCase().includes(texto) || (p.sku && p.sku.toLowerCase().includes(texto));
         const precio = extraerPrecio(p);
         const coincidePrecioMin = precioMin === null || precio >= precioMin;
         const coincidePrecioMax = precioMax === null || precio <= precioMax;
         const coincideOferta = !soloOfertas || p.oferta;
-        return coincideCategoria && coincideSubcategoria && coincideTexto && coincidePrecioMin && coincidePrecioMax && coincideOferta;
+        return coincideCategoria && coincideSubcategoria && coincidePrecioMin && coincidePrecioMax && coincideOferta;
       });
 
       elGrilla.innerHTML = "";
@@ -662,23 +665,44 @@
       });
     }
 
-    function cargarViaJSONP(url) {
-      return new Promise((resolve, reject) => {
-        const nombreCallback = "callback_catalogo_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
-        window[nombreCallback] = function(datos) { limpiar(); resolve(datos); };
-        const script = document.createElement("script");
-        script.src = url + (url.includes("?") ? "&" : "?") + "callback=" + nombreCallback;
-        script.onerror = () => { limpiar(); reject(new Error("No se pudo conectar con el catálogo.")); };
-        const temporizador = setTimeout(() => { limpiar(); reject(new Error("El catálogo tardó demasiado en responder.")); }, 15000);
-        function limpiar() { clearTimeout(temporizador); delete window[nombreCallback]; script.remove(); }
-        document.body.appendChild(script);
+    function dibujarDrawerCategorias(categorias) {
+      const elDrawerCategorias = document.getElementById("drawer-categorias");
+
+      elDrawerCategorias.innerHTML = categorias.map((cat, indice) => {
+        const tieneSubcategorias = cat.subcategorias && cat.subcategorias.length > 0;
+        if (!tieneSubcategorias) {
+          return `<a class="drawer-categoria-sola" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}"><span>${cat.nombre}</span><span class="cantidad">${cat.cantidad}</span></a>`;
+        }
+        const subHtml = cat.subcategorias.map(sub => `
+          <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}&subcategoria=${encodeURIComponent(sub.nombre)}">
+            <span>${sub.nombre}</span><span class="n">${sub.cantidad}</span>
+          </a>`).join("");
+        return `
+          <div class="drawer-item" id="drawer-item-${indice}">
+            <button class="drawer-categoria-fila" data-indice="${indice}">
+              <span>${cat.nombre}</span><span class="cantidad">${cat.cantidad}</span>
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="drawer-subcategorias">
+              <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}" style="font-weight:600; color:var(--texto);"><span>Ver todo en ${cat.nombre}</span></a>
+              ${subHtml}
+            </div>
+          </div>`;
+      }).join("");
+
+      elDrawerCategorias.querySelectorAll(".drawer-categoria-fila").forEach(boton => {
+        boton.addEventListener("click", () => {
+          document.getElementById("drawer-item-" + boton.dataset.indice).classList.toggle("abierto");
+        });
       });
     }
 
     async function cargarCatalogo() {
       try {
-        const datos = await cargarViaJSONP(API_URL);
-        if (datos.error) throw new Error(datos.error);
+        const respuesta = await fetch(RUTA_PRODUCTOS);
+        if (!respuesta.ok) throw new Error("No se pudo cargar productos.json (" + respuesta.status + ")");
+
+        const datos = await respuesta.json();
 
         todosLosProductos = datos.productos || [];
         if (todosLosProductos.length === 0) {
@@ -686,10 +710,17 @@
           return;
         }
 
+        fuse = new Fuse(todosLosProductos, {
+          keys: ["nombre", "sku"],
+          threshold: 0.35,
+          ignoreLocation: true
+        });
+
         elEstadoCarga.style.display = "none";
         elContenido.style.display = "block";
 
         construirCategorias();
+        dibujarDrawerCategorias(datos.categorias || []);
 
         const buscarUrl = new URLSearchParams(window.location.search).get("buscar");
         if (buscarUrl) elBuscar.value = buscarUrl;
@@ -699,45 +730,6 @@
 
       } catch (error) {
         mostrarError("Ocurrió un problema al conectar con el catálogo. Intenta recargar la página en unos minutos.");
-        console.error(error);
-      }
-    }
-
-    async function cargarCategoriasDrawer() {
-      const elDrawerCategorias = document.getElementById("drawer-categorias");
-      try {
-        const datos = await cargarViaJSONP(API_URL + "?modo=categorias");
-        if (datos.error || !datos.categorias) throw new Error(datos.error || "Sin categorías");
-
-        elDrawerCategorias.innerHTML = datos.categorias.map((cat, indice) => {
-          const tieneSubcategorias = cat.subcategorias && cat.subcategorias.length > 0;
-          if (!tieneSubcategorias) {
-            return `<a class="drawer-categoria-sola" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}"><span>${cat.nombre}</span><span class="cantidad">${cat.cantidad}</span></a>`;
-          }
-          const subHtml = cat.subcategorias.map(sub => `
-            <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}&subcategoria=${encodeURIComponent(sub.nombre)}">
-              <span>${sub.nombre}</span><span class="n">${sub.cantidad}</span>
-            </a>`).join("");
-          return `
-            <div class="drawer-item" id="drawer-item-${indice}">
-              <button class="drawer-categoria-fila" data-indice="${indice}">
-                <span>${cat.nombre}</span><span class="cantidad">${cat.cantidad}</span>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="drawer-subcategorias">
-                <a class="drawer-subcategoria" href="catalogo.html?categoria=${encodeURIComponent(cat.nombre)}" style="font-weight:600; color:var(--texto);"><span>Ver todo en ${cat.nombre}</span></a>
-                ${subHtml}
-              </div>
-            </div>`;
-        }).join("");
-
-        elDrawerCategorias.querySelectorAll(".drawer-categoria-fila").forEach(boton => {
-          boton.addEventListener("click", () => {
-            document.getElementById("drawer-item-" + boton.dataset.indice).classList.toggle("abierto");
-          });
-        });
-      } catch (error) {
-        elDrawerCategorias.innerHTML = "";
         console.error(error);
       }
     }
@@ -761,7 +753,6 @@
     });
 
     cargarCatalogo();
-    cargarCategoriasDrawer();
   </script>
 
 </body>
