@@ -61,179 +61,98 @@
 
   /* ---------- Header ---------- */
 
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--linea);
-  }
+header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--linea);
+}
 
-  html[data-tema="oscuro"] header { background: rgba(11, 12, 30, 0.92); }
+html[data-tema="oscuro"] header{
+  background: rgba(11,12,30,.92);
+}
 
-  .header-fila {
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
+.header-fila{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:12px 20px;
+}
 
-  .header-izquierda {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+.header-izquierda{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+}
 
-  .header-buscador-fila { padding: 0 20px 12px; }
+.contenedor-buscador{
+  flex:1;
+  position:relative;
+  min-width:0;
+  max-width:none;
+  margin:0;
+}
 
-  .buscador-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--bg-elevada);
-    border: 1px solid var(--linea);
-    border-radius: 12px;
-    padding: 4px 4px 4px 14px;
-    max-width: 640px;
-    margin: 0 auto;
-  }
+.buscador-header{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:100%;
+  background:var(--bg-elevada);
+  border:1px solid var(--linea);
+  border-radius:12px;
+  padding:4px 4px 4px 14px;
+}
 
-  .buscador-header svg { flex-shrink: 0; opacity: 0.55; width: 17px; height: 17px; }
+.buscador-header svg{
+  width:17px;
+  height:17px;
+  flex-shrink:0;
+  opacity:.55;
+}
 
-  .buscador-header input {
-    flex: 1; background: transparent; border: none; outline: none;
-    color: var(--texto); font-family: 'Inter', sans-serif; font-size: 0.88rem; padding: 9px 0;
-  }
-  .buscador-header input::placeholder { color: var(--texto-muted); }
+.buscador-header input{
+  flex:1;
+  min-width:0;
+  background:transparent;
+  border:none;
+  outline:none;
+  color:var(--texto);
+  font-family:'Inter',sans-serif;
+  font-size:.88rem;
+  padding:9px 0;
+}
 
-  .buscador-header button {
-    background: var(--azul); color: var(--texto-sobre-azul); border: none;
-    border-radius: 8px; padding: 9px 16px; font-weight: 600; font-size: 0.82rem; cursor: pointer; flex-shrink: 0;
-  }
-  .buscador-header button:hover { background: var(--azul-hover); }
+.buscador-header input::placeholder{
+  color:var(--texto-muted);
+}
 
-  .contenedor-buscador { position: relative; max-width: 640px; margin: 0 auto; }
+.buscador-header button{
+  background:var(--azul);
+  color:var(--texto-sobre-azul);
+  border:none;
+  border-radius:8px;
+  padding:9px 16px;
+  font-weight:600;
+  font-size:.82rem;
+  cursor:pointer;
+  flex-shrink:0;
+}
 
-  .resultados-busqueda {
-    display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    right: 0;
-    background: var(--bg-elevada);
-    border: 1px solid var(--linea);
-    border-radius: 14px;
-    box-shadow: 0 12px 32px var(--sombra);
-    overflow: hidden;
-    z-index: 50;
-    max-height: 70vh;
-    overflow-y: auto;
-  }
+.buscador-header button:hover{
+  background:var(--azul-hover);
+}
 
-  .resultados-busqueda.abierto { display: block; }
-
-  .resultado-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--linea);
-    cursor: pointer;
-  }
-
-  .resultado-item:last-child { border-bottom: none; }
-  .resultado-item:hover, .resultado-item.resaltado { background: var(--bg-elevada-hover); }
-
-  .resultado-img {
-    width: 46px; height: 46px; flex-shrink: 0;
-    background: var(--bg);
-    border-radius: 9px;
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-  }
-  .resultado-img img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
-  .resultado-img .sin-foto { font-size: 0.55rem; color: var(--texto-muted); font-family: 'IBM Plex Mono', monospace; }
-
-  .resultado-info { flex: 1; min-width: 0; }
-
-  .resultado-nombre {
-    font-size: 0.85rem; font-weight: 500; color: var(--texto);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    margin: 0 0 3px;
-  }
-
-  .resultado-meta { display: flex; align-items: center; gap: 8px; }
-
-  .resultado-precio {
-    font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 0.98rem; color: var(--azul);
-  }
-
-  .resultado-categoria {
-    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--texto-muted);
-    text-transform: uppercase; letter-spacing: 0.03em;
-  }
-
-  .resultado-badge-oferta {
-    font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; font-weight: 700;
-    color: var(--texto-sobre-ember); background: var(--ember);
-    padding: 2px 6px; border-radius: 5px; text-transform: uppercase;
-  }
-
-  .resultado-ver-todos {
-    display: block;
-    text-align: center;
-    padding: 12px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--azul);
-    background: var(--bg-elevada-hover);
-  }
-  .resultado-ver-todos:hover { text-decoration: underline; }
-
-  .resultado-estado {
-    padding: 18px 14px;
-    text-align: center;
-    font-size: 0.85rem;
-    color: var(--texto-muted);
-  }
-
-  .btn-hamburguesa {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: var(--bg-elevada);
-    border: 1px solid var(--linea);
-    color: var(--texto);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-
-  .btn-hamburguesa svg { width: 20px; height: 20px; }
-
-  .logo-header img {
-    height: 30px;
-    width: auto;
-    display: block;
-  }
-
-  .logo-header {
-    background: #ffffff;
-    padding: 6px 12px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-  }
-
-  .header-derecha {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+.header-derecha{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-shrink:0;
+}
+  
 
   .btn-tema {
     width: 40px;
@@ -803,40 +722,72 @@
 </head>
 <body>
 
-  <header>
-    <div class="header-fila">
-      <div class="header-izquierda">
-        <button class="btn-hamburguesa" id="btn-abrir-drawer" aria-label="Abrir menú">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
+<header>
 
-        <a class="logo-header" href="index.html">
-          <img src="logo.webp" alt="Fenix Import Perú">
-        </a>
-      </div>
+  <div class="header-fila">
 
-      <div class="header-derecha">
-        <button class="btn-tema" id="btn-tema" aria-label="Cambiar tema">
-          <svg class="icono-sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-          <svg class="icono-luna" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <a class="btn-nav-whatsapp" href="#" id="nav-whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
-          <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
-        </a>
-      </div>
+    <div class="header-izquierda">
+      <button class="btn-hamburguesa" id="btn-abrir-drawer" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+      <a class="logo-header" href="index.html">
+        <img src="logo.webp" alt="Fenix Import Perú">
+      </a>
     </div>
 
-    <div class="header-buscador-fila">
-      <div class="contenedor-buscador">
-        <form class="buscador-header" id="form-buscador-header" autocomplete="off">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="input-buscador-header" placeholder="Busca un producto o código Fenix...">
-          <button type="submit">Buscar</button>
-        </form>
-        <div class="resultados-busqueda" id="resultados-busqueda"></div>
-      </div>
+    <div class="contenedor-buscador">
+      <form class="buscador-header" id="form-buscador-header" autocomplete="off">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+
+        <input
+          type="text"
+          id="input-buscador-header"
+          placeholder="Busca un producto o código Fenix..."
+        >
+
+        <button type="submit">Buscar</button>
+      </form>
+
+      <div class="resultados-busqueda" id="resultados-busqueda"></div>
     </div>
-  </header>
+
+    <div class="header-derecha">
+      <button class="btn-tema" id="btn-tema" aria-label="Cambiar tema">
+        <svg class="icono-sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+
+        <svg class="icono-luna" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <a class="btn-nav-whatsapp"
+         href="#"
+         id="nav-whatsapp"
+         target="_blank"
+         rel="noopener"
+         aria-label="WhatsApp">
+
+        <svg viewBox="0 0 24 24">
+          <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/>
+        </svg>
+
+      </a>
+    </div>
+
+  </div>
+
+</header>
 
   <div class="fondo-drawer" id="fondo-drawer"></div>
   <nav class="drawer" id="drawer">
