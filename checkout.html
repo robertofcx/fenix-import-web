@@ -355,6 +355,7 @@
   const URL_SITIO = "https://fenix-import-peru.onrender.com";
   const CARRITO_KEY = "fenix_carrito";
   const DIRECCION_ALMACEN = "Jirón Cajabamba 313, Independencia, Lima";
+  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbxIHzfTctny6HYemui4k6lQzQEnaiKVPtnsMX_ZkneckolbW-WA88ZHTEgkTfj9OVDd2w/exec";
 
   // Ubigeo propio (Departamento → Provincia → Distrito), publicado desde tu Sheet
   const URL_UBIGEO = "ubigeo.json";
@@ -393,6 +394,21 @@
 
   function extraerPrecioNumerico(precio) {
     return Number(String(precio).replace(/[^0-9.]/g, "")) || 0;
+  }
+
+  // Combina distrito + calle + número + urbanización en un solo texto,
+  // igual formato para el mensaje de WhatsApp y para la columna N del Sheet.
+  function armarDireccionCompleta() {
+    const distrito = document.getElementById("input-distrito").value.trim();
+    const calle = document.getElementById("input-calle").value.trim();
+    const numero = document.getElementById("input-numero").value.trim();
+    const urbanizacion = document.getElementById("input-urbanizacion").value.trim();
+
+    let texto = [calle, numero].filter(Boolean).join(" ");
+    if (urbanizacion) texto += (texto ? ", " : "") + "Urb. " + urbanizacion;
+    if (distrito) texto += (texto ? " - " : "") + distrito;
+
+    return texto;
   }
 
   // ---------- Estado ----------
@@ -502,10 +518,22 @@
             <p class="campo-error">Selecciona tu distrito</p>
           </div>
 
-          <div class="campo" id="campo-direccion">
-            <label>Dirección</label>
-            <input type="text" id="input-direccion" placeholder="Av./Jr./Calle, número, urbanización...">
-            <p class="campo-error">Ingresa tu dirección</p>
+          <div class="campo" id="campo-calle">
+            <label>Calle o avenida</label>
+            <input type="text" id="input-calle" placeholder="Ej. Av. Los Jazmines">
+            <p class="campo-error">Ingresa la calle o avenida</p>
+          </div>
+
+          <div class="fila-2">
+            <div class="campo" id="campo-numero">
+              <label>Número / Mz. / Lote</label>
+              <input type="text" id="input-numero" placeholder="Ej. Mz C Lote 5, o 450">
+              <p class="campo-error">Ingresa el número</p>
+            </div>
+            <div class="campo">
+              <label>Urbanización <span class="opcional">(opcional)</span></label>
+              <input type="text" id="input-urbanizacion" placeholder="Ej. Los Jazmines de Naranjal">
+            </div>
           </div>
 
           <div class="campo">
@@ -715,11 +743,10 @@
   function intentarGeocodificar() {
     clearTimeout(temporizadorGeocodificar);
     temporizadorGeocodificar = setTimeout(async () => {
-      const distrito = document.getElementById("input-distrito").value;
-      const direccion = document.getElementById("input-direccion").value.trim();
+      const direccion = armarDireccionCompleta();
       if (!direccion || !mapaLeaflet) return;
 
-      const consulta = `${direccion}, ${distrito}, Lima, Perú`;
+      const consulta = `${direccion}, Lima, Perú`;
       try {
         const respuesta = await fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(consulta));
         const resultados = await respuesta.json();
@@ -812,7 +839,9 @@
       elSelect.appendChild(opt);
     });
 
-    document.getElementById("input-direccion").addEventListener("input", intentarGeocodificar);
+    document.getElementById("input-calle").addEventListener("input", intentarGeocodificar);
+    document.getElementById("input-numero").addEventListener("input", intentarGeocodificar);
+    document.getElementById("input-urbanizacion").addEventListener("input", intentarGeocodificar);
     document.getElementById("input-distrito").addEventListener("change", intentarGeocodificar);
     document.getElementById("input-departamento").addEventListener("change", alCambiarDepartamento);
     document.getElementById("input-provincia").addEventListener("change", alCambiarProvincia);
@@ -930,9 +959,13 @@
       marcarError("campo-distrito", !distrito);
       if (!distrito) valido = false;
 
-      const direccion = document.getElementById("input-direccion").value.trim();
-      marcarError("campo-direccion", !direccion);
-      if (!direccion) valido = false;
+      const calle = document.getElementById("input-calle").value.trim();
+      marcarError("campo-calle", !calle);
+      if (!calle) valido = false;
+
+      const numero = document.getElementById("input-numero").value.trim();
+      marcarError("campo-numero", !numero);
+      if (!numero) valido = false;
     }
 
     if (tipoEntrega === "provincia") {
@@ -962,6 +995,22 @@
     if (!contacto1Telefono) valido = false;
 
     return valido;
+  }
+
+  function registrarPedidoEnSheet(datosPedido) {
+    const nombreCallback = "callback_registro_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
+
+    window[nombreCallback] = function(respuesta) {
+      if (respuesta.error) console.error("No se pudo registrar el pedido en el Sheet:", respuesta.error);
+      delete window[nombreCallback];
+      script.remove();
+    };
+
+    const url = URL_REGISTRO_PEDIDO + "?datos=" + encodeURIComponent(JSON.stringify(datosPedido)) + "&callback=" + nombreCallback;
+    const script = document.createElement("script");
+    script.src = url;
+    script.onerror = () => { delete window[nombreCallback]; script.remove(); };
+    document.body.appendChild(script);
   }
 
   function intentarEnviarPedido() {
@@ -1019,26 +1068,37 @@
     mensaje += `Nombre: ${nombre}\n`;
     mensaje += `Comprobante: ${conComprobante ? "Con comprobante (Boleta/Factura)" : "Precio libre, sin comprobante"}\n`;
 
+    let tipoDocumento = "";
+    let numeroDocumento = "";
     if (conComprobante) {
-      const tipoDoc = document.getElementById("input-tipo-documento").value;
-      const numeroDoc = document.getElementById("input-numero-documento").value.trim();
-      mensaje += `${tipoDoc}: ${numeroDoc}\n`;
+      tipoDocumento = document.getElementById("input-tipo-documento").value;
+      numeroDocumento = document.getElementById("input-numero-documento").value.trim();
+      mensaje += `${tipoDocumento}: ${numeroDocumento}\n`;
     }
+
+    let direccionCompleta = "";
+    let ubicacionGpsTexto = "";
+    let distritoLima = "";
+    let departamentoProvinciaTexto = "";
+    let provinciaProvinciaTexto = "";
+    let distritoProvinciaTexto = "";
+    let agenciaTexto = "";
 
     if (tipoEntrega === "recojo") {
       mensaje += `Entrega: Recojo en almacén (${DIRECCION_ALMACEN})\n`;
+      direccionCompleta = DIRECCION_ALMACEN;
 
     } else if (tipoEntrega === "lima") {
-      const distrito = document.getElementById("input-distrito").value;
-      const direccion = document.getElementById("input-direccion").value.trim();
+      distritoLima = document.getElementById("input-distrito").value;
+      direccionCompleta = armarDireccionCompleta();
       const referencia = document.getElementById("input-referencia").value.trim();
       mensaje += `Entrega: Delivery en Lima\n`;
-      mensaje += `Distrito: ${distrito}\n`;
-      mensaje += `Dirección: ${direccion}\n`;
+      mensaje += `Dirección: ${direccionCompleta}\n`;
       if (referencia) mensaje += `Referencia: ${referencia}\n`;
       if (marcadorMapa) {
         const pos = marcadorMapa.getLatLng();
-        mensaje += `Ubicación GPS: https://maps.google.com/?q=${pos.lat},${pos.lng}\n`;
+        ubicacionGpsTexto = `https://maps.google.com/?q=${pos.lat},${pos.lng}`;
+        mensaje += `Ubicación GPS: ${ubicacionGpsTexto}\n`;
       }
 
     } else if (tipoEntrega === "provincia") {
@@ -1048,11 +1108,16 @@
       const agencia = document.getElementById("input-agencia").value;
       const agenciaOtro = document.getElementById("input-agencia-otro").value.trim();
 
+      departamentoProvinciaTexto = elDepartamento.selectedOptions[0]?.textContent || "";
+      provinciaProvinciaTexto = elProvincia.selectedOptions[0]?.textContent || "";
+      distritoProvinciaTexto = elDistritoProv.selectedOptions[0]?.textContent || "";
+      agenciaTexto = agencia === "otro" ? agenciaOtro : agencia;
+
       mensaje += `Entrega: Envío a provincia\n`;
-      mensaje += `Departamento: ${elDepartamento.selectedOptions[0]?.textContent || ""}\n`;
-      mensaje += `Provincia: ${elProvincia.selectedOptions[0]?.textContent || ""}\n`;
-      mensaje += `Distrito: ${elDistritoProv.selectedOptions[0]?.textContent || ""}\n`;
-      mensaje += `Agencia: ${agencia === "otro" ? agenciaOtro : agencia}\n`;
+      mensaje += `Departamento: ${departamentoProvinciaTexto}\n`;
+      mensaje += `Provincia: ${provinciaProvinciaTexto}\n`;
+      mensaje += `Distrito: ${distritoProvinciaTexto}\n`;
+      mensaje += `Agencia: ${agenciaTexto}\n`;
     }
 
     mensaje += `\nContacto 1: ${contacto1Nombre} - ${contacto1Telefono}\n`;
@@ -1063,6 +1128,31 @@
     if (notas) mensaje += `\nNotas: ${notas}\n`;
 
     mensaje += `\n¿Me confirman disponibilidad y coordinamos la entrega?`;
+
+    // ---------- Registrar el pedido en el Sheet (ALMACEN / DOMICILIO / ENVIO) ----------
+    const hoy = new Date();
+    const fechaTexto = String(hoy.getDate()).padStart(2, "0") + "/" + String(hoy.getMonth() + 1).padStart(2, "0") + "/" + hoy.getFullYear();
+
+    const datosPedido = {
+      tipoEntrega: tipoEntrega,
+      fecha: fechaTexto,
+      nombre: nombre,
+      celular: contacto1Telefono,
+      documento: numeroDocumento,
+      direccion: direccionCompleta,
+      ubicacionGps: ubicacionGpsTexto,
+      distrito: tipoEntrega === "lima" ? distritoLima : distritoProvinciaTexto,
+      departamento: departamentoProvinciaTexto,
+      provincia: provinciaProvinciaTexto,
+      agencia: agenciaTexto,
+      items: carrito.map(item => ({
+        codigo: item.sku,
+        cantidad: item.cantidad,
+        precioUnitario: Number((extraerPrecioNumerico(item.precio) * (conComprobante ? 1.18 : 1)).toFixed(2))
+      }))
+    };
+
+    registrarPedidoEnSheet(datosPedido);
 
     window.open("https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje), "_blank");
   }
