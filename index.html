@@ -74,19 +74,33 @@
 
   .header-fila {
     padding: 12px 20px;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      "izq der"
+      "buscador buscador";
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+    row-gap: 10px;
+    column-gap: 12px;
   }
+
+  @media (min-width: 780px) {
+    .header-fila {
+      grid-template-columns: auto 1fr auto;
+      grid-template-areas: "izq buscador der";
+      row-gap: 0;
+    }
+  }
+
+  .header-izquierda { grid-area: izq; }
+  .contenedor-buscador { grid-area: buscador; }
+  .header-derecha { grid-area: der; justify-self: end; }
 
   .header-izquierda {
     display: flex;
     align-items: center;
     gap: 10px;
   }
-
-  .header-buscador-fila { padding: 0 20px 12px; }
 
   .buscador-header {
     display: flex;
