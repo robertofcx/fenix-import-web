@@ -355,7 +355,7 @@
   const URL_SITIO = "https://fenix-import-peru.onrender.com";
   const CARRITO_KEY = "fenix_carrito";
   const DIRECCION_ALMACEN = "Jirón Cajabamba 313, Independencia, Lima";
-  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbzd3moMXjALDCU-hTAR3nHm7QdtJFOz1D2WDXRjW6LLeFakigzspMriMxm_ZqD3oa2SnQ/exec";
+  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycby9I1PnCqR01fVdzp-1nyv41Pw4RhsI5r72amSnUmrzfnUq1wNm4uyoKOht3W7Qhezljg/exec";
 
   // Ubigeo propio (Departamento → Provincia → Distrito), publicado desde tu Sheet
   const URL_UBIGEO = "ubigeo.json";
@@ -1177,6 +1177,7 @@
       fecha: fechaTexto,
       nombre: nombre,
       celular: contacto1Telefono,
+      tipoDocumento: tipoDocumento,
       documento: numeroDocumento,
       direccion: direccionCompleta,
       ubicacionGps: ubicacionGpsTexto,
@@ -1188,6 +1189,7 @@
       montoTotal: Number(total.toFixed(2)),
       items: carrito.map(item => ({
         codigo: item.sku,
+        nombre: item.nombre,
         cantidad: item.cantidad,
         precioUnitario: Number((extraerPrecioNumerico(item.precio) * factorIgv).toFixed(2))
       }))
