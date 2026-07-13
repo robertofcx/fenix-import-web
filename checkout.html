@@ -355,7 +355,7 @@
   const URL_SITIO = "https://fenix-import-peru.onrender.com";
   const CARRITO_KEY = "fenix_carrito";
   const DIRECCION_ALMACEN = "Jirón Cajabamba 313, Independencia, Lima";
-  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbxIHzfTctny6HYemui4k6lQzQEnaiKVPtnsMX_ZkneckolbW-WA88ZHTEgkTfj9OVDd2w/exec";
+  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbxSjmnqKHf6GDs857II5cowOknv4B0ldWtSfIVSjI74YDJCzkqcp7H4YT-5plv4mwyiEg/exec";
 
   // Ubigeo propio (Departamento → Provincia → Distrito), publicado desde tu Sheet
   const URL_UBIGEO = "ubigeo.json";
@@ -887,11 +887,8 @@
     const carrito = obtenerCarrito();
     const subtotal = carrito.reduce((s, i) => s + extraerPrecioNumerico(i.precio) * i.cantidad, 0);
     const conComprobante = document.querySelector('input[name="comprobante"]:checked')?.value === "con_comprobante";
-    const igv = conComprobante ? subtotal * 0.18 : 0;
 
     document.getElementById("resumen-subtotal").textContent = "S/ " + subtotal.toFixed(2);
-    document.getElementById("linea-igv").style.display = conComprobante ? "flex" : "none";
-    document.getElementById("resumen-igv").textContent = "S/ " + igv.toFixed(2);
 
     const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked')?.value || "recojo";
     const elResumenEnvio = document.getElementById("resumen-envio");
@@ -921,11 +918,22 @@
       } else {
         const costoDistrito = Number(elDistrito.selectedOptions[0].dataset.costo) || 0;
         envio = costoDistrito + calcularRecargoVolumen();
-        elResumenEnvio.textContent = "S/ " + envio.toFixed(2);
       }
     }
 
-    const total = subtotal + igv + (envioEsNumero ? envio : 0);
+    // El IGV aplica sobre productos Y delivery (si el delivery tiene costo numérico)
+    const baseImponible = subtotal + (envioEsNumero ? envio : 0);
+    const igv = conComprobante ? baseImponible * 0.18 : 0;
+    const factorIgv = conComprobante ? 1.18 : 1;
+
+    document.getElementById("linea-igv").style.display = conComprobante ? "flex" : "none";
+    document.getElementById("resumen-igv").textContent = "S/ " + igv.toFixed(2);
+
+    if (envioEsNumero && (tipoEntrega === "lima")) {
+      elResumenEnvio.textContent = "S/ " + (envio * factorIgv).toFixed(2);
+    }
+
+    const total = baseImponible + igv;
     document.getElementById("resumen-total").textContent = "S/ " + total.toFixed(2) + (envioEsNumero ? "" : " + envío");
   }
 
@@ -1030,10 +1038,10 @@
     const notas = document.getElementById("input-notas").value.trim();
 
     const subtotal = carrito.reduce((s, i) => s + extraerPrecioNumerico(i.precio) * i.cantidad, 0);
-    const igv = conComprobante ? subtotal * 0.18 : 0;
     const requiereCotizacionManual = buscarRecargoCotizarManual();
 
     let envio = 0;
+    let envioEsNumero = false;
     let envioTexto = "Sin costo (recojo en almacén)";
 
     if (tipoEntrega === "lima") {
@@ -1043,18 +1051,30 @@
         const elDistrito = document.getElementById("input-distrito");
         const costoDistrito = Number(elDistrito.selectedOptions[0]?.dataset.costo) || 0;
         envio = costoDistrito + calcularRecargoVolumen();
-        envioTexto = "S/ " + envio.toFixed(2);
+        envioEsNumero = true;
       }
     } else if (tipoEntrega === "provincia") {
       envioTexto = "Se coordina y paga en la agencia";
+    } else if (tipoEntrega === "recojo") {
+      envioEsNumero = true; // envío = 0, pero sí entra en la base (no cambia nada)
     }
 
-    const total = subtotal + igv + ((tipoEntrega === "lima" && !requiereCotizacionManual) ? envio : 0);
+    // El IGV aplica sobre productos Y delivery (si el delivery tiene costo numérico)
+    const baseImponible = subtotal + (envioEsNumero ? envio : 0);
+    const igv = conComprobante ? baseImponible * 0.18 : 0;
+    const factorIgv = conComprobante ? 1.18 : 1;
+    const costoDeliveryConIgv = Number((envio * factorIgv).toFixed(2));
+
+    if (tipoEntrega === "lima" && envioEsNumero) {
+      envioTexto = "S/ " + costoDeliveryConIgv.toFixed(2);
+    }
+
+    const total = baseImponible + igv;
 
     let mensaje = "¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n\n";
 
     carrito.forEach(item => {
-      const precioUnit = extraerPrecioNumerico(item.precio);
+      const precioUnit = extraerPrecioNumerico(item.precio) * factorIgv;
       const link = URL_SITIO + "/producto.html?sku=" + encodeURIComponent(item.sku);
       mensaje += `${item.nombre}\nPrecio: S/ ${precioUnit.toFixed(2)} c/u — Cantidad: ${item.cantidad}\nSKU: ${item.sku}\n${link}\n\n`;
     });
@@ -1145,10 +1165,12 @@
       departamento: departamentoProvinciaTexto,
       provincia: provinciaProvinciaTexto,
       agencia: agenciaTexto,
+      costoDelivery: tipoEntrega === "lima" ? costoDeliveryConIgv : 0,
+      montoTotal: Number(total.toFixed(2)),
       items: carrito.map(item => ({
         codigo: item.sku,
         cantidad: item.cantidad,
-        precioUnitario: Number((extraerPrecioNumerico(item.precio) * (conComprobante ? 1.18 : 1)).toFixed(2))
+        precioUnitario: Number((extraerPrecioNumerico(item.precio) * factorIgv).toFixed(2))
       }))
     };
 
