@@ -1006,38 +1006,22 @@
   }
 
   function registrarPedidoEnSheet(datosPedido) {
-    return new Promise((resolve) => {
-      const nombreCallback = "callback_registro_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
+    const url = URL_REGISTRO_PEDIDO + "?datos=" + encodeURIComponent(JSON.stringify(datosPedido));
 
-      const temporizador = setTimeout(() => {
-        console.error("El registro en el Sheet tardó demasiado, se continúa de todas formas.");
-        limpiar();
-        resolve({ error: "tiempo agotado" });
-      }, 8000);
-
-      function limpiar() {
-        clearTimeout(temporizador);
-        delete window[nombreCallback];
-        if (script.parentNode) script.remove();
-      }
-
-      window[nombreCallback] = function(respuesta) {
-        if (respuesta.error) console.error("No se pudo registrar el pedido en el Sheet:", respuesta.error);
-        if (respuesta.avisos) console.warn("Avisos al registrar el pedido:", respuesta.avisos);
-        limpiar();
-        resolve(respuesta);
-      };
-
-      const url = URL_REGISTRO_PEDIDO + "?datos=" + encodeURIComponent(JSON.stringify(datosPedido)) + "&callback=" + nombreCallback;
-      const script = document.createElement("script");
-      script.src = url;
-      script.onerror = () => {
-        console.error("No se pudo conectar con el registro del Sheet.");
-        limpiar();
-        resolve({ error: "conexión fallida" });
-      };
-      document.body.appendChild(script);
-    });
+    // Se usa fetch en modo "no-cors": no necesitamos LEER la respuesta
+    // (esto es un envío silencioso de respaldo, el mensaje de WhatsApp es
+    // la confirmación real), así que no importa si Google la bloquea para
+    // lectura — el registro en el Sheet igual se ejecuta del lado del
+    // servidor. Esto evita los problemas raros de sesión/cuentas de
+    // Google que sí afectaban la carga de un <script> tradicional.
+    return fetch(url, { mode: "no-cors", keepalive: true })
+      .then(() => {
+        return { exito: true };
+      })
+      .catch((error) => {
+        console.error("No se pudo conectar con el registro del Sheet:", error);
+        return { error: "conexión fallida" };
+      });
   }
 
   async function intentarEnviarPedido() {
