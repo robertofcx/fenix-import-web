@@ -354,6 +354,7 @@
   const NUMERO_WHATSAPP = "51978821080";
   const URL_SITIO = "https://fenix-import-peru.onrender.com";
   const CARRITO_KEY = "fenix_carrito";
+  const FORM_DATOS_KEY = "fenix_checkout_datos";
   const DIRECCION_ALMACEN = "Jirón Cajabamba 313, Independencia, Lima";
   const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycby5JfqckK0tRlEDpgoZFp9Zp241Od7ARoEvXObFJYzlOGpERhizPC14ZLcsCwkDV4bJJw/exec";
 
@@ -443,6 +444,11 @@
             <label>Nombre completo</label>
             <input type="text" id="input-nombre" placeholder="Ej. María Gómez">
             <p class="campo-error">Ingresa tu nombre</p>
+          </div>
+          <div class="campo" id="campo-celular-comprador">
+            <label>Celular</label>
+            <input type="tel" id="input-celular-comprador" placeholder="9XXXXXXXX">
+            <p class="campo-error">Ingresa tu celular</p>
           </div>
         </div>
 
@@ -593,27 +599,40 @@
         </div>
 
         <div class="seccion-form">
-          <p class="seccion-form-titulo">Contacto</p>
-          <p class="seccion-form-subtitulo">Hasta 2 — por si otra persona recibe el pedido</p>
+          <p class="seccion-form-titulo">¿Quién recibe el pedido?</p>
+          <p class="seccion-form-subtitulo">Por si otra persona distinta a ti lo recibe</p>
 
-          <div class="contacto-bloque">
-            <p class="contacto-bloque-titulo">Contacto 1</p>
-            <div class="fila-2">
-              <div class="campo" id="campo-contacto1-nombre">
-                <label>Nombre</label>
-                <input type="text" id="input-contacto1-nombre" placeholder="Nombre">
-                <p class="campo-error">Requerido</p>
-              </div>
-              <div class="campo" id="campo-contacto1-telefono">
-                <label>Teléfono</label>
-                <input type="tel" id="input-contacto1-telefono" placeholder="9XXXXXXXX">
-                <p class="campo-error">Requerido</p>
+          <div class="opciones-comprobante">
+            <label class="opcion-radio">
+              <input type="radio" name="quienRecibe" value="yo_mismo" checked>
+              <span class="opcion-radio-texto"><strong>Yo mismo</strong><span>Uso mi propio nombre y celular de arriba</span></span>
+            </label>
+            <label class="opcion-radio">
+              <input type="radio" name="quienRecibe" value="otra_persona">
+              <span class="opcion-radio-texto"><strong>Otra persona</strong><span>Alguien más va a recibir el pedido</span></span>
+            </label>
+          </div>
+
+          <div id="bloque-contacto1" style="display:none; margin-top:14px;">
+            <div class="contacto-bloque" style="border-top:none; padding-top:0; margin-top:0;">
+              <p class="contacto-bloque-titulo">Quien recibe</p>
+              <div class="fila-2">
+                <div class="campo" id="campo-contacto1-nombre">
+                  <label>Nombre</label>
+                  <input type="text" id="input-contacto1-nombre" placeholder="Nombre">
+                  <p class="campo-error">Requerido</p>
+                </div>
+                <div class="campo" id="campo-contacto1-telefono">
+                  <label>Teléfono</label>
+                  <input type="tel" id="input-contacto1-telefono" placeholder="9XXXXXXXX">
+                  <p class="campo-error">Requerido</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="contacto-bloque">
-            <p class="contacto-bloque-titulo">Contacto 2 <span class="opcional" style="text-transform:none; font-weight:400;">(opcional)</span></p>
+          <div class="contacto-bloque" style="margin-top:14px;">
+            <p class="contacto-bloque-titulo">Contacto adicional <span class="opcional" style="text-transform:none; font-weight:400;">(opcional, por si no responden al primero)</span></p>
             <div class="fila-2">
               <div class="campo">
                 <label>Nombre</label>
@@ -637,6 +656,7 @@
 
       <div class="resumen">
         <p class="resumen-titulo">Resumen del pedido</p>
+        <a href="catalogo.html" id="link-editar-carrito" style="display:block; font-size:0.82rem; color:var(--azul); font-weight:600; margin-bottom:14px;">← Agregar o quitar productos</a>
         <div id="resumen-items"></div>
         <div class="resumen-linea"><span>Subtotal</span><span id="resumen-subtotal">S/ 0.00</span></div>
         <div class="resumen-linea" id="linea-igv" style="display:none;"><span>IGV (18%)</span><span id="resumen-igv">S/ 0.00</span></div>
@@ -653,6 +673,7 @@
 
     document.querySelectorAll('input[name="comprobante"]').forEach(r => r.addEventListener("change", onCambioComprobante));
     document.querySelectorAll('input[name="tipoEntrega"]').forEach(r => r.addEventListener("change", onCambioTipoEntrega));
+    document.querySelectorAll('input[name="quienRecibe"]').forEach(r => r.addEventListener("change", onCambioQuienRecibe));
     document.getElementById("input-tipo-documento").addEventListener("change", ajustarCampoDocumento);
     document.getElementById("input-distrito").addEventListener("change", actualizarResumen);
     document.getElementById("input-agencia").addEventListener("change", onCambioAgencia);
@@ -661,7 +682,16 @@
     poblarDistritosLima();
     renderizarResumenItems();
     ajustarCampoDocumento();
+    onCambioQuienRecibe();
     actualizarResumen();
+
+    restaurarDatosFormulario();
+    activarGuardadoAutomatico();
+  }
+
+  function onCambioQuienRecibe() {
+    const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
+    document.getElementById("bloque-contacto1").style.display = esOtraPersona ? "block" : "none";
   }
 
   // ---------- Comprobante / documento ----------
@@ -942,12 +972,118 @@
     if (el) el.classList.toggle("con-error", tieneError);
   }
 
+  // ---------- Guardar/restaurar el formulario (para no perder datos si el cliente va al carrito) ----------
+
+  const CAMPOS_TEXTO_A_GUARDAR = [
+    "input-nombre", "input-celular-comprador",
+    "input-contacto1-nombre", "input-contacto1-telefono",
+    "input-contacto2-nombre", "input-contacto2-telefono",
+    "input-numero-documento",
+    "input-distrito", "input-calle", "input-numero", "input-urbanizacion", "input-referencia",
+    "input-agencia-otro",
+    "input-notas"
+  ];
+
+  function guardarDatosFormulario() {
+    const datos = {};
+    CAMPOS_TEXTO_A_GUARDAR.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) datos[id] = el.value;
+    });
+
+    const comprobante = document.querySelector('input[name="comprobante"]:checked');
+    if (comprobante) datos.comprobante = comprobante.value;
+
+    const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked');
+    if (tipoEntrega) datos.tipoEntrega = tipoEntrega.value;
+
+    const quienRecibe = document.querySelector('input[name="quienRecibe"]:checked');
+    if (quienRecibe) datos.quienRecibe = quienRecibe.value;
+
+    const tipoDoc = document.getElementById("input-tipo-documento");
+    if (tipoDoc) datos.tipoDocumento = tipoDoc.value;
+
+    localStorage.setItem(FORM_DATOS_KEY, JSON.stringify(datos));
+  }
+
+  function restaurarDatosFormulario() {
+    let datos;
+    try {
+      datos = JSON.parse(localStorage.getItem(FORM_DATOS_KEY));
+    } catch (e) {
+      return;
+    }
+    if (!datos) return;
+
+    CAMPOS_TEXTO_A_GUARDAR.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && datos[id] !== undefined) el.value = datos[id];
+    });
+
+    if (datos.comprobante) {
+      const el = document.querySelector(`input[name="comprobante"][value="${datos.comprobante}"]`);
+      if (el) { el.checked = true; onCambioComprobante(); }
+    }
+
+    if (datos.tipoDocumento) {
+      const el = document.getElementById("input-tipo-documento");
+      if (el) { el.value = datos.tipoDocumento; ajustarCampoDocumento(); el.value = datos.tipoDocumento; }
+      const numDoc = document.getElementById("input-numero-documento");
+      if (numDoc && datos["input-numero-documento"]) numDoc.value = datos["input-numero-documento"];
+    }
+
+    if (datos.quienRecibe) {
+      const el = document.querySelector(`input[name="quienRecibe"][value="${datos.quienRecibe}"]`);
+      if (el) { el.checked = true; onCambioQuienRecibe(); }
+    }
+
+    if (datos.tipoEntrega) {
+      const el = document.querySelector(`input[name="tipoEntrega"][value="${datos.tipoEntrega}"]`);
+      if (el) { el.checked = true; onCambioTipoEntrega(); }
+    }
+
+    // El distrito de Lima es un <select> poblado dinámicamente — se
+    // restaura aparte, después de que poblarDistritosLima() ya corrió.
+    if (datos["input-distrito"]) {
+      const elDistrito = document.getElementById("input-distrito");
+      if (elDistrito) elDistrito.value = datos["input-distrito"];
+    }
+
+    actualizarResumen();
+  }
+
+  function activarGuardadoAutomatico() {
+    document.getElementById("main-contenido").addEventListener("input", guardarDatosFormulario);
+    document.getElementById("main-contenido").addEventListener("change", guardarDatosFormulario);
+  }
+
+  function limpiarDatosFormularioGuardados() {
+    localStorage.removeItem(FORM_DATOS_KEY);
+  }
+
+  // ---------- ID de pedido (referencia para el cliente, no reemplaza el correlativo interno del Sheet) ----------
+
+  function generarIdPedido() {
+    const ahora = new Date();
+    const aa = String(ahora.getFullYear()).slice(-2);
+    const mm = String(ahora.getMonth() + 1).padStart(2, "0");
+    const dd = String(ahora.getDate()).padStart(2, "0");
+    const hh = String(ahora.getHours()).padStart(2, "0");
+    const min = String(ahora.getMinutes()).padStart(2, "0");
+    const azar = Math.floor(100 + Math.random() * 900);
+    return `FIP-${aa}${mm}${dd}-${hh}${min}-${azar}`;
+  }
+
   function validarFormulario() {
     let valido = true;
 
     const nombre = document.getElementById("input-nombre").value.trim();
     marcarError("campo-nombre", !nombre);
     if (!nombre) valido = false;
+
+    const celularComprador = document.getElementById("input-celular-comprador").value.trim();
+    marcarError("campo-celular-comprador", !celularComprador);
+    if (!celularComprador) valido = false;
 
     const conComprobante = document.querySelector('input[name="comprobante"]:checked').value === "con_comprobante";
     if (conComprobante) {
@@ -994,13 +1130,16 @@
       if (!agencia) valido = false;
     }
 
-    const contacto1Nombre = document.getElementById("input-contacto1-nombre").value.trim();
-    marcarError("campo-contacto1-nombre", !contacto1Nombre);
-    if (!contacto1Nombre) valido = false;
+    const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
+    if (esOtraPersona) {
+      const contacto1Nombre = document.getElementById("input-contacto1-nombre").value.trim();
+      marcarError("campo-contacto1-nombre", !contacto1Nombre);
+      if (!contacto1Nombre) valido = false;
 
-    const contacto1Telefono = document.getElementById("input-contacto1-telefono").value.trim();
-    marcarError("campo-contacto1-telefono", !contacto1Telefono);
-    if (!contacto1Telefono) valido = false;
+      const contacto1Telefono = document.getElementById("input-contacto1-telefono").value.trim();
+      marcarError("campo-contacto1-telefono", !contacto1Telefono);
+      if (!contacto1Telefono) valido = false;
+    }
 
     return valido;
   }
@@ -1032,13 +1171,18 @@
 
     const carrito = obtenerCarrito();
     const nombre = document.getElementById("input-nombre").value.trim();
+    const celularComprador = document.getElementById("input-celular-comprador").value.trim();
     const conComprobante = document.querySelector('input[name="comprobante"]:checked').value === "con_comprobante";
     const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked').value;
-    const contacto1Nombre = document.getElementById("input-contacto1-nombre").value.trim();
-    const contacto1Telefono = document.getElementById("input-contacto1-telefono").value.trim();
+
+    const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
+    const contacto1Nombre = esOtraPersona ? document.getElementById("input-contacto1-nombre").value.trim() : nombre;
+    const contacto1Telefono = esOtraPersona ? document.getElementById("input-contacto1-telefono").value.trim() : celularComprador;
+
     const contacto2Nombre = document.getElementById("input-contacto2-nombre").value.trim();
     const contacto2Telefono = document.getElementById("input-contacto2-telefono").value.trim();
     const notas = document.getElementById("input-notas").value.trim();
+    const idPedido = generarIdPedido();
 
     const subtotal = carrito.reduce((s, i) => s + extraerPrecioNumerico(i.precio) * i.cantidad, 0);
     const requiereCotizacionManual = buscarRecargoCotizarManual();
@@ -1074,7 +1218,7 @@
 
     const total = baseImponible + igv;
 
-    let mensaje = "¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n\n";
+    let mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\nN° de pedido: ${idPedido}\n\n`;
 
     carrito.forEach(item => {
       const precioUnit = extraerPrecioNumerico(item.precio) * factorIgv;
@@ -1089,6 +1233,7 @@
 
     mensaje += `Datos del cliente:\n`;
     mensaje += `Nombre: ${nombre}\n`;
+    mensaje += `Celular: ${celularComprador}\n`;
     mensaje += `Comprobante: ${conComprobante ? "Con comprobante (Boleta/Factura)" : "Precio libre, sin comprobante"}\n`;
 
     let tipoDocumento = "";
@@ -1143,9 +1288,11 @@
       mensaje += `Agencia: ${agenciaTexto}\n`;
     }
 
-    mensaje += `\nContacto 1: ${contacto1Nombre} - ${contacto1Telefono}\n`;
+    mensaje += esOtraPersona
+      ? `\nQuien recibe: ${contacto1Nombre} - ${contacto1Telefono}\n`
+      : `\nQuien recibe: el propio comprador\n`;
     if (contacto2Nombre || contacto2Telefono) {
-      mensaje += `Contacto 2: ${contacto2Nombre || "-"} - ${contacto2Telefono || "-"}\n`;
+      mensaje += `Contacto adicional: ${contacto2Nombre || "-"} - ${contacto2Telefono || "-"}\n`;
     }
 
     if (notas) mensaje += `\nNotas: ${notas}\n`;
@@ -1157,6 +1304,7 @@
     const fechaTexto = String(hoy.getDate()).padStart(2, "0") + "/" + String(hoy.getMonth() + 1).padStart(2, "0") + "/" + hoy.getFullYear();
 
     const datosPedido = {
+      idPedido: idPedido,
       tipoEntrega: tipoEntrega,
       fecha: fechaTexto,
       nombre: nombre,
@@ -1189,9 +1337,22 @@
 
     window.open("https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje), "_blank");
 
-    elBotonEnviar.disabled = false;
-    elBotonEnviar.style.opacity = "1";
-    elBotonEnviar.innerHTML = textoOriginalBoton;
+    guardarCarrito([]);
+    actualizarBadgeCarrito();
+    limpiarDatosFormularioGuardados();
+    mostrarPantallaConcluido(idPedido);
+  }
+
+  function mostrarPantallaConcluido(idPedido) {
+    document.getElementById("main-contenido").innerHTML = `
+      <div class="estado-vacio" style="grid-column: 1 / -1;">
+        <div class="icono">✅</div>
+        <p style="font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:1.4rem; color:var(--texto); margin:0 0 10px;">¡Pedido enviado!</p>
+        <p style="margin:0 0 6px;">N° de pedido: <strong style="color:var(--texto);">${idPedido}</strong></p>
+        <p style="max-width:380px; margin:0 auto 20px;">Gracias por tu compra. La atención continúa por WhatsApp — ahí un asesor va a confirmar tu pedido y coordinar los siguientes pasos.</p>
+        <a href="catalogo.html" style="display:inline-block; margin-top:10px;">Seguir viendo el catálogo →</a>
+      </div>
+    `;
   }
 
   // ---------- Carga inicial ----------
