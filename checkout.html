@@ -660,22 +660,20 @@
 
         <div class="seccion-form" id="seccion-destinatario-provincia" style="display:none;">
           <p class="seccion-form-titulo">Datos de quien recibe</p>
-          <p class="seccion-form-subtitulo">La agencia pide DNI del destinatario para entregar el paquete</p>
+          <p class="seccion-form-subtitulo">La agencia pide DNI a quien recoja el paquete — marca todas las que apliquen</p>
 
-          <div class="opciones-comprobante">
-            <label class="opcion-radio">
-              <input type="radio" name="esMismoDestinatario" value="si" checked>
-              <span class="opcion-radio-texto"><strong>El destinatario soy yo mismo</strong><span>Uso mis propios datos de arriba (nombre, DNI, celular)</span></span>
-            </label>
-            <label class="opcion-radio">
-              <input type="radio" name="esMismoDestinatario" value="no">
-              <span class="opcion-radio-texto"><strong>Es otra persona</strong><span>Alguien más va a recibir el paquete en destino</span></span>
-            </label>
-          </div>
+          <label class="opcion-radio" style="margin-bottom:8px;">
+            <input type="checkbox" id="chk-destinatario-yo-mismo" checked>
+            <span class="opcion-radio-texto"><strong>Yo mismo</strong><span>Uso mis propios datos de arriba (nombre, DNI, celular)</span></span>
+          </label>
+          <label class="opcion-radio">
+            <input type="checkbox" id="chk-destinatario-otra-persona">
+            <span class="opcion-radio-texto"><strong>Otra persona</strong><span>Alguien más también puede recoger el paquete</span></span>
+          </label>
 
           <div id="bloque-destinatario1" style="display:none; margin-top:14px;">
             <div class="contacto-bloque" style="border-top:none; padding-top:0; margin-top:0;">
-              <p class="contacto-bloque-titulo">Destinatario</p>
+              <p class="contacto-bloque-titulo">Datos de esa persona</p>
               <div class="campo" id="campo-destinatario1-nombre">
                 <label>Nombre completo</label>
                 <input type="text" id="input-destinatario1-nombre" placeholder="Nombre completo">
@@ -693,22 +691,26 @@
                   <p class="campo-error">Celular inválido (9 dígitos, ej. 987654321)</p>
                 </div>
               </div>
+
+              <button type="button" id="btn-agregar-destinatario2" class="btn-gps" style="margin-top:4px;">+ Agregar una segunda persona</button>
+
+              <div id="bloque-destinatario2" style="display:none; margin-top:14px;">
+                <p class="contacto-bloque-titulo">Segunda persona <span class="opcional" style="text-transform:none; font-weight:400;">(opcional)</span></p>
+                <div class="fila-2">
+                  <div class="campo">
+                    <label>Nombre completo</label>
+                    <input type="text" id="input-destinatario2-nombre" placeholder="Nombre completo">
+                  </div>
+                  <div class="campo">
+                    <label>Celular</label>
+                    <input type="tel" id="input-destinatario2-celular" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="contacto-bloque" style="margin-top:14px;">
-            <p class="contacto-bloque-titulo">Destinatario adicional <span class="opcional" style="text-transform:none; font-weight:400;">(opcional, por si quieres registrar a alguien más)</span></p>
-            <div class="fila-2">
-              <div class="campo">
-                <label>Nombre completo</label>
-                <input type="text" id="input-destinatario2-nombre" placeholder="Nombre completo">
-              </div>
-              <div class="campo">
-                <label>Celular</label>
-                <input type="tel" id="input-destinatario2-celular" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
-              </div>
-            </div>
-          </div>
+          <p class="campo-error" id="error-destinatario-general" style="display:none; margin-top:10px;">Marca al menos una opción de quién recogerá el pedido.</p>
         </div>
 
         <div class="seccion-form">
@@ -772,7 +774,9 @@
     document.querySelectorAll('input[name="comprobante"]').forEach(r => r.addEventListener("change", onCambioComprobante));
     document.querySelectorAll('input[name="tipoEntrega"]').forEach(r => r.addEventListener("change", onCambioTipoEntrega));
     document.querySelectorAll('input[name="quienRecibe"]').forEach(r => r.addEventListener("change", onCambioQuienRecibe));
-    document.querySelectorAll('input[name="esMismoDestinatario"]').forEach(r => r.addEventListener("change", onCambioEsMismoDestinatario));
+    document.getElementById("chk-destinatario-yo-mismo").addEventListener("change", onCambioDestinatarios);
+    document.getElementById("chk-destinatario-otra-persona").addEventListener("change", onCambioDestinatarios);
+    document.getElementById("btn-agregar-destinatario2").addEventListener("click", toggleDestinatario2);
     document.getElementById("input-tipo-documento").addEventListener("change", ajustarCampoDocumento);
     document.getElementById("input-distrito").addEventListener("change", actualizarResumen);
     document.getElementById("input-agencia").addEventListener("change", onCambioAgencia);
@@ -782,7 +786,7 @@
     renderizarResumenItems();
     ajustarCampoDocumento();
     onCambioQuienRecibe();
-    onCambioEsMismoDestinatario();
+    onCambioDestinatarios();
     actualizarResumen();
     activarValidacionesDeCampos();
     actualizarEstimadosEntrega();
@@ -796,9 +800,26 @@
     document.getElementById("bloque-contacto1").style.display = esOtraPersona ? "block" : "none";
   }
 
-  function onCambioEsMismoDestinatario() {
-    const esOtro = document.querySelector('input[name="esMismoDestinatario"]:checked').value === "no";
-    document.getElementById("bloque-destinatario1").style.display = esOtro ? "block" : "none";
+  function onCambioDestinatarios() {
+    const yoMismo = document.getElementById("chk-destinatario-yo-mismo").checked;
+    const otraPersona = document.getElementById("chk-destinatario-otra-persona").checked;
+
+    document.getElementById("bloque-destinatario1").style.display = otraPersona ? "block" : "none";
+
+    // No se puede desmarcar todo — siempre debe quedar al menos alguien
+    document.getElementById("error-destinatario-general").style.display = (!yoMismo && !otraPersona) ? "block" : "none";
+  }
+
+  function toggleDestinatario2() {
+    const el = document.getElementById("bloque-destinatario2");
+    const btn = document.getElementById("btn-agregar-destinatario2");
+    const abierto = el.style.display === "block";
+    el.style.display = abierto ? "none" : "block";
+    btn.textContent = abierto ? "+ Agregar una segunda persona" : "− Quitar segunda persona";
+    if (abierto) {
+      document.getElementById("input-destinatario2-nombre").value = "";
+      document.getElementById("input-destinatario2-celular").value = "";
+    }
   }
 
   // ---------- Comprobante / documento ----------
@@ -1160,8 +1181,11 @@
     const quienRecibe = document.querySelector('input[name="quienRecibe"]:checked');
     if (quienRecibe) datos.quienRecibe = quienRecibe.value;
 
-    const esMismoDestinatario = document.querySelector('input[name="esMismoDestinatario"]:checked');
-    if (esMismoDestinatario) datos.esMismoDestinatario = esMismoDestinatario.value;
+    const esMismoDestinatario = document.getElementById("chk-destinatario-yo-mismo");
+    if (esMismoDestinatario) datos.destinatarioYoMismo = esMismoDestinatario.checked;
+
+    const destinatarioOtraPersona = document.getElementById("chk-destinatario-otra-persona");
+    if (destinatarioOtraPersona) datos.destinatarioOtraPersona = destinatarioOtraPersona.checked;
 
     const tipoDoc = document.getElementById("input-tipo-documento");
     if (tipoDoc) datos.tipoDocumento = tipoDoc.value;
@@ -1200,9 +1224,17 @@
       if (el) { el.checked = true; onCambioQuienRecibe(); }
     }
 
-    if (datos.esMismoDestinatario) {
-      const el = document.querySelector(`input[name="esMismoDestinatario"][value="${datos.esMismoDestinatario}"]`);
-      if (el) { el.checked = true; onCambioEsMismoDestinatario(); }
+    if (datos.destinatarioYoMismo !== undefined) {
+      document.getElementById("chk-destinatario-yo-mismo").checked = datos.destinatarioYoMismo;
+    }
+    if (datos.destinatarioOtraPersona !== undefined) {
+      document.getElementById("chk-destinatario-otra-persona").checked = datos.destinatarioOtraPersona;
+    }
+    onCambioDestinatarios();
+
+    if (datos["input-destinatario2-nombre"] || datos["input-destinatario2-celular"]) {
+      document.getElementById("bloque-destinatario2").style.display = "block";
+      document.getElementById("btn-agregar-destinatario2").textContent = "− Quitar segunda persona";
     }
 
     if (datos.tipoEntrega) {
@@ -1303,8 +1335,14 @@
       marcarError("campo-agencia", !agencia);
       if (!agencia) valido = false;
 
-      const esOtroDestinatario = document.querySelector('input[name="esMismoDestinatario"]:checked').value === "no";
-      if (esOtroDestinatario) {
+      const destYoMismo = document.getElementById("chk-destinatario-yo-mismo").checked;
+      const destOtraPersona = document.getElementById("chk-destinatario-otra-persona").checked;
+
+      const hayAlMenosUno = destYoMismo || destOtraPersona;
+      document.getElementById("error-destinatario-general").style.display = hayAlMenosUno ? "none" : "block";
+      if (!hayAlMenosUno) valido = false;
+
+      if (destOtraPersona) {
         const destNombre = document.getElementById("input-destinatario1-nombre").value.trim();
         marcarError("campo-destinatario1-nombre", !destNombre);
         if (!destNombre) valido = false;
@@ -1371,23 +1409,28 @@
     const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
     const dniComprador = tipoEntrega === "provincia" ? document.getElementById("input-dni-comprador").value.trim() : "";
 
-    let contacto1Nombre, contacto1Telefono, contacto1Dni = "";
-    let contacto2Nombre = "", contacto2Telefono = "";
-    let esOtroDestinatario = false;
+    let contacto1Nombre, contacto1Telefono;
+    let listaDestinatarios = [];
 
     if (tipoEntrega === "provincia") {
-      esOtroDestinatario = document.querySelector('input[name="esMismoDestinatario"]:checked').value === "no";
-      if (esOtroDestinatario) {
-        contacto1Nombre = document.getElementById("input-destinatario1-nombre").value.trim();
-        contacto1Dni = document.getElementById("input-destinatario1-dni").value.trim();
-        contacto1Telefono = document.getElementById("input-destinatario1-celular").value.trim();
-      } else {
-        contacto1Nombre = nombre;
-        contacto1Dni = dniComprador;
-        contacto1Telefono = celularComprador;
+      const destYoMismo = document.getElementById("chk-destinatario-yo-mismo").checked;
+      const destOtraPersona = document.getElementById("chk-destinatario-otra-persona").checked;
+
+      if (destYoMismo) {
+        listaDestinatarios.push({ nombre: nombre, dni: dniComprador, celular: celularComprador });
       }
-      contacto2Nombre = document.getElementById("input-destinatario2-nombre").value.trim();
-      contacto2Telefono = document.getElementById("input-destinatario2-celular").value.trim();
+      if (destOtraPersona) {
+        listaDestinatarios.push({
+          nombre: document.getElementById("input-destinatario1-nombre").value.trim(),
+          dni: document.getElementById("input-destinatario1-dni").value.trim(),
+          celular: document.getElementById("input-destinatario1-celular").value.trim()
+        });
+      }
+      const destinatario2Nombre = document.getElementById("input-destinatario2-nombre").value.trim();
+      const destinatario2Celular = document.getElementById("input-destinatario2-celular").value.trim();
+      if (destinatario2Nombre || destinatario2Celular) {
+        listaDestinatarios.push({ nombre: destinatario2Nombre, dni: "", celular: destinatario2Celular });
+      }
     } else {
       contacto1Nombre = esOtraPersona ? document.getElementById("input-contacto1-nombre").value.trim() : nombre;
       contacto1Telefono = esOtraPersona ? document.getElementById("input-contacto1-telefono").value.trim() : celularComprador;
@@ -1405,13 +1448,15 @@
       const linea = `Autorizado a recoger/recibir: ${contacto1Nombre} - ${contacto1Telefono}`;
       notasParaSheet = notasParaSheet ? `${notasParaSheet}\n${linea}` : linea;
     }
-    if (tipoEntrega === "provincia" && esOtroDestinatario) {
-      const linea = `Destinatario: ${contacto1Nombre} - DNI ${contacto1Dni} - ${contacto1Telefono}`;
-      notasParaSheet = notasParaSheet ? `${notasParaSheet}\n${linea}` : linea;
-    }
-    if (tipoEntrega === "provincia" && (contacto2Nombre || contacto2Telefono)) {
-      const linea = `Destinatario adicional: ${contacto2Nombre || "-"} - ${contacto2Telefono || "-"}`;
-      notasParaSheet = notasParaSheet ? `${notasParaSheet}\n${linea}` : linea;
+    if (tipoEntrega === "provincia") {
+      const esSoloElComprador = listaDestinatarios.length === 1 && listaDestinatarios[0].nombre === nombre;
+      if (!esSoloElComprador && listaDestinatarios.length > 0) {
+        const detalle = listaDestinatarios
+          .map(d => `${d.nombre}${d.dni ? " (DNI " + d.dni + ")" : ""} - ${d.celular}`)
+          .join(" | ");
+        const linea = `Autorizados a recoger en agencia: ${detalle}`;
+        notasParaSheet = notasParaSheet ? `${notasParaSheet}\n${linea}` : linea;
+      }
     }
 
     const subtotal = carrito.reduce((s, i) => s + extraerPrecioNumerico(i.precio) * i.cantidad, 0);
@@ -1520,12 +1565,10 @@
     }
 
     if (tipoEntrega === "provincia") {
-      mensaje += esOtroDestinatario
-        ? `\nDestinatario: ${contacto1Nombre} - DNI ${contacto1Dni} - ${contacto1Telefono}\n`
-        : `\nDestinatario: el propio comprador (DNI ${dniComprador})\n`;
-      if (contacto2Nombre || contacto2Telefono) {
-        mensaje += `Destinatario adicional: ${contacto2Nombre || "-"} - ${contacto2Telefono || "-"}\n`;
-      }
+      mensaje += `\nPersonas autorizadas a recoger:\n`;
+      listaDestinatarios.forEach(d => {
+        mensaje += `- ${d.nombre}${d.dni ? " - DNI " + d.dni : ""} - ${d.celular}\n`;
+      });
     } else {
       mensaje += esOtraPersona
         ? `\nQuien recibe: ${contacto1Nombre} - ${contacto1Telefono}\n`
