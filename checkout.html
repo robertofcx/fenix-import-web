@@ -236,6 +236,20 @@
     padding: 12px; font-size: 0.8rem; color: var(--texto-muted); margin-top: 4px;
   }
 
+  .estimado-entrega {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .estimado-entrega.a-tiempo { background: rgba(37, 211, 102, 0.1); border: 1px solid rgba(37, 211, 102, 0.35); color: var(--texto); }
+  .estimado-entrega.fuera-de-horario { background: rgba(247, 148, 30, 0.1); border: 1px solid rgba(247, 148, 30, 0.4); color: var(--texto); }
+  .estimado-entrega .icono-estimado { flex-shrink: 0; font-size: 1rem; }
+
   /* ---------- Resumen (sticky) ---------- */
 
   .resumen {
@@ -381,6 +395,40 @@
     catch (e) { return []; }
   }
 
+  function guardarCarrito(carrito) {
+    localStorage.setItem(CARRITO_KEY, JSON.stringify(carrito));
+  }
+
+  // ---------- Validación y filtrado de celulares/documentos ----------
+
+  // Mientras el cliente escribe: deja pasar solo dígitos, y un "+" si va
+  // al inicio (para números extranjeros con código de país).
+  function filtrarSoloCelular(evento) {
+    const el = evento.target;
+    const tienePlusAlInicio = el.value.trim().startsWith("+");
+    let limpio = el.value.replace(/[^\d]/g, "");
+    el.value = tienePlusAlInicio ? "+" + limpio : limpio;
+  }
+
+  function filtrarSoloNumeros(evento) {
+    evento.target.value = evento.target.value.replace(/[^\d]/g, "");
+  }
+
+  // Celular peruano válido: 9 dígitos empezando en 9 (ej. 987654321).
+  // También se acepta número extranjero si el cliente lo escribe con
+  // "+" y su código de país (ej. +1 555 123 4567).
+  function esCelularValido(valor) {
+    const limpio = valor.trim();
+    if (/^9\d{8}$/.test(limpio)) return true;
+    if (/^\+\d{8,15}$/.test(limpio)) return true;
+    return false;
+  }
+
+  function activarValidacionesDeCampos() {
+    document.querySelectorAll(".campo-celular").forEach(el => el.addEventListener("input", filtrarSoloCelular));
+    document.querySelectorAll(".campo-solo-numeros").forEach(el => el.addEventListener("input", filtrarSoloNumeros));
+  }
+
   function actualizarBadgeCarrito() {
     const carrito = obtenerCarrito();
     const total = carrito.reduce((s, i) => s + i.cantidad, 0);
@@ -447,8 +495,9 @@
           </div>
           <div class="campo" id="campo-celular-comprador">
             <label>Celular</label>
-            <input type="tel" id="input-celular-comprador" placeholder="9XXXXXXXX">
-            <p class="campo-error">Ingresa tu celular</p>
+            <input type="tel" id="input-celular-comprador" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
+            <p style="font-size:0.72rem; color:var(--texto-muted); margin:5px 0 0;">¿Número de otro país? Escríbelo con "+" y tu código (ej. +1 555...)</p>
+            <p class="campo-error">Ingresa un celular válido (9 dígitos, ej. 987654321)</p>
           </div>
         </div>
 
@@ -478,7 +527,7 @@
               </div>
               <div class="campo" id="campo-numero-documento" style="margin-bottom:0;">
                 <label>Número de documento</label>
-                <input type="text" id="input-numero-documento" inputmode="numeric" placeholder="8 dígitos">
+                <input type="text" id="input-numero-documento" class="campo-solo-numeros" inputmode="numeric" placeholder="8 dígitos">
                 <p class="campo-error">Verifica el número (DNI: 8 dígitos, RUC: 11 dígitos)</p>
               </div>
             </div>
@@ -510,11 +559,14 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v11a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
             <span>📍 ${DIRECCION_ALMACEN}<br><span style="color:var(--texto-muted); font-size:0.8rem;">Coordinamos el horario exacto por WhatsApp antes de tu visita.</span></span>
           </div>
+          <div class="estimado-entrega" id="estimado-recojo"></div>
         </div>
 
         <div class="seccion-form" id="seccion-lima" style="display:none;">
           <p class="seccion-form-titulo">Delivery en Lima</p>
           <p class="seccion-form-subtitulo">Para calcular el envío y coordinar la entrega</p>
+
+          <div class="estimado-entrega" id="estimado-lima"></div>
 
           <div class="campo" id="campo-distrito">
             <label>Distrito</label>
@@ -558,6 +610,8 @@
           <p class="seccion-form-titulo">Envío a provincia</p>
           <p class="seccion-form-subtitulo">El costo del envío se coordina y paga directo en la agencia</p>
 
+          <div class="estimado-entrega" id="estimado-provincia"></div>
+
           <div class="fila-2">
             <div class="campo" id="campo-departamento">
               <label>Departamento</label>
@@ -598,7 +652,7 @@
           <p class="nota-provincia">💡 El costo de envío por agencia varía según peso/volumen y se paga directo ahí — nosotros dejamos el paquete listo en la agencia que elijas.</p>
         </div>
 
-        <div class="seccion-form">
+        <div class="seccion-form" id="seccion-contacto-general">
           <p class="seccion-form-titulo">¿Quién recibe el pedido?</p>
           <p class="seccion-form-subtitulo">Por si otra persona distinta a ti lo recibe</p>
 
@@ -624,23 +678,49 @@
                 </div>
                 <div class="campo" id="campo-contacto1-telefono">
                   <label>Teléfono</label>
-                  <input type="tel" id="input-contacto1-telefono" placeholder="9XXXXXXXX">
-                  <p class="campo-error">Requerido</p>
+                  <input type="tel" id="input-contacto1-telefono" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
+                  <p class="campo-error">Celular inválido (9 dígitos, ej. 987654321)</p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="contacto-bloque" style="margin-top:14px;">
-            <p class="contacto-bloque-titulo">Contacto adicional <span class="opcional" style="text-transform:none; font-weight:400;">(opcional, por si no responden al primero)</span></p>
+        <div class="seccion-form" id="seccion-destinatario-provincia" style="display:none;">
+          <p class="seccion-form-titulo">Datos de quien recibe</p>
+          <p class="seccion-form-subtitulo">La agencia pide DNI del destinatario para entregar el paquete</p>
+
+          <div class="contacto-bloque" style="border-top:none; padding-top:0; margin-top:0;">
+            <p class="contacto-bloque-titulo">Destinatario principal</p>
+            <div class="campo" id="campo-destinatario1-nombre">
+              <label>Nombre completo</label>
+              <input type="text" id="input-destinatario1-nombre" placeholder="Nombre completo">
+              <p class="campo-error">Requerido</p>
+            </div>
+            <div class="fila-2">
+              <div class="campo" id="campo-destinatario1-dni">
+                <label>DNI</label>
+                <input type="text" id="input-destinatario1-dni" class="campo-solo-numeros" placeholder="8 dígitos" inputmode="numeric" maxlength="8">
+                <p class="campo-error">El DNI debe tener 8 dígitos</p>
+              </div>
+              <div class="campo" id="campo-destinatario1-celular">
+                <label>Celular</label>
+                <input type="tel" id="input-destinatario1-celular" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
+                <p class="campo-error">Celular inválido (9 dígitos, ej. 987654321)</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="contacto-bloque">
+            <p class="contacto-bloque-titulo">Segundo contacto <span class="opcional" style="text-transform:none; font-weight:400;">(opcional, por si no responde el primero)</span></p>
             <div class="fila-2">
               <div class="campo">
-                <label>Nombre</label>
-                <input type="text" id="input-contacto2-nombre" placeholder="Nombre">
+                <label>Nombre completo</label>
+                <input type="text" id="input-destinatario2-nombre" placeholder="Nombre completo">
               </div>
               <div class="campo">
-                <label>Teléfono</label>
-                <input type="tel" id="input-contacto2-telefono" placeholder="9XXXXXXXX">
+                <label>Celular</label>
+                <input type="tel" id="input-destinatario2-celular" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
               </div>
             </div>
           </div>
@@ -684,6 +764,8 @@
     ajustarCampoDocumento();
     onCambioQuienRecibe();
     actualizarResumen();
+    activarValidacionesDeCampos();
+    actualizarEstimadosEntrega();
 
     restaurarDatosFormulario();
     activarGuardadoAutomatico();
@@ -732,6 +814,9 @@
     document.getElementById("seccion-lima").style.display = tipo === "lima" ? "block" : "none";
     document.getElementById("seccion-provincia").style.display = tipo === "provincia" ? "block" : "none";
 
+    document.getElementById("seccion-contacto-general").style.display = tipo === "provincia" ? "none" : "block";
+    document.getElementById("seccion-destinatario-provincia").style.display = tipo === "provincia" ? "block" : "none";
+
     if (tipo === "lima") {
       setTimeout(inicializarMapa, 50);
     }
@@ -746,6 +831,54 @@
   function onCambioAgencia() {
     const esOtro = document.getElementById("input-agencia").value === "otro";
     document.getElementById("campo-agencia-otro").style.display = esOtro ? "block" : "none";
+    actualizarEstimadosEntrega();
+  }
+
+  // ---------- Estimado de entrega (según hora real y horarios de corte) ----------
+
+  const AGENCIAS_CON_CORTE = ["Shalom", "Olva Courier", "Hnos Flores", "Marvisur"];
+
+  function pintarEstimado(idElemento, mensaje, aTiempo) {
+    const el = document.getElementById(idElemento);
+    if (!el) return;
+    el.className = "estimado-entrega " + (aTiempo ? "a-tiempo" : "fuera-de-horario");
+    el.innerHTML = `<span class="icono-estimado">${aTiempo ? "✅" : "🕐"}</span><span>${mensaje}</span>`;
+  }
+
+  function actualizarEstimadosEntrega() {
+    const ahora = new Date();
+    const horaDecimal = ahora.getHours() + ahora.getMinutes() / 60;
+
+    // Recojo en almacén: hasta las 5:00 PM, sin tolerancia (no queda nadie después)
+    const corteRecojo = 17;
+    if (horaDecimal < corteRecojo) {
+      pintarEstimado("estimado-recojo", "Puedes recogerlo <strong>hoy mismo</strong> — atendemos hasta las 5:00 PM. Coordina el horario exacto por WhatsApp.", true);
+    } else {
+      pintarEstimado("estimado-recojo", "El horario de atención de hoy (hasta 5:00 PM) ya terminó. Podrás recogerlo el <strong>siguiente día hábil</strong>, coordinando antes por WhatsApp.", false);
+    }
+
+    // Delivery en Lima: pedidos hasta las 10:00 AM se procesan el mismo día
+    const corteLima = 10;
+    if (horaDecimal < corteLima) {
+      pintarEstimado("estimado-lima", "Pedido dentro de horario — se procesa para entrega <strong>hoy mismo</strong>, sujeto a confirmación de stock y coordinación de pago.", true);
+    } else {
+      pintarEstimado("estimado-lima", "El horario de despacho de hoy (hasta 10:00 AM) ya pasó. Tu pedido se entrega el <strong>siguiente día hábil</strong>.", false);
+    }
+
+    // Envío a provincia: hasta la 1:00 PM se deja hoy en la agencia (si es de las
+    // que tienen corte diario); otras agencias necesitan coordinación previa
+    const corteProvincia = 13;
+    const agenciaSeleccionada = document.getElementById("input-agencia")?.value || "";
+
+    if (!agenciaSeleccionada) {
+      pintarEstimado("estimado-provincia", "Elige una agencia para ver el tiempo estimado de envío.", true);
+    } else if (agenciaSeleccionada === "otro") {
+      pintarEstimado("estimado-provincia", "Esta agencia requiere <strong>coordinación previa</strong> — te contactamos para definir fecha y hora exacta de envío.", true);
+    } else if (horaDecimal < corteProvincia) {
+      pintarEstimado("estimado-provincia", `Pedido dentro de horario — se deja <strong>hoy en la tarde</strong> en ${agenciaSeleccionada}.`, true);
+    } else {
+      pintarEstimado("estimado-provincia", `El horario de hoy (hasta 1:00 PM) ya pasó. Se envía a ${agenciaSeleccionada} el <strong>siguiente día hábil</strong>.`, false);
+    }
   }
 
   // ---------- Mapa (Leaflet + OpenStreetMap, sin necesidad de API key) ----------
@@ -977,7 +1110,8 @@
   const CAMPOS_TEXTO_A_GUARDAR = [
     "input-nombre", "input-celular-comprador",
     "input-contacto1-nombre", "input-contacto1-telefono",
-    "input-contacto2-nombre", "input-contacto2-telefono",
+    "input-destinatario1-nombre", "input-destinatario1-dni", "input-destinatario1-celular",
+    "input-destinatario2-nombre", "input-destinatario2-celular",
     "input-numero-documento",
     "input-distrito", "input-calle", "input-numero", "input-urbanizacion", "input-referencia",
     "input-agencia-otro",
@@ -1082,8 +1216,9 @@
     if (!nombre) valido = false;
 
     const celularComprador = document.getElementById("input-celular-comprador").value.trim();
-    marcarError("campo-celular-comprador", !celularComprador);
-    if (!celularComprador) valido = false;
+    const celularCompradorValido = esCelularValido(celularComprador);
+    marcarError("campo-celular-comprador", !celularCompradorValido);
+    if (!celularCompradorValido) valido = false;
 
     const conComprobante = document.querySelector('input[name="comprobante"]:checked').value === "con_comprobante";
     if (conComprobante) {
@@ -1128,17 +1263,33 @@
       const agencia = document.getElementById("input-agencia").value;
       marcarError("campo-agencia", !agencia);
       if (!agencia) valido = false;
-    }
 
-    const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
-    if (esOtraPersona) {
-      const contacto1Nombre = document.getElementById("input-contacto1-nombre").value.trim();
-      marcarError("campo-contacto1-nombre", !contacto1Nombre);
-      if (!contacto1Nombre) valido = false;
+      const destNombre = document.getElementById("input-destinatario1-nombre").value.trim();
+      marcarError("campo-destinatario1-nombre", !destNombre);
+      if (!destNombre) valido = false;
 
-      const contacto1Telefono = document.getElementById("input-contacto1-telefono").value.trim();
-      marcarError("campo-contacto1-telefono", !contacto1Telefono);
-      if (!contacto1Telefono) valido = false;
+      const destDni = document.getElementById("input-destinatario1-dni").value.trim();
+      const dniValido = /^\d{8}$/.test(destDni);
+      marcarError("campo-destinatario1-dni", !dniValido);
+      if (!dniValido) valido = false;
+
+      const destCelular = document.getElementById("input-destinatario1-celular").value.trim();
+      const destCelularValido = esCelularValido(destCelular);
+      marcarError("campo-destinatario1-celular", !destCelularValido);
+      if (!destCelularValido) valido = false;
+
+    } else {
+      const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
+      if (esOtraPersona) {
+        const contacto1Nombre = document.getElementById("input-contacto1-nombre").value.trim();
+        marcarError("campo-contacto1-nombre", !contacto1Nombre);
+        if (!contacto1Nombre) valido = false;
+
+        const contacto1Telefono = document.getElementById("input-contacto1-telefono").value.trim();
+        const contacto1TelefonoValido = esCelularValido(contacto1Telefono);
+        marcarError("campo-contacto1-telefono", !contacto1TelefonoValido);
+        if (!contacto1TelefonoValido) valido = false;
+      }
     }
 
     return valido;
@@ -1176,11 +1327,21 @@
     const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked').value;
 
     const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
-    const contacto1Nombre = esOtraPersona ? document.getElementById("input-contacto1-nombre").value.trim() : nombre;
-    const contacto1Telefono = esOtraPersona ? document.getElementById("input-contacto1-telefono").value.trim() : celularComprador;
 
-    const contacto2Nombre = document.getElementById("input-contacto2-nombre").value.trim();
-    const contacto2Telefono = document.getElementById("input-contacto2-telefono").value.trim();
+    let contacto1Nombre, contacto1Telefono, contacto1Dni = "";
+    let contacto2Nombre = "", contacto2Telefono = "";
+
+    if (tipoEntrega === "provincia") {
+      contacto1Nombre = document.getElementById("input-destinatario1-nombre").value.trim();
+      contacto1Dni = document.getElementById("input-destinatario1-dni").value.trim();
+      contacto1Telefono = document.getElementById("input-destinatario1-celular").value.trim();
+      contacto2Nombre = document.getElementById("input-destinatario2-nombre").value.trim();
+      contacto2Telefono = document.getElementById("input-destinatario2-celular").value.trim();
+    } else {
+      contacto1Nombre = esOtraPersona ? document.getElementById("input-contacto1-nombre").value.trim() : nombre;
+      contacto1Telefono = esOtraPersona ? document.getElementById("input-contacto1-telefono").value.trim() : celularComprador;
+    }
+
     const notas = document.getElementById("input-notas").value.trim();
     const idPedido = generarIdPedido();
 
@@ -1288,11 +1449,15 @@
       mensaje += `Agencia: ${agenciaTexto}\n`;
     }
 
-    mensaje += esOtraPersona
-      ? `\nQuien recibe: ${contacto1Nombre} - ${contacto1Telefono}\n`
-      : `\nQuien recibe: el propio comprador\n`;
-    if (contacto2Nombre || contacto2Telefono) {
-      mensaje += `Contacto adicional: ${contacto2Nombre || "-"} - ${contacto2Telefono || "-"}\n`;
+    if (tipoEntrega === "provincia") {
+      mensaje += `\nDestinatario: ${contacto1Nombre} - DNI ${contacto1Dni} - ${contacto1Telefono}\n`;
+      if (contacto2Nombre || contacto2Telefono) {
+        mensaje += `Segundo contacto: ${contacto2Nombre || "-"} - ${contacto2Telefono || "-"}\n`;
+      }
+    } else {
+      mensaje += esOtraPersona
+        ? `\nQuien recibe: ${contacto1Nombre} - ${contacto1Telefono}\n`
+        : `\nQuien recibe: el propio comprador\n`;
     }
 
     if (notas) mensaje += `\nNotas: ${notas}\n`;
