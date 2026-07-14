@@ -370,7 +370,7 @@
   const CARRITO_KEY = "fenix_carrito";
   const FORM_DATOS_KEY = "fenix_checkout_datos";
   const DIRECCION_ALMACEN = "Jirón Cajabamba 313, Independencia, Lima";
-  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycby5JfqckK0tRlEDpgoZFp9Zp241Od7ARoEvXObFJYzlOGpERhizPC14ZLcsCwkDV4bJJw/exec";
+  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbx-syl9_TJZwCgnVOCs5Y1UYHIM41XP_eLeqNHvWjcxVFzEAMqcUJgHeEGLFtsYp3t-0w/exec";
 
   // Ubigeo propio (Departamento → Provincia → Distrito), publicado desde tu Sheet
   const URL_UBIGEO = "ubigeo.json";
@@ -485,55 +485,6 @@
 
     elMain.innerHTML = `
       <div>
-        <div class="seccion-form">
-          <p class="seccion-form-titulo">Tus datos</p>
-          <p class="seccion-form-subtitulo">Para saber a nombre de quién va el pedido</p>
-          <div class="campo" id="campo-nombre">
-            <label>Nombre completo</label>
-            <input type="text" id="input-nombre" placeholder="Ej. María Gómez">
-            <p class="campo-error">Ingresa tu nombre</p>
-          </div>
-          <div class="campo" id="campo-celular-comprador">
-            <label>Celular</label>
-            <input type="tel" id="input-celular-comprador" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
-            <p style="font-size:0.72rem; color:var(--texto-muted); margin:5px 0 0;">¿Número de otro país? Escríbelo con "+" y tu código (ej. +1 555...)</p>
-            <p class="campo-error">Ingresa un celular válido (9 dígitos, ej. 987654321)</p>
-          </div>
-        </div>
-
-        <div class="seccion-form">
-          <p class="seccion-form-titulo">Comprobante de pago</p>
-          <p class="seccion-form-subtitulo">Si necesitas factura/boleta, se agrega el IGV (18%)</p>
-          <div class="opciones-comprobante">
-            <label class="opcion-radio">
-              <input type="radio" name="comprobante" value="libre" checked>
-              <span class="opcion-radio-texto"><strong>Precio libre</strong><span>Sin comprobante, precio tal cual se muestra</span></span>
-            </label>
-            <label class="opcion-radio">
-              <input type="radio" name="comprobante" value="con_comprobante">
-              <span class="opcion-radio-texto"><strong>Con comprobante (Boleta/Factura)</strong><span>Se agrega 18% de IGV al total</span></span>
-            </label>
-          </div>
-
-          <div class="campo" id="campo-documento" style="display:none; margin-top:14px;">
-            <div class="fila-2">
-              <div class="campo" style="margin-bottom:0;">
-                <label>Tipo de documento</label>
-                <select id="input-tipo-documento">
-                  <option value="DNI">DNI</option>
-                  <option value="RUC">RUC</option>
-                  <option value="CE">Carné de Extranjería</option>
-                </select>
-              </div>
-              <div class="campo" id="campo-numero-documento" style="margin-bottom:0;">
-                <label>Número de documento</label>
-                <input type="text" id="input-numero-documento" class="campo-solo-numeros" inputmode="numeric" placeholder="8 dígitos">
-                <p class="campo-error">Verifica el número (DNI: 8 dígitos, RUC: 11 dígitos)</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="seccion-form">
           <p class="seccion-form-titulo">Tipo de entrega</p>
           <p class="seccion-form-subtitulo">Elige cómo prefieres recibir tu pedido</p>
@@ -652,9 +603,30 @@
           <p class="nota-provincia">💡 El costo de envío por agencia varía según peso/volumen y se paga directo ahí — nosotros dejamos el paquete listo en la agencia que elijas.</p>
         </div>
 
+        <div class="seccion-form">
+          <p class="seccion-form-titulo">Tus datos</p>
+          <p class="seccion-form-subtitulo">Para saber a nombre de quién va el pedido</p>
+          <div class="campo" id="campo-nombre">
+            <label>Nombre completo</label>
+            <input type="text" id="input-nombre" placeholder="Ej. María Gómez">
+            <p class="campo-error">Ingresa tu nombre</p>
+          </div>
+          <div class="campo" id="campo-dni-comprador" style="display:none;">
+            <label>DNI</label>
+            <input type="text" id="input-dni-comprador" class="campo-solo-numeros" placeholder="8 dígitos" inputmode="numeric" maxlength="8">
+            <p class="campo-error">El DNI debe tener 8 dígitos</p>
+          </div>
+          <div class="campo" id="campo-celular-comprador">
+            <label>Celular</label>
+            <input type="tel" id="input-celular-comprador" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
+            <p style="font-size:0.72rem; color:var(--texto-muted); margin:5px 0 0;">¿Número de otro país? Escríbelo con "+" y tu código (ej. +1 555...)</p>
+            <p class="campo-error">Ingresa un celular válido (9 dígitos, ej. 987654321)</p>
+          </div>
+        </div>
+
         <div class="seccion-form" id="seccion-contacto-general">
           <p class="seccion-form-titulo">¿Quién recibe el pedido?</p>
-          <p class="seccion-form-subtitulo">Por si otra persona distinta a ti lo recibe</p>
+          <p class="seccion-form-subtitulo">Por si otra persona distinta a ti lo recibe o lo recoge</p>
 
           <div class="opciones-comprobante">
             <label class="opcion-radio">
@@ -663,13 +635,13 @@
             </label>
             <label class="opcion-radio">
               <input type="radio" name="quienRecibe" value="otra_persona">
-              <span class="opcion-radio-texto"><strong>Otra persona</strong><span>Alguien más va a recibir el pedido</span></span>
+              <span class="opcion-radio-texto"><strong>Otra persona</strong><span>Alguien más está autorizado a recibir/recoger</span></span>
             </label>
           </div>
 
           <div id="bloque-contacto1" style="display:none; margin-top:14px;">
             <div class="contacto-bloque" style="border-top:none; padding-top:0; margin-top:0;">
-              <p class="contacto-bloque-titulo">Quien recibe</p>
+              <p class="contacto-bloque-titulo">Quien recibe / recoge</p>
               <div class="fila-2">
                 <div class="campo" id="campo-contacto1-nombre">
                   <label>Nombre</label>
@@ -690,29 +662,42 @@
           <p class="seccion-form-titulo">Datos de quien recibe</p>
           <p class="seccion-form-subtitulo">La agencia pide DNI del destinatario para entregar el paquete</p>
 
-          <div class="contacto-bloque" style="border-top:none; padding-top:0; margin-top:0;">
-            <p class="contacto-bloque-titulo">Destinatario principal</p>
-            <div class="campo" id="campo-destinatario1-nombre">
-              <label>Nombre completo</label>
-              <input type="text" id="input-destinatario1-nombre" placeholder="Nombre completo">
-              <p class="campo-error">Requerido</p>
-            </div>
-            <div class="fila-2">
-              <div class="campo" id="campo-destinatario1-dni">
-                <label>DNI</label>
-                <input type="text" id="input-destinatario1-dni" class="campo-solo-numeros" placeholder="8 dígitos" inputmode="numeric" maxlength="8">
-                <p class="campo-error">El DNI debe tener 8 dígitos</p>
+          <div class="opciones-comprobante">
+            <label class="opcion-radio">
+              <input type="radio" name="esMismoDestinatario" value="si" checked>
+              <span class="opcion-radio-texto"><strong>El destinatario soy yo mismo</strong><span>Uso mis propios datos de arriba (nombre, DNI, celular)</span></span>
+            </label>
+            <label class="opcion-radio">
+              <input type="radio" name="esMismoDestinatario" value="no">
+              <span class="opcion-radio-texto"><strong>Es otra persona</strong><span>Alguien más va a recibir el paquete en destino</span></span>
+            </label>
+          </div>
+
+          <div id="bloque-destinatario1" style="display:none; margin-top:14px;">
+            <div class="contacto-bloque" style="border-top:none; padding-top:0; margin-top:0;">
+              <p class="contacto-bloque-titulo">Destinatario</p>
+              <div class="campo" id="campo-destinatario1-nombre">
+                <label>Nombre completo</label>
+                <input type="text" id="input-destinatario1-nombre" placeholder="Nombre completo">
+                <p class="campo-error">Requerido</p>
               </div>
-              <div class="campo" id="campo-destinatario1-celular">
-                <label>Celular</label>
-                <input type="tel" id="input-destinatario1-celular" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
-                <p class="campo-error">Celular inválido (9 dígitos, ej. 987654321)</p>
+              <div class="fila-2">
+                <div class="campo" id="campo-destinatario1-dni">
+                  <label>DNI</label>
+                  <input type="text" id="input-destinatario1-dni" class="campo-solo-numeros" placeholder="8 dígitos" inputmode="numeric" maxlength="8">
+                  <p class="campo-error">El DNI debe tener 8 dígitos</p>
+                </div>
+                <div class="campo" id="campo-destinatario1-celular">
+                  <label>Celular</label>
+                  <input type="tel" id="input-destinatario1-celular" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
+                  <p class="campo-error">Celular inválido (9 dígitos, ej. 987654321)</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="contacto-bloque">
-            <p class="contacto-bloque-titulo">Segundo contacto <span class="opcional" style="text-transform:none; font-weight:400;">(opcional, por si no responde el primero)</span></p>
+          <div class="contacto-bloque" style="margin-top:14px;">
+            <p class="contacto-bloque-titulo">Destinatario adicional <span class="opcional" style="text-transform:none; font-weight:400;">(opcional, por si quieres registrar a alguien más)</span></p>
             <div class="fila-2">
               <div class="campo">
                 <label>Nombre completo</label>
@@ -721,6 +706,39 @@
               <div class="campo">
                 <label>Celular</label>
                 <input type="tel" id="input-destinatario2-celular" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seccion-form">
+          <p class="seccion-form-titulo">Comprobante de pago</p>
+          <p class="seccion-form-subtitulo">Si necesitas factura/boleta, se agrega el IGV (18%)</p>
+          <div class="opciones-comprobante">
+            <label class="opcion-radio">
+              <input type="radio" name="comprobante" value="libre" checked>
+              <span class="opcion-radio-texto"><strong>Precio libre</strong><span>Sin comprobante, precio tal cual se muestra</span></span>
+            </label>
+            <label class="opcion-radio">
+              <input type="radio" name="comprobante" value="con_comprobante">
+              <span class="opcion-radio-texto"><strong>Con comprobante (Boleta/Factura)</strong><span>Se agrega 18% de IGV al total</span></span>
+            </label>
+          </div>
+
+          <div class="campo" id="campo-documento" style="display:none; margin-top:14px;">
+            <div class="fila-2">
+              <div class="campo" style="margin-bottom:0;">
+                <label>Tipo de documento</label>
+                <select id="input-tipo-documento">
+                  <option value="DNI">DNI</option>
+                  <option value="RUC">RUC</option>
+                  <option value="CE">Carné de Extranjería</option>
+                </select>
+              </div>
+              <div class="campo" id="campo-numero-documento" style="margin-bottom:0;">
+                <label>Número de documento</label>
+                <input type="text" id="input-numero-documento" class="campo-solo-numeros" inputmode="numeric" placeholder="8 dígitos">
+                <p class="campo-error">Verifica el número (DNI: 8 dígitos, RUC: 11 dígitos)</p>
               </div>
             </div>
           </div>
@@ -754,6 +772,7 @@
     document.querySelectorAll('input[name="comprobante"]').forEach(r => r.addEventListener("change", onCambioComprobante));
     document.querySelectorAll('input[name="tipoEntrega"]').forEach(r => r.addEventListener("change", onCambioTipoEntrega));
     document.querySelectorAll('input[name="quienRecibe"]').forEach(r => r.addEventListener("change", onCambioQuienRecibe));
+    document.querySelectorAll('input[name="esMismoDestinatario"]').forEach(r => r.addEventListener("change", onCambioEsMismoDestinatario));
     document.getElementById("input-tipo-documento").addEventListener("change", ajustarCampoDocumento);
     document.getElementById("input-distrito").addEventListener("change", actualizarResumen);
     document.getElementById("input-agencia").addEventListener("change", onCambioAgencia);
@@ -763,6 +782,7 @@
     renderizarResumenItems();
     ajustarCampoDocumento();
     onCambioQuienRecibe();
+    onCambioEsMismoDestinatario();
     actualizarResumen();
     activarValidacionesDeCampos();
     actualizarEstimadosEntrega();
@@ -774,6 +794,11 @@
   function onCambioQuienRecibe() {
     const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
     document.getElementById("bloque-contacto1").style.display = esOtraPersona ? "block" : "none";
+  }
+
+  function onCambioEsMismoDestinatario() {
+    const esOtro = document.querySelector('input[name="esMismoDestinatario"]:checked').value === "no";
+    document.getElementById("bloque-destinatario1").style.display = esOtro ? "block" : "none";
   }
 
   // ---------- Comprobante / documento ----------
@@ -816,6 +841,7 @@
 
     document.getElementById("seccion-contacto-general").style.display = tipo === "provincia" ? "none" : "block";
     document.getElementById("seccion-destinatario-provincia").style.display = tipo === "provincia" ? "block" : "none";
+    document.getElementById("campo-dni-comprador").style.display = tipo === "provincia" ? "block" : "none";
 
     if (tipo === "lima") {
       setTimeout(inicializarMapa, 50);
@@ -1108,7 +1134,7 @@
   // ---------- Guardar/restaurar el formulario (para no perder datos si el cliente va al carrito) ----------
 
   const CAMPOS_TEXTO_A_GUARDAR = [
-    "input-nombre", "input-celular-comprador",
+    "input-nombre", "input-dni-comprador", "input-celular-comprador",
     "input-contacto1-nombre", "input-contacto1-telefono",
     "input-destinatario1-nombre", "input-destinatario1-dni", "input-destinatario1-celular",
     "input-destinatario2-nombre", "input-destinatario2-celular",
@@ -1133,6 +1159,9 @@
 
     const quienRecibe = document.querySelector('input[name="quienRecibe"]:checked');
     if (quienRecibe) datos.quienRecibe = quienRecibe.value;
+
+    const esMismoDestinatario = document.querySelector('input[name="esMismoDestinatario"]:checked');
+    if (esMismoDestinatario) datos.esMismoDestinatario = esMismoDestinatario.value;
 
     const tipoDoc = document.getElementById("input-tipo-documento");
     if (tipoDoc) datos.tipoDocumento = tipoDoc.value;
@@ -1169,6 +1198,11 @@
     if (datos.quienRecibe) {
       const el = document.querySelector(`input[name="quienRecibe"][value="${datos.quienRecibe}"]`);
       if (el) { el.checked = true; onCambioQuienRecibe(); }
+    }
+
+    if (datos.esMismoDestinatario) {
+      const el = document.querySelector(`input[name="esMismoDestinatario"][value="${datos.esMismoDestinatario}"]`);
+      if (el) { el.checked = true; onCambioEsMismoDestinatario(); }
     }
 
     if (datos.tipoEntrega) {
@@ -1248,6 +1282,11 @@
     }
 
     if (tipoEntrega === "provincia") {
+      const dniComprador = document.getElementById("input-dni-comprador").value.trim();
+      const dniCompradorValido = /^\d{8}$/.test(dniComprador);
+      marcarError("campo-dni-comprador", !dniCompradorValido);
+      if (!dniCompradorValido) valido = false;
+
       const departamento = document.getElementById("input-departamento").value;
       marcarError("campo-departamento", !departamento);
       if (!departamento) valido = false;
@@ -1264,19 +1303,22 @@
       marcarError("campo-agencia", !agencia);
       if (!agencia) valido = false;
 
-      const destNombre = document.getElementById("input-destinatario1-nombre").value.trim();
-      marcarError("campo-destinatario1-nombre", !destNombre);
-      if (!destNombre) valido = false;
+      const esOtroDestinatario = document.querySelector('input[name="esMismoDestinatario"]:checked').value === "no";
+      if (esOtroDestinatario) {
+        const destNombre = document.getElementById("input-destinatario1-nombre").value.trim();
+        marcarError("campo-destinatario1-nombre", !destNombre);
+        if (!destNombre) valido = false;
 
-      const destDni = document.getElementById("input-destinatario1-dni").value.trim();
-      const dniValido = /^\d{8}$/.test(destDni);
-      marcarError("campo-destinatario1-dni", !dniValido);
-      if (!dniValido) valido = false;
+        const destDni = document.getElementById("input-destinatario1-dni").value.trim();
+        const dniValido = /^\d{8}$/.test(destDni);
+        marcarError("campo-destinatario1-dni", !dniValido);
+        if (!dniValido) valido = false;
 
-      const destCelular = document.getElementById("input-destinatario1-celular").value.trim();
-      const destCelularValido = esCelularValido(destCelular);
-      marcarError("campo-destinatario1-celular", !destCelularValido);
-      if (!destCelularValido) valido = false;
+        const destCelular = document.getElementById("input-destinatario1-celular").value.trim();
+        const destCelularValido = esCelularValido(destCelular);
+        marcarError("campo-destinatario1-celular", !destCelularValido);
+        if (!destCelularValido) valido = false;
+      }
 
     } else {
       const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
@@ -1327,14 +1369,23 @@
     const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked').value;
 
     const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
+    const dniComprador = tipoEntrega === "provincia" ? document.getElementById("input-dni-comprador").value.trim() : "";
 
     let contacto1Nombre, contacto1Telefono, contacto1Dni = "";
     let contacto2Nombre = "", contacto2Telefono = "";
+    let esOtroDestinatario = false;
 
     if (tipoEntrega === "provincia") {
-      contacto1Nombre = document.getElementById("input-destinatario1-nombre").value.trim();
-      contacto1Dni = document.getElementById("input-destinatario1-dni").value.trim();
-      contacto1Telefono = document.getElementById("input-destinatario1-celular").value.trim();
+      esOtroDestinatario = document.querySelector('input[name="esMismoDestinatario"]:checked').value === "no";
+      if (esOtroDestinatario) {
+        contacto1Nombre = document.getElementById("input-destinatario1-nombre").value.trim();
+        contacto1Dni = document.getElementById("input-destinatario1-dni").value.trim();
+        contacto1Telefono = document.getElementById("input-destinatario1-celular").value.trim();
+      } else {
+        contacto1Nombre = nombre;
+        contacto1Dni = dniComprador;
+        contacto1Telefono = celularComprador;
+      }
       contacto2Nombre = document.getElementById("input-destinatario2-nombre").value.trim();
       contacto2Telefono = document.getElementById("input-destinatario2-celular").value.trim();
     } else {
@@ -1344,6 +1395,24 @@
 
     const notas = document.getElementById("input-notas").value.trim();
     const idPedido = generarIdPedido();
+
+    // Notas que van al Sheet: las que escribió el cliente + cualquier
+    // dato de contacto/destinatario que no tenga columna propia — así
+    // el celular del comprador (columna G) siempre queda con SU celular,
+    // nunca con el de otra persona.
+    let notasParaSheet = notas;
+    if (tipoEntrega !== "provincia" && esOtraPersona) {
+      const linea = `Autorizado a recoger/recibir: ${contacto1Nombre} - ${contacto1Telefono}`;
+      notasParaSheet = notasParaSheet ? `${notasParaSheet}\n${linea}` : linea;
+    }
+    if (tipoEntrega === "provincia" && esOtroDestinatario) {
+      const linea = `Destinatario: ${contacto1Nombre} - DNI ${contacto1Dni} - ${contacto1Telefono}`;
+      notasParaSheet = notasParaSheet ? `${notasParaSheet}\n${linea}` : linea;
+    }
+    if (tipoEntrega === "provincia" && (contacto2Nombre || contacto2Telefono)) {
+      const linea = `Destinatario adicional: ${contacto2Nombre || "-"} - ${contacto2Telefono || "-"}`;
+      notasParaSheet = notasParaSheet ? `${notasParaSheet}\n${linea}` : linea;
+    }
 
     const subtotal = carrito.reduce((s, i) => s + extraerPrecioNumerico(i.precio) * i.cantidad, 0);
     const requiereCotizacionManual = buscarRecargoCotizarManual();
@@ -1395,6 +1464,7 @@
     mensaje += `Datos del cliente:\n`;
     mensaje += `Nombre: ${nombre}\n`;
     mensaje += `Celular: ${celularComprador}\n`;
+    if (tipoEntrega === "provincia") mensaje += `DNI: ${dniComprador}\n`;
     mensaje += `Comprobante: ${conComprobante ? "Con comprobante (Boleta/Factura)" : "Precio libre, sin comprobante"}\n`;
 
     let tipoDocumento = "";
@@ -1450,9 +1520,11 @@
     }
 
     if (tipoEntrega === "provincia") {
-      mensaje += `\nDestinatario: ${contacto1Nombre} - DNI ${contacto1Dni} - ${contacto1Telefono}\n`;
+      mensaje += esOtroDestinatario
+        ? `\nDestinatario: ${contacto1Nombre} - DNI ${contacto1Dni} - ${contacto1Telefono}\n`
+        : `\nDestinatario: el propio comprador (DNI ${dniComprador})\n`;
       if (contacto2Nombre || contacto2Telefono) {
-        mensaje += `Segundo contacto: ${contacto2Nombre || "-"} - ${contacto2Telefono || "-"}\n`;
+        mensaje += `Destinatario adicional: ${contacto2Nombre || "-"} - ${contacto2Telefono || "-"}\n`;
       }
     } else {
       mensaje += esOtraPersona
@@ -1473,7 +1545,7 @@
       tipoEntrega: tipoEntrega,
       fecha: fechaTexto,
       nombre: nombre,
-      celular: contacto1Telefono,
+      celular: celularComprador,
       tipoDocumento: tipoDocumento,
       documento: numeroDocumento,
       direccion: direccionCompleta,
@@ -1484,6 +1556,7 @@
       agencia: agenciaTexto,
       costoDelivery: tipoEntrega === "lima" ? costoDeliveryConIgv : 0,
       montoTotal: Number(total.toFixed(2)),
+      notas: notasParaSheet,
       items: carrito.map(item => ({
         codigo: item.sku,
         nombre: item.nombre,
