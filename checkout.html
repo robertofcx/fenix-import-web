@@ -30,7 +30,6 @@
     --sombra: rgba(20, 21, 43, 0.14);
     --error: #d92d20;
   }
-
   html[data-tema="oscuro"] {
     --bg: #0b0c1e;
     --bg-elevada: #14152c;
@@ -47,9 +46,7 @@
     --sombra: rgba(0, 0, 0, 0.5);
     --error: #f97066;
   }
-
   * { box-sizing: border-box; }
-
   html, body {
     margin: 0;
     padding: 0;
@@ -58,12 +55,9 @@
     font-family: 'Inter', sans-serif;
     transition: background 0.2s ease, color 0.2s ease;
   }
-
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; }
-
   /* ---------- Header ---------- */
-
   header {
     position: sticky; top: 0; z-index: 30;
     background: rgba(255, 255, 255, 0.92);
@@ -71,20 +65,16 @@
     border-bottom: 1px solid var(--linea);
   }
   html[data-tema="oscuro"] header { background: rgba(11, 12, 30, 0.92); }
-
   .header-fila {
     padding: 12px 20px;
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
   }
-
   .logo-chip {
     background: #ffffff; padding: 6px 12px; border-radius: 10px;
     display: flex; align-items: center;
   }
   .logo-chip img { height: 30px; width: auto; display: block; }
-
   .header-derecha { display: flex; align-items: center; gap: 8px; }
-
   .btn-tema, .btn-carrito {
     position: relative;
     width: 40px; height: 40px; border-radius: 50%;
@@ -93,9 +83,7 @@
   }
   .btn-tema svg, .btn-carrito svg { width: 19px; height: 19px; }
   .icono-luna { display: none; }
-  html[data-tema="claro"] .icono-sol { display: none; }
   html[data-tema="claro"] .icono-luna { display: block; }
-
   .badge-carrito {
     position: absolute; top: -4px; right: -4px;
     min-width: 18px; height: 18px; padding: 0 4px; border-radius: 999px;
@@ -103,39 +91,29 @@
     font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; font-weight: 700;
     display: flex; align-items: center; justify-content: center;
   }
-
   .btn-nav-whatsapp {
     display: flex; align-items: center; justify-content: center;
     width: 40px; height: 40px; border-radius: 50%; background: var(--whatsapp); flex-shrink: 0;
   }
   .btn-nav-whatsapp svg { width: 19px; height: 19px; fill: #0d1f13; }
-
   /* ---------- Breadcrumb + título ---------- */
-
   .barra-titulo { max-width: 1100px; margin: 0 auto; padding: 18px 20px 0; }
-
   .breadcrumb { font-size: 0.8rem; color: var(--texto-muted); margin-bottom: 6px; }
   .breadcrumb a:hover { color: var(--azul); }
   .breadcrumb .sep { opacity: 0.5; margin: 0 4px; }
   .breadcrumb .actual { color: var(--texto); font-weight: 500; }
-
   .titulo-pagina {
     font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 1.7rem; margin: 0 0 20px;
   }
-
   /* ---------- Layout principal ---------- */
-
   main {
     max-width: 1100px; margin: 0 auto; padding: 0 20px 60px;
     display: grid; grid-template-columns: 1fr; gap: 28px;
   }
-
   @media (min-width: 900px) {
     main { grid-template-columns: 1fr 380px; align-items: start; }
   }
-
   /* ---------- Secciones del formulario ---------- */
-
   .seccion-form {
     background: var(--bg-elevada);
     border: 1px solid var(--linea);
@@ -143,21 +121,17 @@
     padding: 20px;
     margin-bottom: 16px;
   }
-
   .seccion-form-titulo {
     font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 1.05rem;
     margin: 0 0 4px;
   }
   .seccion-form-subtitulo { font-size: 0.8rem; color: var(--texto-muted); margin: 0 0 16px; }
-
   .campo { margin-bottom: 14px; }
   .campo:last-child { margin-bottom: 0; }
-
   .campo label {
     display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 6px;
   }
   .campo label .opcional { font-weight: 400; color: var(--texto-muted); text-transform: none; }
-
   .campo input[type="text"],
   .campo input[type="tel"],
   .campo select,
@@ -176,7 +150,6 @@
     outline: none; border-color: var(--azul);
   }
   .campo textarea { resize: vertical; min-height: 70px; }
-
   .campo-error {
     display: none;
     font-size: 0.76rem;
@@ -186,12 +159,9 @@
   .campo.con-error input,
   .campo.con-error select { border-color: var(--error); }
   .campo.con-error .campo-error { display: block; }
-
   .fila-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 480px) { .fila-2 { grid-template-columns: 1fr; } }
-
   .opciones-comprobante { display: flex; flex-direction: column; gap: 8px; }
-
   .opcion-radio {
     display: flex; align-items: flex-start; gap: 10px;
     border: 1px solid var(--linea);
@@ -203,7 +173,6 @@
   .opcion-radio input { margin-top: 3px; accent-color: var(--azul); }
   .opcion-radio-texto strong { display: block; font-size: 0.88rem; }
   .opcion-radio-texto span { font-size: 0.78rem; color: var(--texto-muted); }
-
   .contacto-bloque {
     border-top: 1px solid var(--linea);
     padding-top: 14px;
@@ -214,14 +183,12 @@
     font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
     color: var(--texto-muted); margin: 0 0 10px;
   }
-
   .info-recojo {
     display: flex; align-items: center; gap: 10px;
     background: var(--bg); border: 1px solid var(--linea); border-radius: 10px; padding: 14px;
     font-size: 0.88rem;
   }
   .info-recojo svg { width: 20px; height: 20px; color: var(--azul); flex-shrink: 0; }
-
   #mapa-entrega {
     height: 260px;
     border-radius: 10px;
@@ -230,12 +197,10 @@
     margin-top: 6px;
   }
   .mapa-nota { font-size: 0.74rem; color: var(--texto-muted); margin: 8px 0 0; }
-
   .nota-provincia {
     background: var(--bg); border: 1px dashed var(--linea); border-radius: 10px;
     padding: 12px; font-size: 0.8rem; color: var(--texto-muted); margin-top: 4px;
   }
-
   .estimado-entrega {
     display: flex;
     align-items: flex-start;
@@ -249,35 +214,28 @@
   .estimado-entrega.a-tiempo { background: rgba(37, 211, 102, 0.1); border: 1px solid rgba(37, 211, 102, 0.35); color: var(--texto); }
   .estimado-entrega.fuera-de-horario { background: rgba(247, 148, 30, 0.1); border: 1px solid rgba(247, 148, 30, 0.4); color: var(--texto); }
   .estimado-entrega .icono-estimado { flex-shrink: 0; font-size: 1rem; }
-
   /* ---------- Resumen (sticky) ---------- */
-
   .resumen {
     background: var(--bg-elevada);
     border: 1px solid var(--linea);
     border-radius: 16px;
     padding: 20px;
   }
-
   @media (min-width: 900px) {
     .resumen { position: sticky; top: 90px; }
   }
-
   .resumen-titulo {
     font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 1.1rem; margin: 0 0 14px;
   }
-
   .resumen-item {
     display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--linea);
   }
   .resumen-item:last-of-type { border-bottom: none; }
-
   .resumen-item-img {
     width: 44px; height: 44px; flex-shrink: 0; border-radius: 8px;
     background: var(--bg); display: flex; align-items: center; justify-content: center; overflow: hidden;
   }
   .resumen-item-img img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
-
   .resumen-item-info { flex: 1; min-width: 0; }
   .resumen-item-nombre {
     font-size: 0.78rem; font-weight: 500; margin: 0 0 2px;
@@ -285,14 +243,12 @@
   }
   .resumen-item-meta { font-size: 0.74rem; color: var(--texto-muted); font-family: 'IBM Plex Mono', monospace; }
   .resumen-item-subtotal { font-size: 0.82rem; font-weight: 700; white-space: nowrap; }
-
   .resumen-linea {
     display: flex; justify-content: space-between; font-size: 0.85rem;
     padding: 6px 0; color: var(--texto-muted);
   }
   .resumen-linea.destacada { color: var(--texto); font-weight: 600; }
   .resumen-linea .valor-cotizar { color: var(--ember); font-weight: 600; font-size: 0.78rem; text-align: right; }
-
   .resumen-total {
     display: flex; justify-content: space-between; align-items: baseline;
     margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--linea);
@@ -300,7 +256,6 @@
   }
   .resumen-total span:first-child { font-size: 0.85rem; font-weight: 600; color: var(--texto-muted); font-family: 'Inter', sans-serif; }
   .resumen-total span:last-child { font-size: 1.6rem; font-weight: 800; color: var(--texto); }
-
   .btn-enviar-checkout {
     display: flex; align-items: center; justify-content: center; gap: 8px;
     width: 100%; background: var(--whatsapp); color: #0d1f13; border: none;
@@ -309,11 +264,9 @@
   }
   .btn-enviar-checkout:hover { background: var(--whatsapp-dark); }
   .btn-enviar-checkout svg { width: 19px; height: 19px; }
-
   .nota-checkout {
     font-size: 0.74rem; color: var(--texto-muted); text-align: center; margin: 10px 0 0;
   }
-
   .estado-vacio {
     text-align: center;
     padding: 70px 20px;
@@ -321,13 +274,11 @@
   }
   .estado-vacio .icono { font-size: 2rem; margin-bottom: 12px; }
   .estado-vacio a { color: var(--azul); font-weight: 600; }
-
   footer { background: var(--bg-elevada); border-top: 1px solid var(--linea); padding: 30px 24px; margin-top: 20px; }
   .footer-abajo { max-width: 1100px; margin: 0 auto; text-align: center; font-size: 0.78rem; color: var(--texto-muted); }
 </style>
 </head>
 <body>
-
   <header>
     <div class="header-fila">
       <a class="logo-chip" href="index.html"><img src="logo.webp" alt="Fenix Import Perú"></a>
@@ -346,7 +297,6 @@
       </div>
     </div>
   </header>
-
   <div class="barra-titulo">
     <p class="breadcrumb">
       <a href="index.html">Inicio</a> <span class="sep">›</span>
@@ -355,15 +305,12 @@
     </p>
     <h1 class="titulo-pagina">Finalizar pedido</h1>
   </div>
-
   <main id="main-contenido">
     <!-- Se llena con JS: o el formulario, o el estado vacío -->
   </main>
-
   <footer>
     <div class="footer-abajo">© <span id="anio"></span> Fenix Import Perú. Todos los derechos reservados.</div>
   </footer>
-
 <script>
   const NUMERO_WHATSAPP = "51978821080";
   const URL_SITIO = "https://fenix-import-peru.onrender.com";
@@ -371,15 +318,11 @@
   const FORM_DATOS_KEY = "fenix_checkout_datos";
   const DIRECCION_ALMACEN = "Jirón Cajabamba 313, Independencia, Lima";
   const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbwjdBAzGbHjCqxNqCqzge-Gak0SnQPmk8TUgL82cW6aQbue1IMzo9sHEqQQ5ZUvBWO-Wg/exec";
-
   // Ubigeo propio (Departamento → Provincia → Distrito), publicado desde tu Sheet
   const URL_UBIGEO = "ubigeo.json";
-
   document.getElementById("anio").textContent = new Date().getFullYear();
-
   const mensajeGenerico = "¡Hola Fenix Import Perú!\nMe gustaría más información sobre sus productos.";
   document.getElementById("nav-whatsapp").href = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensajeGenerico);
-
   // ---------- Tema oscuro / claro ----------
   const raiz = document.documentElement;
   function aplicarTema(tema) { raiz.setAttribute("data-tema", tema); localStorage.setItem("fenix-tema", tema); }
@@ -388,19 +331,15 @@
     aplicarTema(raiz.getAttribute("data-tema") === "claro" ? "oscuro" : "claro");
     if (mapaLeaflet) setTimeout(() => mapaLeaflet.invalidateSize(), 200);
   });
-
   // ---------- Carrito (lectura) ----------
   function obtenerCarrito() {
     try { return JSON.parse(localStorage.getItem(CARRITO_KEY)) || []; }
     catch (e) { return []; }
   }
-
   function guardarCarrito(carrito) {
     localStorage.setItem(CARRITO_KEY, JSON.stringify(carrito));
   }
-
   // ---------- Validación y filtrado de celulares/documentos ----------
-
   // Mientras el cliente escribe: deja pasar solo dígitos, y un "+" si va
   // al inicio (para números extranjeros con código de país).
   function filtrarSoloCelular(evento) {
@@ -409,11 +348,9 @@
     let limpio = el.value.replace(/[^\d]/g, "");
     el.value = tienePlusAlInicio ? "+" + limpio : limpio;
   }
-
   function filtrarSoloNumeros(evento) {
     evento.target.value = evento.target.value.replace(/[^\d]/g, "");
   }
-
   // Celular peruano válido: 9 dígitos empezando en 9 (ej. 987654321).
   // También se acepta número extranjero si el cliente lo escribe con
   // "+" y su código de país (ej. +1 555 123 4567).
@@ -423,12 +360,19 @@
     if (/^\+\d{8,15}$/.test(limpio)) return true;
     return false;
   }
-
+  // Documento de identidad válido según su tipo.
+  // DNI peruano: exactamente 8 dígitos.
+  // CE (Carné de Extranjería): no tiene un formato único fijo, así que
+  // se acepta un rango razonable de 6 a 12 dígitos.
+  function esDocumentoValido(valor, tipo) {
+    const limpio = (valor || "").trim();
+    if (tipo === "CE") return /^\d{6,12}$/.test(limpio);
+    return /^\d{8}$/.test(limpio); // DNI por defecto
+  }
   function activarValidacionesDeCampos() {
     document.querySelectorAll(".campo-celular").forEach(el => el.addEventListener("input", filtrarSoloCelular));
     document.querySelectorAll(".campo-solo-numeros").forEach(el => el.addEventListener("input", filtrarSoloNumeros));
   }
-
   function actualizarBadgeCarrito() {
     const carrito = obtenerCarrito();
     const total = carrito.reduce((s, i) => s + i.cantidad, 0);
@@ -436,15 +380,12 @@
     if (total > 0) { elBadge.textContent = total; elBadge.style.display = "flex"; }
     else { elBadge.style.display = "none"; }
   }
-
   document.getElementById("btn-abrir-carrito").addEventListener("click", () => {
     window.location.href = "catalogo.html";
   });
-
   function extraerPrecioNumerico(precio) {
     return Number(String(precio).replace(/[^0-9.]/g, "")) || 0;
   }
-
   // Combina distrito + calle + número + urbanización en un solo texto,
   // igual formato para el mensaje de WhatsApp y para la columna N del Sheet.
   function armarDireccionCompleta() {
@@ -452,24 +393,19 @@
     const calle = document.getElementById("input-calle").value.trim();
     const numero = document.getElementById("input-numero").value.trim();
     const urbanizacion = document.getElementById("input-urbanizacion").value.trim();
-
     let texto = [calle, numero].filter(Boolean).join(" ");
     if (urbanizacion) texto += (texto ? ", " : "") + "Urb. " + urbanizacion;
     if (distrito) texto += (texto ? " - " : "") + distrito;
-
     return texto;
   }
-
   // ---------- Estado ----------
   let productosCatalogo = [];
   let distritosLima = [];
   let mapaLeaflet = null;
   let marcadorMapa = null;
-
   // Ubigeo Perú (para envíos a provincia) — se carga solo si el cliente elige esa opción
   let ubigeo = {};
   let ubigeoCargado = false;
-
   function mostrarVacio() {
     document.getElementById("main-contenido").innerHTML = `
       <div class="estado-vacio" style="grid-column: 1 / -1;">
@@ -479,10 +415,8 @@
       </div>
     `;
   }
-
   function renderizarFormulario() {
     const elMain = document.getElementById("main-contenido");
-
     elMain.innerHTML = `
       <div>
         <div class="seccion-form">
@@ -503,7 +437,6 @@
             </label>
           </div>
         </div>
-
         <div class="seccion-form" id="seccion-recojo">
           <p class="seccion-form-titulo">Recojo en almacén</p>
           <div class="info-recojo">
@@ -512,13 +445,10 @@
           </div>
           <div class="estimado-entrega" id="estimado-recojo"></div>
         </div>
-
         <div class="seccion-form" id="seccion-lima" style="display:none;">
           <p class="seccion-form-titulo">Delivery en Lima</p>
           <p class="seccion-form-subtitulo">Para calcular el envío y coordinar la entrega</p>
-
           <div class="estimado-entrega" id="estimado-lima"></div>
-
           <div class="campo" id="campo-distrito">
             <label>Distrito</label>
             <select id="input-distrito">
@@ -526,13 +456,11 @@
             </select>
             <p class="campo-error">Selecciona tu distrito</p>
           </div>
-
           <div class="campo" id="campo-calle">
             <label>Calle o avenida</label>
             <input type="text" id="input-calle" placeholder="Ej. Av. Los Jazmines">
             <p class="campo-error">Ingresa la calle o avenida</p>
           </div>
-
           <div class="fila-2">
             <div class="campo" id="campo-numero">
               <label>Número / Mz. / Lote</label>
@@ -544,25 +472,20 @@
               <input type="text" id="input-urbanizacion" placeholder="Ej. Los Jazmines de Naranjal">
             </div>
           </div>
-
           <div class="campo">
             <label>Referencia <span class="opcional">(opcional)</span></label>
             <input type="text" id="input-referencia" placeholder="Ej. frente al parque, casa de rejas negras...">
           </div>
-
           <div class="campo" style="margin-bottom:0;">
             <label>Marca tu ubicación exacta <span class="opcional">(arrastra el pin)</span></label>
             <div id="mapa-entrega"></div>
             <p class="mapa-nota">Toca el mapa o arrastra el marcador hasta tu ubicación exacta — como en las apps de delivery.</p>
           </div>
         </div>
-
         <div class="seccion-form" id="seccion-provincia" style="display:none;">
           <p class="seccion-form-titulo">Envío a provincia</p>
           <p class="seccion-form-subtitulo">El costo del envío se coordina y paga directo en la agencia</p>
-
           <div class="estimado-entrega" id="estimado-provincia"></div>
-
           <div class="fila-2">
             <div class="campo" id="campo-departamento">
               <label>Departamento</label>
@@ -575,13 +498,11 @@
               <p class="campo-error">Selecciona tu provincia</p>
             </div>
           </div>
-
           <div class="campo" id="campo-distrito-provincia">
             <label>Distrito</label>
             <select id="input-distrito-provincia" disabled><option value="">Elige una provincia primero</option></select>
             <p class="campo-error">Selecciona tu distrito</p>
           </div>
-
           <div class="campo" id="campo-agencia">
             <label>Agencia de tu preferencia</label>
             <select id="input-agencia">
@@ -594,15 +515,12 @@
             </select>
             <p class="campo-error">Selecciona una agencia</p>
           </div>
-
           <div class="campo" id="campo-agencia-otro" style="display:none;">
             <label>¿Cuál agencia?</label>
             <input type="text" id="input-agencia-otro" placeholder="Nombre de la agencia">
           </div>
-
           <p class="nota-provincia">💡 El costo de envío por agencia varía según peso/volumen y se paga directo ahí — nosotros dejamos el paquete listo en la agencia que elijas.</p>
         </div>
-
         <div class="seccion-form">
           <p class="seccion-form-titulo">Tus datos</p>
           <p class="seccion-form-subtitulo">Para saber a nombre de quién va el pedido</p>
@@ -612,9 +530,20 @@
             <p class="campo-error">Ingresa tu nombre</p>
           </div>
           <div class="campo" id="campo-dni-comprador" style="display:none;">
-            <label>DNI</label>
-            <input type="text" id="input-dni-comprador" class="campo-solo-numeros" placeholder="8 dígitos" inputmode="numeric" maxlength="8">
-            <p class="campo-error">El DNI debe tener 8 dígitos</p>
+            <div class="fila-2">
+              <div class="campo" id="campo-dni-comprador-tipo" style="margin-bottom:0;">
+                <label>Tipo de documento</label>
+                <select id="input-dni-comprador-tipo">
+                  <option value="DNI">DNI</option>
+                  <option value="CE">Carné de Extranjería</option>
+                </select>
+              </div>
+              <div class="campo" style="margin-bottom:0;">
+                <label>N° de documento</label>
+                <input type="text" id="input-dni-comprador" class="campo-solo-numeros" placeholder="8 dígitos" inputmode="numeric" maxlength="8">
+                <p class="campo-error">El documento no es válido</p>
+              </div>
+            </div>
           </div>
           <div class="campo" id="campo-celular-comprador">
             <label>Celular</label>
@@ -623,11 +552,9 @@
             <p class="campo-error">Ingresa un celular válido (9 dígitos, ej. 987654321)</p>
           </div>
         </div>
-
         <div class="seccion-form" id="seccion-contacto-general">
           <p class="seccion-form-titulo">¿Quién recibe el pedido?</p>
           <p class="seccion-form-subtitulo">Por si otra persona distinta a ti lo recibe o lo recoge</p>
-
           <div class="opciones-comprobante">
             <label class="opcion-radio">
               <input type="radio" name="quienRecibe" value="yo_mismo" checked>
@@ -638,7 +565,6 @@
               <span class="opcion-radio-texto"><strong>Otra persona</strong><span>Alguien más está autorizado a recibir/recoger</span></span>
             </label>
           </div>
-
           <div id="bloque-contacto1" style="display:none; margin-top:14px;">
             <div class="contacto-bloque" style="border-top:none; padding-top:0; margin-top:0;">
               <p class="contacto-bloque-titulo">Quien recibe / recoge</p>
@@ -657,11 +583,9 @@
             </div>
           </div>
         </div>
-
         <div class="seccion-form" id="seccion-destinatario-provincia" style="display:none;">
           <p class="seccion-form-titulo">Datos de quien recibe</p>
           <p class="seccion-form-subtitulo">La agencia pide DNI a quien recoja el paquete — marca todas las que apliquen</p>
-
           <label class="opcion-radio" style="margin-bottom:8px;">
             <input type="checkbox" id="chk-destinatario-yo-mismo" checked>
             <span class="opcion-radio-texto"><strong>Yo mismo</strong><span>Uso mis propios datos de arriba (nombre, DNI, celular)</span></span>
@@ -670,7 +594,6 @@
             <input type="checkbox" id="chk-destinatario-otra-persona">
             <span class="opcion-radio-texto"><strong>Otra persona</strong><span>Alguien más también puede recoger el paquete</span></span>
           </label>
-
           <div id="bloque-destinatario1" style="display:none; margin-top:14px;">
             <div class="contacto-bloque" style="border-top:none; padding-top:0; margin-top:0;">
               <p class="contacto-bloque-titulo">Datos de esa persona</p>
@@ -680,39 +603,56 @@
                 <p class="campo-error">Requerido</p>
               </div>
               <div class="fila-2">
-                <div class="campo" id="campo-destinatario1-dni">
-                  <label>DNI</label>
-                  <input type="text" id="input-destinatario1-dni" class="campo-solo-numeros" placeholder="8 dígitos" inputmode="numeric" maxlength="8">
-                  <p class="campo-error">El DNI debe tener 8 dígitos</p>
+                <div class="campo" id="campo-destinatario1-tipo" style="margin-bottom:0;">
+                  <label>Tipo de documento</label>
+                  <select id="input-destinatario1-tipo">
+                    <option value="DNI">DNI</option>
+                    <option value="CE">Carné de Extranjería</option>
+                  </select>
                 </div>
-                <div class="campo" id="campo-destinatario1-celular">
-                  <label>Celular</label>
-                  <input type="tel" id="input-destinatario1-celular" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
-                  <p class="campo-error">Celular inválido (9 dígitos, ej. 987654321)</p>
+                <div class="campo" id="campo-destinatario1-dni" style="margin-bottom:0;">
+                  <label>N° de documento</label>
+                  <input type="text" id="input-destinatario1-dni" class="campo-solo-numeros" placeholder="8 dígitos" inputmode="numeric" maxlength="8">
+                  <p class="campo-error">El documento no es válido</p>
                 </div>
               </div>
-
+              <div class="campo" id="campo-destinatario1-celular" style="margin-top:14px;">
+                <label>Celular</label>
+                <input type="tel" id="input-destinatario1-celular" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
+                <p class="campo-error">Celular inválido (9 dígitos, ej. 987654321)</p>
+              </div>
               <button type="button" id="btn-agregar-destinatario2" class="btn-gps" style="margin-top:4px;">+ Agregar una segunda persona</button>
-
               <div id="bloque-destinatario2" style="display:none; margin-top:14px;">
                 <p class="contacto-bloque-titulo">Segunda persona <span class="opcional" style="text-transform:none; font-weight:400;">(opcional)</span></p>
+                <div class="campo" id="campo-destinatario2-nombre">
+                  <label>Nombre completo</label>
+                  <input type="text" id="input-destinatario2-nombre" placeholder="Nombre completo">
+                  <p class="campo-error">Requerido</p>
+                </div>
                 <div class="fila-2">
-                  <div class="campo">
-                    <label>Nombre completo</label>
-                    <input type="text" id="input-destinatario2-nombre" placeholder="Nombre completo">
+                  <div class="campo" id="campo-destinatario2-tipo" style="margin-bottom:0;">
+                    <label>Tipo de documento</label>
+                    <select id="input-destinatario2-tipo">
+                      <option value="DNI">DNI</option>
+                      <option value="CE">Carné de Extranjería</option>
+                    </select>
                   </div>
-                  <div class="campo">
-                    <label>Celular</label>
-                    <input type="tel" id="input-destinatario2-celular" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
+                  <div class="campo" id="campo-destinatario2-dni" style="margin-bottom:0;">
+                    <label>N° de documento</label>
+                    <input type="text" id="input-destinatario2-dni" class="campo-solo-numeros" placeholder="8 dígitos" inputmode="numeric" maxlength="8">
+                    <p class="campo-error">El documento no es válido</p>
                   </div>
+                </div>
+                <div class="campo" id="campo-destinatario2-celular" style="margin-top:14px;">
+                  <label>Celular</label>
+                  <input type="tel" id="input-destinatario2-celular" class="campo-celular" placeholder="9XXXXXXXX" inputmode="numeric">
+                  <p class="campo-error">Celular inválido (9 dígitos, ej. 987654321)</p>
                 </div>
               </div>
             </div>
           </div>
-
           <p class="campo-error" id="error-destinatario-general" style="display:none; margin-top:10px;">Marca al menos una opción de quién recogerá el pedido.</p>
         </div>
-
         <div class="seccion-form">
           <p class="seccion-form-titulo">Comprobante de pago</p>
           <p class="seccion-form-subtitulo">Si necesitas factura/boleta, se agrega el IGV (18%)</p>
@@ -726,7 +666,6 @@
               <span class="opcion-radio-texto"><strong>Con comprobante (Boleta/Factura)</strong><span>Se agrega 18% de IGV al total</span></span>
             </label>
           </div>
-
           <div class="campo" id="campo-documento" style="display:none; margin-top:14px;">
             <div class="fila-2">
               <div class="campo" style="margin-bottom:0;">
@@ -745,7 +684,6 @@
             </div>
           </div>
         </div>
-
         <div class="seccion-form">
           <p class="seccion-form-titulo">Notas adicionales <span class="opcional">(opcional)</span></p>
           <div class="campo">
@@ -753,7 +691,6 @@
           </div>
         </div>
       </div>
-
       <div class="resumen">
         <p class="resumen-titulo">Resumen del pedido</p>
         <a href="catalogo.html" id="link-editar-carrito" style="display:block; font-size:0.82rem; color:var(--azul); font-weight:600; margin-bottom:14px;">← Agregar o quitar productos</a>
@@ -762,7 +699,6 @@
         <div class="resumen-linea" id="linea-igv" style="display:none;"><span>IGV (18%)</span><span id="resumen-igv">S/ 0.00</span></div>
         <div class="resumen-linea destacada"><span>Envío</span><span id="resumen-envio">Sin costo</span></div>
         <div class="resumen-total"><span>Total</span><span id="resumen-total">S/ 0.00</span></div>
-
         <button class="btn-enviar-checkout" id="btn-enviar-checkout">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
           Enviar pedido por WhatsApp
@@ -770,7 +706,6 @@
         <p class="nota-checkout">Al enviar, se abre WhatsApp con todo el detalle. La compra se confirma coordinando ahí con un asesor.</p>
       </div>
     `;
-
     document.querySelectorAll('input[name="comprobante"]').forEach(r => r.addEventListener("change", onCambioComprobante));
     document.querySelectorAll('input[name="tipoEntrega"]').forEach(r => r.addEventListener("change", onCambioTipoEntrega));
     document.querySelectorAll('input[name="quienRecibe"]').forEach(r => r.addEventListener("change", onCambioQuienRecibe));
@@ -778,10 +713,12 @@
     document.getElementById("chk-destinatario-otra-persona").addEventListener("change", onCambioDestinatarios);
     document.getElementById("btn-agregar-destinatario2").addEventListener("click", toggleDestinatario2);
     document.getElementById("input-tipo-documento").addEventListener("change", ajustarCampoDocumento);
+    document.getElementById("input-dni-comprador-tipo").addEventListener("change", () => ajustarCampoDocumentoPersona("input-dni-comprador-tipo", "input-dni-comprador"));
+    document.getElementById("input-destinatario1-tipo").addEventListener("change", () => ajustarCampoDocumentoPersona("input-destinatario1-tipo", "input-destinatario1-dni"));
+    document.getElementById("input-destinatario2-tipo").addEventListener("change", () => ajustarCampoDocumentoPersona("input-destinatario2-tipo", "input-destinatario2-dni"));
     document.getElementById("input-distrito").addEventListener("change", actualizarResumen);
     document.getElementById("input-agencia").addEventListener("change", onCambioAgencia);
     document.getElementById("btn-enviar-checkout").addEventListener("click", intentarEnviarPedido);
-
     poblarDistritosLima();
     renderizarResumenItems();
     ajustarCampoDocumento();
@@ -790,26 +727,20 @@
     actualizarResumen();
     activarValidacionesDeCampos();
     actualizarEstimadosEntrega();
-
     restaurarDatosFormulario();
     activarGuardadoAutomatico();
   }
-
   function onCambioQuienRecibe() {
     const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
     document.getElementById("bloque-contacto1").style.display = esOtraPersona ? "block" : "none";
   }
-
   function onCambioDestinatarios() {
     const yoMismo = document.getElementById("chk-destinatario-yo-mismo").checked;
     const otraPersona = document.getElementById("chk-destinatario-otra-persona").checked;
-
     document.getElementById("bloque-destinatario1").style.display = otraPersona ? "block" : "none";
-
     // No se puede desmarcar todo — siempre debe quedar al menos alguien
     document.getElementById("error-destinatario-general").style.display = (!yoMismo && !otraPersona) ? "block" : "none";
   }
-
   function toggleDestinatario2() {
     const el = document.getElementById("bloque-destinatario2");
     const btn = document.getElementById("btn-agregar-destinatario2");
@@ -818,23 +749,23 @@
     btn.textContent = abierto ? "+ Agregar una segunda persona" : "− Quitar segunda persona";
     if (abierto) {
       document.getElementById("input-destinatario2-nombre").value = "";
+      document.getElementById("input-destinatario2-dni").value = "";
       document.getElementById("input-destinatario2-celular").value = "";
+      marcarError("campo-destinatario2-nombre", false);
+      marcarError("campo-destinatario2-dni", false);
+      marcarError("campo-destinatario2-celular", false);
     }
   }
-
   // ---------- Comprobante / documento ----------
-
   function onCambioComprobante() {
     const conComprobante = document.querySelector('input[name="comprobante"]:checked').value === "con_comprobante";
     document.getElementById("campo-documento").style.display = conComprobante ? "block" : "none";
     actualizarResumen();
   }
-
   function ajustarCampoDocumento() {
     const tipo = document.getElementById("input-tipo-documento").value;
     const elInput = document.getElementById("input-numero-documento");
     const elError = document.querySelector("#campo-numero-documento .campo-error");
-
     if (tipo === "DNI") {
       elInput.maxLength = 8;
       elInput.placeholder = "8 dígitos";
@@ -850,52 +781,53 @@
     }
     elInput.value = "";
   }
-
+  // Ajusta el placeholder/maxlength de un campo de documento de identidad
+  // (comprador en provincia, destinatario1, destinatario2) según si eligieron
+  // DNI o Carné de Extranjería (CE) — para soportar compradores/destinatarios extranjeros.
+  function ajustarCampoDocumentoPersona(idSelectTipo, idInputDocumento) {
+    const tipo = document.getElementById(idSelectTipo).value;
+    const elInput = document.getElementById(idInputDocumento);
+    if (tipo === "CE") {
+      elInput.maxLength = 12;
+      elInput.placeholder = "N° de Carné de Extranjería";
+    } else {
+      elInput.maxLength = 8;
+      elInput.placeholder = "8 dígitos";
+    }
+  }
   // ---------- Tipo de entrega ----------
-
   function onCambioTipoEntrega() {
     const tipo = document.querySelector('input[name="tipoEntrega"]:checked').value;
-
     document.getElementById("seccion-recojo").style.display = tipo === "recojo" ? "block" : "none";
     document.getElementById("seccion-lima").style.display = tipo === "lima" ? "block" : "none";
     document.getElementById("seccion-provincia").style.display = tipo === "provincia" ? "block" : "none";
-
     document.getElementById("seccion-contacto-general").style.display = tipo === "provincia" ? "none" : "block";
     document.getElementById("seccion-destinatario-provincia").style.display = tipo === "provincia" ? "block" : "none";
     document.getElementById("campo-dni-comprador").style.display = tipo === "provincia" ? "block" : "none";
-
     if (tipo === "lima") {
       setTimeout(inicializarMapa, 50);
     }
-
     if (tipo === "provincia" && !ubigeoCargado) {
       cargarUbigeoPeru();
     }
-
     actualizarResumen();
   }
-
   function onCambioAgencia() {
     const esOtro = document.getElementById("input-agencia").value === "otro";
     document.getElementById("campo-agencia-otro").style.display = esOtro ? "block" : "none";
     actualizarEstimadosEntrega();
   }
-
   // ---------- Estimado de entrega (según hora real y horarios de corte) ----------
-
   const AGENCIAS_CON_CORTE = ["Shalom", "Olva Courier", "Hnos Flores", "Marvisur"];
-
   function pintarEstimado(idElemento, mensaje, aTiempo) {
     const el = document.getElementById(idElemento);
     if (!el) return;
     el.className = "estimado-entrega " + (aTiempo ? "a-tiempo" : "fuera-de-horario");
     el.innerHTML = `<span class="icono-estimado">${aTiempo ? "✅" : "🕐"}</span><span>${mensaje}</span>`;
   }
-
   function actualizarEstimadosEntrega() {
     const ahora = new Date();
     const horaDecimal = ahora.getHours() + ahora.getMinutes() / 60;
-
     // Recojo en almacén: hasta las 5:00 PM, sin tolerancia (no queda nadie después)
     const corteRecojo = 17;
     if (horaDecimal < corteRecojo) {
@@ -903,7 +835,6 @@
     } else {
       pintarEstimado("estimado-recojo", "El horario de atención de hoy (hasta 5:00 PM) ya terminó. Podrás recogerlo el <strong>siguiente día hábil</strong>, coordinando antes por WhatsApp.", false);
     }
-
     // Delivery en Lima: pedidos hasta las 10:00 AM se procesan el mismo día
     const corteLima = 10;
     if (horaDecimal < corteLima) {
@@ -911,12 +842,10 @@
     } else {
       pintarEstimado("estimado-lima", "El horario de despacho de hoy (hasta 10:00 AM) ya pasó. Tu pedido se entrega el <strong>siguiente día hábil</strong>.", false);
     }
-
     // Envío a provincia: hasta la 1:00 PM se deja hoy en la agencia (si es de las
     // que tienen corte diario); otras agencias necesitan coordinación previa
     const corteProvincia = 13;
     const agenciaSeleccionada = document.getElementById("input-agencia")?.value || "";
-
     if (!agenciaSeleccionada) {
       pintarEstimado("estimado-provincia", "Elige una agencia para ver el tiempo estimado de envío.", true);
     } else if (agenciaSeleccionada === "otro") {
@@ -927,35 +856,26 @@
       pintarEstimado("estimado-provincia", `El horario de hoy (hasta 1:00 PM) ya pasó. Se envía a ${agenciaSeleccionada} el <strong>siguiente día hábil</strong>.`, false);
     }
   }
-
   // ---------- Mapa (Leaflet + OpenStreetMap, sin necesidad de API key) ----------
-
   function inicializarMapa() {
     if (mapaLeaflet) { mapaLeaflet.invalidateSize(); return; }
-
     const centroLima = [-12.0464, -77.0428];
     mapaLeaflet = L.map("mapa-entrega").setView(centroLima, 12);
-
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '© OpenStreetMap',
       maxZoom: 19
     }).addTo(mapaLeaflet);
-
     marcadorMapa = L.marker(centroLima, { draggable: true }).addTo(mapaLeaflet);
-
     mapaLeaflet.on("click", (e) => {
       marcadorMapa.setLatLng(e.latlng);
     });
   }
-
   let temporizadorGeocodificar = null;
-
   function intentarGeocodificar() {
     clearTimeout(temporizadorGeocodificar);
     temporizadorGeocodificar = setTimeout(async () => {
       const direccion = armarDireccionCompleta();
       if (!direccion || !mapaLeaflet) return;
-
       const consulta = `${direccion}, Lima, Perú`;
       try {
         const respuesta = await fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(consulta));
@@ -971,74 +891,56 @@
       }
     }, 900);
   }
-
   // ---------- Ubigeo (departamentos / provincias / distritos reales, desde tu Sheet) ----------
-
   async function cargarUbigeoPeru() {
     const elDepartamento = document.getElementById("input-departamento");
     try {
       const respuesta = await fetch(URL_UBIGEO);
       ubigeo = await respuesta.json();
       ubigeoCargado = true;
-
       const departamentos = Object.keys(ubigeo).sort();
-
       elDepartamento.innerHTML = '<option value="">Selecciona tu departamento...</option>' +
         departamentos.map(dep => `<option value="${dep}">${dep}</option>`).join("");
-
     } catch (error) {
       elDepartamento.innerHTML = '<option value="">No se pudo cargar la lista</option>';
       console.error(error);
     }
   }
-
   function alCambiarDepartamento() {
     const departamento = document.getElementById("input-departamento").value;
     const elProvincia = document.getElementById("input-provincia");
     const elDistrito = document.getElementById("input-distrito-provincia");
-
     elDistrito.innerHTML = '<option value="">Elige una provincia primero</option>';
     elDistrito.disabled = true;
-
     if (!departamento || !ubigeo[departamento]) {
       elProvincia.innerHTML = '<option value="">Elige un departamento primero</option>';
       elProvincia.disabled = true;
       actualizarResumen();
       return;
     }
-
     const provincias = Object.keys(ubigeo[departamento]).sort();
-
     elProvincia.disabled = false;
     elProvincia.innerHTML = '<option value="">Selecciona tu provincia...</option>' +
       provincias.map(prov => `<option value="${prov}">${prov}</option>`).join("");
-
     actualizarResumen();
   }
-
   function alCambiarProvincia() {
     const departamento = document.getElementById("input-departamento").value;
     const provincia = document.getElementById("input-provincia").value;
     const elDistrito = document.getElementById("input-distrito-provincia");
-
     if (!provincia || !ubigeo[departamento] || !ubigeo[departamento][provincia]) {
       elDistrito.innerHTML = '<option value="">Elige una provincia primero</option>';
       elDistrito.disabled = true;
       actualizarResumen();
       return;
     }
-
     const distritos = [...ubigeo[departamento][provincia]].sort();
-
     elDistrito.disabled = false;
     elDistrito.innerHTML = '<option value="">Selecciona tu distrito...</option>' +
       distritos.map(d => `<option value="${d}">${d}</option>`).join("");
-
     actualizarResumen();
   }
-
   // ---------- Distritos de Lima (envío calculado) ----------
-
   function poblarDistritosLima() {
     const elSelect = document.getElementById("input-distrito");
     distritosLima.forEach(d => {
@@ -1048,7 +950,6 @@
       opt.dataset.costo = d.costo;
       elSelect.appendChild(opt);
     });
-
     document.getElementById("input-calle").addEventListener("input", intentarGeocodificar);
     document.getElementById("input-numero").addEventListener("input", intentarGeocodificar);
     document.getElementById("input-urbanizacion").addEventListener("input", intentarGeocodificar);
@@ -1056,7 +957,6 @@
     document.getElementById("input-departamento").addEventListener("change", alCambiarDepartamento);
     document.getElementById("input-provincia").addEventListener("change", alCambiarProvincia);
   }
-
   function renderizarResumenItems() {
     const carrito = obtenerCarrito();
     document.getElementById("resumen-items").innerHTML = carrito.map(item => {
@@ -1074,7 +974,6 @@
       `;
     }).join("");
   }
-
   function buscarRecargoCotizarManual() {
     const carrito = obtenerCarrito();
     return carrito.some(item => {
@@ -1082,7 +981,6 @@
       return p && p.recargo === "COTIZAR";
     });
   }
-
   function calcularRecargoVolumen() {
     const carrito = obtenerCarrito();
     let total = 0;
@@ -1092,33 +990,25 @@
     });
     return total;
   }
-
   function actualizarResumen() {
     const carrito = obtenerCarrito();
     const subtotal = carrito.reduce((s, i) => s + extraerPrecioNumerico(i.precio) * i.cantidad, 0);
     const conComprobante = document.querySelector('input[name="comprobante"]:checked')?.value === "con_comprobante";
-
     document.getElementById("resumen-subtotal").textContent = "S/ " + subtotal.toFixed(2);
-
     const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked')?.value || "recojo";
     const elResumenEnvio = document.getElementById("resumen-envio");
     const requiereCotizacionManual = buscarRecargoCotizarManual();
-
     let envio = 0;
     let envioEsNumero = true;
-
     if (tipoEntrega === "recojo") {
       elResumenEnvio.textContent = "Sin costo";
       envio = 0;
-
     } else if (tipoEntrega === "provincia") {
       elResumenEnvio.innerHTML = `<span class="valor-cotizar">Se paga en la agencia</span>`;
       envioEsNumero = false;
-
     } else if (requiereCotizacionManual) {
       elResumenEnvio.innerHTML = `<span class="valor-cotizar">A cotizar</span>`;
       envioEsNumero = false;
-
     } else {
       const elDistrito = document.getElementById("input-distrito");
       const distritoElegido = elDistrito.value;
@@ -1130,69 +1020,59 @@
         envio = costoDistrito + calcularRecargoVolumen();
       }
     }
-
     // El IGV aplica sobre productos Y delivery (si el delivery tiene costo numérico)
     const baseImponible = subtotal + (envioEsNumero ? envio : 0);
     const igv = conComprobante ? baseImponible * 0.18 : 0;
     const factorIgv = conComprobante ? 1.18 : 1;
-
     document.getElementById("linea-igv").style.display = conComprobante ? "flex" : "none";
     document.getElementById("resumen-igv").textContent = "S/ " + igv.toFixed(2);
-
     if (envioEsNumero && (tipoEntrega === "lima")) {
       elResumenEnvio.textContent = "S/ " + (envio * factorIgv).toFixed(2);
     }
-
     const total = baseImponible + igv;
     document.getElementById("resumen-total").textContent = "S/ " + total.toFixed(2) + (envioEsNumero ? "" : " + envío");
   }
-
   function marcarError(idCampo, tieneError) {
     const el = document.getElementById(idCampo);
     if (el) el.classList.toggle("con-error", tieneError);
   }
-
   // ---------- Guardar/restaurar el formulario (para no perder datos si el cliente va al carrito) ----------
-
   const CAMPOS_TEXTO_A_GUARDAR = [
     "input-nombre", "input-dni-comprador", "input-celular-comprador",
     "input-contacto1-nombre", "input-contacto1-telefono",
     "input-destinatario1-nombre", "input-destinatario1-dni", "input-destinatario1-celular",
-    "input-destinatario2-nombre", "input-destinatario2-celular",
+    "input-destinatario2-nombre", "input-destinatario2-dni", "input-destinatario2-celular",
     "input-numero-documento",
     "input-distrito", "input-calle", "input-numero", "input-urbanizacion", "input-referencia",
     "input-agencia-otro",
     "input-notas"
   ];
-
   function guardarDatosFormulario() {
     const datos = {};
     CAMPOS_TEXTO_A_GUARDAR.forEach(id => {
       const el = document.getElementById(id);
       if (el) datos[id] = el.value;
     });
-
     const comprobante = document.querySelector('input[name="comprobante"]:checked');
     if (comprobante) datos.comprobante = comprobante.value;
-
     const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked');
     if (tipoEntrega) datos.tipoEntrega = tipoEntrega.value;
-
     const quienRecibe = document.querySelector('input[name="quienRecibe"]:checked');
     if (quienRecibe) datos.quienRecibe = quienRecibe.value;
-
     const esMismoDestinatario = document.getElementById("chk-destinatario-yo-mismo");
     if (esMismoDestinatario) datos.destinatarioYoMismo = esMismoDestinatario.checked;
-
     const destinatarioOtraPersona = document.getElementById("chk-destinatario-otra-persona");
     if (destinatarioOtraPersona) datos.destinatarioOtraPersona = destinatarioOtraPersona.checked;
-
     const tipoDoc = document.getElementById("input-tipo-documento");
     if (tipoDoc) datos.tipoDocumento = tipoDoc.value;
-
+    const tipoDocComprador = document.getElementById("input-dni-comprador-tipo");
+    if (tipoDocComprador) datos.tipoDocComprador = tipoDocComprador.value;
+    const tipoDocDest1 = document.getElementById("input-destinatario1-tipo");
+    if (tipoDocDest1) datos.tipoDocDest1 = tipoDocDest1.value;
+    const tipoDocDest2 = document.getElementById("input-destinatario2-tipo");
+    if (tipoDocDest2) datos.tipoDocDest2 = tipoDocDest2.value;
     localStorage.setItem(FORM_DATOS_KEY, JSON.stringify(datos));
   }
-
   function restaurarDatosFormulario() {
     let datos;
     try {
@@ -1201,29 +1081,36 @@
       return;
     }
     if (!datos) return;
-
     CAMPOS_TEXTO_A_GUARDAR.forEach(id => {
       const el = document.getElementById(id);
       if (el && datos[id] !== undefined) el.value = datos[id];
     });
-
     if (datos.comprobante) {
       const el = document.querySelector(`input[name="comprobante"][value="${datos.comprobante}"]`);
       if (el) { el.checked = true; onCambioComprobante(); }
     }
-
     if (datos.tipoDocumento) {
       const el = document.getElementById("input-tipo-documento");
       if (el) { el.value = datos.tipoDocumento; ajustarCampoDocumento(); el.value = datos.tipoDocumento; }
       const numDoc = document.getElementById("input-numero-documento");
       if (numDoc && datos["input-numero-documento"]) numDoc.value = datos["input-numero-documento"];
     }
-
+    if (datos.tipoDocComprador) {
+      const el = document.getElementById("input-dni-comprador-tipo");
+      if (el) { el.value = datos.tipoDocComprador; ajustarCampoDocumentoPersona("input-dni-comprador-tipo", "input-dni-comprador"); }
+    }
+    if (datos.tipoDocDest1) {
+      const el = document.getElementById("input-destinatario1-tipo");
+      if (el) { el.value = datos.tipoDocDest1; ajustarCampoDocumentoPersona("input-destinatario1-tipo", "input-destinatario1-dni"); }
+    }
+    if (datos.tipoDocDest2) {
+      const el = document.getElementById("input-destinatario2-tipo");
+      if (el) { el.value = datos.tipoDocDest2; ajustarCampoDocumentoPersona("input-destinatario2-tipo", "input-destinatario2-dni"); }
+    }
     if (datos.quienRecibe) {
       const el = document.querySelector(`input[name="quienRecibe"][value="${datos.quienRecibe}"]`);
       if (el) { el.checked = true; onCambioQuienRecibe(); }
     }
-
     if (datos.destinatarioYoMismo !== undefined) {
       document.getElementById("chk-destinatario-yo-mismo").checked = datos.destinatarioYoMismo;
     }
@@ -1231,38 +1118,30 @@
       document.getElementById("chk-destinatario-otra-persona").checked = datos.destinatarioOtraPersona;
     }
     onCambioDestinatarios();
-
-    if (datos["input-destinatario2-nombre"] || datos["input-destinatario2-celular"]) {
+    if (datos["input-destinatario2-nombre"] || datos["input-destinatario2-celular"] || datos["input-destinatario2-dni"]) {
       document.getElementById("bloque-destinatario2").style.display = "block";
       document.getElementById("btn-agregar-destinatario2").textContent = "− Quitar segunda persona";
     }
-
     if (datos.tipoEntrega) {
       const el = document.querySelector(`input[name="tipoEntrega"][value="${datos.tipoEntrega}"]`);
       if (el) { el.checked = true; onCambioTipoEntrega(); }
     }
-
     // El distrito de Lima es un <select> poblado dinámicamente — se
     // restaura aparte, después de que poblarDistritosLima() ya corrió.
     if (datos["input-distrito"]) {
       const elDistrito = document.getElementById("input-distrito");
       if (elDistrito) elDistrito.value = datos["input-distrito"];
     }
-
     actualizarResumen();
   }
-
   function activarGuardadoAutomatico() {
     document.getElementById("main-contenido").addEventListener("input", guardarDatosFormulario);
     document.getElementById("main-contenido").addEventListener("change", guardarDatosFormulario);
   }
-
   function limpiarDatosFormularioGuardados() {
     localStorage.removeItem(FORM_DATOS_KEY);
   }
-
   // ---------- ID de pedido (referencia para el cliente, no reemplaza el correlativo interno del Sheet) ----------
-
   function generarIdPedido() {
     const ahora = new Date();
     const aa = String(ahora.getFullYear()).slice(-2);
@@ -1273,19 +1152,15 @@
     const azar = Math.floor(100 + Math.random() * 900);
     return `FIP-${aa}${mm}${dd}-${hh}${min}-${azar}`;
   }
-
   function validarFormulario() {
     let valido = true;
-
     const nombre = document.getElementById("input-nombre").value.trim();
     marcarError("campo-nombre", !nombre);
     if (!nombre) valido = false;
-
     const celularComprador = document.getElementById("input-celular-comprador").value.trim();
     const celularCompradorValido = esCelularValido(celularComprador);
     marcarError("campo-celular-comprador", !celularCompradorValido);
     if (!celularCompradorValido) valido = false;
-
     const conComprobante = document.querySelector('input[name="comprobante"]:checked').value === "con_comprobante";
     if (conComprobante) {
       const tipoDoc = document.getElementById("input-tipo-documento").value;
@@ -1296,88 +1171,89 @@
       marcarError("campo-numero-documento", !docValido);
       if (!docValido) valido = false;
     }
-
     const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked').value;
-
     if (tipoEntrega === "lima") {
       const distrito = document.getElementById("input-distrito").value;
       marcarError("campo-distrito", !distrito);
       if (!distrito) valido = false;
-
       const calle = document.getElementById("input-calle").value.trim();
       marcarError("campo-calle", !calle);
       if (!calle) valido = false;
-
       const numero = document.getElementById("input-numero").value.trim();
       marcarError("campo-numero", !numero);
       if (!numero) valido = false;
     }
-
     if (tipoEntrega === "provincia") {
       const dniComprador = document.getElementById("input-dni-comprador").value.trim();
-      const dniCompradorValido = /^\d{8}$/.test(dniComprador);
+      const tipoDocComprador = document.getElementById("input-dni-comprador-tipo").value;
+      const dniCompradorValido = esDocumentoValido(dniComprador, tipoDocComprador);
       marcarError("campo-dni-comprador", !dniCompradorValido);
       if (!dniCompradorValido) valido = false;
-
       const departamento = document.getElementById("input-departamento").value;
       marcarError("campo-departamento", !departamento);
       if (!departamento) valido = false;
-
       const provincia = document.getElementById("input-provincia").value;
       marcarError("campo-provincia", !provincia);
       if (!provincia) valido = false;
-
       const distritoProv = document.getElementById("input-distrito-provincia").value;
       marcarError("campo-distrito-provincia", !distritoProv);
       if (!distritoProv) valido = false;
-
       const agencia = document.getElementById("input-agencia").value;
       marcarError("campo-agencia", !agencia);
       if (!agencia) valido = false;
-
       const destYoMismo = document.getElementById("chk-destinatario-yo-mismo").checked;
       const destOtraPersona = document.getElementById("chk-destinatario-otra-persona").checked;
-
       const hayAlMenosUno = destYoMismo || destOtraPersona;
       document.getElementById("error-destinatario-general").style.display = hayAlMenosUno ? "none" : "block";
       if (!hayAlMenosUno) valido = false;
-
       if (destOtraPersona) {
         const destNombre = document.getElementById("input-destinatario1-nombre").value.trim();
         marcarError("campo-destinatario1-nombre", !destNombre);
         if (!destNombre) valido = false;
-
         const destDni = document.getElementById("input-destinatario1-dni").value.trim();
-        const dniValido = /^\d{8}$/.test(destDni);
+        const tipoDocDest1 = document.getElementById("input-destinatario1-tipo").value;
+        const dniValido = esDocumentoValido(destDni, tipoDocDest1);
         marcarError("campo-destinatario1-dni", !dniValido);
         if (!dniValido) valido = false;
-
         const destCelular = document.getElementById("input-destinatario1-celular").value.trim();
         const destCelularValido = esCelularValido(destCelular);
         marcarError("campo-destinatario1-celular", !destCelularValido);
         if (!destCelularValido) valido = false;
       }
-
+      // Segunda persona (destinatario2): opcional como bloque completo,
+      // pero si el cliente empezó a llenarla, debe completarla —
+      // incluyendo el DNI/CE, porque la agencia lo exige para entregar el paquete.
+      const dest2Nombre = document.getElementById("input-destinatario2-nombre").value.trim();
+      const dest2Dni = document.getElementById("input-destinatario2-dni").value.trim();
+      const dest2Celular = document.getElementById("input-destinatario2-celular").value.trim();
+      const dest2Iniciado = dest2Nombre || dest2Dni || dest2Celular;
+      if (dest2Iniciado) {
+        marcarError("campo-destinatario2-nombre", !dest2Nombre);
+        if (!dest2Nombre) valido = false;
+        const tipoDocDest2 = document.getElementById("input-destinatario2-tipo").value;
+        const dest2DniValido = esDocumentoValido(dest2Dni, tipoDocDest2);
+        marcarError("campo-destinatario2-dni", !dest2DniValido);
+        if (!dest2DniValido) valido = false;
+        const dest2CelularValido = esCelularValido(dest2Celular);
+        marcarError("campo-destinatario2-celular", !dest2CelularValido);
+        if (!dest2CelularValido) valido = false;
+      }
     } else {
       const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
       if (esOtraPersona) {
         const contacto1Nombre = document.getElementById("input-contacto1-nombre").value.trim();
         marcarError("campo-contacto1-nombre", !contacto1Nombre);
         if (!contacto1Nombre) valido = false;
-
         const contacto1Telefono = document.getElementById("input-contacto1-telefono").value.trim();
         const contacto1TelefonoValido = esCelularValido(contacto1Telefono);
         marcarError("campo-contacto1-telefono", !contacto1TelefonoValido);
         if (!contacto1TelefonoValido) valido = false;
       }
     }
-
     return valido;
   }
-
   function registrarPedidoEnSheet(datosPedido) {
     const url = URL_REGISTRO_PEDIDO + "?datos=" + encodeURIComponent(JSON.stringify(datosPedido));
-
     // Se usa fetch en modo "no-cors": no necesitamos LEER la respuesta
     // (esto es un envío silencioso de respaldo, el mensaje de WhatsApp es
     // la confirmación real), así que no importa si Google la bloquea para
@@ -1393,52 +1269,52 @@
         return { error: "conexión fallida" };
       });
   }
-
   async function intentarEnviarPedido() {
     if (!validarFormulario()) {
       document.querySelector(".con-error")?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
-
     const carrito = obtenerCarrito();
     const nombre = document.getElementById("input-nombre").value.trim();
     const celularComprador = document.getElementById("input-celular-comprador").value.trim();
     const conComprobante = document.querySelector('input[name="comprobante"]:checked').value === "con_comprobante";
     const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked').value;
-
     const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
+    const tipoDocComprador = tipoEntrega === "provincia" ? document.getElementById("input-dni-comprador-tipo").value : "";
     const dniComprador = tipoEntrega === "provincia" ? document.getElementById("input-dni-comprador").value.trim() : "";
-
     let contacto1Nombre, contacto1Telefono;
     let listaDestinatarios = [];
-
     if (tipoEntrega === "provincia") {
       const destYoMismo = document.getElementById("chk-destinatario-yo-mismo").checked;
       const destOtraPersona = document.getElementById("chk-destinatario-otra-persona").checked;
-
       if (destYoMismo) {
-        listaDestinatarios.push({ nombre: nombre, dni: dniComprador, celular: celularComprador });
+        listaDestinatarios.push({ nombre: nombre, tipoDoc: tipoDocComprador, dni: dniComprador, celular: celularComprador });
       }
       if (destOtraPersona) {
         listaDestinatarios.push({
           nombre: document.getElementById("input-destinatario1-nombre").value.trim(),
+          tipoDoc: document.getElementById("input-destinatario1-tipo").value,
           dni: document.getElementById("input-destinatario1-dni").value.trim(),
           celular: document.getElementById("input-destinatario1-celular").value.trim()
         });
       }
       const destinatario2Nombre = document.getElementById("input-destinatario2-nombre").value.trim();
+      const destinatario2Dni = document.getElementById("input-destinatario2-dni").value.trim();
       const destinatario2Celular = document.getElementById("input-destinatario2-celular").value.trim();
-      if (destinatario2Nombre || destinatario2Celular) {
-        listaDestinatarios.push({ nombre: destinatario2Nombre, dni: "", celular: destinatario2Celular });
+      if (destinatario2Nombre || destinatario2Celular || destinatario2Dni) {
+        listaDestinatarios.push({
+          nombre: destinatario2Nombre,
+          tipoDoc: document.getElementById("input-destinatario2-tipo").value,
+          dni: destinatario2Dni,
+          celular: destinatario2Celular
+        });
       }
     } else {
       contacto1Nombre = esOtraPersona ? document.getElementById("input-contacto1-nombre").value.trim() : nombre;
       contacto1Telefono = esOtraPersona ? document.getElementById("input-contacto1-telefono").value.trim() : celularComprador;
     }
-
     const notas = document.getElementById("input-notas").value.trim();
     const idPedido = generarIdPedido();
-
     // Notas que van al Sheet: las que escribió el cliente + cualquier
     // dato de contacto/destinatario que no tenga columna propia — así
     // el celular del comprador (columna G) siempre queda con SU celular,
@@ -1452,20 +1328,17 @@
       const esSoloElComprador = listaDestinatarios.length === 1 && listaDestinatarios[0].nombre === nombre;
       if (!esSoloElComprador && listaDestinatarios.length > 0) {
         const detalle = listaDestinatarios
-          .map(d => `${d.nombre}${d.dni ? " (DNI " + d.dni + ")" : ""} - ${d.celular}`)
+          .map(d => `${d.nombre}${d.dni ? " (" + d.tipoDoc + " " + d.dni + ")" : ""} - ${d.celular}`)
           .join(" | ");
         const linea = `Autorizados a recoger en agencia: ${detalle}`;
         notasParaSheet = notasParaSheet ? `${notasParaSheet}\n${linea}` : linea;
       }
     }
-
     const subtotal = carrito.reduce((s, i) => s + extraerPrecioNumerico(i.precio) * i.cantidad, 0);
     const requiereCotizacionManual = buscarRecargoCotizarManual();
-
     let envio = 0;
     let envioEsNumero = false;
     let envioTexto = "Sin costo (recojo en almacén)";
-
     if (tipoEntrega === "lima") {
       if (requiereCotizacionManual) {
         envioTexto = "A cotizar (pedido incluye artículo grande/pesado)";
@@ -1480,38 +1353,30 @@
     } else if (tipoEntrega === "recojo") {
       envioEsNumero = true; // envío = 0, pero sí entra en la base (no cambia nada)
     }
-
     // El IGV aplica sobre productos Y delivery (si el delivery tiene costo numérico)
     const baseImponible = subtotal + (envioEsNumero ? envio : 0);
     const igv = conComprobante ? baseImponible * 0.18 : 0;
     const factorIgv = conComprobante ? 1.18 : 1;
     const costoDeliveryConIgv = Number((envio * factorIgv).toFixed(2));
-
     if (tipoEntrega === "lima" && envioEsNumero) {
       envioTexto = "S/ " + costoDeliveryConIgv.toFixed(2);
     }
-
     const total = baseImponible + igv;
-
     let mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\nN° de pedido: ${idPedido}\n\n`;
-
     carrito.forEach(item => {
       const precioUnit = extraerPrecioNumerico(item.precio) * factorIgv;
       const link = URL_SITIO + "/producto.html?sku=" + encodeURIComponent(item.sku);
       mensaje += `${item.nombre}\nPrecio: S/ ${precioUnit.toFixed(2)} c/u — Cantidad: ${item.cantidad}\nSKU: ${item.sku}\n${link}\n\n`;
     });
-
     mensaje += `Subtotal: S/ ${subtotal.toFixed(2)}\n`;
     if (conComprobante) mensaje += `IGV (18%): S/ ${igv.toFixed(2)}\n`;
     mensaje += `Envío: ${envioTexto}\n`;
     mensaje += `Total: S/ ${total.toFixed(2)}${tipoEntrega === "provincia" || requiereCotizacionManual ? " + envío" : ""}\n\n`;
-
     mensaje += `Datos del cliente:\n`;
     mensaje += `Nombre: ${nombre}\n`;
     mensaje += `Celular: ${celularComprador}\n`;
-    if (tipoEntrega === "provincia") mensaje += `DNI: ${dniComprador}\n`;
+    if (tipoEntrega === "provincia") mensaje += `${tipoDocComprador}: ${dniComprador}\n`;
     mensaje += `Comprobante: ${conComprobante ? "Con comprobante (Boleta/Factura)" : "Precio libre, sin comprobante"}\n`;
-
     let tipoDocumento = "";
     let numeroDocumento = "";
     if (conComprobante) {
@@ -1519,7 +1384,6 @@
       numeroDocumento = document.getElementById("input-numero-documento").value.trim();
       mensaje += `${tipoDocumento}: ${numeroDocumento}\n`;
     }
-
     let direccionCompleta = "";
     let ubicacionGpsTexto = "";
     let distritoLima = "";
@@ -1527,11 +1391,9 @@
     let provinciaProvinciaTexto = "";
     let distritoProvinciaTexto = "";
     let agenciaTexto = "";
-
     if (tipoEntrega === "recojo") {
       mensaje += `Entrega: Recojo en almacén (${DIRECCION_ALMACEN})\n`;
       direccionCompleta = DIRECCION_ALMACEN;
-
     } else if (tipoEntrega === "lima") {
       distritoLima = document.getElementById("input-distrito").value;
       direccionCompleta = armarDireccionCompleta();
@@ -1544,45 +1406,37 @@
         ubicacionGpsTexto = `https://maps.google.com/?q=${pos.lat},${pos.lng}`;
         mensaje += `Ubicación GPS: ${ubicacionGpsTexto}\n`;
       }
-
     } else if (tipoEntrega === "provincia") {
       const elDepartamento = document.getElementById("input-departamento");
       const elProvincia = document.getElementById("input-provincia");
       const elDistritoProv = document.getElementById("input-distrito-provincia");
       const agencia = document.getElementById("input-agencia").value;
       const agenciaOtro = document.getElementById("input-agencia-otro").value.trim();
-
       departamentoProvinciaTexto = elDepartamento.selectedOptions[0]?.textContent || "";
       provinciaProvinciaTexto = elProvincia.selectedOptions[0]?.textContent || "";
       distritoProvinciaTexto = elDistritoProv.selectedOptions[0]?.textContent || "";
       agenciaTexto = agencia === "otro" ? agenciaOtro : agencia;
-
       mensaje += `Entrega: Envío a provincia\n`;
       mensaje += `Departamento: ${departamentoProvinciaTexto}\n`;
       mensaje += `Provincia: ${provinciaProvinciaTexto}\n`;
       mensaje += `Distrito: ${distritoProvinciaTexto}\n`;
       mensaje += `Agencia: ${agenciaTexto}\n`;
     }
-
     if (tipoEntrega === "provincia") {
       mensaje += `\nPersonas autorizadas a recoger:\n`;
       listaDestinatarios.forEach(d => {
-        mensaje += `- ${d.nombre}${d.dni ? " - DNI " + d.dni : ""} - ${d.celular}\n`;
+        mensaje += `- ${d.nombre}${d.dni ? " - " + d.tipoDoc + " " + d.dni : ""} - ${d.celular}\n`;
       });
     } else {
       mensaje += esOtraPersona
         ? `\nQuien recibe: ${contacto1Nombre} - ${contacto1Telefono}\n`
         : `\nQuien recibe: el propio comprador\n`;
     }
-
     if (notas) mensaje += `\nNotas: ${notas}\n`;
-
     mensaje += `\n¿Me confirman disponibilidad y coordinamos la entrega?`;
-
     // ---------- Registrar el pedido en el Sheet (ALMACEN / DOMICILIO / ENVIO) ----------
     const hoy = new Date();
     const fechaTexto = String(hoy.getDate()).padStart(2, "0") + "/" + String(hoy.getMonth() + 1).padStart(2, "0") + "/" + hoy.getFullYear();
-
     const datosPedido = {
       idPedido: idPedido,
       tipoEntrega: tipoEntrega,
@@ -1607,23 +1461,18 @@
         precioUnitario: Number((extraerPrecioNumerico(item.precio) * factorIgv).toFixed(2))
       }))
     };
-
     const elBotonEnviar = document.getElementById("btn-enviar-checkout");
     elBotonEnviar.disabled = true;
     elBotonEnviar.style.opacity = "0.7";
     const textoOriginalBoton = elBotonEnviar.innerHTML;
     elBotonEnviar.innerHTML = "Enviando pedido...";
-
     await registrarPedidoEnSheet(datosPedido);
-
     window.open("https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje), "_blank");
-
     guardarCarrito([]);
     actualizarBadgeCarrito();
     limpiarDatosFormularioGuardados();
     mostrarPantallaConcluido(idPedido);
   }
-
   function mostrarPantallaConcluido(idPedido) {
     document.getElementById("main-contenido").innerHTML = `
       <div class="estado-vacio" style="grid-column: 1 / -1;">
@@ -1635,38 +1484,29 @@
       </div>
     `;
   }
-
   // ---------- Carga inicial ----------
   async function iniciar() {
     actualizarBadgeCarrito();
-
     const carrito = obtenerCarrito();
     if (carrito.length === 0) {
       mostrarVacio();
       return;
     }
-
     try {
       const [respuestaProductos, respuestaDistritos] = await Promise.all([
         fetch("productos.json"),
         fetch("distritos.json")
       ]);
-
       const datosProductos = await respuestaProductos.json();
       const datosDistritos = await respuestaDistritos.json();
-
       productosCatalogo = datosProductos.productos || [];
       distritosLima = datosDistritos.distritos || [];
-
     } catch (error) {
       console.error(error);
     }
-
     renderizarFormulario();
   }
-
   iniciar();
 </script>
-
 </body>
 </html>
