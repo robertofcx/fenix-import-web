@@ -317,8 +317,7 @@
   const CARRITO_KEY = "fenix_carrito";
   const FORM_DATOS_KEY = "fenix_checkout_datos";
   const DIRECCION_ALMACEN = "Jirón Cajabamba 313, Independencia, Lima";
-  // Nueva implementación del Apps Script (ahora recibe POST, ver doPost)
-  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbwyDlqTlLwJ1-0Gh67FOyNWwLyMZLnknLaoGMKVd0CcEABRB2XQbtOh_wTbhywSg8GH5Q/exec";
+  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbwjdBAzGbHjCqxNqCqzge-Gak0SnQPmk8TUgL82cW6aQbue1IMzo9sHEqQQ5ZUvBWO-Wg/exec";
   // Ubigeo propio (Departamento → Provincia → Distrito), publicado desde tu Sheet
   const URL_UBIGEO = "ubigeo.json";
   document.getElementById("anio").textContent = new Date().getFullYear();
@@ -1253,22 +1252,15 @@
     }
     return valido;
   }
-  // ---------- Registro en el Sheet (POST, para soportar pedidos con varios items) ----------
   function registrarPedidoEnSheet(datosPedido) {
-    // Antes se mandaba todo por GET (query string), lo que rompía con
-    // pedidos de varios productos porque la URL superaba el límite que
-    // aceptan los servidores. Ahora se manda por POST en el body, sin
-    // límite práctico de tamaño.
-    // "text/plain" evita que el navegador dispare un preflight OPTIONS
-    // (Apps Script no lo maneja bien); el contenido sigue siendo JSON
-    // válido, solo cambia la etiqueta del header.
-    return fetch(URL_REGISTRO_PEDIDO, {
-      method: "POST",
-      mode: "no-cors",
-      keepalive: true,
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(datosPedido)
-    })
+    const url = URL_REGISTRO_PEDIDO + "?datos=" + encodeURIComponent(JSON.stringify(datosPedido));
+    // Se usa fetch en modo "no-cors": no necesitamos LEER la respuesta
+    // (esto es un envío silencioso de respaldo, el mensaje de WhatsApp es
+    // la confirmación real), así que no importa si Google la bloquea para
+    // lectura — el registro en el Sheet igual se ejecuta del lado del
+    // servidor. Esto evita los problemas raros de sesión/cuentas de
+    // Google que sí afectaban la carga de un <script> tradicional.
+    return fetch(url, { mode: "no-cors", keepalive: true })
       .then(() => {
         return { exito: true };
       })
