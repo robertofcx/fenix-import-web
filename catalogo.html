@@ -761,7 +761,7 @@
 
     function urlWhatsApp(producto) {
       const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
-      const link = URL_SITIO + "/producto.html?sku=" + encodeURIComponent(producto.sku);
+      const link = URL_SITIO + "/producto/" + encodeURIComponent(producto.sku) + ".html";
       const mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${producto.nombre}\nPrecio: S/ ${precio}\nSKU: ${producto.sku}\n${link}`;
       return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
     }
@@ -775,7 +775,7 @@
       const productoJson = encodeURIComponent(JSON.stringify({ sku: producto.sku, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen }));
 
       return `
-        <a class="tarjeta" href="producto.html?sku=${encodeURIComponent(producto.sku)}">
+        <a class="tarjeta" href="/producto/${encodeURIComponent(producto.sku)}.html">
           <div class="tarjeta-img">${badge}${imagenHtml}</div>
           <div class="tarjeta-body">
             <p class="tarjeta-categoria">${producto.categoria || ""}</p>
