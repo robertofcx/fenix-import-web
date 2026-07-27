@@ -51,8 +51,6 @@
     --azul: #4d52e0;
     --azul-hover: #6266e0;
     --ember: #ffab3d;
-    --ember-hover: #ffbd66;
-    --texto-sobre-azul: #ffffff;
     --texto-sobre-ember: #1a0f00;
     --sombra: rgba(0, 0, 0, 0.5);
   }
@@ -200,7 +198,7 @@
   .carrito-item-info { flex: 1; min-width: 0; }
   .carrito-item-nombre {
     font-size: 0.82rem; font-weight: 500; margin: 0 0 4px;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   }
   .carrito-item-precio { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--texto-muted); margin: 0 0 6px; }
 
@@ -483,6 +481,10 @@
     .producto-layout { grid-template-columns: 1fr 1fr; gap: 40px; }
   }
 
+  /* ---------- Galería / Carrusel de imágenes ---------- */
+
+  .producto-galeria { display: flex; flex-direction: column; gap: 10px; }
+
   .producto-img {
     background: var(--bg-elevada);
     border: 1px solid var(--linea);
@@ -493,16 +495,53 @@
     justify-content: center;
     overflow: hidden;
     position: relative;
+    touch-action: pan-y;
   }
 
-  .producto-img img { width: 100%; height: 100%; object-fit: contain; padding: 24px; }
+  .producto-img img {
+    width: 100%; height: 100%; object-fit: contain; padding: 24px;
+    user-select: none; -webkit-user-drag: none;
+  }
   .producto-img .sin-foto { color: var(--texto-muted); font-size: 0.85rem; font-family: 'IBM Plex Mono', monospace; }
+
+  .galeria-flecha {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--bg); border: 1px solid var(--linea); color: var(--texto);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 5; opacity: 0.85;
+  }
+  .galeria-flecha:hover { opacity: 1; }
+  .galeria-flecha svg { width: 16px; height: 16px; }
+  .galeria-flecha.izq { left: 10px; }
+  .galeria-flecha.der { right: 10px; }
+
+  .galeria-contador {
+    position: absolute; bottom: 10px; right: 10px;
+    background: rgba(20,21,43,0.65); color: #fff;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+    padding: 3px 9px; border-radius: 20px; z-index: 5;
+  }
+
+  .galeria-miniaturas {
+    display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .miniatura {
+    flex-shrink: 0; width: 62px; height: 62px; border-radius: 10px;
+    background: var(--bg-elevada); border: 2px solid transparent;
+    cursor: pointer; overflow: hidden; display: flex; align-items: center; justify-content: center;
+  }
+  .miniatura img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+  .miniatura.activa { border-color: var(--azul); }
 
   .badge-oferta-producto {
     position: absolute; top: 14px; right: 14px;
     background: var(--ember); color: var(--texto-sobre-ember);
     font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; font-weight: 700;
     letter-spacing: 0.05em; text-transform: uppercase; padding: 6px 12px; border-radius: 8px;
+    z-index: 6;
   }
 
   .producto-categoria {
@@ -701,6 +740,10 @@
     let productoActual = null;
     let fuse = null;
 
+    // ---------- Estado de la galería/carrusel ----------
+    let imagenesProductoActual = [];
+    let indiceImagenActual = 0;
+
     document.getElementById("anio").textContent = new Date().getFullYear();
 
     const mensajeGenerico = "¡Hola Fenix Import Perú!\nMe gustaría más información sobre sus productos.";
@@ -865,6 +908,80 @@
       });
     }
 
+    // ---------- Galería / Carrusel de imágenes ----------
+    function normalizarImagenes(producto) {
+      if (producto.imagenes && producto.imagenes.length > 0) return producto.imagenes;
+      if (producto.imagen) return [producto.imagen];
+      return [];
+    }
+
+    function renderizarGaleria(imagenes) {
+      imagenesProductoActual = imagenes;
+      indiceImagenActual = 0;
+
+      if (imagenes.length === 0) {
+        return `<div class="producto-galeria"><div class="producto-img"><span class="sin-foto">Sin foto disponible</span></div></div>`;
+      }
+
+      const flechas = imagenes.length > 1 ? `
+        <button class="galeria-flecha izq" onclick="cambiarImagen(-1)" aria-label="Anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="galeria-flecha der" onclick="cambiarImagen(1)" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <span class="galeria-contador" id="galeria-contador">1 / ${imagenes.length}</span>
+      ` : "";
+
+      const miniaturas = imagenes.length > 1 ? `
+        <div class="galeria-miniaturas" id="galeria-miniaturas">
+          ${imagenes.map((url, i) => `
+            <div class="miniatura ${i === 0 ? 'activa' : ''}" data-indice="${i}" onclick="irAImagen(${i})">
+              <img src="${url}" alt="Vista ${i + 1}" loading="lazy">
+            </div>
+          `).join("")}
+        </div>
+      ` : "";
+
+      return `
+        <div class="producto-galeria">
+          <div class="producto-img" id="producto-img-principal">
+            ${flechas}
+            <img id="imagen-principal" src="${imagenes[0]}" alt="Imagen del producto">
+          </div>
+          ${miniaturas}
+        </div>
+      `;
+    }
+
+    function irAImagen(indice) {
+      indiceImagenActual = indice;
+      document.getElementById("imagen-principal").src = imagenesProductoActual[indice];
+      const contador = document.getElementById("galeria-contador");
+      if (contador) contador.textContent = `${indice + 1} / ${imagenesProductoActual.length}`;
+      document.querySelectorAll(".miniatura").forEach((min, i) => min.classList.toggle("activa", i === indice));
+    }
+
+    function cambiarImagen(delta) {
+      let nuevo = indiceImagenActual + delta;
+      if (nuevo < 0) nuevo = imagenesProductoActual.length - 1;
+      if (nuevo >= imagenesProductoActual.length) nuevo = 0;
+      irAImagen(nuevo);
+    }
+
+    function activarSwipeGaleria() {
+      const contenedor = document.getElementById("producto-img-principal");
+      if (!contenedor) return;
+      let xInicio = 0;
+
+      contenedor.addEventListener("touchstart", (e) => { xInicio = e.touches[0].clientX; }, { passive: true });
+      contenedor.addEventListener("touchend", (e) => {
+        const diferencia = e.changedTouches[0].clientX - xInicio;
+        if (Math.abs(diferencia) < 40) return;
+        cambiarImagen(diferencia > 0 ? -1 : 1);
+      }, { passive: true });
+    }
+
     // ---------- Mostrar el producto ----------
     function urlWhatsAppProducto(producto) {
       const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
@@ -900,9 +1017,8 @@
       elBreadcrumb.style.display = "flex";
 
       const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
-      const imagenHtml = producto.imagen
-        ? `<img src="${producto.imagen}" alt="${producto.nombre}">`
-        : `<span class="sin-foto">Sin foto disponible</span>`;
+      const imagenes = normalizarImagenes(producto);
+      const galeriaHtml = renderizarGaleria(imagenes);
       const badge = producto.oferta ? `<span class="badge-oferta-producto">Oferta</span>` : "";
 
       const meta = [];
@@ -922,7 +1038,7 @@
 
       document.getElementById("contenido-producto").innerHTML = `
         <div class="producto-layout">
-          <div class="producto-img">${badge}${imagenHtml}</div>
+          <div style="position:relative;">${badge}${galeriaHtml}</div>
           <div>
             <p class="producto-categoria">${producto.categoria || ""}${producto.subcategoria ? " · " + producto.subcategoria : ""}</p>
             <h1 class="producto-nombre">${producto.nombre}</h1>
@@ -948,8 +1064,9 @@
       document.getElementById("estado-carga").style.display = "none";
       document.getElementById("contenido-producto").style.display = "block";
 
+      activarSwipeGaleria();
       actualizarMetaTagsSEO(producto, precio);
-      insertarDatosEstructurados(producto, precio);
+      insertarDatosEstructurados(producto, precio, imagenes);
     }
 
     function actualizarMetaTagsSEO(producto, precio) {
@@ -966,7 +1083,7 @@
       document.getElementById("og-precio").setAttribute("content", precio);
     }
 
-    function insertarDatosEstructurados(producto, precio) {
+    function insertarDatosEstructurados(producto, precio, imagenes) {
       const url = "https://fenix-import-peru.onrender.com/producto.html?sku=" + encodeURIComponent(producto.sku);
 
       const productoLd = {
@@ -974,7 +1091,7 @@
         "@type": "Product",
         "name": producto.nombre,
         "sku": producto.sku,
-        "image": producto.imagen || undefined,
+        "image": imagenes.length > 0 ? imagenes : undefined,
         "description": producto.descripcion || producto.nombre,
         "brand": producto.marca ? { "@type": "Brand", "name": producto.marca } : undefined,
         "offers": {
