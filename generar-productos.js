@@ -55,13 +55,65 @@ function generarUrlWhatsApp(producto, precio, url) {
   return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 }
 
-function generarJsonLd(producto, precio, url) {
+/**
+ * Arma el HTML de la galería (imagen principal + flechas + lupa +
+ * miniaturas) a partir de producto.imagenes (array) con fallback
+ * a producto.imagen (singular) para SKUs aún no migrados.
+ * Devuelve también el array de imágenes ya normalizado, para
+ * reutilizarlo en el JSON-LD y en window.PRODUCTO_ACTUAL.
+ */
+function generarGaleriaHtml(producto, nombreEscapado) {
+  const imagenes = (producto.imagenes && producto.imagenes.length > 0)
+    ? producto.imagenes
+    : (producto.imagen ? [producto.imagen] : []);
+
+  if (imagenes.length === 0) {
+    return {
+      galeriaHtml: `<div class="producto-galeria"><div class="producto-img"><span class="sin-foto">Sin foto disponible</span></div></div>`,
+      imagenes
+    };
+  }
+
+  const flechas = imagenes.length > 1 ? `
+    <button class="galeria-flecha izq" onclick="cambiarImagen(-1)" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="galeria-flecha der" onclick="cambiarImagen(1)" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <span class="galeria-contador" id="galeria-contador">1 / ${imagenes.length}</span>
+  ` : "";
+
+  const miniaturas = imagenes.length > 1 ? `
+    <div class="galeria-miniaturas" id="galeria-miniaturas">
+      ${imagenes.map((url, i) => `
+        <div class="miniatura ${i === 0 ? "activa" : ""}" data-indice="${i}" onclick="irAImagen(${i})">
+          <img src="${url}" alt="Vista ${i + 1}" loading="lazy">
+        </div>`).join("")}
+    </div>` : "";
+
+  const galeriaHtml = `
+    <div class="producto-galeria">
+      <div class="producto-img" id="producto-img-principal">
+        ${flechas}
+        <button class="galeria-lupa" onclick="abrirLupa()" aria-label="Ampliar imagen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </button>
+        <img id="imagen-principal" src="${imagenes[0]}" alt="${nombreEscapado}">
+      </div>
+      ${miniaturas}
+    </div>`;
+
+  return { galeriaHtml, imagenes };
+}
+
+function generarJsonLd(producto, precio, url, imagenes) {
   const productoLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: producto.nombre,
     sku: producto.sku,
-    image: producto.imagen || undefined,
+    image: imagenes.length > 0 ? imagenes : undefined,
     description: producto.descripcion || producto.nombre,
     brand: producto.marca ? { "@type": "Brand", name: producto.marca } : undefined,
     offers: {
@@ -94,9 +146,7 @@ function generarHtmlProducto(producto) {
   const descripcionCorta = escaparHtml((producto.descripcion || producto.nombre).slice(0, 160));
   const imagenAbsoluta = producto.imagen || `${URL_SITIO}/logo.webp`;
 
-  const imagenHtml = producto.imagen
-    ? `<img src="${producto.imagen}" alt="${nombreEscapado}">`
-    : `<span class="sin-foto">Sin foto disponible</span>`;
+  const { galeriaHtml, imagenes } = generarGaleriaHtml(producto, nombreEscapado);
   const badgeOferta = producto.oferta ? `<span class="badge-oferta-producto">Oferta</span>` : "";
 
   const metaChips = [];
@@ -117,15 +167,16 @@ function generarHtmlProducto(producto) {
   }
   breadcrumbHtml += ` <span class="sep">›</span> <span class="actual">${nombreEscapado}</span>`;
 
-  const jsonLd = generarJsonLd(producto, precio, url);
+  const jsonLd = generarJsonLd(producto, precio, url, imagenes);
   const urlWhatsApp = generarUrlWhatsApp(producto, precio, url);
 
-  // Datos mínimos que la página necesita en el navegador (carrito, WhatsApp)
+  // Datos mínimos que la página necesita en el navegador (carrito, WhatsApp, galería)
   const productoActualJs = escaparJsonEnHtml({
     sku: producto.sku,
     nombre: producto.nombre,
     precio: precio,
-    imagen: producto.imagen || ""
+    imagen: producto.imagen || "",
+    imagenes: imagenes
   });
 
   return `<!DOCTYPE html>
@@ -212,7 +263,7 @@ function generarHtmlProducto(producto) {
 
 <main>
   <div class="producto-layout">
-    <div class="producto-img">${badgeOferta}${imagenHtml}</div>
+    <div style="position:relative;">${badgeOferta}${galeriaHtml}</div>
     <div>
       <p class="producto-categoria">${escaparHtml(producto.categoria || "")}${producto.subcategoria ? " · " + escaparHtml(producto.subcategoria) : ""}</p>
       <h1 class="producto-nombre">${nombreEscapado}</h1>
@@ -235,6 +286,20 @@ function generarHtmlProducto(producto) {
 <a class="whatsapp-flotante" href="#" id="whatsapp-flotante" target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2z"/></svg>
 </a>
+
+<div class="modal-zoom-fondo" id="modal-zoom-fondo" onclick="if(event.target===this) cerrarLupa()">
+  <div class="modal-zoom-contenido">
+    <button class="modal-zoom-cerrar" onclick="cerrarLupa()" aria-label="Cerrar">✕</button>
+    <button class="modal-zoom-flecha izq" onclick="cambiarImagenModal(-1)" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <img id="modal-zoom-imagen" src="" alt="Imagen ampliada">
+    <button class="modal-zoom-flecha der" onclick="cambiarImagenModal(1)" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <span class="modal-zoom-contador" id="modal-zoom-contador"></span>
+  </div>
+</div>
 
 <script>window.PRODUCTO_ACTUAL = ${productoActualJs};</script>
 <script src="/producto-comun.js"></script>
