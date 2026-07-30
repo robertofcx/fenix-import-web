@@ -571,6 +571,28 @@
   <div id="header-placeholder"></div>
   <script src="/header.js"></script>
 
+  <div class="fondo-carrito" id="fondo-carrito"></div>
+  <div class="drawer-carrito" id="drawer-carrito">
+    <div class="carrito-header">
+      <h2>Tu pedido</h2>
+      <button class="btn-cerrar-drawer" id="btn-cerrar-carrito" aria-label="Cerrar carrito">✕</button>
+    </div>
+    <div class="carrito-lista" id="carrito-lista"></div>
+    <div class="carrito-footer" id="carrito-footer" style="display:none;">
+      <div class="carrito-total">
+        <span>Total</span>
+        <span id="carrito-total-monto">S/ 0.00</span>
+      </div>
+      <button class="btn-enviar-pedido" id="btn-enviar-pedido">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        Finalizar pedido
+      </button>
+      <button class="btn-vaciar-carrito" id="btn-vaciar-carrito">Vaciar carrito</button>
+    </div>
+  </div>
+
+  <div class="toast-carrito" id="toast-carrito"></div>
+
   <div class="barra-titulo">
     <p class="breadcrumb" id="breadcrumb"><a href="index.html">Inicio</a> <span class="sep">›</span> <span class="actual">Catálogo</span></p>
     <h1 class="titulo-catalogo">Catálogo</h1>
