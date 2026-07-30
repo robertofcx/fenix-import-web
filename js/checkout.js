@@ -6,7 +6,7 @@ const NUMERO_WHATSAPP = "51978821080";
   const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbwjdBAzGbHjCqxNqCqzge-Gak0SnQPmk8TUgL82cW6aQbue1IMzo9sHEqQQ5ZUvBWO-Wg/exec";
   // Ubigeo propio (Departamento → Provincia → Distrito), publicado desde tu Sheet
   const URL_UBIGEO = "ubigeo.json";
-  document.getElementById("anio").textContent = new Date().getFullYear();
+  // #anio ya lo escribe footer.js al inyectar el footer
   // nav-whatsapp y el tema oscuro/claro ya los maneja header.js.
   // Aquí solo re-ajustamos el mapa de Leaflet cuando cambia el tema.
   document.addEventListener("click", (e) => {

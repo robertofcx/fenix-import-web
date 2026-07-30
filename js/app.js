@@ -4,7 +4,7 @@ const RUTA_PRODUCTOS = "productos.json";
     let catalogoCompleto = null;
     let fuse = null;
 
-    document.getElementById("anio").textContent = new Date().getFullYear();
+    // #anio ya lo escribe footer.js al inyectar el footer
 
     const mensajeWhatsApp = "¡Hola Fenix Import Perú!\nMe gustaría más información sobre sus productos.";
     const urlWhatsApp = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensajeWhatsApp);

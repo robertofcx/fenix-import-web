@@ -233,9 +233,7 @@ main { padding: 20px; max-width: 1200px; margin: 0 auto; }
 
 .cargar-mas:hover { border-color: var(--azul); }
 
-footer { background: var(--bg-elevada); border-top: 1px solid var(--linea); padding: 40px 24px 20px; margin-top: 40px; }
-
-.footer-abajo { max-width: 1100px; margin: 0 auto; text-align: center; font-size: 0.78rem; color: var(--texto-muted); }
+/* El footer ya vive en footer.css */
 
 .whatsapp-flotante {
     position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px; border-radius: 50%;

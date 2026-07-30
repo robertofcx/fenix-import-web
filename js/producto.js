@@ -15,8 +15,7 @@ let imagenesProductoActual = [];
 let indiceImagenActual = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const anio = document.getElementById("anio");
-  if (anio) anio.textContent = new Date().getFullYear();
+  // #anio ya lo escribe footer.js al inyectar el footer
 
   // nav-whatsapp ya lo asigna header.js; aquí solo el flotante propio de esta página.
   const elFlotante = document.getElementById("whatsapp-flotante");

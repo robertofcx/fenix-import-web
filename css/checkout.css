@@ -242,6 +242,4 @@ main {
 
 .estado-vacio a { color: var(--azul); font-weight: 600; }
 
-footer { background: var(--bg-elevada); border-top: 1px solid var(--linea); padding: 30px 24px; margin-top: 20px; }
-
-.footer-abajo { max-width: 1100px; margin: 0 auto; text-align: center; font-size: 0.78rem; color: var(--texto-muted); }
+/* El footer ya vive en footer.css */

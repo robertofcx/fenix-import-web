@@ -205,6 +205,7 @@ function generarHtmlProducto(producto) {
 <link rel="stylesheet" href="/css/variables.css">
 <link rel="stylesheet" href="/css/header.css">
 <link rel="stylesheet" href="/css/carrito.css">
+<link rel="stylesheet" href="/css/footer.css">
 <link rel="stylesheet" href="/css/producto.css">
 <script type="application/ld+json">${jsonLd}</script>
 </head>
@@ -247,7 +248,8 @@ function generarHtmlProducto(producto) {
   </div>
 </main>
 
-<footer>© <span id="anio"></span> Fenix Import Perú. Todos los derechos reservados.</footer>
+<div id="footer-placeholder" data-variant="reducido"></div>
+<script src="/js/footer.js"></script>
 
 <a class="whatsapp-flotante" href="#" id="whatsapp-flotante" target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2z"/></svg>

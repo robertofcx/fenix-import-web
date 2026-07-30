@@ -70,7 +70,7 @@ main { max-width:1000px; margin:0 auto; padding:20px; }
   padding: 3px 9px; border-radius: 20px; z-index: 5;
 }
 
-.galeria-miniaturas { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
+.galeria-miniaturas { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
 
 .miniatura { flex-shrink: 0; width: 56px; height: 56px; border-radius: 10px; background: var(--bg-elevada); border: 2px solid transparent; cursor: pointer; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 
@@ -120,7 +120,7 @@ main { max-width:1000px; margin:0 auto; padding:20px; }
 
 .producto-seccion-texto { font-size:.92rem; line-height:1.7; color: var(--texto-muted); white-space:pre-line; }
 
-footer { background: var(--bg-elevada); border-top:1px solid var(--linea); padding:40px 24px 20px; margin-top:40px; text-align:center; font-size:.78rem; color: var(--texto-muted); }
+/* El footer ya vive en footer.css */
 
 .whatsapp-flotante { position:fixed; bottom:20px; right:20px; width:56px; height:56px; border-radius:50%; background: var(--whatsapp); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 20px var(--sombra); z-index:20; }
 
