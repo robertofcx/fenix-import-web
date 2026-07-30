@@ -21,34 +21,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/producto.css">
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/carrito.css">
+<link rel="stylesheet" href="/css/producto.css">
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Product","name":"Linterna Recargable Energizer Hard Case Professional 1000 Lumenes Power Bank USB hasta 550 Metros IPX4 y Cuerpo Reforzado para Uso Industrial","sku":"ILU_330","image":["https://res.cloudinary.com/vmkiq93n/image/upload/v1784721822/fenix/ILU_330/main.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721825/fenix/ILU_330/2.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721827/fenix/ILU_330/3.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721828/fenix/ILU_330/4.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721830/fenix/ILU_330/5.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721832/fenix/ILU_330/6.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721833/fenix/ILU_330/7.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721835/fenix/ILU_330/8.png"],"description":"La Linterna Recargable Energizer Hard Case Professional 1000 Lúmenes está diseñada para ofrecer un alto rendimiento en trabajos industriales, mantenimiento, construcción, seguridad, rescate y actividades al aire libre. Equipada con un potente LED de 1000 lúmenes, proporciona un alcance de iluminación de hasta 550 metros y cuenta con dos modos de funcionamiento para optimizar el brillo o la autonomía. Su resistente estructura de ABS reforzado, caucho y acero soporta impactos y condiciones exigentes, mientras que su certificación IPX4 la protege contra salpicaduras de agua. Además, incorpora una batería de litio recargable de 4800 mAh con carga USB y función Power Bank para cargar dispositivos móviles.","brand":{"@type":"Brand","name":"Energizer"},"offers":{"@type":"Offer","url":"https://fenix-import-peru.onrender.com/producto/ILU_330.html","priceCurrency":"PEN","price":"250.00","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Fenix Import Perú"}}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://fenix-import-peru.onrender.com/"},{"@type":"ListItem","position":2,"name":"Iluminacion","item":"https://fenix-import-peru.onrender.com/catalogo.html"},{"@type":"ListItem","position":3,"name":"Linterna Recargable Energizer Hard Case Professional 1000 Lumenes Power Bank USB hasta 550 Metros IPX4 y Cuerpo Reforzado para Uso Industrial","item":"https://fenix-import-peru.onrender.com/producto/ILU_330.html"}]}]</script>
 </head>
 <body>
 
-<header>
-  <div class="header-fila">
-    <div class="header-izquierda">
-      <button class="btn-hamburguesa" id="btn-abrir-drawer" aria-label="Abrir menú">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <a class="logo-chip" href="/index.html"><img src="/logo.webp" alt="Fenix Import Perú"></a>
-    </div>
-    <div class="header-derecha">
-      <button class="btn-tema" id="btn-tema" aria-label="Cambiar tema">
-        <svg class="icono-sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/></svg>
-        <svg class="icono-luna" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
-      <button class="btn-carrito" id="btn-abrir-carrito" aria-label="Ver carrito">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"/><circle cx="19" cy="21" r="1.5"/><path d="M2.5 3h2l2.6 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
-        <span class="badge-carrito" id="badge-carrito">0</span>
-      </button>
-      <a class="btn-nav-whatsapp" href="#" id="nav-whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
-        <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2z"/></svg>
-      </a>
-    </div>
-  </div>
-</header>
+<div id="header-placeholder"></div>
+<script src="/js/header.js"></script>
 
 <div class="fondo-carrito" id="fondo-carrito"></div>
 <div class="drawer-carrito" id="drawer-carrito">
@@ -61,22 +43,6 @@
   </div>
 </div>
 <div class="toast-carrito" id="toast-carrito"></div>
-
-<div class="fondo-drawer" id="fondo-drawer"></div>
-<nav class="drawer" id="drawer">
-  <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-    <span class="logo-chip"><img src="/logo.webp" alt="Fenix Import Perú" style="height:26px;"></span>
-    <button class="btn-cerrar-drawer" id="btn-cerrar-drawer">✕</button>
-  </div>
-  <a class="drawer-link" href="/index.html">Inicio</a>
-  <a class="drawer-link" href="/catalogo.html">Catálogo completo</a>
-  <p class="drawer-seccion-titulo">Categorías</p>
-  <div id="drawer-categorias"><p style="padding:10px 0; color:var(--texto-muted); font-size:.85rem;">Cargando...</p></div>
-  <div class="drawer-redes">
-    <a href="https://www.instagram.com/feniximportperu/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
-    <a href="https://www.facebook.com/FenixImportPeru" target="_blank" rel="noopener" aria-label="Facebook">FB</a>
-  </div>
-</nav>
 
 <nav class="breadcrumb"><a href="/index.html">Inicio</a> <span class="sep">›</span> <a href="/catalogo.html?categoria=Iluminacion">Iluminacion</a> <span class="sep">›</span> <span class="actual">Linterna Recargable Energizer Hard Case Professional 1000 Lumenes Power Bank USB hasta 550 Metros IPX4 y Cuerpo Reforzado para Uso Industrial</span></nav>
 
@@ -177,6 +143,8 @@
 </div>
 
 <script>window.PRODUCTO_ACTUAL = {"sku":"ILU_330","nombre":"Linterna Recargable Energizer Hard Case Professional 1000 Lumenes Power Bank USB hasta 550 Metros IPX4 y Cuerpo Reforzado para Uso Industrial","precio":"250.00","imagen":"https://res.cloudinary.com/vmkiq93n/image/upload/v1784721822/fenix/ILU_330/main.png","imagenes":["https://res.cloudinary.com/vmkiq93n/image/upload/v1784721822/fenix/ILU_330/main.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721825/fenix/ILU_330/2.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721827/fenix/ILU_330/3.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721828/fenix/ILU_330/4.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721830/fenix/ILU_330/5.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721832/fenix/ILU_330/6.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721833/fenix/ILU_330/7.png","https://res.cloudinary.com/vmkiq93n/image/upload/v1784721835/fenix/ILU_330/8.png"]};</script>
-<script src="/producto-comun.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/carrito.js"></script>
+<script src="/js/producto.js"></script>
 </body>
 </html>
