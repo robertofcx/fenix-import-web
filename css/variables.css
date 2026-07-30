@@ -1,0 +1,55 @@
+/* ============================================================
+   variables.css — variables de color/tema y reset base,
+   compartidas por TODAS las páginas del sitio.
+   ============================================================ */
+
+:root {
+    --bg: #ffffff;
+    --bg-elevada: #f5f6fb;
+    --bg-elevada-hover: #ebedf7;
+    --texto: #14152b;
+    --texto-muted: #5c5e78;
+    --linea: rgba(30, 33, 166, 0.12);
+    --azul: #1E21A6;
+    --azul-hover: #15187e;
+    --ember: #F7941E;
+    --ember-hover: #dd8210;
+    --texto-sobre-azul: #ffffff;
+    --texto-sobre-ember: #241300;
+    --whatsapp: #25d366;
+    --whatsapp-dark: #1ea952;
+    --sombra: rgba(20, 21, 43, 0.14);
+    --error: #d92d20;
+  }
+
+html[data-tema="oscuro"] {
+    --bg: #0b0c1e;
+    --bg-elevada: #14152c;
+    --bg-elevada-hover: #1c1e3d;
+    --texto: #f1f1fa;
+    --texto-muted: #9294b8;
+    --linea: rgba(130, 140, 255, 0.18);
+    --azul: #4d52e0;
+    --azul-hover: #6266e0;
+    --ember: #ffab3d;
+    --ember-hover: #ffbd66;
+    --texto-sobre-azul: #ffffff;
+    --texto-sobre-ember: #1a0f00;
+    --sombra: rgba(0, 0, 0, 0.5);
+    --error: #f97066;
+  }
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--texto);
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+a { color: inherit; text-decoration: none; }
+
+button { font-family: inherit; }

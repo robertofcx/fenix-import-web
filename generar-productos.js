@@ -202,7 +202,7 @@ function generarHtmlProducto(producto) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/producto.css">
+<link rel="stylesheet" href="/css/producto.css">
 <script type="application/ld+json">${jsonLd}</script>
 </head>
 <body>
