@@ -35,8 +35,7 @@ function mostrarToast(mensaje) {
 
 // Cada página de producto estática define window.PRODUCTO_ACTUAL
 // (objeto con sku, nombre, precio, imagen, imagenes) antes de cargar este script.
-function agregarAlCarritoActual() {
-  const producto = window.PRODUCTO_ACTUAL;
+function agregarProductoAlCarrito(producto) {
   if (!producto) return;
   const carrito = obtenerCarrito();
   const existente = carrito.find(item => item.sku === producto.sku);
@@ -44,6 +43,17 @@ function agregarAlCarritoActual() {
   else carrito.push({ sku: producto.sku, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen, cantidad: 1 });
   guardarCarrito(carrito);
   mostrarToast("✓ Agregado a tu pedido");
+}
+
+// Botón principal de la ficha de producto (usa window.PRODUCTO_ACTUAL)
+function agregarAlCarritoActual() {
+  agregarProductoAlCarrito(window.PRODUCTO_ACTUAL);
+}
+
+// Usada desde tarjetas de "También te puede interesar" / "Vistos recientemente"
+// (recibe el producto codificado en el onclick, igual que en el catálogo)
+function agregarProductoAlCarritoDesdeTarjeta(productoJsonCodificado) {
+  agregarProductoAlCarrito(JSON.parse(decodeURIComponent(productoJsonCodificado)));
 }
 
 function quitarDelCarrito(sku) {

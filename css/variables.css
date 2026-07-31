@@ -69,6 +69,7 @@ button { font-family: inherit; }
 .drawer-cat-col-izq,
 .drawer-cat-col-der,
 .drawer-cat-resultado-lista,
+.franja-scroll,
 .vitrina-wrap {
   scrollbar-width: thin;
   scrollbar-color: var(--linea) transparent;
@@ -81,6 +82,7 @@ button { font-family: inherit; }
 .drawer-cat-col-izq::-webkit-scrollbar,
 .drawer-cat-col-der::-webkit-scrollbar,
 .drawer-cat-resultado-lista::-webkit-scrollbar,
+.franja-scroll::-webkit-scrollbar,
 .vitrina-wrap::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -93,6 +95,7 @@ button { font-family: inherit; }
 .drawer-cat-col-izq::-webkit-scrollbar-track,
 .drawer-cat-col-der::-webkit-scrollbar-track,
 .drawer-cat-resultado-lista::-webkit-scrollbar-track,
+.franja-scroll::-webkit-scrollbar-track,
 .vitrina-wrap::-webkit-scrollbar-track {
   background: transparent;
 }
@@ -104,6 +107,7 @@ button { font-family: inherit; }
 .drawer-cat-col-izq::-webkit-scrollbar-thumb,
 .drawer-cat-col-der::-webkit-scrollbar-thumb,
 .drawer-cat-resultado-lista::-webkit-scrollbar-thumb,
+.franja-scroll::-webkit-scrollbar-thumb,
 .vitrina-wrap::-webkit-scrollbar-thumb {
   background: var(--linea);
   border-radius: 999px;
@@ -116,6 +120,7 @@ button { font-family: inherit; }
 .drawer-cat-col-izq::-webkit-scrollbar-thumb:hover,
 .drawer-cat-col-der::-webkit-scrollbar-thumb:hover,
 .drawer-cat-resultado-lista::-webkit-scrollbar-thumb:hover,
+.franja-scroll::-webkit-scrollbar-thumb:hover,
 .vitrina-wrap::-webkit-scrollbar-thumb:hover {
   background: var(--azul);
 }

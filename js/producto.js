@@ -24,12 +24,61 @@ document.addEventListener("DOMContentLoaded", () => {
       encodeURIComponent("¡Hola Fenix Import Perú!\nMe gustaría más información sobre sus productos.");
   }
 
+  // ---------- Vistos recientemente ----------
+  if (window.PRODUCTO_ACTUAL) {
+    renderizarVistos(window.PRODUCTO_ACTUAL.sku);
+    registrarVisto(window.PRODUCTO_ACTUAL);
+  }
+
   // ---------- Inicializar galería con los datos de la página ----------
   if (window.PRODUCTO_ACTUAL && window.PRODUCTO_ACTUAL.imagenes) {
     imagenesProductoActual = window.PRODUCTO_ACTUAL.imagenes;
     activarSwipeGaleria();
   }
 });
+
+// ==================== VISTOS RECIENTEMENTE ====================
+const VISTOS_KEY = "fenix_vistos";
+const MAX_VISTOS = 20;
+
+function obtenerVistos() {
+  try { return JSON.parse(localStorage.getItem(VISTOS_KEY)) || []; }
+  catch (e) { return []; }
+}
+
+function registrarVisto(producto) {
+  if (!producto || !producto.sku) return;
+  let vistos = obtenerVistos().filter(p => p.sku !== producto.sku);
+  vistos.unshift({ sku: producto.sku, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen });
+  if (vistos.length > MAX_VISTOS) vistos = vistos.slice(0, MAX_VISTOS);
+  localStorage.setItem(VISTOS_KEY, JSON.stringify(vistos));
+}
+
+function renderizarVistos(skuActual) {
+  const elSeccion = document.getElementById("seccion-vistos");
+  const elFranja = document.getElementById("franja-vistos");
+  if (!elSeccion || !elFranja) return;
+
+  const vistos = obtenerVistos().filter(p => p.sku !== skuActual).slice(0, 10);
+  if (vistos.length === 0) return;
+
+  elFranja.innerHTML = vistos.map(p => {
+    const precio = Number(String(p.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+    const imagenHtml = p.imagen
+      ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`
+      : `<span class="sin-foto">Sin foto</span>`;
+    const productoJson = encodeURIComponent(JSON.stringify({ sku: p.sku, nombre: p.nombre, precio: p.precio, imagen: p.imagen || "" }));
+    return `
+      <a class="franja-tarjeta" href="/producto/${encodeURIComponent(p.sku)}.html">
+        <div class="franja-tarjeta-img">${imagenHtml}</div>
+        <p class="franja-tarjeta-nombre">${p.nombre}</p>
+        <p class="franja-tarjeta-precio">S/ ${precio}</p>
+        <button class="franja-tarjeta-agregar" onclick="event.preventDefault(); agregarProductoAlCarritoDesdeTarjeta('${productoJson}')">+ Agregar</button>
+      </a>`;
+  }).join("");
+
+  elSeccion.style.display = "block";
+}
 
 // ==================== GALERÍA / CARRUSEL DE IMÁGENES ====================
 

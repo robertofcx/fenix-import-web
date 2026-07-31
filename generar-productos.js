@@ -56,6 +56,44 @@ function generarUrlWhatsApp(producto, precio, url) {
 }
 
 /**
+ * Productos relacionados: prioriza misma subcategoría, completa con
+ * la misma categoría si hacen falta más. Se calcula una sola vez al
+ * publicar — la ficha no hace ningún fetch extra para esto.
+ */
+function obtenerRelacionados(producto, todosLosProductos, limite) {
+  const mismaSubcategoria = [];
+  const mismaCategoria = [];
+
+  for (const p of todosLosProductos) {
+    if (p.sku === producto.sku) continue;
+    if (producto.subcategoria && p.subcategoria === producto.subcategoria && p.categoria === producto.categoria) {
+      mismaSubcategoria.push(p);
+    } else if (p.categoria === producto.categoria) {
+      mismaCategoria.push(p);
+    }
+  }
+
+  return mismaSubcategoria.concat(mismaCategoria).slice(0, limite);
+}
+
+function tarjetaFranja(p) {
+  const precio = limpiarPrecio(p.precio);
+  const nombre = escaparHtml(p.nombre);
+  const imagenHtml = p.imagen
+    ? `<img src="${p.imagen}" alt="${nombre}" loading="lazy">`
+    : `<span class="sin-foto">Sin foto</span>`;
+  const productoJson = encodeURIComponent(JSON.stringify({ sku: p.sku, nombre: p.nombre, precio: precio, imagen: p.imagen || "" }));
+
+  return `
+    <a class="franja-tarjeta" href="/producto/${encodeURIComponent(p.sku)}.html">
+      <div class="franja-tarjeta-img">${imagenHtml}</div>
+      <p class="franja-tarjeta-nombre">${nombre}</p>
+      <p class="franja-tarjeta-precio">S/ ${precio}</p>
+      <button class="franja-tarjeta-agregar" onclick="event.preventDefault(); agregarProductoAlCarritoDesdeTarjeta('${productoJson}')">+ Agregar</button>
+    </a>`;
+}
+
+/**
  * Arma el HTML de la galería (imagen principal + flechas + lupa +
  * miniaturas) a partir de producto.imagenes (array) con fallback
  * a producto.imagen (singular) para SKUs aún no migrados.
@@ -139,12 +177,20 @@ function generarJsonLd(producto, precio, url, imagenes) {
   return escaparJsonEnHtml([productoLd, breadcrumbLd]);
 }
 
-function generarHtmlProducto(producto) {
+function generarHtmlProducto(producto, todosLosProductos) {
   const precio = limpiarPrecio(producto.precio);
   const url = `${URL_SITIO}/producto/${producto.sku}.html`;
   const nombreEscapado = escaparHtml(producto.nombre);
   const descripcionCorta = escaparHtml((producto.descripcion || producto.nombre).slice(0, 160));
   const imagenAbsoluta = producto.imagen || `${URL_SITIO}/logo.webp`;
+
+  const relacionados = obtenerRelacionados(producto, todosLosProductos, 10);
+  const relacionadosHtml = relacionados.length > 0
+    ? `<section class="franja-productos">
+        <h2 class="franja-titulo">También te puede interesar</h2>
+        <div class="franja-scroll">${relacionados.map(tarjetaFranja).join("")}</div>
+      </section>`
+    : "";
 
   const { galeriaHtml, imagenes } = generarGaleriaHtml(producto, nombreEscapado);
   const badgeOferta = producto.oferta ? `<span class="badge-oferta-producto">Oferta</span>` : "";
@@ -246,6 +292,13 @@ function generarHtmlProducto(producto) {
     ${seccion("Características", producto.caracteristicas)}
     ${seccion("Incluye", producto.incluye)}
   </div>
+
+  ${relacionadosHtml}
+
+  <section class="franja-productos" id="seccion-vistos" style="display:none;">
+    <h2 class="franja-titulo">Vistos recientemente</h2>
+    <div class="franja-scroll" id="franja-vistos"></div>
+  </section>
 </main>
 
 <div id="footer-placeholder" data-variant="reducido"></div>
@@ -334,7 +387,7 @@ function main() {
     skusVistos.add(producto.sku);
 
     try {
-      const html = generarHtmlProducto(producto);
+      const html = generarHtmlProducto(producto, productos);
       fs.writeFileSync(path.join(CARPETA_SALIDA, `${producto.sku}.html`), html, "utf-8");
       generados++;
     } catch (err) {
