@@ -216,14 +216,15 @@ html[data-tema="claro"] .icono-sol { display: none; }
    ============================================================ */
 @media (min-width: 780px) {
   .drawer { max-width: 460px; padding: 24px; }
-  .drawer-cat-split { height: 460px; }
+  .drawer-cat-split { height: calc(100vh - 320px); min-height: 420px; max-height: 640px; }
   .drawer-cat-col-izq { width: 42%; }
   .drawer-cat-col-der { width: 58%; }
-  .drawer-cat-item { font-size: .88rem; padding: 11px 10px; }
-  .drawer-cat-sub, .drawer-cat-ver-todo { font-size: .9rem; padding: 10px 10px; }
+  .drawer-cat-item { font-size: .97rem; padding: 12px 10px; }
+  .drawer-cat-sub, .drawer-cat-ver-todo { font-size: 1rem; padding: 11px 10px; }
+  .cat-cantidad { font-size: .74rem; }
 }
 
 @media (min-width: 1100px) {
   .drawer { max-width: 540px; }
-  .drawer-cat-split { height: 500px; }
+  .drawer-cat-split { max-height: 760px; }
 }
