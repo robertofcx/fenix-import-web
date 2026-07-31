@@ -53,3 +53,69 @@ html, body {
 a { color: inherit; text-decoration: none; }
 
 button { font-family: inherit; }
+
+/* ============================================================
+   Barras de scroll: estilo consistente en todo el sitio (en vez
+   de la barra gris/blanca por defecto del navegador). Cubre:
+   galería de miniaturas de producto, drawer lateral, resultados
+   del buscador, lista del carrito, chips de categoría y la
+   vitrina de la portada.
+   ============================================================ */
+.galeria-miniaturas,
+.drawer,
+.resultados-busqueda,
+.carrito-lista,
+.categorias,
+.drawer-cat-col-izq,
+.drawer-cat-col-der,
+.drawer-cat-resultado-lista,
+.vitrina-wrap {
+  scrollbar-width: thin;
+  scrollbar-color: var(--linea) transparent;
+}
+.galeria-miniaturas::-webkit-scrollbar,
+.drawer::-webkit-scrollbar,
+.resultados-busqueda::-webkit-scrollbar,
+.carrito-lista::-webkit-scrollbar,
+.categorias::-webkit-scrollbar,
+.drawer-cat-col-izq,
+.drawer-cat-col-der,
+.drawer-cat-resultado-lista,
+.vitrina-wrap::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.galeria-miniaturas::-webkit-scrollbar-track,
+.drawer::-webkit-scrollbar-track,
+.resultados-busqueda::-webkit-scrollbar-track,
+.carrito-lista::-webkit-scrollbar-track,
+.categorias::-webkit-scrollbar-track,
+.drawer-cat-col-izq,
+.drawer-cat-col-der,
+.drawer-cat-resultado-lista,
+.vitrina-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+.galeria-miniaturas::-webkit-scrollbar-thumb,
+.drawer::-webkit-scrollbar-thumb,
+.resultados-busqueda::-webkit-scrollbar-thumb,
+.carrito-lista::-webkit-scrollbar-thumb,
+.categorias::-webkit-scrollbar-thumb,
+.drawer-cat-col-izq,
+.drawer-cat-col-der,
+.drawer-cat-resultado-lista,
+.vitrina-wrap::-webkit-scrollbar-thumb {
+  background: var(--linea);
+  border-radius: 999px;
+}
+.galeria-miniaturas::-webkit-scrollbar-thumb:hover,
+.drawer::-webkit-scrollbar-thumb:hover,
+.resultados-busqueda::-webkit-scrollbar-thumb:hover,
+.carrito-lista::-webkit-scrollbar-thumb:hover,
+.categorias::-webkit-scrollbar-thumb:hover,
+.drawer-cat-col-izq,
+.drawer-cat-col-der,
+.drawer-cat-resultado-lista,
+.vitrina-wrap::-webkit-scrollbar-thumb:hover {
+  background: var(--azul);
+}
