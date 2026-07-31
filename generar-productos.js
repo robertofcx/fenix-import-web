@@ -79,7 +79,8 @@ function escaparJsonEnHtml(objeto) {
 }
 
 function generarUrlWhatsApp(producto, precio, url) {
-  const mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${producto.nombre}\nPrecio: S/ ${precio}\nSKU: ${producto.sku}\n${url}`;
+  const nombreConColor = producto.color ? `${producto.nombre} - ${producto.color}` : producto.nombre;
+  const mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${nombreConColor}\nPrecio: S/ ${precio}\nSKU: ${producto.sku}\n${url}`;
   return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 }
 
@@ -347,7 +348,7 @@ function generarHtmlProducto(producto, todosLosProductos) {
         </div>
       </div>` : ""}
       <button class="btn-agregar-carrito-producto" onclick="agregarAlCarritoActual()">+ Agregar al pedido</button>
-      <a class="btn-whatsapp-producto" href="${urlWhatsApp}" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+      <a class="btn-whatsapp-producto" id="btn-whatsapp-producto" href="${urlWhatsApp}" target="_blank" rel="noopener">Consultar por WhatsApp</a>
       <p class="nota-entrega">Coordinamos entrega en Lima y envíos a todo el Perú.</p>
     </div>
   </div>

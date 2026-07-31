@@ -73,7 +73,18 @@ function seleccionarVariante(indice) {
   const elSku = document.getElementById("meta-sku");
   if (elSku) elSku.textContent = "SKU " + variante.sku;
 
+  actualizarWhatsAppVariante(variante);
+
   renderizarGaleriaVariante(variante);
+}
+
+function actualizarWhatsAppVariante(variante) {
+  const elBoton = document.getElementById("btn-whatsapp-producto");
+  if (!elBoton) return;
+  const precio = Number(String(variante.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+  const nombreConColor = variante.color ? `${window.PRODUCTO_ACTUAL.nombre} - ${variante.color}` : window.PRODUCTO_ACTUAL.nombre;
+  const mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${nombreConColor}\nPrecio: S/ ${precio}\nSKU: ${variante.sku}\n${window.location.href}`;
+  elBoton.href = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
 }
 
 // Usada por carrito.js: si esta página tiene variantes, el botón
