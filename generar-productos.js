@@ -3,9 +3,15 @@
  * generar-productos.js
  * ------------------------------------------------------------
  * Lee productos.json y genera una página HTML estática por
- * cada producto en /producto/{sku}.html, con título, meta
- * description, Open Graph y JSON-LD ya "horneados" — sin
- * depender de JavaScript para que Google o WhatsApp los vean.
+ * cada producto en /producto/{slug}.html (slug = nombre del
+ * producto, estilo WordPress — así coincide con las URLs que
+ * Google ya tenía indexadas de la web anterior), con título,
+ * meta description, Open Graph y JSON-LD ya "horneados".
+ *
+ * También genera un stub de redirección en /producto/{SKU}.html
+ * (la ruta vieja de este mismo sitio) apuntando al slug nuevo,
+ * por si quedó algún link o localStorage de un cliente apuntando
+ * ahí de antes de este cambio.
  *
  * También regenera sitemap.xml con todas las URLs nuevas.
  *
@@ -31,6 +37,28 @@ const CARPETA_SALIDA = path.join(__dirname, "producto");
 const RUTA_SITEMAP = path.join(__dirname, "sitemap.xml");
 const NUMERO_WHATSAPP = "51978821080";
 // =========================================================
+
+/**
+ * Respaldo por si productos.json todavía no trae el campo "slug"
+ * (por ejemplo, si corres este script antes de actualizar el
+ * Apps Script que lo genera). Réplica de sanitize_title_with_dashes
+ * de WordPress. Ojo: sin el campo "slug" no se resuelven duplicados
+ * entre productos con el mismo nombre — por eso lo ideal es que
+ * productos.json ya traiga el slug calculado.
+ */
+function generarSlugRespaldo(nombre) {
+  let texto = String(nombre || "").trim();
+  texto = texto.normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+  texto = texto.toLowerCase();
+  texto = texto.replace(/&.+?;/g, "");
+  texto = texto.replace(/\./g, "-");
+  texto = texto.replace(/&/g, "and");
+  texto = texto.replace(/[^a-z0-9 _-]/g, "");
+  texto = texto.replace(/[ _]/g, "-");
+  texto = texto.replace(/-+/g, "-");
+  texto = texto.replace(/^-+|-+$/g, "");
+  return texto;
+}
 
 function limpiarPrecio(precio) {
   return Number(String(precio).replace(/[^0-9.]/g, "")).toFixed(2);
@@ -79,13 +107,14 @@ function obtenerRelacionados(producto, todosLosProductos, limite) {
 function tarjetaFranja(p) {
   const precio = limpiarPrecio(p.precio);
   const nombre = escaparHtml(p.nombre);
+  const slug = p.slug || generarSlugRespaldo(p.nombre);
   const imagenHtml = p.imagen
     ? `<img src="${p.imagen}" alt="${nombre}" loading="lazy">`
     : `<span class="sin-foto">Sin foto</span>`;
-  const productoJson = encodeURIComponent(JSON.stringify({ sku: p.sku, nombre: p.nombre, precio: precio, imagen: p.imagen || "" }));
+  const productoJson = encodeURIComponent(JSON.stringify({ sku: p.sku, slug: slug, nombre: p.nombre, precio: precio, imagen: p.imagen || "" }));
 
   return `
-    <a class="franja-tarjeta" href="/producto/${encodeURIComponent(p.sku)}.html">
+    <a class="franja-tarjeta" href="/producto/${encodeURIComponent(slug)}.html">
       <div class="franja-tarjeta-img">${imagenHtml}</div>
       <p class="franja-tarjeta-nombre">${nombre}</p>
       <p class="franja-tarjeta-precio">S/ ${precio}</p>
@@ -164,6 +193,21 @@ function generarJsonLd(producto, precio, url, imagenes) {
     }
   };
 
+  if (producto.esGrupo && producto.variantes && producto.variantes.length > 1) {
+    productoLd.hasVariant = producto.variantes.map(v => ({
+      "@type": "Product",
+      name: `${producto.nombre} - ${v.color}`,
+      sku: v.sku,
+      color: v.color || undefined,
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "PEN",
+        price: limpiarPrecio(v.precio),
+        availability: v.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+      }
+    }));
+  }
+
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -179,7 +223,8 @@ function generarJsonLd(producto, precio, url, imagenes) {
 
 function generarHtmlProducto(producto, todosLosProductos) {
   const precio = limpiarPrecio(producto.precio);
-  const url = `${URL_SITIO}/producto/${producto.sku}.html`;
+  const slug = producto.slug || generarSlugRespaldo(producto.nombre);
+  const url = `${URL_SITIO}/producto/${slug}.html`;
   const nombreEscapado = escaparHtml(producto.nombre);
   const descripcionCorta = escaparHtml((producto.descripcion || producto.nombre).slice(0, 160));
   const imagenAbsoluta = producto.imagen || `${URL_SITIO}/logo.webp`;
@@ -196,10 +241,10 @@ function generarHtmlProducto(producto, todosLosProductos) {
   const badgeOferta = producto.oferta ? `<span class="badge-oferta-producto">Oferta</span>` : "";
 
   const metaChips = [];
-  if (producto.marca) metaChips.push(escaparHtml(producto.marca));
-  if (producto.color) metaChips.push(escaparHtml(producto.color));
-  metaChips.push("SKU " + escaparHtml(producto.sku));
-  const metaHtml = metaChips.map(m => `<span>${m}</span>`).join("");
+  if (producto.marca) metaChips.push(`<span>${escaparHtml(producto.marca)}</span>`);
+  if (producto.color && !producto.esGrupo) metaChips.push(`<span>${escaparHtml(producto.color)}</span>`);
+  metaChips.push(`<span id="meta-sku">SKU ${escaparHtml(producto.sku)}</span>`);
+  const metaHtml = metaChips.join("");
 
   const seccion = (titulo, contenido) =>
     contenido ? `<div><p class="producto-seccion-titulo">${titulo}</p><p class="producto-seccion-texto">${escaparHtml(contenido)}</p></div>` : "";
@@ -219,10 +264,19 @@ function generarHtmlProducto(producto, todosLosProductos) {
   // Datos mínimos que la página necesita en el navegador (carrito, WhatsApp, galería)
   const productoActualJs = escaparJsonEnHtml({
     sku: producto.sku,
+    slug: slug,
     nombre: producto.nombre,
     precio: precio,
     imagen: producto.imagen || "",
-    imagenes: imagenes
+    imagenes: imagenes,
+    variantes: (producto.esGrupo && producto.variantes) ? producto.variantes.map(v => ({
+      sku: v.sku,
+      color: v.color || "",
+      precio: limpiarPrecio(v.precio),
+      imagen: v.imagen || "",
+      imagenes: (v.imagenes && v.imagenes.length > 0) ? v.imagenes : (v.imagen ? [v.imagen] : []),
+      stock: v.stock || 0
+    })) : null
   });
 
   return `<!DOCTYPE html>
@@ -280,8 +334,18 @@ function generarHtmlProducto(producto, todosLosProductos) {
     <div>
       <p class="producto-categoria">${escaparHtml(producto.categoria || "")}${producto.subcategoria ? " · " + escaparHtml(producto.subcategoria) : ""}</p>
       <h1 class="producto-nombre">${nombreEscapado}</h1>
-      <p class="producto-precio">S/ ${precio}</p>
+      <p class="producto-precio" id="producto-precio">S/ ${precio}</p>
       <div class="producto-meta">${metaHtml}</div>
+      ${(producto.esGrupo && producto.variantes && producto.variantes.length > 1) ? `
+      <div class="producto-variantes" id="producto-variantes">
+        <p class="producto-variantes-titulo">Color: <span id="variante-color-activo">${escaparHtml(producto.color || "")}</span></p>
+        <div class="producto-variantes-swatches">
+          ${producto.variantes.map((v, i) => `
+            <button class="variante-swatch ${i === 0 ? "activo" : ""}" data-indice="${i}" title="${escaparHtml(v.color || "")}" aria-label="${escaparHtml(v.color || "")}">
+              ${v.imagen ? `<img src="${v.imagen}" alt="${escaparHtml(v.color || "")}">` : `<span class="variante-swatch-sin-foto"></span>`}
+            </button>`).join("")}
+        </div>
+      </div>` : ""}
       <button class="btn-agregar-carrito-producto" onclick="agregarAlCarritoActual()">+ Agregar al pedido</button>
       <a class="btn-whatsapp-producto" href="${urlWhatsApp}" target="_blank" rel="noopener">Consultar por WhatsApp</a>
       <p class="nota-entrega">Coordinamos entrega en Lima y envíos a todo el Perú.</p>
@@ -335,7 +399,7 @@ function generarSitemap(productos) {
   const urls = [
     { loc: `${URL_SITIO}/`, priority: "1.0" },
     { loc: `${URL_SITIO}/catalogo.html`, priority: "0.9" },
-    ...productos.filter(p => p.sku).map(p => ({ loc: `${URL_SITIO}/producto/${p.sku}.html`, priority: "0.7" }))
+    ...productos.filter(p => p.sku).map(p => ({ loc: `${URL_SITIO}/producto/${p.slug || generarSlugRespaldo(p.nombre)}.html`, priority: "0.7" }))
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -370,6 +434,7 @@ function main() {
   if (!fs.existsSync(CARPETA_SALIDA)) fs.mkdirSync(CARPETA_SALIDA, { recursive: true });
 
   const skusVistos = new Set();
+  const slugsVistos = new Set();
   let generados = 0;
   let omitidos = 0;
 
@@ -386,9 +451,39 @@ function main() {
     }
     skusVistos.add(producto.sku);
 
+    const slugCandidato = producto.slug || generarSlugRespaldo(producto.nombre);
+    if (slugsVistos.has(slugCandidato)) {
+      console.warn(`  ⚠ Slug duplicado ("${slugCandidato}"), omitido: ${producto.sku}. Si productos.json ya trae "slug" del Apps Script esto no debería pasar — revisa que esté actualizado.`);
+      omitidos++;
+      continue;
+    }
+    slugsVistos.add(slugCandidato);
+
     try {
+      const slug = producto.slug || generarSlugRespaldo(producto.nombre);
       const html = generarHtmlProducto(producto, productos);
-      fs.writeFileSync(path.join(CARPETA_SALIDA, `${producto.sku}.html`), html, "utf-8");
+      fs.writeFileSync(path.join(CARPETA_SALIDA, `${slug}.html`), html, "utf-8");
+
+      // Stub de redirección en la ruta vieja por SKU (por si quedó algún link
+      // o localStorage de un cliente apuntando ahí de antes de este cambio).
+      if (slug !== producto.sku) {
+        const urlNueva = `/producto/${slug}.html`;
+        const htmlRedireccion = `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="0; url=${urlNueva}">
+<link rel="canonical" href="${URL_SITIO}${urlNueva}">
+<meta name="robots" content="noindex">
+<title>Redirigiendo…</title>
+</head>
+<body>
+<p>Este producto se movió. <a href="${urlNueva}">Haz clic aquí si no eres redirigido automáticamente</a>.</p>
+</body>
+</html>`;
+        fs.writeFileSync(path.join(CARPETA_SALIDA, `${producto.sku}.html`), htmlRedireccion, "utf-8");
+      }
+
       generados++;
     } catch (err) {
       console.error(`  ✗ Error generando ${producto.sku}: ${err.message}`);
