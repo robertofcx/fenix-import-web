@@ -35,7 +35,108 @@ document.addEventListener("DOMContentLoaded", () => {
     imagenesProductoActual = window.PRODUCTO_ACTUAL.imagenes;
     activarSwipeGaleria();
   }
+
+  // ---------- Selector de color (variantes) ----------
+  if (window.PRODUCTO_ACTUAL && window.PRODUCTO_ACTUAL.variantes && window.PRODUCTO_ACTUAL.variantes.length > 0) {
+    inicializarVariantes();
+  }
 });
+
+// ==================== VARIANTES (SELECTOR DE COLOR) ====================
+let varianteActivaIndice = 0;
+
+function inicializarVariantes() {
+  document.querySelectorAll(".variante-swatch").forEach(boton => {
+    boton.addEventListener("click", () => {
+      seleccionarVariante(Number(boton.dataset.indice));
+    });
+  });
+}
+
+function seleccionarVariante(indice) {
+  const variantes = window.PRODUCTO_ACTUAL.variantes;
+  const variante = variantes[indice];
+  if (!variante) return;
+
+  varianteActivaIndice = indice;
+
+  document.querySelectorAll(".variante-swatch").forEach((boton, i) => {
+    boton.classList.toggle("activo", i === indice);
+  });
+
+  const elColor = document.getElementById("variante-color-activo");
+  if (elColor) elColor.textContent = variante.color || "";
+
+  const elPrecio = document.getElementById("producto-precio");
+  if (elPrecio) elPrecio.textContent = "S/ " + Number(String(variante.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+
+  const elSku = document.getElementById("meta-sku");
+  if (elSku) elSku.textContent = "SKU " + variante.sku;
+
+  renderizarGaleriaVariante(variante);
+}
+
+// Usada por carrito.js: si esta página tiene variantes, el botón
+// "Agregar al pedido" debe sumar la variante elegida, no el grupo.
+function obtenerVarianteActiva() {
+  const variantes = window.PRODUCTO_ACTUAL && window.PRODUCTO_ACTUAL.variantes;
+  if (variantes && variantes.length > 0) return variantes[varianteActivaIndice];
+  return null;
+}
+
+/**
+ * Reconstruye la galería completa (imagen principal + flechas + contador +
+ * miniaturas) para la variante elegida — hace falta reconstruirla entera
+ * (no solo la imagen) porque cada color puede tener una cantidad distinta
+ * de fotos.
+ */
+function renderizarGaleriaVariante(variante) {
+  const imagenes = (variante.imagenes && variante.imagenes.length > 0)
+    ? variante.imagenes
+    : (variante.imagen ? [variante.imagen] : []);
+
+  imagenesProductoActual = imagenes;
+  indiceImagenActual = 0;
+
+  const contenedor = document.querySelector(".producto-galeria");
+  if (!contenedor) return;
+
+  if (imagenes.length === 0) {
+    contenedor.innerHTML = `<div class="producto-img"><span class="sin-foto">Sin foto disponible</span></div>`;
+    return;
+  }
+
+  const flechas = imagenes.length > 1 ? `
+    <button class="galeria-flecha izq" onclick="cambiarImagen(-1)" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="galeria-flecha der" onclick="cambiarImagen(1)" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <span class="galeria-contador" id="galeria-contador">1 / ${imagenes.length}</span>
+  ` : "";
+
+  const miniaturas = imagenes.length > 1 ? `
+    <div class="galeria-miniaturas" id="galeria-miniaturas">
+      ${imagenes.map((url, i) => `
+        <div class="miniatura ${i === 0 ? "activa" : ""}" data-indice="${i}" onclick="irAImagen(${i})">
+          <img src="${url}" alt="Vista ${i + 1}" loading="lazy">
+        </div>`).join("")}
+    </div>` : "";
+
+  contenedor.innerHTML = `
+    <div class="producto-img" id="producto-img-principal">
+      ${flechas}
+      <button class="galeria-lupa" onclick="abrirLupa()" aria-label="Ampliar imagen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+      </button>
+      <img id="imagen-principal" src="${imagenes[0]}" alt="">
+    </div>
+    ${miniaturas}
+  `;
+
+  activarSwipeGaleria();
+}
 
 // ==================== VISTOS RECIENTEMENTE ====================
 const VISTOS_KEY = "fenix_vistos";
@@ -49,7 +150,7 @@ function obtenerVistos() {
 function registrarVisto(producto) {
   if (!producto || !producto.sku) return;
   let vistos = obtenerVistos().filter(p => p.sku !== producto.sku);
-  vistos.unshift({ sku: producto.sku, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen });
+  vistos.unshift({ sku: producto.sku, slug: producto.slug || producto.sku, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen });
   if (vistos.length > MAX_VISTOS) vistos = vistos.slice(0, MAX_VISTOS);
   localStorage.setItem(VISTOS_KEY, JSON.stringify(vistos));
 }
@@ -64,12 +165,13 @@ function renderizarVistos(skuActual) {
 
   elFranja.innerHTML = vistos.map(p => {
     const precio = Number(String(p.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+    const slug = p.slug || p.sku;
     const imagenHtml = p.imagen
       ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`
       : `<span class="sin-foto">Sin foto</span>`;
-    const productoJson = encodeURIComponent(JSON.stringify({ sku: p.sku, nombre: p.nombre, precio: p.precio, imagen: p.imagen || "" }));
+    const productoJson = encodeURIComponent(JSON.stringify({ sku: p.sku, slug: slug, nombre: p.nombre, precio: p.precio, imagen: p.imagen || "" }));
     return `
-      <a class="franja-tarjeta" href="/producto/${encodeURIComponent(p.sku)}.html">
+      <a class="franja-tarjeta" href="/producto/${encodeURIComponent(slug)}.html">
         <div class="franja-tarjeta-img">${imagenHtml}</div>
         <p class="franja-tarjeta-nombre">${p.nombre}</p>
         <p class="franja-tarjeta-precio">S/ ${precio}</p>

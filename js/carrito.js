@@ -46,8 +46,19 @@ function agregarProductoAlCarrito(producto) {
 }
 
 // Botón principal de la ficha de producto (usa window.PRODUCTO_ACTUAL)
+// Botón principal de la ficha de producto. Si la página tiene selector de
+// color (obtenerVarianteActiva, definida en producto.js), agrega la
+// variante elegida, no el SKU por defecto del grupo.
 function agregarAlCarritoActual() {
-  agregarProductoAlCarrito(window.PRODUCTO_ACTUAL);
+  const variante = (typeof obtenerVarianteActiva === "function") ? obtenerVarianteActiva() : null;
+  if (variante) {
+    const nombreConColor = variante.color
+      ? `${window.PRODUCTO_ACTUAL.nombre} - ${variante.color}`
+      : window.PRODUCTO_ACTUAL.nombre;
+    agregarProductoAlCarrito({ sku: variante.sku, nombre: nombreConColor, precio: variante.precio, imagen: variante.imagen });
+  } else {
+    agregarProductoAlCarrito(window.PRODUCTO_ACTUAL);
+  }
 }
 
 // Usada desde tarjetas de "También te puede interesar" / "Vistos recientemente"
