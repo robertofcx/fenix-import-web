@@ -432,10 +432,22 @@ function main() {
     process.exit(1);
   }
 
-  if (!fs.existsSync(CARPETA_SALIDA)) fs.mkdirSync(CARPETA_SALIDA, { recursive: true });
+  if (!fs.existsSync(CARPETA_SALIDA)) {
+    fs.mkdirSync(CARPETA_SALIDA, { recursive: true });
+  } else {
+    // Limpiar archivos .html viejos antes de regenerar — así ningún archivo
+    // de una estructura anterior (SKU individual, variante ya agrupada,
+    // slug que cambió, etc.) queda huérfano y accesible sin querer.
+    const archivosViejos = fs.readdirSync(CARPETA_SALIDA).filter(f => f.endsWith(".html"));
+    archivosViejos.forEach(f => fs.unlinkSync(path.join(CARPETA_SALIDA, f)));
+    if (archivosViejos.length > 0) {
+      console.log(`🧹 Se limpiaron ${archivosViejos.length} archivos .html anteriores en /producto antes de regenerar.\n`);
+    }
+  }
 
   const skusVistos = new Set();
   const slugsVistos = new Set();
+  const archivosReales = new Set(); // slugs que ya son una página real (no un stub)
   let generados = 0;
   let omitidos = 0;
 
@@ -464,12 +476,15 @@ function main() {
       const slug = producto.slug || generarSlugRespaldo(producto.nombre);
       const html = generarHtmlProducto(producto, productos);
       fs.writeFileSync(path.join(CARPETA_SALIDA, `${slug}.html`), html, "utf-8");
+      archivosReales.add(slug);
 
       // Stub de redirección en la ruta vieja por SKU (por si quedó algún link
       // o localStorage de un cliente apuntando ahí de antes de este cambio).
-      if (slug !== producto.sku) {
-        const urlNueva = `/producto/${slug}.html`;
-        const htmlRedireccion = `<!DOCTYPE html>
+      // Para un grupo de variantes, cada color tenía su propia página antes
+      // de agruparse — así que TODAS sus SKU necesitan su propio stub, no
+      // solo la variante principal.
+      const urlNueva = `/producto/${slug}.html`;
+      const htmlRedireccion = (skuViejo) => `<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -482,8 +497,21 @@ function main() {
 <p>Este producto se movió. <a href="${urlNueva}">Haz clic aquí si no eres redirigido automáticamente</a>.</p>
 </body>
 </html>`;
-        fs.writeFileSync(path.join(CARPETA_SALIDA, `${producto.sku}.html`), htmlRedireccion, "utf-8");
+
+      const skusARedirigir = new Set();
+      if (slug !== producto.sku) skusARedirigir.add(producto.sku);
+      if (producto.esGrupo && Array.isArray(producto.variantes)) {
+        producto.variantes.forEach(v => {
+          if (v.sku && v.sku !== slug) skusARedirigir.add(v.sku);
+        });
       }
+      skusARedirigir.forEach(skuViejo => {
+        if (archivosReales.has(skuViejo)) {
+          console.warn(`  ⚠ "${skuViejo}" es el slug de otra página real — no se generó su stub de redirección para evitar pisarla. Revisa si hay un SKU duplicado en el Sheet.`);
+          return;
+        }
+        fs.writeFileSync(path.join(CARPETA_SALIDA, `${skuViejo}.html`), htmlRedireccion(skuViejo), "utf-8");
+      });
 
       generados++;
     } catch (err) {
