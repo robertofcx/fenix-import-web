@@ -58,38 +58,85 @@
     <h1 class="titulo-catalogo">Catálogo</h1>
   </div>
 
-  <div class="categorias" id="lista-categorias"></div>
+  <button class="btn-abrir-filtros" id="btn-abrir-filtros">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+    Filtros
+    <span class="badge-filtros-activos" id="badge-filtros-activos" style="display:none;">0</span>
+  </button>
 
-  <div class="filtros">
-    <div class="buscador">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="input-buscar" placeholder="Filtrar por nombre o código Fenix (ej. ADA_002)...">
-    </div>
-    <div class="filtro-precio">
-      <span>S/</span>
-      <input type="number" id="input-precio-min" placeholder="Mín" min="0">
-      <span>—</span>
-      <input type="number" id="input-precio-max" placeholder="Máx" min="0">
-    </div>
-    <label class="filtro-check">
-      <input type="checkbox" id="input-solo-ofertas">
-      Solo ofertas
-    </label>
-    <button class="btn-limpiar-filtros" id="btn-limpiar-filtros">Limpiar filtros</button>
+  <div class="pagina-catalogo">
+    <div class="fondo-filtros" id="fondo-filtros"></div>
+
+    <aside class="sidebar-filtros" id="sidebar-filtros">
+      <div class="sidebar-filtros-header">
+        <h2>Filtros</h2>
+        <button class="btn-cerrar-drawer" id="btn-cerrar-filtros" aria-label="Cerrar filtros">✕</button>
+      </div>
+
+      <div class="filtro-seccion">
+        <div class="buscador">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="input-buscar" placeholder="Filtrar por nombre o código Fenix...">
+        </div>
+      </div>
+
+      <div class="filtro-seccion">
+        <h3 class="filtro-titulo">Categoría</h3>
+        <div class="lista-categorias" id="lista-categorias"></div>
+      </div>
+
+      <div class="filtro-seccion">
+        <h3 class="filtro-titulo">Marca</h3>
+        <div class="lista-marcas" id="lista-marcas"></div>
+      </div>
+
+      <div class="filtro-seccion">
+        <h3 class="filtro-titulo">Precio</h3>
+        <div class="filtro-precio">
+          <span>S/</span>
+          <input type="number" id="input-precio-min" placeholder="Mín" min="0">
+          <span>—</span>
+          <input type="number" id="input-precio-max" placeholder="Máx" min="0">
+        </div>
+      </div>
+
+      <div class="filtro-seccion">
+        <label class="filtro-check">
+          <input type="checkbox" id="input-solo-ofertas">
+          Solo ofertas
+        </label>
+      </div>
+
+      <button class="btn-limpiar-filtros" id="btn-limpiar-filtros">Limpiar filtros</button>
+    </aside>
+
+    <main class="catalogo-principal">
+      <div id="estado-carga" class="estado">
+        <div class="spinner"></div>
+        <p class="estado-texto">Cargando catálogo...</p>
+      </div>
+
+      <div id="contenido" style="display:none;">
+        <div class="catalogo-toolbar">
+          <p class="contador" id="contador"></p>
+          <div class="orden-selector">
+            <label for="select-orden">Ordenar por</label>
+            <select id="select-orden">
+              <option value="predeterminado">Predeterminado</option>
+              <option value="precio-asc">Precio: menor a mayor</option>
+              <option value="precio-desc">Precio: mayor a menor</option>
+              <option value="nombre-asc">Nombre: A-Z</option>
+              <option value="ofertas">Ofertas primero</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grilla" id="grilla"></div>
+
+        <nav class="paginacion" id="paginacion"></nav>
+      </div>
+    </main>
   </div>
-
-  <main>
-    <div id="estado-carga" class="estado">
-      <div class="spinner"></div>
-      <p class="estado-texto">Cargando catálogo...</p>
-    </div>
-
-    <div id="contenido" style="display:none;">
-      <p class="contador" id="contador"></p>
-      <div class="grilla" id="grilla"></div>
-      <button class="cargar-mas" id="btn-cargar-mas" style="display:none;">Cargar más productos</button>
-    </div>
-  </main>
 
   <div id="footer-placeholder" data-variant="completo"></div>
   <script src="/js/footer.js"></script>
