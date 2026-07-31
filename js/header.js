@@ -79,7 +79,15 @@
   <a class="drawer-link" href="/index.html">Inicio</a>
   <a class="drawer-link" href="/catalogo.html">Catálogo completo</a>
   <p class="drawer-seccion-titulo">Categorías</p>
-  <div id="drawer-categorias"><p style="padding:10px 0; color:var(--texto-muted); font-size:.85rem;">Cargando...</p></div>
+  <div class="drawer-cat-buscador">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="drawer-buscar-categoria" placeholder="Buscar categoría o subcategoría...">
+  </div>
+  <div id="drawer-categorias-resultado" class="drawer-cat-resultado-lista" style="display:none;"></div>
+  <div id="drawer-categorias-split" class="drawer-cat-split">
+    <div id="drawer-cat-izq" class="drawer-cat-col-izq"><p style="padding:10px 6px; color:var(--texto-muted); font-size:.8rem;">Cargando...</p></div>
+    <div id="drawer-cat-der" class="drawer-cat-col-der"></div>
+  </div>
   <div class="drawer-redes">
     <a href="https://www.instagram.com/feniximportperu/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
     <a href="https://www.facebook.com/FenixImportPeru" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.5l.5-3h-3V8.5c0-.87.24-1.46 1.5-1.46H16.6V4.36C16.3 4.32 15.3 4.24 14.15 4.24c-2.4 0-4.05 1.47-4.05 4.16V10.5H7.6v3h2.5V21h3.4z"/></svg></a>
@@ -169,54 +177,113 @@
     nav.href = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
   }
 
-  // ---------- Categorías del drawer ----------
-  function dibujarCategoriasDrawer(categorias) {
-    const elDrawerCategorias = document.getElementById("drawer-categorias");
-    if (!elDrawerCategorias) return;
+  // ---------- Categorías del drawer: panel de dos columnas + buscador ----------
+  let categoriasDrawer = [];
+  let categoriaSeleccionadaDrawer = null;
 
-    if (!categorias || categorias.length === 0) {
-      elDrawerCategorias.innerHTML = `<p style="padding:10px 0; color:var(--texto-muted); font-size:.85rem;">No se pudieron cargar.</p>`;
+  function urlCategoria(categoria, subcategoria) {
+    let url = "/catalogo.html?categoria=" + encodeURIComponent(categoria);
+    if (subcategoria) url += "&subcategoria=" + encodeURIComponent(subcategoria);
+    return url;
+  }
+
+  function renderColumnaIzquierdaDrawer() {
+    const el = document.getElementById("drawer-cat-izq");
+    if (!el) return;
+    el.innerHTML = categoriasDrawer.map((cat, i) => `
+      <button class="drawer-cat-item ${cat.nombre === categoriaSeleccionadaDrawer ? "activo" : ""}" data-indice="${i}">
+        <span>${cat.nombre}</span>
+      </button>`).join("");
+
+    el.querySelectorAll(".drawer-cat-item").forEach(boton => {
+      boton.addEventListener("click", () => {
+        categoriaSeleccionadaDrawer = categoriasDrawer[Number(boton.dataset.indice)].nombre;
+        renderColumnaIzquierdaDrawer();
+        renderColumnaDerechaDrawer();
+      });
+    });
+  }
+
+  function renderColumnaDerechaDrawer() {
+    const el = document.getElementById("drawer-cat-der");
+    if (!el) return;
+
+    const cat = categoriasDrawer.find(c => c.nombre === categoriaSeleccionadaDrawer);
+    if (!cat) {
+      el.innerHTML = `<p class="drawer-cat-vacio">Elige una categoría de la izquierda</p>`;
       return;
     }
 
-    elDrawerCategorias.innerHTML = categorias.map((cat, indice) => {
-      const tieneSubcategorias = cat.subcategorias && cat.subcategorias.length > 0;
-
-      if (!tieneSubcategorias) {
-        return `
-          <a class="drawer-categoria-sola" href="/catalogo.html?categoria=${encodeURIComponent(cat.nombre)}">
-            <span>${cat.nombre}</span>
-            <span class="cantidad">${cat.cantidad}</span>
-          </a>`;
-      }
-
-      const subcategoriasHtml = cat.subcategorias.map(sub => `
-        <a class="drawer-subcategoria" href="/catalogo.html?categoria=${encodeURIComponent(cat.nombre)}&subcategoria=${encodeURIComponent(sub.nombre)}">
+    let html = `<a class="drawer-cat-ver-todo" href="${urlCategoria(cat.nombre)}">Ver todo en ${cat.nombre}</a>`;
+    (cat.subcategorias || []).forEach(sub => {
+      html += `
+        <a class="drawer-cat-sub" href="${urlCategoria(cat.nombre, sub.nombre)}">
           <span>${sub.nombre}</span>
-          <span class="n">${sub.cantidad}</span>
-        </a>`).join("");
+          <span class="cat-cantidad">${sub.cantidad}</span>
+        </a>`;
+    });
+    el.innerHTML = html;
+  }
 
-      return `
-        <div class="drawer-item" id="drawer-item-${indice}">
-          <button class="drawer-categoria-fila" data-indice="${indice}">
-            <span>${cat.nombre}</span>
-            <span class="cantidad">${cat.cantidad}</span>
-            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <div class="drawer-subcategorias">
-            <a class="drawer-subcategoria" href="/catalogo.html?categoria=${encodeURIComponent(cat.nombre)}" style="font-weight:600; color:var(--texto);">
-              <span>Ver todo en ${cat.nombre}</span>
-            </a>
-            ${subcategoriasHtml}
-          </div>
-        </div>`;
-    }).join("");
+  function filtrarCategoriasDrawer(texto) {
+    const elResultado = document.getElementById("drawer-categorias-resultado");
+    const elSplit = document.getElementById("drawer-categorias-split");
+    const textoNorm = texto.trim().toLowerCase();
 
-    elDrawerCategorias.querySelectorAll(".drawer-categoria-fila").forEach(boton => {
-      boton.addEventListener("click", () => {
-        document.getElementById("drawer-item-" + boton.dataset.indice).classList.toggle("abierto");
+    if (!textoNorm) {
+      elResultado.style.display = "none";
+      elSplit.style.display = "flex";
+      return;
+    }
+
+    elResultado.style.display = "flex";
+    elSplit.style.display = "none";
+
+    const resultados = [];
+    categoriasDrawer.forEach(cat => {
+      if (cat.nombre.toLowerCase().includes(textoNorm)) {
+        resultados.push({ categoria: cat.nombre, subcategoria: null, cantidad: cat.cantidad });
+      }
+      (cat.subcategorias || []).forEach(sub => {
+        if (sub.nombre.toLowerCase().includes(textoNorm)) {
+          resultados.push({ categoria: cat.nombre, subcategoria: sub.nombre, cantidad: sub.cantidad });
+        }
       });
     });
+
+    if (resultados.length === 0) {
+      elResultado.innerHTML = `<p class="drawer-cat-vacio">Sin resultados para "${texto}"</p>`;
+      return;
+    }
+
+    elResultado.innerHTML = resultados.map(r => {
+      const etiqueta = r.subcategoria ? `${r.categoria} › ${r.subcategoria}` : r.categoria;
+      return `
+        <a class="drawer-cat-sub" href="${urlCategoria(r.categoria, r.subcategoria)}">
+          <span>${etiqueta}</span>
+          <span class="cat-cantidad">${r.cantidad}</span>
+        </a>`;
+    }).join("");
+  }
+
+  function dibujarCategoriasDrawer(categorias) {
+    categoriasDrawer = categorias || [];
+
+    const elIzq = document.getElementById("drawer-cat-izq");
+    if (!elIzq) return;
+
+    if (categoriasDrawer.length === 0) {
+      elIzq.innerHTML = `<p class="drawer-cat-vacio">No se pudieron cargar.</p>`;
+      return;
+    }
+
+    renderColumnaIzquierdaDrawer();
+    renderColumnaDerechaDrawer();
+
+    const elBuscar = document.getElementById("drawer-buscar-categoria");
+    if (elBuscar) {
+      elBuscar.addEventListener("input", () => filtrarCategoriasDrawer(elBuscar.value));
+    }
   }
 
   // ---------- Buscador en vivo (header) ----------
