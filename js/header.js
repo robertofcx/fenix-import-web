@@ -303,7 +303,14 @@
   // (los dígitos pueden faltar si el usuario aún está escribiendo, ej. "HOG_")
   const REGEX_CODIGO_FENIX = /^[A-Z]{2,5}_\d*$/;
 
-  function urlProducto(sku) { return "/producto/" + encodeURIComponent(sku) + ".html"; }
+  // Usa el slug real del archivo (igual que producto.js en "vistos recientemente"),
+  // no el SKU: el SKU solo tiene una página-puente de redirección
+  // (meta refresh), así que enlazar por SKU costaba una carga extra.
+  // Si por algún motivo un producto no tuviera slug, cae de vuelta al SKU.
+  function urlProducto(producto) {
+    const destino = producto.slug || producto.sku;
+    return "/producto/" + encodeURIComponent(destino) + ".html";
+  }
 
   function renderizarResultados(productos, textoBuscado) {
     const elResultados = document.getElementById("resultados-busqueda");
@@ -322,7 +329,7 @@
       const ofertaHtml = p.oferta ? `<span class="resultado-badge-oferta">Oferta</span>` : "";
 
       return `
-        <a class="resultado-item" href="${urlProducto(p.sku)}" data-sku="${p.sku}">
+        <a class="resultado-item" href="${urlProducto(p)}" data-sku="${p.sku}">
           <div class="resultado-img">${imagenHtml}</div>
           <div class="resultado-info">
             <p class="resultado-nombre">${p.nombre}</p>

@@ -40,7 +40,7 @@ function agregarProductoAlCarrito(producto) {
   const carrito = obtenerCarrito();
   const existente = carrito.find(item => item.sku === producto.sku);
   if (existente) existente.cantidad += 1;
-  else carrito.push({ sku: producto.sku, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen, cantidad: 1 });
+  else carrito.push({ sku: producto.sku, slug: producto.slug, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen, cantidad: 1 });
   guardarCarrito(carrito);
   mostrarToast("✓ Agregado a tu pedido");
 }
@@ -55,7 +55,8 @@ function agregarAlCarritoActual() {
     const nombreConColor = variante.color
       ? `${window.PRODUCTO_ACTUAL.nombre} - ${variante.color}`
       : window.PRODUCTO_ACTUAL.nombre;
-    agregarProductoAlCarrito({ sku: variante.sku, nombre: nombreConColor, precio: variante.precio, imagen: variante.imagen });
+    // Las variantes no tienen slug propio: viven en la misma página del producto padre.
+    agregarProductoAlCarrito({ sku: variante.sku, slug: window.PRODUCTO_ACTUAL.slug, nombre: nombreConColor, precio: variante.precio, imagen: variante.imagen });
   } else {
     agregarProductoAlCarrito(window.PRODUCTO_ACTUAL);
   }

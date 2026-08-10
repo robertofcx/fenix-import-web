@@ -1042,7 +1042,12 @@ const NUMERO_WHATSAPP = "51978821080";
     let mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\nN° de pedido: ${idPedido}\n\n`;
     carrito.forEach(item => {
       const precioUnit = extraerPrecioNumerico(item.precio) * factorIgv;
-      const link = URL_SITIO + "/producto.html?sku=" + encodeURIComponent(item.sku);
+      // Resuelve el slug desde el catálogo cargado (más confiable que el carrito
+      // guardado en localStorage, que puede ser de antes de este cambio y no
+      // tener el campo slug todavía). Si no se encuentra, cae al sku del item.
+      const productoCat = productosCatalogo.find(pr => pr.sku === item.sku);
+      const slugItem = (productoCat && productoCat.slug) || item.slug || item.sku;
+      const link = URL_SITIO + "/producto/" + encodeURIComponent(slugItem) + ".html";
       mensaje += `${item.nombre}\nPrecio: S/ ${precioUnit.toFixed(2)} c/u — Cantidad: ${item.cantidad}\nSKU: ${item.sku}\n${link}\n\n`;
     });
     mensaje += `Subtotal: S/ ${subtotal.toFixed(2)}\n`;

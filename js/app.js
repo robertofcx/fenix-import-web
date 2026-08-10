@@ -76,7 +76,7 @@ const RUTA_PRODUCTOS = "productos.json";
         const badge = p.oferta ? `<span class="vitrina-badge-oferta">Oferta</span>` : "";
 
         return `
-          <a class="vitrina-tarjeta" href="/producto/${encodeURIComponent(p.sku)}.html">
+          <a class="vitrina-tarjeta" href="/producto/${encodeURIComponent(p.slug || p.sku)}.html">
             <div class="vitrina-img">${badge}${imagenHtml}</div>
             <div class="vitrina-body">
               <p class="vitrina-nombre">${p.nombre}</p>

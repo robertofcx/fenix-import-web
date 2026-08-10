@@ -110,7 +110,8 @@ function mostrarVacio() {
 
 function urlWhatsApp(producto) {
   const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
-  const link = URL_SITIO + "/producto/" + encodeURIComponent(producto.sku) + ".html";
+  // Usa el slug real (no el SKU): el SKU solo tiene página-puente de redirección
+  const link = URL_SITIO + "/producto/" + encodeURIComponent(producto.slug || producto.sku) + ".html";
   const mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${producto.nombre}\nPrecio: S/ ${precio}\nSKU: ${producto.sku}\n${link}`;
   return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 }
@@ -121,10 +122,10 @@ function crearTarjeta(producto) {
     ? `<img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">`
     : `<span class="sin-foto">Sin foto</span>`;
   const badge = producto.oferta ? `<span class="badge-oferta">Oferta</span>` : "";
-  const productoJson = encodeURIComponent(JSON.stringify({ sku: producto.sku, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen }));
+  const productoJson = encodeURIComponent(JSON.stringify({ sku: producto.sku, slug: producto.slug, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen }));
 
   return `
-    <a class="tarjeta" href="/producto/${encodeURIComponent(producto.sku)}.html">
+    <a class="tarjeta" href="/producto/${encodeURIComponent(producto.slug || producto.sku)}.html">
       <div class="tarjeta-img">${badge}${imagenHtml}</div>
       <div class="tarjeta-body">
         <p class="tarjeta-categoria">${producto.categoria || ""}</p>
