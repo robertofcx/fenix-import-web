@@ -28,6 +28,15 @@
  * Si la página quiere un mensaje de WhatsApp específico (por ejemplo,
  * la ficha de un producto), debe definir esto ANTES de cargar header.js:
  *   <script>window.FENIX_HEADER_WHATSAPP_MSG = "...";</script>
+ *
+ * NOVEDAD (búsqueda por código Fenix):
+ *  - Si el texto buscado coincide EXACTO con un SKU, se muestra solo
+ *    ese producto (sin fuzzy search).
+ *  - Si el texto tiene forma de código Fenix (ej. "HOG_378", "HOG_37")
+ *    pero está incompleto, se filtra por SKUs que EMPIEZAN con ese
+ *    texto, en vez de usar Fuse.
+ *  - Para cualquier otro texto, sigue funcionando la búsqueda difusa
+ *    (Fuse.js) de siempre por nombre/sku.
  * ========================================================================
  */
 (function () {
@@ -288,6 +297,11 @@
 
   // ---------- Buscador en vivo (header) ----------
   let fuse = null;
+  let listaProductosHeader = []; // copia propia de los productos, para no depender de internals de Fuse
+
+  // Patrón de código Fenix: prefijo de letras (2 a 5) + "_" + dígitos
+  // (los dígitos pueden faltar si el usuario aún está escribiendo, ej. "HOG_")
+  const REGEX_CODIGO_FENIX = /^[A-Z]{2,5}_\d*$/;
 
   function urlProducto(sku) { return "/producto/" + encodeURIComponent(sku) + ".html"; }
 
@@ -331,6 +345,7 @@
       .then(r => r.json())
       .then(data => {
         dibujarCategoriasDrawer(data.categorias);
+        listaProductosHeader = data.productos || [];
 
         function iniciarBusqueda() {
           fuse = new Fuse(data.productos, { keys: ["nombre", "sku"], threshold: 0.35, ignoreLocation: true });
@@ -358,6 +373,29 @@
 
     function buscarEnVivo(texto) {
       if (!fuse) return;
+
+      const textoUpper = texto.trim().toUpperCase();
+
+      // 1) Coincidencia EXACTA con un SKU -> un único resultado, sin fuzzy.
+      const exacto = listaProductosHeader.find(p => (p.sku || "").toUpperCase() === textoUpper);
+      if (exacto) {
+        indiceResaltado = -1;
+        renderizarResultados([exacto], texto);
+        return;
+      }
+
+      // 2) Parece un código Fenix (aunque esté incompleto, ej. "HOG_37")
+      //    -> filtramos por SKUs que EMPIEZAN con ese texto.
+      if (REGEX_CODIGO_FENIX.test(textoUpper)) {
+        const porPrefijo = listaProductosHeader
+          .filter(p => (p.sku || "").toUpperCase().startsWith(textoUpper))
+          .slice(0, 6);
+        indiceResaltado = -1;
+        renderizarResultados(porPrefijo, texto);
+        return;
+      }
+
+      // 3) Caso normal: búsqueda difusa por nombre/sku.
       const resultados = fuse.search(texto).slice(0, 6).map(r => r.item);
       indiceResaltado = -1;
       renderizarResultados(resultados, texto);
