@@ -249,20 +249,36 @@ section { padding: 10px 24px 60px; }
 .ver-todo:hover { text-decoration: underline; }
 
 .grilla-testimonios {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
     gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    scrollbar-color: var(--linea) transparent;
   }
+.grilla-testimonios::-webkit-scrollbar { height: 6px; }
+.grilla-testimonios::-webkit-scrollbar-track { background: transparent; }
+.grilla-testimonios::-webkit-scrollbar-thumb { background: var(--linea); border-radius: 999px; }
+.grilla-testimonios::-webkit-scrollbar-thumb:hover { background: var(--azul); }
 
-@media (min-width: 720px) {
-    .grilla-testimonios { grid-template-columns: repeat(2, 1fr); }
+.badge-recomendado {
+    display: block;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--texto-muted);
+    margin: -18px 0 24px;
   }
+.badge-recomendado strong { color: var(--ember); }
 
 .tarjeta-testimonio {
     background: var(--bg-elevada);
     border: 1px solid var(--linea);
     border-radius: 14px;
     padding: 22px;
+    flex: 0 0 280px;
+    scroll-snap-align: start;
   }
 
 .tarjeta-testimonio .estrellas { color: var(--ember); font-size: 0.9rem; margin-bottom: 10px; letter-spacing: 2px; }
