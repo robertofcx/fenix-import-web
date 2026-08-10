@@ -55,6 +55,18 @@ a { color: inherit; text-decoration: none; }
 button { font-family: inherit; }
 
 /* ============================================================
+   Escala de escritorio: agranda todo el sitio ~15% (texto,
+   paddings, iconos, tarjetas) solo en pantallas de escritorio.
+   Se usa "zoom" en vez de font-size porque escala todo el layout
+   de forma proporcional sin importar si un valor está en px o rem
+   — la mayoría de paddings/anchos del sitio están en px fijos.
+   No afecta a móvil/tablet (por debajo de 1024px).
+   ============================================================ */
+@media (min-width: 1024px) {
+  body { zoom: 1.15; }
+}
+
+/* ============================================================
    Barras de scroll: estilo consistente en todo el sitio (en vez
    de la barra gris/blanca por defecto del navegador). Cubre:
    galería de miniaturas de producto, drawer lateral, resultados
