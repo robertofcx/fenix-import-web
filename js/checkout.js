@@ -1116,6 +1116,56 @@ const NUMERO_WHATSAPP = "51978821080";
     }
     if (notas) mensaje += `\nNotas: ${notas}\n`;
     mensaje += `\n¿Me confirman disponibilidad y coordinamos la entrega?`;
+
+    // ---------- Nombre/celular para el Sheet: si quien recibe NO es el
+    // comprador, se combinan ambos en el mismo campo ("Cliente: X, Recibe: Y")
+    // en vez de agregar columnas nuevas al Sheet. ----------
+    let nombreParaSheet = nombre;
+    let celularParaSheet = celularComprador;
+
+    if (tipoEntrega === "provincia") {
+      const esSoloElCompradorSheet = listaDestinatarios.length === 1 && listaDestinatarios[0].nombre === nombre;
+      if (!esSoloElCompradorSheet && listaDestinatarios.length > 0) {
+        // Si el comprador también está entre los autorizados, no se repite en la lista.
+        const otros = listaDestinatarios.filter(d => !(d.nombre === nombre && d.celular === celularComprador));
+        const paraListar = otros.length > 0 ? otros : listaDestinatarios;
+
+        const partesNombre = [`Cliente: ${nombre}`];
+        const partesCelular = [`Cliente: ${celularComprador}`];
+        paraListar.forEach((d, i) => {
+          partesNombre.push(`Destinatario ${i + 1}: ${d.nombre}`);
+          partesCelular.push(`Celular ${i + 1}: ${d.celular}`);
+        });
+        nombreParaSheet = partesNombre.join(", ");
+        celularParaSheet = partesCelular.join(", ");
+      }
+    } else if (esOtraPersona) {
+      const etiquetaRecibe = tipoEntrega === "recojo" ? "Recoge" : "Recibe";
+      nombreParaSheet = `Cliente: ${nombre}, ${etiquetaRecibe}: ${contacto1Nombre}`;
+      celularParaSheet = `Cliente: ${celularComprador}, ${etiquetaRecibe}: ${contacto1Telefono}`;
+    }
+
+    // ---------- Documento PERSONAL (columnas J/K) — DNI o CE de quien recoge
+    // el pedido en la agencia. Distinto del documento de FACTURACIÓN (columnas
+    // H/I, ya armado más abajo en tipoDocumento/documento) — un mismo pedido a
+    // provincia puede necesitar ambos a la vez, así que van en columnas separadas.
+    // Solo aplica a provincia: es el único flujo que hoy pide DNI/CE personal. ----------
+    let tipoDocPersonalParaSheet = tipoDocComprador; // "" si no es provincia
+    let documentoPersonalParaSheet = dniComprador;
+
+    if (tipoEntrega === "provincia") {
+      const esSoloElCompradorDoc = listaDestinatarios.length === 1 && listaDestinatarios[0].nombre === nombre;
+      if (!esSoloElCompradorDoc && listaDestinatarios.length > 0) {
+        const otrosDoc = listaDestinatarios.filter(d => !(d.nombre === nombre && d.celular === celularComprador));
+        const paraListarDoc = otrosDoc.length > 0 ? otrosDoc : listaDestinatarios;
+        const partesDoc = [`Cliente ${tipoDocComprador}: ${dniComprador}`];
+        paraListarDoc.forEach((d, i) => {
+          partesDoc.push(`${d.tipoDoc || "DNI"} ${i + 1}: ${d.dni}`);
+        });
+        documentoPersonalParaSheet = partesDoc.join(", ");
+      }
+    }
+
     // ---------- Registrar el pedido en el Sheet (ALMACEN / DOMICILIO / ENVIO) ----------
     const hoy = new Date();
     const fechaTexto = String(hoy.getDate()).padStart(2, "0") + "/" + String(hoy.getMonth() + 1).padStart(2, "0") + "/" + hoy.getFullYear();
@@ -1123,10 +1173,12 @@ const NUMERO_WHATSAPP = "51978821080";
       idPedido: idPedido,
       tipoEntrega: tipoEntrega,
       fecha: fechaTexto,
-      nombre: nombre,
-      celular: celularComprador,
-      tipoDocumento: tipoDocumento,
-      documento: numeroDocumento,
+      nombre: nombreParaSheet,
+      celular: celularParaSheet,
+      tipoDocumento: tipoDocumento,       // columna H — tipo de documento de FACTURACIÓN
+      documento: numeroDocumento,          // columna I — número de documento de FACTURACIÓN
+      tipoDocumentoPersonal: tipoDocPersonalParaSheet,   // columna J — tipo de documento PERSONAL (envío)
+      documentoPersonal: documentoPersonalParaSheet,     // columna K — número(s) de documento PERSONAL (envío)
       direccion: direccionCompleta,
       ubicacionGps: ubicacionGpsTexto,
       distrito: tipoEntrega === "lima" ? distritoLima : distritoProvinciaTexto,
