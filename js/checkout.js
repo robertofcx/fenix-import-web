@@ -950,25 +950,10 @@ const NUMERO_WHATSAPP = "51978821080";
     }
     const notas = document.getElementById("input-notas").value.trim();
     const idPedido = generarIdPedido();
-    // Notas que van al Sheet: las que escribió el cliente + cualquier
-    // dato de contacto/destinatario que no tenga columna propia — así
-    // el celular del comprador (columna G) siempre queda con SU celular,
-    // nunca con el de otra persona.
-    let notasParaSheet = notas;
-    if (tipoEntrega !== "provincia" && esOtraPersona) {
-      const linea = `Autorizado a recoger/recibir: ${contacto1Nombre} - ${contacto1Telefono}`;
-      notasParaSheet = notasParaSheet ? `${notasParaSheet}\n${linea}` : linea;
-    }
-    if (tipoEntrega === "provincia") {
-      const esSoloElComprador = listaDestinatarios.length === 1 && listaDestinatarios[0].nombre === nombre;
-      if (!esSoloElComprador && listaDestinatarios.length > 0) {
-        const detalle = listaDestinatarios
-          .map(d => `${d.nombre}${d.dni ? " (" + d.tipoDoc + " " + d.dni + ")" : ""} - ${d.celular}`)
-          .join(" | ");
-        const linea = `Autorizados a recoger en agencia: ${detalle}`;
-        notasParaSheet = notasParaSheet ? `${notasParaSheet}\n${linea}` : linea;
-      }
-    }
+    // Notas que van al Sheet: solo lo que escribió el cliente. Los datos
+    // de quien recibe/recoge ya van limpios en columnas F/G (y en
+    // provincia también J/K) — no hace falta repetirlos acá.
+    const notasParaSheet = notas;
     const subtotal = carrito.reduce((s, i) => s + extraerPrecioNumerico(i.precio) * i.cantidad, 0);
     const requiereCotizacionManual = buscarRecargoCotizarManual();
     let envio = 0;
