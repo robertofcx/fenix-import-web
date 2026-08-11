@@ -153,3 +153,25 @@
 
 .btn-whatsapp { background: var(--whatsapp); color: #0d1f13; }
 .btn-whatsapp:hover { background: var(--whatsapp-dark); }
+
+/* ---------- Hero centrado (mismo lenguaje visual que index.css),
+   para páginas "de marca" como Nosotros — a diferencia de las
+   páginas legales/utilitarias que se quedan con el layout de
+   documento a la izquierda (.pagina-contenido normal). ---------- */
+.pagina-hero {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 30px 24px 10px;
+  text-align: center;
+}
+.pagina-hero .eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin: 0 0 18px;
+}
+.pagina-hero .pagina-titulo { margin: 0 0 20px; }
+.pagina-hero .pagina-intro { text-align: center; }
+.pagina-hero .hero-botones { justify-content: center; margin: 22px 0 0; }
