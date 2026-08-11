@@ -1115,7 +1115,8 @@ const NUMERO_WHATSAPP = "51978821080";
 
     // ---------- Registrar el pedido en el Sheet (ALMACEN / DOMICILIO / ENVIO) ----------
     const hoy = new Date();
-    const fechaTexto = String(hoy.getDate()).padStart(2, "0") + "/" + String(hoy.getMonth() + 1).padStart(2, "0") + "/" + hoy.getFullYear();
+    const fechaTexto = String(hoy.getDate()).padStart(2, "0") + "/" + String(hoy.getMonth() + 1).padStart(2, "0") + "/" + hoy.getFullYear()
+      + " " + String(hoy.getHours()).padStart(2, "0") + ":" + String(hoy.getMinutes()).padStart(2, "0");
     const datosPedido = {
       idPedido: idPedido,
       tipoEntrega: tipoEntrega,
