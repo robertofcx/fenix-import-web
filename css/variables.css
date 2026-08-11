@@ -63,7 +63,7 @@ button { font-family: inherit; }
    No afecta a móvil/tablet (por debajo de 1024px).
    ============================================================ */
 @media (min-width: 1024px) {
-  body { zoom: 1.15; }
+  body { zoom: 1.05; }
 }
 
 /* ============================================================
