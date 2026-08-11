@@ -8,9 +8,10 @@
  * Google ya tenía indexadas de la web anterior), con título,
  * meta description, Open Graph y JSON-LD ya "horneados".
  *
- * (El sitio estuvo solo en desarrollo, sin links reales
- * compartidos con código de producto — por eso ya no se genera
- * ningún stub de redirección por SKU, solo la página con slug.)
+ * También genera un stub de redirección en /producto/{SKU}.html
+ * (la ruta vieja de este mismo sitio) apuntando al slug nuevo,
+ * por si quedó algún link o localStorage de un cliente apuntando
+ * ahí de antes de este cambio.
  *
  * También regenera sitemap.xml con todas las URLs nuevas.
  *
@@ -287,7 +288,10 @@ function generarHtmlProducto(producto, todosLosProductos) {
 <title>${nombreEscapado} — Fenix Import Perú</title>
 <meta name="description" content="${descripcionCorta}">
 <link rel="canonical" href="${url}">
-<link rel="icon" href="/logo.webp">
+<link rel="icon" type="image/x-icon" href="/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
 
 <meta property="og:type" content="product">
 <meta property="og:title" content="${nombreEscapado} — Fenix Import Perú">
@@ -477,13 +481,40 @@ function main() {
       fs.writeFileSync(path.join(CARPETA_SALIDA, `${slug}.html`), html, "utf-8");
       archivosReales.add(slug);
 
-      // NOTA: antes acá se generaba un stub de redirección por cada SKU
-      // (/producto/HOG_278.html -> meta refresh al slug real), por si
-      // circulaban links viejos basados en código. Se quitó porque el
-      // sitio estuvo solo en desarrollo — nunca se compartió ni se generó
-      // ningún link real con SKU, así que no hay nada que proteger. Todo
-      // el código del sitio (buscador, catálogo, checkout, etc.) ya
-      // genera únicamente links con slug.
+      // Stub de redirección en la ruta vieja por SKU (por si quedó algún link
+      // o localStorage de un cliente apuntando ahí de antes de este cambio).
+      // Para un grupo de variantes, cada color tenía su propia página antes
+      // de agruparse — así que TODAS sus SKU necesitan su propio stub, no
+      // solo la variante principal.
+      const urlNueva = `/producto/${slug}.html`;
+      const htmlRedireccion = (skuViejo) => `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="0; url=${urlNueva}">
+<link rel="canonical" href="${URL_SITIO}${urlNueva}">
+<meta name="robots" content="noindex">
+<title>Redirigiendo…</title>
+</head>
+<body>
+<p>Este producto se movió. <a href="${urlNueva}">Haz clic aquí si no eres redirigido automáticamente</a>.</p>
+</body>
+</html>`;
+
+      const skusARedirigir = new Set();
+      if (slug !== producto.sku) skusARedirigir.add(producto.sku);
+      if (producto.esGrupo && Array.isArray(producto.variantes)) {
+        producto.variantes.forEach(v => {
+          if (v.sku && v.sku !== slug) skusARedirigir.add(v.sku);
+        });
+      }
+      skusARedirigir.forEach(skuViejo => {
+        if (archivosReales.has(skuViejo)) {
+          console.warn(`  ⚠ "${skuViejo}" es el slug de otra página real — no se generó su stub de redirección para evitar pisarla. Revisa si hay un SKU duplicado en el Sheet.`);
+          return;
+        }
+        fs.writeFileSync(path.join(CARPETA_SALIDA, `${skuViejo}.html`), htmlRedireccion(skuViejo), "utf-8");
+      });
 
       generados++;
     } catch (err) {
