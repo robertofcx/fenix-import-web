@@ -3,7 +3,7 @@ const NUMERO_WHATSAPP = "51978821080";
   const CARRITO_KEY = "fenix_carrito";
   const FORM_DATOS_KEY = "fenix_checkout_datos";
   const DIRECCION_ALMACEN = "Jirón Cajabamba 313, Independencia, Lima";
-  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbwyDlqTlLwJ1-0Gh67FOyNWwLyMZLnknLaoGMKVd0CcEABRB2XQbtOh_wTbhywSg8GH5Q/exec";
+  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbyUDAx_uxcRC-_Vo22u5utS2GVrN76nAfQfvbynmajfTVu8pRCXpuOeFVs0VqUjdZTu/exec";
   // Ubigeo propio (Departamento → Provincia → Distrito), publicado desde tu Sheet
   const URL_UBIGEO = "ubigeo.json";
   // #anio ya lo escribe footer.js al inyectar el footer
@@ -887,22 +887,48 @@ const NUMERO_WHATSAPP = "51978821080";
     }
     return valido;
   }
-  function registrarPedidoEnSheet(datosPedido) {
-    const url = URL_REGISTRO_PEDIDO + "?datos=" + encodeURIComponent(JSON.stringify(datosPedido));
-    // Se usa fetch en modo "no-cors": no necesitamos LEER la respuesta
-    // (esto es un envío silencioso de respaldo, el mensaje de WhatsApp es
-    // la confirmación real), así que no importa si Google la bloquea para
-    // lectura — el registro en el Sheet igual se ejecuta del lado del
-    // servidor. Esto evita los problemas raros de sesión/cuentas de
-    // Google que sí afectaban la carga de un <script> tradicional.
-    return fetch(url, { mode: "no-cors", keepalive: true })
-      .then(() => {
-        return { exito: true };
-      })
-      .catch((error) => {
-        console.error("No se pudo conectar con el registro del Sheet:", error);
-        return { error: "conexión fallida" };
-      });
+  // Ahora SÍ necesitamos leer la respuesta (el correlativo que asigna el
+  // script), así que se usa JSONP en vez de fetch con no-cors — el backend
+  // ya soporta el parámetro "callback" (ver responderJsonp en el script).
+  // Si el Sheet no responde a tiempo (timeoutMs), se resuelve con
+  // exito:false para que el checkout siga con un ID de respaldo en vez de
+  // quedarse trabado esperando.
+  function registrarPedidoEnSheet(datosPedido, timeoutMs) {
+    return new Promise((resolve) => {
+      const nombreCallback = "callbackPedido_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
+      let yaResuelto = false;
+
+      function limpiar() {
+        delete window[nombreCallback];
+        if (elScript.parentNode) elScript.parentNode.removeChild(elScript);
+        clearTimeout(temporizador);
+      }
+
+      const temporizador = setTimeout(() => {
+        if (yaResuelto) return;
+        yaResuelto = true;
+        limpiar();
+        resolve({ exito: false, motivo: "timeout" });
+      }, timeoutMs || 8000);
+
+      window[nombreCallback] = function (respuesta) {
+        if (yaResuelto) return;
+        yaResuelto = true;
+        limpiar();
+        resolve(respuesta || { exito: false, motivo: "respuesta_vacia" });
+      };
+
+      const url = URL_REGISTRO_PEDIDO + "?datos=" + encodeURIComponent(JSON.stringify(datosPedido)) + "&callback=" + nombreCallback;
+      const elScript = document.createElement("script");
+      elScript.src = url;
+      elScript.onerror = function () {
+        if (yaResuelto) return;
+        yaResuelto = true;
+        limpiar();
+        resolve({ exito: false, motivo: "error_de_carga" });
+      };
+      document.body.appendChild(elScript);
+    });
   }
   async function intentarEnviarPedido() {
     if (!validarFormulario()) {
@@ -949,7 +975,9 @@ const NUMERO_WHATSAPP = "51978821080";
       contacto1Telefono = esOtraPersona ? document.getElementById("input-contacto1-telefono").value.trim() : celularComprador;
     }
     const notas = document.getElementById("input-notas").value.trim();
-    const idPedido = generarIdPedido();
+    // El idPedido YA NO se genera acá: se pide al backend más abajo, para
+    // que sea un correlativo real (00001, 00002...). Si el Sheet no
+    // responde a tiempo, recién ahí se usa generarIdPedido() como respaldo.
     // Notas que van al Sheet: solo lo que escribió el cliente. Los datos
     // de quien recibe/recoge ya van limpios en columnas F/G (y en
     // provincia también J/K) — no hace falta repetirlos acá.
@@ -982,7 +1010,9 @@ const NUMERO_WHATSAPP = "51978821080";
       envioTexto = "S/ " + costoDeliveryConIgv.toFixed(2);
     }
     const total = baseImponible + igv;
-    let mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\nN° de pedido: ${idPedido}\n\n`;
+    // El encabezado con "N° de pedido" se antepone al final, ya con el
+    // correlativo real que devuelve el backend (ver más abajo).
+    let mensaje = ``;
     carrito.forEach(item => {
       const precioUnit = extraerPrecioNumerico(item.precio) * factorIgv;
       // Resuelve el slug desde el catálogo cargado (más confiable que el carrito
@@ -1118,9 +1148,10 @@ const NUMERO_WHATSAPP = "51978821080";
     const fechaTexto = String(hoy.getDate()).padStart(2, "0") + "/" + String(hoy.getMonth() + 1).padStart(2, "0") + "/" + hoy.getFullYear()
       + " " + String(hoy.getHours()).padStart(2, "0") + ":" + String(hoy.getMinutes()).padStart(2, "0");
     const datosPedido = {
-      idPedido: idPedido,
+      // idPedido NO se manda: el backend genera el correlativo real y lo
+      // devuelve en la respuesta (ver más abajo, registrarPedidoEnSheet).
       tipoEntrega: tipoEntrega,
-      tipoEntregaTexto: tipoEntregaTexto,   // columna BO — "RECOJO" / "DELIVERY" / "ENVIO PROVINCIA"
+      tipoEntregaTexto: tipoEntregaTexto,   // referencia legible ("RECOJO"/"DELIVERY"/"ENVIO PROVINCIA") — la columna C ya cubre esto (ALMACEN/DOMICILIO/ENVIOS), este campo queda disponible por si lo necesitas en otro lado
       fecha: fechaTexto,
       nombre: nombreParaSheet,
       celular: celularParaSheet,
@@ -1148,12 +1179,22 @@ const NUMERO_WHATSAPP = "51978821080";
     elBotonEnviar.style.opacity = "0.7";
     const textoOriginalBoton = elBotonEnviar.innerHTML;
     elBotonEnviar.innerHTML = "Enviando pedido...";
-    await registrarPedidoEnSheet(datosPedido);
-    window.open("https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje), "_blank");
+
+    const respuestaRegistro = await registrarPedidoEnSheet(datosPedido, 8000);
+    // Si el Sheet respondió a tiempo con un correlativo real, se usa ese.
+    // Si no (caído, lento, sin internet un instante), se cae a un ID
+    // temporal — así el cliente nunca se queda trabado sin poder enviar.
+    const idPedidoFinal = (respuestaRegistro && respuestaRegistro.exito && respuestaRegistro.idPedido)
+      ? respuestaRegistro.idPedido
+      : generarIdPedido();
+
+    const mensajeFinal = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\nN° de pedido: ${idPedidoFinal}\n\n` + mensaje;
+
+    window.open("https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensajeFinal), "_blank");
     guardarCarrito([]);
     actualizarBadgeCarrito();
     limpiarDatosFormularioGuardados();
-    mostrarPantallaConcluido(idPedido);
+    mostrarPantallaConcluido(idPedidoFinal);
   }
   function mostrarPantallaConcluido(idPedido) {
     document.getElementById("main-contenido").innerHTML = `
