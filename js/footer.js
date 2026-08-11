@@ -65,10 +65,13 @@
       <p>+51 978 821 080</p>
       <p>ventas.fenixip@gmail.com</p>
       <p>Lunes a Viernes, 9:00 AM – 5:00 PM</p>
-      <p>Respondemos en menos de 5 min en horario de atención</p>
-      <p><a href="https://maps.app.goo.gl/zHCX8xZM2wQxwWpr8" target="_blank" rel="noopener">📍 Jirón Cajabamba 313, Independencia</a><br>Almacén — atención solo con cita previa</p>
-      <p>💳 Yape · Plin · Transferencia · Tarjeta (link de pago)</p>
     </div>
+  </div>
+
+  <div class="footer-confianza">
+    <span>📍 <a href="https://maps.app.goo.gl/zHCX8xZM2wQxwWpr8" target="_blank" rel="noopener">Jirón Cajabamba 313, Independencia</a> — almacén con cita previa</span>
+    <span>⚡ Respondemos en menos de 5 min en horario de atención</span>
+    <span>💳 Yape · Plin · Transferencia · Tarjeta (link de pago)</span>
   </div>
 
   <div class="footer-abajo">

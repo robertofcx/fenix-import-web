@@ -61,6 +61,25 @@ footer {
   color: var(--texto-muted);
 }
 
+/* ---------- Franja de confianza: GPS, tiempo de respuesta y pagos ----------
+   Va en una fila horizontal ancha entre la grilla de columnas y el
+   copyright — así no se apila todo dentro de la columna "Contacto"
+   y desbalancea la altura del footer. */
+.footer-confianza {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 18px 0;
+  border-top: 1px solid var(--linea);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 28px;
+  font-size: 0.78rem;
+  color: var(--texto-muted);
+}
+.footer-confianza a { color: var(--azul); font-weight: 600; }
+.footer-confianza a:hover { text-decoration: underline; }
+
 /* --- Variante reducida (checkout, producto) --- */
 /* Reutiliza .footer-abajo, pero sin el border-top ni el padding
    extra que en la variante completa la separan de la grilla. */
