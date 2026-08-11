@@ -124,3 +124,32 @@
 }
 .aviso-cita-previa svg { width: 18px; height: 18px; color: var(--ember); flex-shrink: 0; margin-top: 1px; }
 .aviso-cita-previa a { color: var(--azul); font-weight: 600; }
+
+/* ---------- Botones (misma clase que usa index.css, replicada aquí
+   porque estas páginas de contenido no cargan index.css) ---------- */
+.hero-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-weight: 600;
+  font-size: 0.97rem;
+  padding: 14px 25px;
+  border-radius: 12px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+.btn-principal { background: var(--azul); color: var(--texto-sobre-azul); }
+.btn-principal:hover { background: var(--azul-hover); }
+
+.btn-whatsapp { background: var(--whatsapp); color: #0d1f13; }
+.btn-whatsapp:hover { background: var(--whatsapp-dark); }
