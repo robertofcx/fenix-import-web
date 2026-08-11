@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Métodos de Pago — Fenix Import Perú</title>
+<meta name="description" content="Formas de pago aceptadas en Fenix Import Perú: Yape, Plin, transferencia y tarjeta con link de pago.">
+<link rel="canonical" href="https://fenix-import-peru.onrender.com/metodos-de-pago.html">
+<link rel="icon" href="/logo.webp">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Métodos de Pago — Fenix Import Perú">
+<meta property="og:description" content="Yape, Plin, transferencia y tarjeta con link de pago.">
+<meta property="og:url" content="https://fenix-import-peru.onrender.com/metodos-de-pago.html">
+<meta property="og:locale" content="es_PE">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/carrito.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/paginas.css">
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+  <script src="/js/header.js"></script>
+
+  <nav class="breadcrumb"><a href="/index.html">Inicio</a><span class="sep">›</span><span class="actual">Métodos de pago</span></nav>
+
+  <section class="pagina-contenido">
+    <div class="contenedor-angosto">
+      <h1 class="pagina-titulo">Métodos de Pago</h1>
+      <p class="pagina-intro">
+        Coordinamos el pago directo contigo por WhatsApp una vez confirmado tu pedido. Estas
+        son las formas de pago que aceptamos hoy:
+      </p>
+
+      <div class="metodos-grilla">
+        <div class="metodo-chip">
+          <div class="icono">📱</div>
+          <p>Yape</p>
+        </div>
+        <div class="metodo-chip">
+          <div class="icono">📲</div>
+          <p>Plin</p>
+        </div>
+        <div class="metodo-chip">
+          <div class="icono">🏦</div>
+          <p>Transferencia bancaria</p>
+        </div>
+        <div class="metodo-chip">
+          <div class="icono">💳</div>
+          <p>Tarjeta (link de pago)</p>
+        </div>
+        <div class="metodo-chip proximamente">
+          <div class="icono">🌐</div>
+          <p>Pasarela de pago en línea</p>
+          <span class="etiqueta-proximamente">Próximamente</span>
+        </div>
+      </div>
+
+      <div class="pagina-seccion">
+        <h2>¿Cómo funciona?</h2>
+        <ul>
+          <li>Arma tu pedido en el <a href="/catalogo.html">catálogo</a> y finalízalo — se abre WhatsApp con el detalle completo.</li>
+          <li>Un asesor te confirma disponibilidad y coordina contigo el método de pago que prefieras.</li>
+          <li>Realizas el pago y compartes el comprobante por el mismo chat.</li>
+          <li>Coordinamos el envío o el recojo en almacén (con cita previa).</li>
+        </ul>
+      </div>
+
+      <div class="pagina-seccion">
+        <h2>Sobre comprobantes</h2>
+        <p>Los precios mostrados en el catálogo son precios base. Si necesitas boleta o
+          factura, se agrega el 18% de IGV al valor del producto o pedido — más detalle en
+          <a href="/preguntas-frecuentes.html">Preguntas Frecuentes</a>.</p>
+      </div>
+
+      <div class="hero-botones" style="justify-content:flex-start;">
+        <a class="btn btn-whatsapp" href="#" id="pagos-whatsapp" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+          Coordinar pago por WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder" data-variant="completo"></div>
+  <script src="/js/footer.js"></script>
+
+  <script>
+    document.getElementById("pagos-whatsapp").href =
+      "https://wa.me/51978821080?text=" + encodeURIComponent("¡Hola Fenix Import Perú!\nTengo una consulta sobre métodos de pago.");
+  </script>
+
+</body>
+</html>

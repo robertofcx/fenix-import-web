@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libro de Reclamaciones — Fenix Import Perú</title>
+<meta name="description" content="Libro de Reclamaciones de Fenix Import Perú, conforme al Código de Protección y Defensa del Consumidor.">
+<link rel="canonical" href="https://fenix-import-peru.onrender.com/libro-de-reclamaciones.html">
+<link rel="icon" href="/logo.webp">
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/carrito.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/paginas.css">
+<!-- Reutiliza los estilos de formulario (.campo, .fila-2, etc.) ya definidos para checkout -->
+<link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+  <script src="/js/header.js"></script>
+
+  <nav class="breadcrumb"><a href="/index.html">Inicio</a><span class="sep">›</span><span class="actual">Libro de reclamaciones</span></nav>
+
+  <section class="pagina-contenido">
+    <div class="contenedor-angosto">
+      <h1 class="pagina-titulo">Libro de Reclamaciones</h1>
+      <p class="pagina-intro">
+        Conforme al Código de Protección y Defensa del Consumidor, este establecimiento
+        cuenta con un Libro de Reclamaciones a tu disposición. Completa el formulario y se
+        abrirá tu cliente de correo con el reclamo ya redactado, listo para enviar a
+        <strong>ventas.fenixip@gmail.com</strong>.
+      </p>
+
+      <div class="aviso-cita-previa">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>Si necesitas adjuntar fotos o comprobantes, respóndelas directamente al correo de confirmación que se abrirá al enviar este formulario.</span>
+      </div>
+
+      <form id="form-reclamo">
+        <div class="seccion-form">
+          <p class="seccion-form-titulo">Datos del reclamante</p>
+          <div class="fila-2">
+            <div class="campo" id="campo-nombres">
+              <label>Nombres y apellidos</label>
+              <input type="text" id="rl-nombres" required>
+              <p class="campo-error">Ingresa tu nombre completo</p>
+            </div>
+            <div class="campo" id="campo-correo">
+              <label>Correo electrónico</label>
+              <input type="email" id="rl-correo" required>
+              <p class="campo-error">Ingresa un correo válido</p>
+            </div>
+          </div>
+          <div class="fila-2">
+            <div class="campo" id="campo-tipo-doc">
+              <label>Tipo de documento</label>
+              <select id="rl-tipo-doc">
+                <option value="DNI">DNI</option>
+                <option value="RUC">RUC</option>
+                <option value="CE">Carné de Extranjería</option>
+              </select>
+            </div>
+            <div class="campo" id="campo-num-doc">
+              <label>Número de documento</label>
+              <input type="text" id="rl-num-doc" class="campo-solo-numeros" inputmode="numeric" required>
+              <p class="campo-error">Ingresa tu número de documento</p>
+            </div>
+          </div>
+          <div class="fila-2">
+            <div class="campo" id="campo-telefono">
+              <label>Celular</label>
+              <input type="tel" id="rl-telefono" class="campo-celular" inputmode="numeric" required>
+              <p class="campo-error">Ingresa un celular válido</p>
+            </div>
+            <div class="campo" id="campo-menor">
+              <label>¿Eres menor de edad?</label>
+              <select id="rl-menor">
+                <option value="No">No</option>
+                <option value="Sí">Sí</option>
+              </select>
+            </div>
+          </div>
+          <div class="campo" id="campo-direccion">
+            <label>Dirección</label>
+            <input type="text" id="rl-direccion" required>
+            <p class="campo-error">Ingresa tu dirección</p>
+          </div>
+          <div class="fila-2">
+            <div class="campo">
+              <label>Departamento</label>
+              <input type="text" id="rl-departamento">
+            </div>
+            <div class="campo">
+              <label>Provincia</label>
+              <input type="text" id="rl-provincia">
+            </div>
+          </div>
+          <div class="campo" style="margin-bottom:0;">
+            <label>Distrito</label>
+            <input type="text" id="rl-distrito">
+          </div>
+        </div>
+
+        <div class="seccion-form">
+          <p class="seccion-form-titulo">Detalle del reclamo</p>
+          <div class="fila-2">
+            <div class="campo">
+              <label>Concepto adquirido</label>
+              <select id="rl-concepto">
+                <option value="Producto">Producto</option>
+                <option value="Servicio">Servicio</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label>Tipo</label>
+              <select id="rl-tipo-reclamo">
+                <option value="Reclamo">Reclamo</option>
+                <option value="Queja">Queja</option>
+                <option value="Solicitud">Solicitud</option>
+              </select>
+            </div>
+          </div>
+          <div class="fila-2">
+            <div class="campo">
+              <label>Fecha de adquisición</label>
+              <input type="date" id="rl-fecha-adquisicion">
+            </div>
+            <div class="campo">
+              <label>Monto del reclamo <span class="opcional">(opcional)</span></label>
+              <input type="text" id="rl-monto" placeholder="S/ 0.00">
+            </div>
+          </div>
+          <div class="campo" style="margin-bottom:0;">
+            <label>Detalle</label>
+            <textarea id="rl-detalle" required placeholder="Describe tu reclamo, queja o solicitud..."></textarea>
+            <p class="campo-error">Describe tu reclamo</p>
+          </div>
+        </div>
+
+        <button type="button" class="btn-enviar-checkout" id="btn-enviar-reclamo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+          Enviar reclamo
+        </button>
+        <p class="nota-checkout">Al enviar, se abre tu cliente de correo con el reclamo redactado, listo para mandar.</p>
+      </form>
+    </div>
+  </section>
+
+  <div id="footer-placeholder" data-variant="completo"></div>
+  <script src="/js/footer.js"></script>
+  <script src="/js/reclamos.js"></script>
+
+</body>
+</html>

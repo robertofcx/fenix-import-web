@@ -1,0 +1,126 @@
+/* ============================================================
+   paginas.css — estilos compartidos para páginas de contenido
+   estático: nosotros.html, preguntas-frecuentes.html,
+   metodos-de-pago.html, terminos-y-condiciones.html,
+   politicas-de-privacidad.html.
+
+   libro-de-reclamaciones.html también usa este archivo para el
+   título/breadcrumb, pero sus campos de formulario reutilizan
+   las clases genéricas de checkout.css (.campo, .fila-2, etc.)
+   ============================================================ */
+
+.breadcrumb { max-width: 760px; margin: 0 auto; padding: 16px 20px 0; font-size: .8rem; color: var(--texto-muted); display: flex; flex-wrap: wrap; gap: 6px; }
+.breadcrumb .sep { opacity: .5; }
+.breadcrumb .actual { color: var(--texto); font-weight: 500; }
+
+.pagina-contenido { padding: 8px 20px 60px; }
+.contenedor-angosto { max-width: 760px; margin: 0 auto; }
+
+.pagina-titulo {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  margin: 6px 0 8px;
+}
+
+.pagina-intro { color: var(--texto-muted); font-size: .95rem; line-height: 1.6; margin: 0 0 30px; }
+
+.pagina-seccion { margin-bottom: 10px; }
+
+.pagina-seccion h2 {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  margin: 0 0 12px;
+  padding-top: 22px;
+  border-top: 1px solid var(--linea);
+}
+.pagina-seccion:first-of-type h2 { border-top: none; padding-top: 0; }
+
+.pagina-seccion p { font-size: .92rem; line-height: 1.75; color: var(--texto); margin: 0 0 12px; }
+
+.pagina-seccion ul { margin: 0 0 12px; padding-left: 20px; }
+.pagina-seccion ul li { font-size: .92rem; line-height: 1.7; color: var(--texto); margin-bottom: 6px; }
+
+/* Tarjeta destacada (Misión/Visión en Nosotros, chips de Métodos de pago) */
+.tarjeta-destacada {
+  background: var(--bg-elevada);
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.tarjeta-destacada h3 {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin: 0 0 8px;
+  color: var(--azul);
+}
+.tarjeta-destacada p { margin: 0; font-size: .9rem; line-height: 1.65; color: var(--texto-muted); }
+
+.grilla-2 { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 24px; }
+@media (min-width: 640px) { .grilla-2 { grid-template-columns: repeat(2, 1fr); } }
+
+.pagina-stats {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  font-family: 'IBM Plex Mono', monospace; font-size: .78rem; color: var(--texto-muted);
+  margin: 0 0 26px;
+}
+.pagina-stats strong { color: var(--ember); }
+
+/* ---------- Preguntas frecuentes (acordeón con <details>) ---------- */
+.faq-item {
+  background: var(--bg-elevada);
+  border: 1px solid var(--linea);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.faq-item summary {
+  padding: 16px 18px;
+  font-weight: 600;
+  font-size: .92rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  font-size: 1.3rem;
+  color: var(--azul);
+  flex-shrink: 0;
+  line-height: 1;
+  transition: transform .15s ease;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item .faq-respuesta { padding: 0 18px 16px; font-size: .88rem; line-height: 1.65; color: var(--texto-muted); }
+
+/* ---------- Métodos de pago: chips ---------- */
+.metodos-grilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin: 20px 0 26px; }
+.metodo-chip {
+  background: var(--bg-elevada);
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  padding: 20px 14px;
+  text-align: center;
+}
+.metodo-chip .icono { font-size: 1.9rem; margin-bottom: 8px; }
+.metodo-chip p { margin: 0; font-size: .82rem; font-weight: 600; color: var(--texto); }
+.metodo-chip.proximamente { opacity: .65; border-style: dashed; }
+.metodo-chip .etiqueta-proximamente {
+  display: inline-block; margin-top: 6px; font-family: 'IBM Plex Mono', monospace;
+  font-size: .6rem; color: var(--ember); text-transform: uppercase; letter-spacing: .05em;
+}
+
+.aviso-cita-previa {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--bg-elevada); border: 1px solid var(--linea); border-radius: 12px;
+  padding: 14px 16px; font-size: .85rem; color: var(--texto-muted); margin: 0 0 24px;
+}
+.aviso-cita-previa svg { width: 18px; height: 18px; color: var(--ember); flex-shrink: 0; margin-top: 1px; }
+.aviso-cita-previa a { color: var(--azul); font-weight: 600; }

@@ -45,18 +45,18 @@
     <div class="footer-col">
       <h4>Acerca de</h4>
       <ul>
-        <li><a href="#">Nosotros</a></li>
-        <li><a href="#">Preguntas frecuentes</a></li>
-        <li><a href="#">Métodos de pago</a></li>
+        <li><a href="/nosotros.html">Nosotros</a></li>
+        <li><a href="/preguntas-frecuentes.html">Preguntas frecuentes</a></li>
+        <li><a href="/metodos-de-pago.html">Métodos de pago</a></li>
       </ul>
     </div>
 
     <div class="footer-col">
       <h4>Enlaces importantes</h4>
       <ul>
-        <li><a href="#">Términos y condiciones</a></li>
-        <li><a href="#">Políticas de privacidad</a></li>
-        <li><a href="#">Libro de reclamaciones</a></li>
+        <li><a href="/terminos-y-condiciones.html">Términos y condiciones</a></li>
+        <li><a href="/politicas-de-privacidad.html">Políticas de privacidad</a></li>
+        <li><a href="/libro-de-reclamaciones.html">Libro de reclamaciones</a></li>
       </ul>
     </div>
 
@@ -65,7 +65,9 @@
       <p>+51 978 821 080</p>
       <p>ventas.fenixip@gmail.com</p>
       <p>Lunes a Viernes, 9:00 AM – 5:00 PM</p>
-      <p>Jirón Cajabamba 313, Independencia</p>
+      <p>Respondemos en menos de 5 min en horario de atención</p>
+      <p><a href="https://maps.app.goo.gl/zHCX8xZM2wQxwWpr8" target="_blank" rel="noopener">📍 Jirón Cajabamba 313, Independencia</a><br>Almacén — atención solo con cita previa</p>
+      <p>💳 Yape · Plin · Transferencia · Tarjeta (link de pago)</p>
     </div>
   </div>
 
