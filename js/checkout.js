@@ -3,7 +3,7 @@ const NUMERO_WHATSAPP = "51978821080";
   const CARRITO_KEY = "fenix_carrito";
   const FORM_DATOS_KEY = "fenix_checkout_datos";
   const DIRECCION_ALMACEN = "Jirón Cajabamba 313, Independencia, Lima";
-  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbwjdBAzGbHjCqxNqCqzge-Gak0SnQPmk8TUgL82cW6aQbue1IMzo9sHEqQQ5ZUvBWO-Wg/exec";
+  const URL_REGISTRO_PEDIDO = "https://script.google.com/macros/s/AKfycbwyDlqTlLwJ1-0Gh67FOyNWwLyMZLnknLaoGMKVd0CcEABRB2XQbtOh_wTbhywSg8GH5Q/exec";
   // Ubigeo propio (Departamento → Provincia → Distrito), publicado desde tu Sheet
   const URL_UBIGEO = "ubigeo.json";
   // #anio ya lo escribe footer.js al inyectar el footer
@@ -344,20 +344,10 @@ const NUMERO_WHATSAPP = "51978821080";
             </label>
           </div>
           <div class="campo" id="campo-documento" style="display:none; margin-top:14px;">
-            <div class="fila-2">
-              <div class="campo" style="margin-bottom:0;">
-                <label>Tipo de documento</label>
-                <select id="input-tipo-documento">
-                  <option value="DNI">DNI</option>
-                  <option value="RUC">RUC</option>
-                  <option value="CE">Carné de Extranjería</option>
-                </select>
-              </div>
-              <div class="campo" id="campo-numero-documento" style="margin-bottom:0;">
-                <label>Número de documento</label>
-                <input type="text" id="input-numero-documento" class="campo-solo-numeros" inputmode="numeric" placeholder="8 dígitos">
-                <p class="campo-error">Verifica el número (DNI: 8 dígitos, RUC: 11 dígitos)</p>
-              </div>
+            <div class="campo" id="campo-numero-documento" style="margin-bottom:0;">
+              <label>Número de documento (DNI o RUC)</label>
+              <input type="text" id="input-numero-documento" class="campo-solo-numeros" inputmode="numeric" placeholder="8 u 11 dígitos" maxlength="11">
+              <p class="campo-error">Verifica el número (DNI: 8 dígitos, RUC: 11 dígitos)</p>
             </div>
           </div>
         </div>
@@ -389,7 +379,6 @@ const NUMERO_WHATSAPP = "51978821080";
     document.getElementById("chk-destinatario-yo-mismo").addEventListener("change", onCambioDestinatarios);
     document.getElementById("chk-destinatario-otra-persona").addEventListener("change", onCambioDestinatarios);
     document.getElementById("btn-agregar-destinatario2").addEventListener("click", toggleDestinatario2);
-    document.getElementById("input-tipo-documento").addEventListener("change", ajustarCampoDocumento);
     document.getElementById("input-dni-comprador-tipo").addEventListener("change", () => ajustarCampoDocumentoPersona("input-dni-comprador-tipo", "input-dni-comprador"));
     document.getElementById("input-destinatario1-tipo").addEventListener("change", () => ajustarCampoDocumentoPersona("input-destinatario1-tipo", "input-destinatario1-dni"));
     document.getElementById("input-destinatario2-tipo").addEventListener("change", () => ajustarCampoDocumentoPersona("input-destinatario2-tipo", "input-destinatario2-dni"));
@@ -398,7 +387,6 @@ const NUMERO_WHATSAPP = "51978821080";
     document.getElementById("btn-enviar-checkout").addEventListener("click", intentarEnviarPedido);
     poblarDistritosLima();
     renderizarResumenItems();
-    ajustarCampoDocumento();
     onCambioQuienRecibe();
     onCambioDestinatarios();
     actualizarResumen();
@@ -438,25 +426,6 @@ const NUMERO_WHATSAPP = "51978821080";
     const conComprobante = document.querySelector('input[name="comprobante"]:checked').value === "con_comprobante";
     document.getElementById("campo-documento").style.display = conComprobante ? "block" : "none";
     actualizarResumen();
-  }
-  function ajustarCampoDocumento() {
-    const tipo = document.getElementById("input-tipo-documento").value;
-    const elInput = document.getElementById("input-numero-documento");
-    const elError = document.querySelector("#campo-numero-documento .campo-error");
-    if (tipo === "DNI") {
-      elInput.maxLength = 8;
-      elInput.placeholder = "8 dígitos";
-      elError.textContent = "El DNI debe tener 8 dígitos";
-    } else if (tipo === "RUC") {
-      elInput.maxLength = 11;
-      elInput.placeholder = "11 dígitos";
-      elError.textContent = "El RUC debe tener 11 dígitos";
-    } else {
-      elInput.maxLength = 12;
-      elInput.placeholder = "Número de CE";
-      elError.textContent = "Verifica el número de CE";
-    }
-    elInput.value = "";
   }
   // Ajusta el placeholder/maxlength de un campo de documento de identidad
   // (comprador en provincia, destinatario1, destinatario2) según si eligieron
@@ -740,8 +709,6 @@ const NUMERO_WHATSAPP = "51978821080";
     if (esMismoDestinatario) datos.destinatarioYoMismo = esMismoDestinatario.checked;
     const destinatarioOtraPersona = document.getElementById("chk-destinatario-otra-persona");
     if (destinatarioOtraPersona) datos.destinatarioOtraPersona = destinatarioOtraPersona.checked;
-    const tipoDoc = document.getElementById("input-tipo-documento");
-    if (tipoDoc) datos.tipoDocumento = tipoDoc.value;
     const tipoDocComprador = document.getElementById("input-dni-comprador-tipo");
     if (tipoDocComprador) datos.tipoDocComprador = tipoDocComprador.value;
     const tipoDocDest1 = document.getElementById("input-destinatario1-tipo");
@@ -765,12 +732,6 @@ const NUMERO_WHATSAPP = "51978821080";
     if (datos.comprobante) {
       const el = document.querySelector(`input[name="comprobante"][value="${datos.comprobante}"]`);
       if (el) { el.checked = true; onCambioComprobante(); }
-    }
-    if (datos.tipoDocumento) {
-      const el = document.getElementById("input-tipo-documento");
-      if (el) { el.value = datos.tipoDocumento; ajustarCampoDocumento(); el.value = datos.tipoDocumento; }
-      const numDoc = document.getElementById("input-numero-documento");
-      if (numDoc && datos["input-numero-documento"]) numDoc.value = datos["input-numero-documento"];
     }
     if (datos.tipoDocComprador) {
       const el = document.getElementById("input-dni-comprador-tipo");
@@ -840,11 +801,8 @@ const NUMERO_WHATSAPP = "51978821080";
     if (!celularCompradorValido) valido = false;
     const conComprobante = document.querySelector('input[name="comprobante"]:checked').value === "con_comprobante";
     if (conComprobante) {
-      const tipoDoc = document.getElementById("input-tipo-documento").value;
       const numeroDoc = document.getElementById("input-numero-documento").value.trim();
-      let docValido = numeroDoc.length > 0;
-      if (tipoDoc === "DNI") docValido = /^\d{8}$/.test(numeroDoc);
-      if (tipoDoc === "RUC") docValido = /^\d{11}$/.test(numeroDoc);
+      const docValido = /^\d{8}$/.test(numeroDoc) || /^\d{11}$/.test(numeroDoc); // DNI (8) o RUC (11)
       marcarError("campo-numero-documento", !docValido);
       if (!docValido) valido = false;
     }
@@ -1059,12 +1017,10 @@ const NUMERO_WHATSAPP = "51978821080";
     mensaje += `Celular: ${celularComprador}\n`;
     if (tipoEntrega === "provincia") mensaje += `${tipoDocComprador}: ${dniComprador}\n`;
     mensaje += `Comprobante: ${conComprobante ? "Con comprobante (Boleta/Factura)" : "Precio libre, sin comprobante"}\n`;
-    let tipoDocumento = "";
     let numeroDocumento = "";
     if (conComprobante) {
-      tipoDocumento = document.getElementById("input-tipo-documento").value;
       numeroDocumento = document.getElementById("input-numero-documento").value.trim();
-      mensaje += `${tipoDocumento}: ${numeroDocumento}\n`;
+      mensaje += `Documento: ${numeroDocumento}\n`;
     }
     let direccionCompleta = "";
     let ubicacionGpsTexto = "";
@@ -1166,17 +1122,23 @@ const NUMERO_WHATSAPP = "51978821080";
       }
     }
 
+    // ---------- Etiqueta legible del tipo de entrega, para la columna BO
+    // ("RECOJO" / "DELIVERY" / "ENVIO PROVINCIA" en vez del código interno
+    // "recojo" / "lima" / "provincia"). ----------
+    const ETIQUETAS_TIPO_ENTREGA = { recojo: "RECOJO", lima: "DELIVERY", provincia: "ENVIO PROVINCIA" };
+    const tipoEntregaTexto = ETIQUETAS_TIPO_ENTREGA[tipoEntrega] || tipoEntrega.toUpperCase();
+
     // ---------- Registrar el pedido en el Sheet (ALMACEN / DOMICILIO / ENVIO) ----------
     const hoy = new Date();
     const fechaTexto = String(hoy.getDate()).padStart(2, "0") + "/" + String(hoy.getMonth() + 1).padStart(2, "0") + "/" + hoy.getFullYear();
     const datosPedido = {
       idPedido: idPedido,
       tipoEntrega: tipoEntrega,
+      tipoEntregaTexto: tipoEntregaTexto,   // columna BO — "RECOJO" / "DELIVERY" / "ENVIO PROVINCIA"
       fecha: fechaTexto,
       nombre: nombreParaSheet,
       celular: celularParaSheet,
-      tipoDocumento: tipoDocumento,       // columna H — tipo de documento de FACTURACIÓN
-      documento: numeroDocumento,          // columna I — número de documento de FACTURACIÓN
+      documento: numeroDocumento,          // columna I — número de documento de FACTURACIÓN (ya no se pide el tipo)
       tipoDocumentoPersonal: tipoDocPersonalParaSheet,   // columna J — tipo de documento PERSONAL (envío)
       documentoPersonal: documentoPersonalParaSheet,     // columna K — número(s) de documento PERSONAL (envío)
       direccion: direccionCompleta,
