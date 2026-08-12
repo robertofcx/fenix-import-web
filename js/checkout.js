@@ -1053,9 +1053,6 @@ const NUMERO_WHATSAPP = "51978821080";
       mensaje += `Provincia: ${provinciaProvinciaTexto}\n`;
       mensaje += `Distrito: ${distritoProvinciaTexto}\n`;
       mensaje += `Agencia: ${agenciaTexto}\n`;
-      if (agencia === "Olva Courier") {
-        mensaje += `⚠️ OLVA COURIER: cotizar el costo del envío antes de coordinar el pago con el cliente.\n`;
-      }
     }
     if (tipoEntrega === "provincia") {
       mensaje += `\nPersonas autorizadas a recoger:\n`;
