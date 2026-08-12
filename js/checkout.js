@@ -1,5 +1,5 @@
 const NUMERO_WHATSAPP = "51978821080";
-  const URL_SITIO = "https://fenix-import-peru.onrender.com";
+  const URL_SITIO = "https://feniximportperu.com";
   const CARRITO_KEY = "fenix_carrito";
   const FORM_DATOS_KEY = "fenix_checkout_datos";
   const DIRECCION_ALMACEN = "Jirón Cajabamba 313, Independencia, Lima";
@@ -464,6 +464,7 @@ const NUMERO_WHATSAPP = "51978821080";
     const esOtro = document.getElementById("input-agencia").value === "otro";
     document.getElementById("campo-agencia-otro").style.display = esOtro ? "block" : "none";
     actualizarEstimadosEntrega();
+    actualizarResumen();
   }
   // ---------- Estimado de entrega (según hora real y horarios de corte) ----------
   const AGENCIAS_CON_CORTE = ["Shalom", "Olva Courier", "Hnos Flores", "Marvisur"];
@@ -490,9 +491,9 @@ const NUMERO_WHATSAPP = "51978821080";
     } else {
       pintarEstimado("estimado-lima", "El horario de despacho de hoy (hasta 10:00 AM) ya pasó. Tu pedido se entrega el <strong>siguiente día hábil</strong>.", false);
     }
-    // Envío a provincia: hasta la 1:00 PM se deja hoy en la agencia (si es de las
+    // Envío a provincia: hasta las 3:00 PM se deja hoy en la agencia (si es de las
     // que tienen corte diario); otras agencias necesitan coordinación previa
-    const corteProvincia = 13;
+    const corteProvincia = 15;
     const agenciaSeleccionada = document.getElementById("input-agencia")?.value || "";
     if (!agenciaSeleccionada) {
       pintarEstimado("estimado-provincia", "Elige una agencia para ver el tiempo estimado de envío.", true);
@@ -501,7 +502,7 @@ const NUMERO_WHATSAPP = "51978821080";
     } else if (horaDecimal < corteProvincia) {
       pintarEstimado("estimado-provincia", `Pedido dentro de horario — se deja <strong>hoy en la tarde</strong> en ${agenciaSeleccionada}.`, true);
     } else {
-      pintarEstimado("estimado-provincia", `El horario de hoy (hasta 1:00 PM) ya pasó. Se envía a ${agenciaSeleccionada} el <strong>siguiente día hábil</strong>.`, false);
+      pintarEstimado("estimado-provincia", `El horario de hoy (hasta 3:00 PM) ya pasó. Se envía a ${agenciaSeleccionada} el <strong>siguiente día hábil</strong>.`, false);
     }
   }
   // ---------- Mapa (Leaflet + OpenStreetMap, sin necesidad de API key) ----------
@@ -652,7 +653,10 @@ const NUMERO_WHATSAPP = "51978821080";
       elResumenEnvio.textContent = "Sin costo";
       envio = 0;
     } else if (tipoEntrega === "provincia") {
-      elResumenEnvio.innerHTML = `<span class="valor-cotizar">Se paga en la agencia</span>`;
+      const agenciaElegidaResumen = document.getElementById("input-agencia")?.value || "";
+      elResumenEnvio.innerHTML = (agenciaElegidaResumen === "Olva Courier")
+        ? `<span class="valor-cotizar">Pago adelantado — se cotiza</span>`
+        : `<span class="valor-cotizar">Se paga en la agencia</span>`;
       envioEsNumero = false;
     } else if (requiereCotizacionManual) {
       elResumenEnvio.innerHTML = `<span class="valor-cotizar">A cotizar</span>`;
@@ -971,7 +975,10 @@ const NUMERO_WHATSAPP = "51978821080";
         envioEsNumero = true;
       }
     } else if (tipoEntrega === "provincia") {
-      envioTexto = "Se coordina y paga en la agencia";
+      const agenciaElegida = document.getElementById("input-agencia")?.value || "";
+      envioTexto = (agenciaElegida === "Olva Courier")
+        ? "Pago adelantado — te cotizamos el costo antes del envío"
+        : "Se coordina y paga en la agencia";
     } else if (tipoEntrega === "recojo") {
       envioEsNumero = true; // envío = 0, pero sí entra en la base (no cambia nada)
     }
@@ -1046,11 +1053,14 @@ const NUMERO_WHATSAPP = "51978821080";
       mensaje += `Provincia: ${provinciaProvinciaTexto}\n`;
       mensaje += `Distrito: ${distritoProvinciaTexto}\n`;
       mensaje += `Agencia: ${agenciaTexto}\n`;
+      if (agencia === "Olva Courier") {
+        mensaje += `⚠️ OLVA COURIER: cotizar el costo del envío antes de coordinar el pago con el cliente.\n`;
+      }
     }
     if (tipoEntrega === "provincia") {
       mensaje += `\nPersonas autorizadas a recoger:\n`;
       listaDestinatarios.forEach(d => {
-        mensaje += `- ${d.nombre}${d.dni ? " - " + d.tipoDoc + " " + d.dni : ""} - ${d.celular}\n`;
+        mensaje += `- ${d.nombre}${d.dni ? " - " + d.tipoDoc + " " + d.dni : ""} - CEL ${d.celular}\n`;
       });
     } else {
       mensaje += esOtraPersona
