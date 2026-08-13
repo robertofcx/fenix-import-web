@@ -478,40 +478,13 @@ function main() {
       fs.writeFileSync(path.join(CARPETA_SALIDA, `${slug}.html`), html, "utf-8");
       archivosReales.add(slug);
 
-      // Stub de redirección en la ruta vieja por SKU (por si quedó algún link
-      // o localStorage de un cliente apuntando ahí de antes de este cambio).
-      // Para un grupo de variantes, cada color tenía su propia página antes
-      // de agruparse — así que TODAS sus SKU necesitan su propio stub, no
-      // solo la variante principal.
-      const urlNueva = `/producto/${slug}.html`;
-      const htmlRedireccion = (skuViejo) => `<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=${urlNueva}">
-<link rel="canonical" href="${URL_SITIO}${urlNueva}">
-<meta name="robots" content="noindex">
-<title>Redirigiendo…</title>
-</head>
-<body>
-<p>Este producto se movió. <a href="${urlNueva}">Haz clic aquí si no eres redirigido automáticamente</a>.</p>
-</body>
-</html>`;
-
-      const skusARedirigir = new Set();
-      if (slug !== producto.sku) skusARedirigir.add(producto.sku);
-      if (producto.esGrupo && Array.isArray(producto.variantes)) {
-        producto.variantes.forEach(v => {
-          if (v.sku && v.sku !== slug) skusARedirigir.add(v.sku);
-        });
-      }
-      skusARedirigir.forEach(skuViejo => {
-        if (archivosReales.has(skuViejo)) {
-          console.warn(`  ⚠ "${skuViejo}" es el slug de otra página real — no se generó su stub de redirección para evitar pisarla. Revisa si hay un SKU duplicado en el Sheet.`);
-          return;
-        }
-        fs.writeFileSync(path.join(CARPETA_SALIDA, `${skuViejo}.html`), htmlRedireccion(skuViejo), "utf-8");
-      });
+      // NOTA: antes acá se generaba un stub de redirección por cada SKU
+      // (/producto/HOG_278.html -> meta refresh al slug real), por si
+      // circulaban links viejos basados en código. Se quitó porque el
+      // sitio estuvo solo en desarrollo — nunca se compartió ni se generó
+      // ningún link real con SKU, así que no hay nada que proteger. Todo
+      // el código del sitio (buscador, catálogo, checkout, etc.) ya
+      // genera únicamente links con slug.
 
       generados++;
     } catch (err) {
