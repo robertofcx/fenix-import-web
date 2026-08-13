@@ -21,9 +21,9 @@
  *   2) node generar-productos.js
  *
  * CONFIGURA LA URL ANTES DE CORRER (ver bloque de abajo):
- *   - Mientras pruebas: deja la de onrender.com
- *   - Cuando migres el dominio: cambia a feniximportperu.com
- *     y vuelve a correr el script una vez más.
+ *   - Dominio real ya migrado: feniximportperu.com (por defecto)
+ *   - Si necesitas probar contra onrender.com puntualmente, corre:
+ *     URL_SITIO=https://fenix-import-peru.onrender.com node generar-productos.js
  * ------------------------------------------------------------
  */
 
@@ -31,7 +31,7 @@ const fs = require("fs");
 const path = require("path");
 
 // ==================== CONFIGURACIÓN ====================
-const URL_SITIO = process.env.URL_SITIO || "https://fenix-import-peru.onrender.com";
+const URL_SITIO = process.env.URL_SITIO || "https://feniximportperu.com";
 const RUTA_PRODUCTOS_JSON = path.join(__dirname, "productos.json");
 const CARPETA_SALIDA = path.join(__dirname, "producto");
 const RUTA_SITEMAP = path.join(__dirname, "sitemap.xml");
@@ -288,10 +288,7 @@ function generarHtmlProducto(producto, todosLosProductos) {
 <title>${nombreEscapado} — Fenix Import Perú</title>
 <meta name="description" content="${descripcionCorta}">
 <link rel="canonical" href="${url}">
-<link rel="icon" type="image/x-icon" href="/favicons/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+<link rel="icon" href="/logo.webp">
 
 <meta property="og:type" content="product">
 <meta property="og:title" content="${nombreEscapado} — Fenix Import Perú">
