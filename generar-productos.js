@@ -29,6 +29,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { optimizarImagenCloudinary } = require("./js/util.js");
 
 // ==================== CONFIGURACIÓN ====================
 const URL_SITIO = process.env.URL_SITIO || "https://feniximportperu.com";
@@ -110,7 +111,7 @@ function tarjetaFranja(p) {
   const nombre = escaparHtml(p.nombre);
   const slug = p.slug || generarSlugRespaldo(p.nombre);
   const imagenHtml = p.imagen
-    ? `<img src="${p.imagen}" alt="${nombre}" loading="lazy">`
+    ? `<img src="${optimizarImagenCloudinary(p.imagen, 'tarjeta')}" alt="${nombre}" loading="lazy">`
     : `<span class="sin-foto">Sin foto</span>`;
   const productoJson = encodeURIComponent(JSON.stringify({ sku: p.sku, slug: slug, nombre: p.nombre, precio: precio, imagen: p.imagen || "" }));
 
@@ -156,7 +157,7 @@ function generarGaleriaHtml(producto, nombreEscapado) {
     <div class="galeria-miniaturas" id="galeria-miniaturas">
       ${imagenes.map((url, i) => `
         <div class="miniatura ${i === 0 ? "activa" : ""}" data-indice="${i}" onclick="irAImagen(${i})">
-          <img src="${url}" alt="Vista ${i + 1}" loading="lazy">
+          <img src="${optimizarImagenCloudinary(url, 'miniatura')}" alt="Vista ${i + 1}" loading="lazy">
         </div>`).join("")}
     </div>` : "";
 
@@ -167,7 +168,7 @@ function generarGaleriaHtml(producto, nombreEscapado) {
         <button class="galeria-lupa" onclick="abrirLupa()" aria-label="Ampliar imagen">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
         </button>
-        <img id="imagen-principal" src="${imagenes[0]}" alt="${nombreEscapado}">
+        <img id="imagen-principal" src="${optimizarImagenCloudinary(imagenes[0], 'principal')}" alt="${nombreEscapado}">
       </div>
       ${miniaturas}
     </div>`;
@@ -316,6 +317,7 @@ function generarHtmlProducto(producto, todosLosProductos) {
 <body>
 
 <div id="header-placeholder"></div>
+<script src="/js/util.js"></script>
 <script src="/js/header.js"></script>
 
 <div class="fondo-carrito" id="fondo-carrito"></div>
@@ -346,7 +348,7 @@ function generarHtmlProducto(producto, todosLosProductos) {
         <div class="producto-variantes-swatches">
           ${producto.variantes.map((v, i) => `
             <button class="variante-swatch ${i === 0 ? "activo" : ""}" data-indice="${i}" title="${escaparHtml(v.color || "")}" aria-label="${escaparHtml(v.color || "")}">
-              ${v.imagen ? `<img src="${v.imagen}" alt="${escaparHtml(v.color || "")}">` : `<span class="variante-swatch-sin-foto"></span>`}
+              ${v.imagen ? `<img src="${optimizarImagenCloudinary(v.imagen, 'miniatura')}" alt="${escaparHtml(v.color || "")}">` : `<span class="variante-swatch-sin-foto"></span>`}
             </button>`).join("")}
         </div>
       </div>` : ""}
@@ -391,7 +393,6 @@ function generarHtmlProducto(producto, todosLosProductos) {
 </div>
 
 <script>window.PRODUCTO_ACTUAL = ${productoActualJs};</script>
-<script src="/js/util.js"></script>
 <script src="/js/carrito.js"></script>
 <script src="/js/producto.js"></script>
 </body>

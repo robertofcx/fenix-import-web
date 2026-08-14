@@ -4,6 +4,15 @@ const URL_SITIO = "https://fenix-import-peru.onrender.com";
 const POR_PAGINA = 24;
 let fuse = null;
 
+// Usa optimizarImagenCloudinary de util.js si esta página lo carga (recomendado
+// agregar <script src="/js/util.js"></script> antes de categoria.js); si no
+// está presente, devuelve la URL tal cual — no rompe nada, solo no optimiza.
+function _optImg(url, preset) {
+  return (typeof optimizarImagenCloudinary === "function")
+    ? optimizarImagenCloudinary(url, preset)
+    : url;
+}
+
 // #anio ya lo escribe footer.js al inyectar el footer
 
 const mensajeGenerico = "¡Hola Fenix Import Perú!\nMe gustaría más información sobre sus productos.";
@@ -119,7 +128,7 @@ function urlWhatsApp(producto) {
 function crearTarjeta(producto) {
   const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
   const imagenHtml = producto.imagen
-    ? `<img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">`
+    ? `<img src="${_optImg(producto.imagen, 'tarjeta')}" alt="${producto.nombre}" loading="lazy">`
     : `<span class="sin-foto">Sin foto</span>`;
   const badge = producto.oferta ? `<span class="badge-oferta">Oferta</span>` : "";
   const productoJson = encodeURIComponent(JSON.stringify({ sku: producto.sku, slug: producto.slug, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen }));
@@ -518,7 +527,7 @@ function renderizarCarrito() {
   elLista.innerHTML = carrito.map(item => {
     const precioUnit = extraerPrecioNumerico(item.precio);
     const imagenHtml = item.imagen
-      ? `<img src="${item.imagen}" alt="${item.nombre}">`
+      ? `<img src="${_optImg(item.imagen, 'miniatura')}" alt="${item.nombre}">`
       : "";
 
     return `

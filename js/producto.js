@@ -131,7 +131,7 @@ function renderizarGaleriaVariante(variante) {
     <div class="galeria-miniaturas" id="galeria-miniaturas">
       ${imagenes.map((url, i) => `
         <div class="miniatura ${i === 0 ? "activa" : ""}" data-indice="${i}" onclick="irAImagen(${i})">
-          <img src="${url}" alt="Vista ${i + 1}" loading="lazy">
+          <img src="${optimizarImagenCloudinary(url, 'miniatura')}" alt="Vista ${i + 1}" loading="lazy">
         </div>`).join("")}
     </div>` : "";
 
@@ -141,7 +141,7 @@ function renderizarGaleriaVariante(variante) {
       <button class="galeria-lupa" onclick="abrirLupa()" aria-label="Ampliar imagen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
       </button>
-      <img id="imagen-principal" src="${imagenes[0]}" alt="">
+      <img id="imagen-principal" src="${optimizarImagenCloudinary(imagenes[0], 'principal')}" alt="">
     </div>
     ${miniaturas}
   `;
@@ -178,7 +178,7 @@ function renderizarVistos(skuActual) {
     const precio = Number(String(p.precio).replace(/[^0-9.]/g, "")).toFixed(2);
     const slug = p.slug || p.sku;
     const imagenHtml = p.imagen
-      ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`
+      ? `<img src="${optimizarImagenCloudinary(p.imagen, 'tarjeta')}" alt="${p.nombre}" loading="lazy">`
       : `<span class="sin-foto">Sin foto</span>`;
     const productoJson = encodeURIComponent(JSON.stringify({ sku: p.sku, slug: slug, nombre: p.nombre, precio: p.precio, imagen: p.imagen || "" }));
     return `
@@ -198,7 +198,7 @@ function renderizarVistos(skuActual) {
 function irAImagen(indice) {
   indiceImagenActual = indice;
   const imgPrincipal = document.getElementById("imagen-principal");
-  if (imgPrincipal) imgPrincipal.src = imagenesProductoActual[indice];
+  if (imgPrincipal) imgPrincipal.src = optimizarImagenCloudinary(imagenesProductoActual[indice], 'principal');
 
   const contador = document.getElementById("galeria-contador");
   if (contador) contador.textContent = `${indice + 1} / ${imagenesProductoActual.length}`;
@@ -207,7 +207,7 @@ function irAImagen(indice) {
 
   const modal = document.getElementById("modal-zoom-fondo");
   if (modal && modal.classList.contains("abierto")) {
-    document.getElementById("modal-zoom-imagen").src = imagenesProductoActual[indice];
+    document.getElementById("modal-zoom-imagen").src = optimizarImagenCloudinary(imagenesProductoActual[indice], 'zoom');
     actualizarContadorModal();
   }
 }
@@ -242,7 +242,7 @@ function actualizarContadorModal() {
 
 function abrirLupa() {
   if (imagenesProductoActual.length === 0) return;
-  document.getElementById("modal-zoom-imagen").src = imagenesProductoActual[indiceImagenActual];
+  document.getElementById("modal-zoom-imagen").src = optimizarImagenCloudinary(imagenesProductoActual[indiceImagenActual], 'zoom');
   actualizarContadorModal();
   document.getElementById("modal-zoom-fondo").classList.add("abierto");
   document.body.style.overflow = "hidden";
@@ -256,7 +256,7 @@ function cerrarLupa() {
 
 function cambiarImagenModal(delta) {
   cambiarImagen(delta);
-  document.getElementById("modal-zoom-imagen").src = imagenesProductoActual[indiceImagenActual];
+  document.getElementById("modal-zoom-imagen").src = optimizarImagenCloudinary(imagenesProductoActual[indiceImagenActual], 'zoom');
   actualizarContadorModal();
 }
 

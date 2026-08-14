@@ -4,6 +4,17 @@ const RUTA_PRODUCTOS = "productos.json";
     let catalogoCompleto = null;
     let fuse = null;
 
+    // index.html hoy no carga util.js, así que app.js no puede depender de
+    // que optimizarImagenCloudinary exista. Este guard usa la versión de
+    // util.js si está disponible; si no, devuelve la URL tal cual (sin
+    // romper nada, solo sin optimizar). Recomendado: agregar
+    // <script src="/js/util.js"></script> antes de app.js en index.html.
+    function _optImg(url, preset) {
+      return (typeof optimizarImagenCloudinary === "function")
+        ? optimizarImagenCloudinary(url, preset)
+        : url;
+    }
+
     // #anio ya lo escribe footer.js al inyectar el footer
 
     const mensajeWhatsApp = "¡Hola Fenix Import Perú!\nMe gustaría más información sobre sus productos.";
@@ -71,7 +82,7 @@ const RUTA_PRODUCTOS = "productos.json";
       const tarjetas = muestra.map(p => {
         const precio = Number(String(p.precio).replace(/[^0-9.]/g, "")).toFixed(2);
         const imagenHtml = p.imagen
-          ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`
+          ? `<img src="${_optImg(p.imagen, 'tarjeta')}" alt="${p.nombre}" loading="lazy">`
           : `<span class="sin-foto">Sin foto</span>`;
         const badge = p.oferta ? `<span class="vitrina-badge-oferta">Oferta</span>` : "";
 
@@ -153,7 +164,7 @@ const RUTA_PRODUCTOS = "productos.json";
       elLista.innerHTML = carrito.map(item => {
         const precioUnit = extraerPrecioNumerico(item.precio);
         const imagenHtml = item.imagen
-          ? `<img src="${item.imagen}" alt="${item.nombre}">`
+          ? `<img src="${_optImg(item.imagen, 'miniatura')}" alt="${item.nombre}">`
           : "";
 
         return `

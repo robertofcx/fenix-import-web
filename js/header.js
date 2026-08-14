@@ -44,6 +44,17 @@
   const NUMERO_WHATSAPP = "51978821080";
   const CARRITO_KEY = "fenix_carrito";
 
+  // header.js se ejecuta ANTES que util.js en todas las páginas (así lo
+  // requiere su propio comentario de carga), así que no puede depender de
+  // que optimizarImagenCloudinary ya exista. Este guard usa la versión de
+  // util.js si para cuando se llama (al buscar en vivo, ya con el usuario
+  // interactuando) ya cargó; si no, devuelve la URL tal cual sin romper nada.
+  function _optImg(url, preset) {
+    return (typeof optimizarImagenCloudinary === "function")
+      ? optimizarImagenCloudinary(url, preset)
+      : url;
+  }
+
   const HEADER_HTML = `
 <header>
   <div class="header-fila">
@@ -324,7 +335,7 @@
     const filas = productos.map(p => {
       const precio = Number(String(p.precio).replace(/[^0-9.]/g, "")).toFixed(2);
       const imagenHtml = p.imagen
-        ? `<img src="${p.imagen}" alt="${p.nombre}">`
+        ? `<img src="${_optImg(p.imagen, 'miniatura')}" alt="${p.nombre}">`
         : `<span class="sin-foto">Sin foto</span>`;
       const ofertaHtml = p.oferta ? `<span class="resultado-badge-oferta">Oferta</span>` : "";
 
