@@ -16,7 +16,7 @@ main { max-width:1000px; margin:0 auto; padding:20px; }
 
 @media (min-width:760px) { .producto-layout { grid-template-columns:1fr 1fr; gap:40px; } }
 
-.producto-galeria { max-width: 420px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+.producto-galeria { max-width: 420px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; box-sizing: border-box; }
 
 .producto-img {
   background: var(--bg-elevada);
@@ -29,9 +29,10 @@ main { max-width:1000px; margin:0 auto; padding:20px; }
   overflow: hidden;
   position: relative;
   touch-action: pan-y;
+  box-sizing: border-box;
 }
 
-.producto-img img { width: 100%; height: 100%; object-fit: contain; padding: 18px; user-select: none; -webkit-user-drag: none; }
+.producto-img img { width: 100%; height: 100%; object-fit: contain; padding: 18px; user-select: none; -webkit-user-drag: none; box-sizing: border-box; }
 
 .producto-img .sin-foto { color: var(--texto-muted); font-size: 0.85rem; font-family: 'IBM Plex Mono', monospace; }
 
@@ -72,9 +73,9 @@ main { max-width:1000px; margin:0 auto; padding:20px; }
 
 .galeria-miniaturas { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
 
-.miniatura { flex-shrink: 0; width: 56px; height: 56px; border-radius: 10px; background: var(--bg-elevada); border: 2px solid transparent; cursor: pointer; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.miniatura { flex-shrink: 0; width: 56px; height: 56px; border-radius: 10px; background: var(--bg-elevada); border: 2px solid transparent; cursor: pointer; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
 
-.miniatura img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+.miniatura img { width: 100%; height: 100%; object-fit: contain; padding: 4px; box-sizing: border-box; }
 
 .miniatura.activa { border-color: var(--azul); }
 
@@ -102,23 +103,33 @@ main { max-width:1000px; margin:0 auto; padding:20px; }
 
 .producto-categoria { font-family:'IBM Plex Mono', monospace; font-size:.72rem; text-transform:uppercase; color: var(--ember); margin:0 0 8px; }
 
-.producto-nombre { font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:clamp(1.6rem,4vw,2.2rem); margin:0 0 14px; }
+.producto-nombre { font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:clamp(1.6rem,4vw,2.2rem); margin:0 0 14px; overflow-wrap: break-word; word-break: break-word; }
 
 .producto-precio { font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:2.4rem; margin:0 0 16px; }
 
 .producto-meta { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
 
-.producto-meta span { font-family:'IBM Plex Mono', monospace; font-size:.75rem; color: var(--texto-muted); background: var(--bg-elevada); border:1px solid var(--linea); border-radius:8px; padding:6px 12px; }
+.producto-meta span { font-family:'IBM Plex Mono', monospace; font-size:.75rem; color: var(--texto-muted); background: var(--bg-elevada); border:1px solid var(--linea); border-radius:8px; padding:6px 12px; box-sizing: border-box; }
 
-.btn-agregar-carrito-producto { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background: var(--azul); color: var(--texto-sobre-azul); border:none; font-weight:700; font-size:1rem; padding:15px; border-radius:12px; cursor:pointer; margin-bottom:10px; }
+/* ------------------------------------------------------------
+   FIX (desborde horizontal en móvil): este botón usa width:100%
+   junto con padding. Sin box-sizing:border-box, el padding se
+   suma POR FUERA del 100% (comportamiento por defecto de CSS),
+   así que el botón terminaba midiendo 100% + 30px y empujaba
+   toda la página hacia la derecha, forzando scroll horizontal
+   en cada ficha de producto. Con border-box, el padding queda
+   incluido DENTRO del 100% — el botón ya no se pasa del ancho
+   del contenedor.
+   ------------------------------------------------------------ */
+.btn-agregar-carrito-producto { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background: var(--azul); color: var(--texto-sobre-azul); border:none; font-weight:700; font-size:1rem; padding:15px; border-radius:12px; cursor:pointer; margin-bottom:10px; box-sizing: border-box; }
 
-.btn-whatsapp-producto { display:flex; align-items:center; justify-content:center; gap:10px; background: var(--whatsapp); color:#0d1f13; font-weight:700; font-size:1.02rem; padding:16px; border-radius:12px; margin-bottom:10px; }
+.btn-whatsapp-producto { display:flex; align-items:center; justify-content:center; gap:10px; background: var(--whatsapp); color:#0d1f13; font-weight:700; font-size:1.02rem; padding:16px; border-radius:12px; margin-bottom:10px; box-sizing: border-box; }
 
 .nota-entrega { font-size:.78rem; color: var(--texto-muted); text-align:center; }
 
 .producto-seccion-titulo { font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:1.15rem; margin:0 0 10px; padding-top:20px; border-top:1px solid var(--linea); }
 
-.producto-seccion-texto { font-size:.92rem; line-height:1.7; color: var(--texto-muted); white-space:pre-line; }
+.producto-seccion-texto { font-size:.92rem; line-height:1.7; color: var(--texto-muted); white-space:pre-line; overflow-wrap: break-word; }
 
 /* El footer ya vive en footer.css */
 
@@ -147,11 +158,12 @@ main { max-width:1000px; margin:0 auto; padding:20px; }
   flex: 0 0 150px; background: var(--bg-elevada); border: 1px solid var(--linea);
   border-radius: 14px; overflow: hidden; display: flex; flex-direction: column;
   transition: border-color 0.15s ease, transform 0.15s ease;
+  box-sizing: border-box;
 }
 .franja-tarjeta:hover { border-color: var(--azul); transform: translateY(-2px); }
 
 .franja-tarjeta-img { aspect-ratio: 1; background: var(--bg); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.franja-tarjeta-img img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
+.franja-tarjeta-img img { width: 100%; height: 100%; object-fit: contain; padding: 10px; box-sizing: border-box; }
 .franja-tarjeta-img .sin-foto { color: var(--texto-muted); font-size: 0.65rem; font-family: 'IBM Plex Mono', monospace; }
 
 .franja-tarjeta-nombre {
@@ -165,6 +177,7 @@ main { max-width:1000px; margin:0 auto; padding:20px; }
   margin: 0 10px 10px; background: var(--azul); color: var(--texto-sobre-azul); border: none;
   font-size: 0.75rem; font-weight: 600; padding: 8px; border-radius: 8px; cursor: pointer;
   transition: background 0.15s ease;
+  box-sizing: border-box;
 }
 .franja-tarjeta-agregar:hover { background: var(--azul-hover); }
 
@@ -184,6 +197,7 @@ main { max-width:1000px; margin:0 auto; padding:20px; }
   background: var(--bg-elevada); border: 2px solid var(--linea);
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   overflow: hidden; transition: border-color 0.15s ease;
+  box-sizing: border-box;
 }
 .variante-swatch:hover { border-color: var(--azul-hover); }
 .variante-swatch.activo { border-color: var(--azul); }
