@@ -40,6 +40,19 @@ document.addEventListener("DOMContentLoaded", () => {
   if (window.PRODUCTO_ACTUAL && window.PRODUCTO_ACTUAL.variantes && window.PRODUCTO_ACTUAL.variantes.length > 0) {
     inicializarVariantes();
   }
+
+  // ---------- Precio en vivo ----------
+  // El precio que viene "horneado" en este HTML es una foto del momento en
+  // que se generó la página (con generar-productos.js). Si el precio
+  // cambió en productos.json DESPUÉS de ese momento y todavía no se
+  // regeneró/redesplegó el sitio, este HTML quedaría mostrando un precio
+  // viejo — igual que le pasaba a esta ficha con HER_075. Para que la
+  // ficha SIEMPRE muestre el precio actual (igual que ya hace el
+  // buscador, que lee productos.json en vivo), se vuelve a consultar acá
+  // y se corrige tanto lo que se ve en pantalla como el mensaje de
+  // WhatsApp — y también window.PRODUCTO_ACTUAL, que es lo que usa
+  // carrito.js al agregar este producto al pedido.
+  sincronizarPrecioEnVivo();
 });
 
 // ==================== VARIANTES (SELECTOR DE COLOR) ====================
@@ -93,6 +106,87 @@ function obtenerVarianteActiva() {
   const variantes = window.PRODUCTO_ACTUAL && window.PRODUCTO_ACTUAL.variantes;
   if (variantes && variantes.length > 0) return variantes[varianteActivaIndice];
   return null;
+}
+
+// ==================== PRECIO EN VIVO ====================
+
+/**
+ * Consulta precios.json — un mapa liviano { SKU: "precio" } generado
+ * por generar-productos.js junto al sitemap, que solo trae precios
+ * (no descripciones, imágenes ni el resto de productos.json, que pesa
+ * mucho más). Si encuentra este SKU, corrige window.PRODUCTO_ACTUAL
+ * con el precio actual — tanto el precio base como el de cada
+ * variante, si las hay. Después de corregir los datos, refresca lo
+ * que se ve en pantalla (precio + botón de WhatsApp) para la
+ * selección actual.
+ *
+ * Si la consulta falla (sin internet, JSON no disponible, etc.) no se
+ * hace nada: la ficha se queda con el precio que ya trajo el HTML — no
+ * es ideal, pero tampoco se rompe ni se le muestra un error al cliente
+ * por esto.
+ */
+async function sincronizarPrecioEnVivo() {
+  if (!window.PRODUCTO_ACTUAL || !window.PRODUCTO_ACTUAL.sku) return;
+
+  try {
+    // cache:"no-store" para no arrastrar una copia vieja del JSON desde
+    // el caché del navegador — queremos el precio real de este momento.
+    const respuesta = await fetch("/precios.json", { cache: "no-store" });
+    if (!respuesta.ok) return;
+    const precios = await respuesta.json();
+
+    // Si ya no aparece (se dio de baja, por ejemplo), no tocamos nada.
+    if (precios[window.PRODUCTO_ACTUAL.sku] === undefined) return;
+
+    window.PRODUCTO_ACTUAL.precio = precios[window.PRODUCTO_ACTUAL.sku];
+
+    if (window.PRODUCTO_ACTUAL.variantes) {
+      window.PRODUCTO_ACTUAL.variantes.forEach(variante => {
+        if (precios[variante.sku] !== undefined) {
+          variante.precio = precios[variante.sku];
+        }
+      });
+    }
+
+    actualizarPrecioYWhatsAppMostrados();
+  } catch (error) {
+    console.error("No se pudo sincronizar el precio en vivo:", error);
+  }
+}
+
+/**
+ * Redibuja el precio y el link de WhatsApp para lo que esté seleccionado
+ * en este momento (variante elegida, o el producto base si no tiene
+ * variantes) — usando lo que haya en window.PRODUCTO_ACTUAL, que para
+ * este punto ya viene corregido por sincronizarPrecioEnVivo(). A
+ * diferencia de seleccionarVariante(), esta función NO reconstruye la
+ * galería de imágenes — solo toca precio y WhatsApp, así no hay parpadeo
+ * ni recarga de fotos por algo que no cambió.
+ */
+function actualizarPrecioYWhatsAppMostrados() {
+  const variantes = window.PRODUCTO_ACTUAL.variantes;
+
+  if (variantes && variantes.length > 0) {
+    const variante = variantes[varianteActivaIndice];
+    if (!variante) return;
+
+    const precio = Number(String(variante.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+    const elPrecio = document.getElementById("producto-precio");
+    if (elPrecio) elPrecio.textContent = "S/ " + precio;
+
+    actualizarWhatsAppVariante(variante);
+    return;
+  }
+
+  const precio = Number(String(window.PRODUCTO_ACTUAL.precio).replace(/[^0-9.]/g, "")).toFixed(2);
+  const elPrecio = document.getElementById("producto-precio");
+  if (elPrecio) elPrecio.textContent = "S/ " + precio;
+
+  const elBoton = document.getElementById("btn-whatsapp-producto");
+  if (elBoton) {
+    const mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${window.PRODUCTO_ACTUAL.nombre}\nPrecio: S/ ${precio}\nSKU: ${window.PRODUCTO_ACTUAL.sku}\n${window.location.href}`;
+    elBoton.href = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
+  }
 }
 
 /**
