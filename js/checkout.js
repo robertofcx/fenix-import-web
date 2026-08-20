@@ -1275,40 +1275,40 @@ const NUMERO_WHATSAPP = "51978821080";
 
     // Aviso de WhatsApp: cambia según si se pudo abrir automáticamente o no.
     const avisoWhatsAppHtml = whatsAppAbierto
-      ? `<div class="aviso-cita-previa" style="border-color:#22c55e33; background:#22c55e11;">
+      ? `<div class="aviso-confirmacion exito">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
           <span>Se abrió WhatsApp en otra pestaña con tu pedido listo para enviar. Si no la ves, usa el botón de abajo.</span>
         </div>`
-      : `<div class="aviso-cita-previa" style="border-color:#f59e0b33; background:#f59e0b11;">
+      : `<div class="aviso-confirmacion alerta">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           <span>Tu navegador bloqueó la ventana de WhatsApp. No te preocupes — tu pedido igual quedó guardado. Toca el botón verde para abrirlo manualmente.</span>
         </div>`;
 
     const avisoSheetHtml = sheetGuardado
-      ? `<p style="font-size:0.78rem; color:var(--texto-muted); text-align:center; margin:4px 0 0;">✓ Pedido registrado en nuestro sistema${correoComprador ? " · copia enviada a " + correoComprador : ""}</p>`
-      : `<p style="font-size:0.78rem; color:#f59e0b; text-align:center; margin:4px 0 0;">⚠ No pudimos confirmar el registro automático — de igual forma, envía el mensaje por WhatsApp y quedará registrado por ahí.</p>`;
+      ? `<p class="nota-confirmacion">✓ Pedido registrado en nuestro sistema${correoComprador ? " · copia enviada a " + correoComprador : ""}</p>`
+      : `<p class="nota-confirmacion alerta">⚠ No pudimos confirmar el registro automático — de igual forma, envía el mensaje por WhatsApp y quedará registrado por ahí.</p>`;
 
     // Si el cliente ya dejó su correo, el aviso de "copia enviada" de arriba
     // ya cubre eso — el botón manual queda como respaldo extra por si ese
     // correo automático no llega (carpeta de spam, etc.) o quiere mandarlo
     // a otra dirección distinta.
-    const textoBotonCorreo = correoComprador ? "✉️ Reenviar copia por correo" : "✉️ Enviarme copia";
+    const textoBotonCorreo = correoComprador ? "Reenviar copia por correo" : "Enviarme copia";
 
     document.getElementById("main-contenido").innerHTML = `
-      <div class="tarjeta-confirmacion" id="tarjeta-confirmacion" style="grid-column: 1 / -1; max-width:520px; margin:0 auto;">
-        <div class="estado-vacio" style="padding-bottom:6px;">
-          <div class="icono">✅</div>
-          <p style="font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:1.4rem; color:var(--texto); margin:0 0 6px;">¡Pedido enviado!</p>
-          <p style="margin:0;">N° de pedido: <strong style="color:var(--texto);">${idPedido}</strong></p>
+      <div class="tarjeta-confirmacion" id="tarjeta-confirmacion">
+        <div class="confirmacion-cabecera">
+          <div class="icono-exito-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <p class="confirmacion-titulo">¡Pedido enviado!</p>
+          <p class="confirmacion-subtitulo">N° de pedido: <strong>${idPedido}</strong></p>
         </div>
 
         ${avisoWhatsAppHtml}
 
         <div class="resumen" style="margin-top:16px;">
           <p class="resumen-titulo">Resumen de tu pedido</p>
-          <p style="font-size:0.82rem; color:var(--texto-muted); margin:-6px 0 12px;">
-            ${etiquetaEntrega} · ${nombre} · ${celularComprador}
-          </p>
+          <p class="confirmacion-meta">${etiquetaEntrega} · ${nombre} · ${celularComprador}</p>
           <div id="confirmacion-items">${itemsHtml}</div>
           <div class="resumen-linea"><span>Subtotal</span><span>S/ ${subtotal.toFixed(2)}</span></div>
           ${conComprobante ? `<div class="resumen-linea"><span>IGV (18%)</span><span>S/ ${igv.toFixed(2)}</span></div>` : ""}
@@ -1321,18 +1321,27 @@ const NUMERO_WHATSAPP = "51978821080";
           Abrir / reenviar por WhatsApp
         </button>
 
-        <div style="display:flex; gap:10px; margin-top:10px;">
-          <button class="btn-gps" id="btn-copiar-resumen" style="flex:1;">📋 Copiar resumen</button>
-          <button class="btn-gps" id="btn-correo-resumen" style="flex:1;">${textoBotonCorreo}</button>
+        <div class="fila-botones-respaldo">
+          <button class="btn-respaldo-checkout" id="btn-copiar-resumen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar resumen
+          </button>
+          <button class="btn-respaldo-checkout" id="btn-correo-resumen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+            ${textoBotonCorreo}
+          </button>
+        </div>
+
+        <div class="aviso-confirmacion alerta" id="aviso-correo-fallback" style="display:none; margin-top:10px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>No detectamos ninguna app de correo configurada en este dispositivo. Usa "Copiar resumen" y pégalo donde prefieras (correo, notas, etc.).</span>
         </div>
 
         ${avisoSheetHtml}
 
-        <p style="font-size:0.78rem; color:var(--texto-muted); text-align:center; margin:10px 0 0;">
-          💡 También puedes tomar una captura de pantalla de este resumen como respaldo.
-        </p>
+        <p class="nota-confirmacion">💡 También puedes tomar una captura de pantalla de este resumen como respaldo.</p>
 
-        <a href="catalogo.html" style="display:block; text-align:center; margin-top:18px;">Seguir viendo el catálogo →</a>
+        <a href="catalogo.html" class="link-seguir-catalogo">Seguir viendo el catálogo →</a>
       </div>
     `;
 
@@ -1397,7 +1406,30 @@ const NUMERO_WHATSAPP = "51978821080";
     const cuerpo = mensaje + "\n\n(Copia de tu pedido — guárdala como respaldo)";
     const destino = correoDestino ? encodeURIComponent(correoDestino) : "";
     const mailto = `mailto:${destino}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+
+    // No hay forma 100% confiable de saber si el sistema operativo abrió
+    // una app de correo o no (los navegadores no lo informan). Como
+    // heurística: si el usuario NO cambió de pestaña/app en ~1.2s, lo más
+    // probable es que no había ninguna app de correo configurada por
+    // defecto — en ese caso avisamos y sugerimos usar "Copiar resumen"
+    // en su lugar, en vez de dejar al cliente sin ninguna señal.
+    const yaEstabaOculto = document.visibilityState === "hidden";
     window.location.href = mailto;
+    if (!yaEstabaOculto) {
+      setTimeout(() => {
+        if (document.visibilityState === "visible") {
+          mostrarAvisoCorreoNoDisponible();
+        }
+      }, 1200);
+    }
+  }
+
+  function mostrarAvisoCorreoNoDisponible() {
+    const contenedor = document.getElementById("aviso-correo-fallback");
+    if (contenedor) {
+      contenedor.style.display = "block";
+      contenedor.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   }
   // ---------- Carga inicial ----------
   async function iniciar() {
