@@ -230,6 +230,12 @@ const NUMERO_WHATSAPP = "51978821080";
             <p style="font-size:0.72rem; color:var(--texto-muted); margin:5px 0 0;">¿Número de otro país? Escríbelo con "+" y tu código (ej. +1 555...)</p>
             <p class="campo-error">Ingresa un celular válido (9 dígitos, ej. 987654321)</p>
           </div>
+          <div class="campo" id="campo-correo-comprador" style="margin-top:14px;">
+            <label>Correo <span class="opcional">(opcional)</span></label>
+            <input type="email" id="input-correo-comprador" placeholder="tucorreo@ejemplo.com">
+            <p style="font-size:0.72rem; color:var(--texto-muted); margin:5px 0 0;">Si lo dejas, te mandamos una copia del pedido apenas lo envíes.</p>
+            <p class="campo-error">Ingresa un correo válido</p>
+          </div>
         </div>
         <div class="seccion-form" id="seccion-contacto-general">
           <p class="seccion-form-titulo">¿Quién recibe el pedido?</p>
@@ -690,7 +696,7 @@ const NUMERO_WHATSAPP = "51978821080";
   }
   // ---------- Guardar/restaurar el formulario (para no perder datos si el cliente va al carrito) ----------
   const CAMPOS_TEXTO_A_GUARDAR = [
-    "input-nombre", "input-dni-comprador", "input-celular-comprador",
+    "input-nombre", "input-dni-comprador", "input-celular-comprador", "input-correo-comprador",
     "input-contacto1-nombre", "input-contacto1-telefono",
     "input-destinatario1-nombre", "input-destinatario1-dni", "input-destinatario1-celular",
     "input-destinatario2-nombre", "input-destinatario2-dni", "input-destinatario2-celular",
@@ -805,6 +811,15 @@ const NUMERO_WHATSAPP = "51978821080";
     const celularCompradorValido = esCelularValido(celularComprador);
     marcarError("campo-celular-comprador", !celularCompradorValido);
     if (!celularCompradorValido) valido = false;
+    // El correo es opcional — solo se valida el formato si el cliente escribió algo
+    const correoComprador = document.getElementById("input-correo-comprador").value.trim();
+    if (correoComprador) {
+      const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoComprador);
+      marcarError("campo-correo-comprador", !correoValido);
+      if (!correoValido) valido = false;
+    } else {
+      marcarError("campo-correo-comprador", false);
+    }
     const conComprobante = document.querySelector('input[name="comprobante"]:checked').value === "con_comprobante";
     if (conComprobante) {
       const numeroDoc = document.getElementById("input-numero-documento").value.trim();
@@ -915,9 +930,26 @@ const NUMERO_WHATSAPP = "51978821080";
       document.querySelector(".con-error")?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
+
+    // ---------- Abrir la ventana de WhatsApp YA, en blanco ----------
+    // Safari/iOS y varios navegadores in-app (Instagram, Facebook, TikTok)
+    // solo permiten window.open() si ocurre de forma síncrona dentro del
+    // mismo clic del usuario. Como más abajo hacemos `await` (registro en
+    // el Sheet), si abriéramos la ventana después de eso el navegador ya
+    // no lo reconoce como "iniciado por el usuario" y la bloquea. Por eso
+    // la abrimos en blanco ACÁ MISMO, y recién le asignamos la URL real
+    // de WhatsApp más abajo, cuando el mensaje ya está armado.
+    let ventanaWhatsApp = null;
+    try {
+      ventanaWhatsApp = window.open("", "_blank");
+    } catch (e) {
+      ventanaWhatsApp = null;
+    }
+
     const carrito = obtenerCarrito();
     const nombre = document.getElementById("input-nombre").value.trim();
     const celularComprador = document.getElementById("input-celular-comprador").value.trim();
+    const correoComprador = document.getElementById("input-correo-comprador").value.trim();
     const conComprobante = document.querySelector('input[name="comprobante"]:checked').value === "con_comprobante";
     const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked').value;
     const esOtraPersona = document.querySelector('input[name="quienRecibe"]:checked').value === "otra_persona";
@@ -1145,6 +1177,8 @@ const NUMERO_WHATSAPP = "51978821080";
       costoDelivery: tipoEntrega === "lima" ? costoDeliveryConIgv : 0,
       montoTotal: Number(total.toFixed(2)),
       notas: notasParaSheet,
+      correo: correoComprador,       // opcional — si viene, el Sheet le manda copia por correo
+      mensajeResumen: mensaje,       // mismo texto del WhatsApp, reutilizado como cuerpo del correo
       items: carrito.map(item => ({
         codigo: item.sku,
         nombre: item.nombre,
@@ -1157,23 +1191,213 @@ const NUMERO_WHATSAPP = "51978821080";
     elBotonEnviar.style.opacity = "0.7";
     const textoOriginalBoton = elBotonEnviar.innerHTML;
     elBotonEnviar.innerHTML = "Enviando pedido...";
-    await registrarPedidoEnSheet(datosPedido);
-    window.open("https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje), "_blank");
+
+    const resultadoSheet = await registrarPedidoEnSheet(datosPedido);
+    const sheetGuardado = !!(resultadoSheet && resultadoSheet.exito);
+
+    const urlWhatsApp = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
+
+    // Usamos la ventana que abrimos en blanco al inicio del clic. Si por lo
+    // que sea no se pudo abrir entonces (bloqueador de pop-ups agresivo,
+    // navegador in-app, etc.), intentamos una segunda vez acá — a veces
+    // funciona igual porque seguimos dentro del mismo gesto async del botón.
+    let whatsAppAbierto = false;
+    if (ventanaWhatsApp && !ventanaWhatsApp.closed) {
+      try {
+        ventanaWhatsApp.location.href = urlWhatsApp;
+        whatsAppAbierto = true;
+      } catch (e) {
+        whatsAppAbierto = false;
+      }
+    }
+    if (!whatsAppAbierto) {
+      try {
+        const intento2 = window.open(urlWhatsApp, "_blank");
+        whatsAppAbierto = !!intento2;
+      } catch (e) {
+        whatsAppAbierto = false;
+      }
+    }
+
     guardarCarrito([]);
     actualizarBadgeCarrito();
     limpiarDatosFormularioGuardados();
-    mostrarPantallaConcluido(idPedido);
+
+    mostrarPantallaConcluido({
+      idPedido,
+      mensaje,
+      urlWhatsApp,
+      whatsAppAbierto,
+      sheetGuardado,
+      carrito,
+      subtotal,
+      igv,
+      total,
+      conComprobante,
+      envioTexto,
+      tipoEntrega,
+      nombre,
+      celularComprador,
+      correoComprador
+    });
   }
-  function mostrarPantallaConcluido(idPedido) {
+
+  // ---------- Pantalla final: resumen completo + reenvío + respaldos ----------
+  // El objetivo es que el cliente SIEMPRE se quede con la información de su
+  // pedido en pantalla — no solo el N° de pedido — sin importar si el popup
+  // de WhatsApp se abrió bien, se bloqueó, o si el navegador es raro. Desde
+  // acá puede: reintentar abrir WhatsApp, copiar el mensaje al portapapeles,
+  // mandárselo a su correo, o simplemente hacer captura de pantalla.
+  function mostrarPantallaConcluido(datos) {
+    const {
+      idPedido, mensaje, urlWhatsApp, whatsAppAbierto, sheetGuardado,
+      carrito, subtotal, igv, total, conComprobante, envioTexto,
+      tipoEntrega, nombre, celularComprador, correoComprador
+    } = datos;
+
+    const etiquetaEntrega = tipoEntrega === "recojo" ? "Recojo en almacén"
+      : tipoEntrega === "lima" ? "Delivery en Lima"
+      : "Envío a provincia";
+
+    const itemsHtml = carrito.map(item => {
+      const precioUnit = extraerPrecioNumerico(item.precio) * (conComprobante ? 1.18 : 1);
+      const imagenHtml = item.imagen ? `<img src="${item.imagen}" alt="${item.nombre}">` : "";
+      return `
+        <div class="resumen-item">
+          <div class="resumen-item-img">${imagenHtml}</div>
+          <div class="resumen-item-info">
+            <p class="resumen-item-nombre">${item.nombre}</p>
+            <p class="resumen-item-meta">${item.cantidad} × S/ ${precioUnit.toFixed(2)}</p>
+          </div>
+          <p class="resumen-item-subtotal">S/ ${(precioUnit * item.cantidad).toFixed(2)}</p>
+        </div>`;
+    }).join("");
+
+    // Aviso de WhatsApp: cambia según si se pudo abrir automáticamente o no.
+    const avisoWhatsAppHtml = whatsAppAbierto
+      ? `<div class="aviso-cita-previa" style="border-color:#22c55e33; background:#22c55e11;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Se abrió WhatsApp en otra pestaña con tu pedido listo para enviar. Si no la ves, usa el botón de abajo.</span>
+        </div>`
+      : `<div class="aviso-cita-previa" style="border-color:#f59e0b33; background:#f59e0b11;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>Tu navegador bloqueó la ventana de WhatsApp. No te preocupes — tu pedido igual quedó guardado. Toca el botón verde para abrirlo manualmente.</span>
+        </div>`;
+
+    const avisoSheetHtml = sheetGuardado
+      ? `<p style="font-size:0.78rem; color:var(--texto-muted); text-align:center; margin:4px 0 0;">✓ Pedido registrado en nuestro sistema${correoComprador ? " · copia enviada a " + correoComprador : ""}</p>`
+      : `<p style="font-size:0.78rem; color:#f59e0b; text-align:center; margin:4px 0 0;">⚠ No pudimos confirmar el registro automático — de igual forma, envía el mensaje por WhatsApp y quedará registrado por ahí.</p>`;
+
+    // Si el cliente ya dejó su correo, el aviso de "copia enviada" de arriba
+    // ya cubre eso — el botón manual queda como respaldo extra por si ese
+    // correo automático no llega (carpeta de spam, etc.) o quiere mandarlo
+    // a otra dirección distinta.
+    const textoBotonCorreo = correoComprador ? "✉️ Reenviar copia por correo" : "✉️ Enviarme copia";
+
     document.getElementById("main-contenido").innerHTML = `
-      <div class="estado-vacio" style="grid-column: 1 / -1;">
-        <div class="icono">✅</div>
-        <p style="font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:1.4rem; color:var(--texto); margin:0 0 10px;">¡Pedido enviado!</p>
-        <p style="margin:0 0 6px;">N° de pedido: <strong style="color:var(--texto);">${idPedido}</strong></p>
-        <p style="max-width:380px; margin:0 auto 20px;">Gracias por tu compra. La atención continúa por WhatsApp — ahí un asesor va a confirmar tu pedido y coordinar los siguientes pasos.</p>
-        <a href="catalogo.html" style="display:inline-block; margin-top:10px;">Seguir viendo el catálogo →</a>
+      <div class="tarjeta-confirmacion" id="tarjeta-confirmacion" style="grid-column: 1 / -1; max-width:520px; margin:0 auto;">
+        <div class="estado-vacio" style="padding-bottom:6px;">
+          <div class="icono">✅</div>
+          <p style="font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:1.4rem; color:var(--texto); margin:0 0 6px;">¡Pedido enviado!</p>
+          <p style="margin:0;">N° de pedido: <strong style="color:var(--texto);">${idPedido}</strong></p>
+        </div>
+
+        ${avisoWhatsAppHtml}
+
+        <div class="resumen" style="margin-top:16px;">
+          <p class="resumen-titulo">Resumen de tu pedido</p>
+          <p style="font-size:0.82rem; color:var(--texto-muted); margin:-6px 0 12px;">
+            ${etiquetaEntrega} · ${nombre} · ${celularComprador}
+          </p>
+          <div id="confirmacion-items">${itemsHtml}</div>
+          <div class="resumen-linea"><span>Subtotal</span><span>S/ ${subtotal.toFixed(2)}</span></div>
+          ${conComprobante ? `<div class="resumen-linea"><span>IGV (18%)</span><span>S/ ${igv.toFixed(2)}</span></div>` : ""}
+          <div class="resumen-linea destacada"><span>Envío</span><span>${envioTexto}</span></div>
+          <div class="resumen-total"><span>Total</span><span>S/ ${total.toFixed(2)}</span></div>
+        </div>
+
+        <button class="btn-enviar-checkout" id="btn-reenviar-whatsapp" style="margin-top:14px;">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+          Abrir / reenviar por WhatsApp
+        </button>
+
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <button class="btn-gps" id="btn-copiar-resumen" style="flex:1;">📋 Copiar resumen</button>
+          <button class="btn-gps" id="btn-correo-resumen" style="flex:1;">${textoBotonCorreo}</button>
+        </div>
+
+        ${avisoSheetHtml}
+
+        <p style="font-size:0.78rem; color:var(--texto-muted); text-align:center; margin:10px 0 0;">
+          💡 También puedes tomar una captura de pantalla de este resumen como respaldo.
+        </p>
+
+        <a href="catalogo.html" style="display:block; text-align:center; margin-top:18px;">Seguir viendo el catálogo →</a>
       </div>
     `;
+
+    document.getElementById("btn-reenviar-whatsapp").addEventListener("click", () => {
+      // Este clic es 100% fresco (gesto directo del usuario), así que
+      // window.open acá casi nunca se bloquea, incluso si el primer
+      // intento automático sí falló.
+      window.open(urlWhatsApp, "_blank");
+    });
+
+    document.getElementById("btn-copiar-resumen").addEventListener("click", (e) => {
+      copiarTextoAlPortapapeles(mensaje, e.currentTarget);
+    });
+
+    document.getElementById("btn-correo-resumen").addEventListener("click", () => {
+      abrirCorreoConResumen(idPedido, mensaje, correoComprador);
+    });
+  }
+
+  // Copia el mensaje completo del pedido al portapapeles — útil como
+  // respaldo si el cliente prefiere pegarlo manualmente en WhatsApp,
+  // guardarlo en notas, o mandarlo por otro medio.
+  function copiarTextoAlPortapapeles(texto, botonOrigen) {
+    const marcarExito = () => {
+      if (!botonOrigen) return;
+      const original = botonOrigen.textContent;
+      botonOrigen.textContent = "✓ Copiado";
+      setTimeout(() => { botonOrigen.textContent = original; }, 2000);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(texto).then(marcarExito).catch(() => {
+        copiarConTextareaTemporal(texto, marcarExito);
+      });
+    } else {
+      copiarConTextareaTemporal(texto, marcarExito);
+    }
+  }
+  // Respaldo para navegadores viejos o contextos donde el Clipboard API
+  // moderno no está disponible (algunos navegadores in-app).
+  function copiarConTextareaTemporal(texto, alExito) {
+    try {
+      const textarea = document.createElement("textarea");
+      textarea.value = texto;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      if (alExito) alExito();
+    } catch (e) {
+      alert("No se pudo copiar automáticamente. Mantén presionado el resumen para seleccionar y copiar el texto manualmente.");
+    }
+  }
+
+  // Abre el cliente de correo del cliente con el resumen ya redactado —
+  // así puede mandárselo a sí mismo (o a quien quiera) como respaldo,
+  // sin depender de que WhatsApp haya abierto bien.
+  function abrirCorreoConResumen(idPedido, mensaje, correoDestino) {
+    const asunto = `Mi pedido Fenix Import Perú — ${idPedido}`;
+    const cuerpo = mensaje + "\n\n(Copia de tu pedido — guárdala como respaldo)";
+    const destino = correoDestino ? encodeURIComponent(correoDestino) : "";
+    const mailto = `mailto:${destino}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+    window.location.href = mailto;
   }
   // ---------- Carga inicial ----------
   async function iniciar() {
