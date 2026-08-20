@@ -1192,15 +1192,26 @@ const NUMERO_WHATSAPP = "51978821080";
     const textoOriginalBoton = elBotonEnviar.innerHTML;
     elBotonEnviar.innerHTML = "Enviando pedido...";
 
-    const resultadoSheet = await registrarPedidoEnSheet(datosPedido);
-    const sheetGuardado = !!(resultadoSheet && resultadoSheet.exito);
+    // ---------- Orden importante: WhatsApp primero, Sheet en paralelo ----------
+    // Antes esperábamos (`await`) a que el Sheet terminara de guardar ANTES
+    // de redirigir a WhatsApp. El problema: ese guardado le pega a un Apps
+    // Script de Google, que normalmente tarda 1-3 segundos en responder —
+    // y durante ese tiempo la ventana de WhatsApp se quedaba en blanco sin
+    // razón, porque son dos cosas totalmente independientes entre sí.
+    //
+    // Ahora: se lanza el guardado en el Sheet (sin esperarlo todavía) y de
+    // inmediato se redirige a WhatsApp — así el cliente ve WhatsApp casi
+    // instantáneo. El resultado del Sheet recién se espera DESPUÉS, justo
+    // antes de mostrar la pantalla de confirmación (que sí necesita saber
+    // si se guardó bien o no).
+    const promesaSheet = registrarPedidoEnSheet(datosPedido);
 
     const urlWhatsApp = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
 
     // Usamos la ventana que abrimos en blanco al inicio del clic. Si por lo
     // que sea no se pudo abrir entonces (bloqueador de pop-ups agresivo,
     // navegador in-app, etc.), intentamos una segunda vez acá — a veces
-    // funciona igual porque seguimos dentro del mismo gesto async del botón.
+    // funciona igual porque seguimos dentro del mismo gesto síncrono del clic.
     let whatsAppAbierto = false;
     if (ventanaWhatsApp && !ventanaWhatsApp.closed) {
       try {
@@ -1218,6 +1229,11 @@ const NUMERO_WHATSAPP = "51978821080";
         whatsAppAbierto = false;
       }
     }
+
+    // Recién ahora esperamos el resultado del Sheet — para este punto
+    // WhatsApp ya se abrió, así que esta espera ya no bloquea nada visible.
+    const resultadoSheet = await promesaSheet;
+    const sheetGuardado = !!(resultadoSheet && resultadoSheet.exito);
 
     guardarCarrito([]);
     actualizarBadgeCarrito();
