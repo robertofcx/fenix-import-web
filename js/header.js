@@ -7,13 +7,15 @@
  *
  * REQUIERE:
  *  - header.css cargado en el <head> de la página
- *  - productos.json accesible en la raíz del sitio
+ *  - productos-store.js cargado ANTES de este script (expone
+ *    window.FenixProductos, que trae productos-index.json)
  *  - (Fuse.js se carga solo si la página no lo tiene ya)
  *
  * USO EN CADA PÁGINA (reemplaza el <header>...</header> y el
  * <nav class="drawer">...</nav> que tenías hardcodeados):
  *
  *   <div id="header-placeholder"></div>
+ *   <script src="/productos-store.js"></script>
  *   <script src="/header.js"></script>
  *   ... (el resto de scripts de la página va DESPUÉS de este) ...
  *
@@ -40,7 +42,6 @@
  * ========================================================================
  */
 (function () {
-  const RUTA_PRODUCTOS = "/productos.json";
   const NUMERO_WHATSAPP = "51978821080";
   const CARRITO_KEY = "fenix_carrito";
 
@@ -359,8 +360,10 @@
   }
 
   function cargarProductosParaHeader() {
-    fetch(RUTA_PRODUCTOS)
-      .then(r => r.json())
+    // window.FenixProductos lo define /productos-store.js (debe cargar ANTES
+    // que este script). Si dos scripts de la misma página lo piden, solo se
+    // hace UN fetch real — y entre páginas de la misma sesión, ninguno.
+    window.FenixProductos.obtener()
       .then(data => {
         dibujarCategoriasDrawer(data.categorias);
         listaProductosHeader = data.productos || [];
@@ -379,7 +382,7 @@
           document.head.appendChild(script);
         }
       })
-      .catch(err => console.error("[header.js] No se pudo cargar productos.json:", err));
+      .catch(err => console.error("[header.js] No se pudo cargar productos-index.json:", err));
   }
 
   function activarListenersBuscador() {

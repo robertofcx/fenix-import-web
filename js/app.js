@@ -1,5 +1,4 @@
-const RUTA_PRODUCTOS = "productos.json";
-    const NUMERO_WHATSAPP = "51978821080";
+const NUMERO_WHATSAPP = "51978821080";
     const URL_SITIO = "https://fenix-import-peru.onrender.com";
     let catalogoCompleto = null;
     let fuse = null;
@@ -52,10 +51,9 @@ const RUTA_PRODUCTOS = "productos.json";
     async function cargarCatalogoCompleto() {
       const elEstado = document.getElementById("estado-categorias");
       try {
-        const respuesta = await fetch(RUTA_PRODUCTOS);
-        if (!respuesta.ok) throw new Error("No se pudo cargar productos.json (" + respuesta.status + ")");
-
-        catalogoCompleto = await respuesta.json();
+        // window.FenixProductos lo define /productos-store.js (debe cargar
+        // antes que header.js y antes que app.js en index.html).
+        catalogoCompleto = await window.FenixProductos.obtener();
 
         fuse = new Fuse(catalogoCompleto.productos, {
           keys: ["nombre", "sku"],

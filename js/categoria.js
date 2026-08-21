@@ -1,4 +1,3 @@
-const RUTA_PRODUCTOS = "productos.json";
 const NUMERO_WHATSAPP = "51978821080";
 const URL_SITIO = "https://fenix-import-peru.onrender.com";
 const POR_PAGINA = 24;
@@ -374,14 +373,14 @@ function construirMarcas() {
 }
 
 // dibujarDrawerCategorias ya no hace falta aquí: header.js llena el
-// drawer de categorías con su propio fetch de productos.json.
+// drawer de categorías, ambos leyendo del mismo window.FenixProductos.
 
 async function cargarCatalogo() {
   try {
-    const respuesta = await fetch(RUTA_PRODUCTOS);
-    if (!respuesta.ok) throw new Error("No se pudo cargar productos.json (" + respuesta.status + ")");
-
-    const datos = await respuesta.json();
+    // window.FenixProductos lo define /js/productos-store.js (debe cargar
+    // antes que header.js y antes que categoria.js). Un solo fetch real
+    // aunque header.js, esta página y el store lo pidan cada uno por su lado.
+    const datos = await window.FenixProductos.obtener();
 
     todosLosProductos = datos.productos || [];
     categoriasArbol = datos.categorias || [];

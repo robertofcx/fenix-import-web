@@ -318,6 +318,7 @@ function generarHtmlProducto(producto, todosLosProductos) {
 
 <div id="header-placeholder"></div>
 <script src="/js/util.js"></script>
+<script src="/js/productos-store.js"></script>
 <script src="/js/header.js"></script>
 
 <div class="fondo-carrito" id="fondo-carrito"></div>
