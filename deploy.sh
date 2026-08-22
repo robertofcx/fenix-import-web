@@ -6,18 +6,20 @@ REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/robertofcx/fenix-imp
 echo "==> Configurando git..."
 git config user.email "render-bot@feniximportperu.com"
 git config user.name "Render Bot"
+git config core.fileMode false
 
 echo "==> Ejecutando generador de productos..."
 node generar-productos.js
 
-echo "==> Revisando cambios..."
-if [ -z "$(git status --porcelain)" ]; then
-  echo "==> Sin cambios que subir. Todo al dia."
+echo "==> Preparando cambios..."
+git add producto/ sitemap.xml
+
+if git diff --cached --quiet; then
+  echo "==> Sin cambios reales que subir. Todo al dia."
   exit 0
 fi
 
 echo "==> Hay cambios, haciendo commit..."
-git add producto/ sitemap.xml
 git commit -m "Auto: regenerar productos $(date '+%Y-%m-%d %H:%M')"
 
 echo "==> Subiendo a GitHub..."
