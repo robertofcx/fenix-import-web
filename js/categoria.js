@@ -29,6 +29,7 @@ let productosFiltrados = [];
 let categoriaActiva = parametrosUrl.get("categoria") || "Todos";
 let subcategoriaActiva = parametrosUrl.get("subcategoria") || null;
 let marcasActivas = new Set((parametrosUrl.get("marca") || "").split(",").filter(Boolean));
+let tallasActivas = new Set((parametrosUrl.get("talla") || "").split(",").filter(Boolean));
 let ordenActivo = parametrosUrl.get("orden") || "predeterminado";
 let paginaActual = Number(parametrosUrl.get("pagina")) || 1;
 
@@ -38,6 +39,7 @@ const elGrilla = document.getElementById("grilla");
 const elContador = document.getElementById("contador");
 const elCategorias = document.getElementById("lista-categorias");
 const elMarcas = document.getElementById("lista-marcas");
+const elTallas = document.getElementById("lista-tallas");
 const elBuscar = document.getElementById("input-buscar");
 const elPrecioMin = document.getElementById("input-precio-min");
 const elPrecioMax = document.getElementById("input-precio-max");
@@ -72,6 +74,7 @@ function actualizarBadgeFiltrosActivos() {
   let total = 0;
   if (categoriaActiva !== "Todos") total++;
   if (marcasActivas.size > 0) total++;
+  if (tallasActivas.size > 0) total++;
   if (elPrecioMin.value !== "" || elPrecioMax.value !== "") total++;
   if (elSoloOfertas.checked) total++;
   elBadgeFiltrosActivos.textContent = total;
@@ -84,6 +87,7 @@ function sincronizarUrl() {
   if (categoriaActiva !== "Todos") params.set("categoria", categoriaActiva);
   if (subcategoriaActiva) params.set("subcategoria", subcategoriaActiva);
   if (marcasActivas.size > 0) params.set("marca", [...marcasActivas].join(","));
+  if (tallasActivas.size > 0) params.set("talla", [...tallasActivas].join(","));
   if (elBuscar.value.trim()) params.set("buscar", elBuscar.value.trim());
   if (ordenActivo !== "predeterminado") params.set("orden", ordenActivo);
   if (paginaActual > 1) params.set("pagina", paginaActual);
@@ -137,7 +141,7 @@ function crearTarjeta(producto) {
       <div class="tarjeta-img">${badge}${imagenHtml}</div>
       <div class="tarjeta-body">
         <p class="tarjeta-categoria">${producto.categoria || ""}</p>
-        <p class="tarjeta-nombre">${producto.nombre}</p>
+        <p class="tarjeta-nombre" title="${producto.nombre}">${producto.nombre}</p>
         <p class="tarjeta-precio">S/ ${precio}</p>
         <div class="tarjeta-acciones">
           <button class="btn-agregar-carrito" onclick="event.preventDefault(); agregarAlCarritoDesdeTarjeta('${productoJson}')">
@@ -241,11 +245,12 @@ function aplicarFiltros(reiniciarPagina = true) {
     const coincideCategoria = categoriaActiva === "Todos" || p.categoria === categoriaActiva;
     const coincideSubcategoria = !subcategoriaActiva || p.subcategoria === subcategoriaActiva;
     const coincideMarca = marcasActivas.size === 0 || marcasActivas.has(p.marca);
+    const coincideTalla = tallasActivas.size === 0 || tallasActivas.has(p.talla);
     const precio = extraerPrecio(p);
     const coincidePrecioMin = precioMin === null || precio >= precioMin;
     const coincidePrecioMax = precioMax === null || precio <= precioMax;
     const coincideOferta = !soloOfertas || p.oferta;
-    return coincideCategoria && coincideSubcategoria && coincideMarca && coincidePrecioMin && coincidePrecioMax && coincideOferta;
+    return coincideCategoria && coincideSubcategoria && coincideMarca && coincideTalla && coincidePrecioMin && coincidePrecioMax && coincideOferta;
   });
 
   productosFiltrados = ordenarProductos(productosFiltrados);
@@ -253,6 +258,7 @@ function aplicarFiltros(reiniciarPagina = true) {
   if (reiniciarPagina) paginaActual = 1;
 
   construirMarcas();
+  construirTallas();
   actualizarBadgeFiltrosActivos();
   sincronizarUrl();
 
@@ -372,6 +378,75 @@ function construirMarcas() {
   });
 }
 
+// ---------- Talla (chips con conteo, según el resto de filtros activos) ----------
+
+// Orden "natural" de tallas de prenda. Lo que no aparezca aquí (tallas
+// numéricas de calzado, "Único", etc.) se ordena aparte al final,
+// numérico si son números, alfabético si no.
+const ORDEN_TALLAS = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL", "3XL", "4XL"];
+
+function compararTallas(a, b) {
+  const ia = ORDEN_TALLAS.indexOf(a.toUpperCase());
+  const ib = ORDEN_TALLAS.indexOf(b.toUpperCase());
+  if (ia !== -1 && ib !== -1) return ia - ib;
+  if (ia !== -1) return -1;
+  if (ib !== -1) return 1;
+  const na = parseFloat(a);
+  const nb = parseFloat(b);
+  if (!isNaN(na) && !isNaN(nb)) return na - nb;
+  return a.localeCompare(b);
+}
+
+function construirTallas() {
+  // Mismo criterio que construirMarcas(): universo filtrado por todo
+  // MENOS el propio filtro de talla, así el conteo sigue siendo útil
+  // aunque ya tengas una talla elegida.
+  const texto = elBuscar.value.trim();
+  const precioMin = elPrecioMin.value !== "" ? Number(elPrecioMin.value) : null;
+  const precioMax = elPrecioMax.value !== "" ? Number(elPrecioMax.value) : null;
+  const soloOfertas = elSoloOfertas.checked;
+  const candidatos = (texto && fuse) ? fuse.search(texto).map(r => r.item) : todosLosProductos;
+
+  const universoTallas = candidatos.filter(p => {
+    const coincideCategoria = categoriaActiva === "Todos" || p.categoria === categoriaActiva;
+    const coincideSubcategoria = !subcategoriaActiva || p.subcategoria === subcategoriaActiva;
+    const coincideMarca = marcasActivas.size === 0 || marcasActivas.has(p.marca);
+    const precio = extraerPrecio(p);
+    const coincidePrecioMin = precioMin === null || precio >= precioMin;
+    const coincidePrecioMax = precioMax === null || precio <= precioMax;
+    const coincideOferta = !soloOfertas || p.oferta;
+    return coincideCategoria && coincideSubcategoria && coincideMarca && coincidePrecioMin && coincidePrecioMax && coincideOferta;
+  });
+
+  const conteoTallas = {};
+  universoTallas.forEach(p => {
+    if (!p.talla) return;
+    conteoTallas[p.talla] = (conteoTallas[p.talla] || 0) + 1;
+  });
+
+  const tallasOrdenadas = Object.keys(conteoTallas).sort(compararTallas);
+
+  if (tallasOrdenadas.length === 0) {
+    elTallas.innerHTML = `<p class="sin-tallas">No hay tallas para este filtro.</p>`;
+    return;
+  }
+
+  elTallas.innerHTML = tallasOrdenadas.map(talla => `
+    <button type="button" class="talla-chip ${tallasActivas.has(talla) ? "activo" : ""}" data-talla="${talla}">
+      ${talla}<span class="talla-cantidad">${conteoTallas[talla]}</span>
+    </button>
+  `).join("");
+
+  elTallas.querySelectorAll(".talla-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      const talla = chip.dataset.talla;
+      if (tallasActivas.has(talla)) tallasActivas.delete(talla);
+      else tallasActivas.add(talla);
+      aplicarFiltros();
+    });
+  });
+}
+
 // dibujarDrawerCategorias ya no hace falta aquí: header.js llena el
 // drawer de categorías, ambos leyendo del mismo window.FenixProductos.
 
@@ -431,6 +506,7 @@ elBtnLimpiarFiltros.addEventListener("click", () => {
   categoriaActiva = "Todos";
   subcategoriaActiva = null;
   marcasActivas = new Set();
+  tallasActivas = new Set();
   actualizarBreadcrumb();
   construirCategorias();
   aplicarFiltros();
