@@ -8,6 +8,10 @@ git config user.email "render-bot@feniximportperu.com"
 git config user.name "Render Bot"
 git config core.fileMode false
 
+echo "==> Sincronizando con GitHub..."
+git fetch "$REPO_URL" main
+git reset --hard FETCH_HEAD
+
 echo "==> Ejecutando generador de productos..."
 node generar-productos.js
 
