@@ -45,6 +45,23 @@
   const NUMERO_WHATSAPP = "51978821080";
   const CARRITO_KEY = "fenix_carrito";
 
+
+    // ---------- Google Analytics 4 ----------
+  function inicializarAnalytics() {
+    const ID_GA = "G-CF4QTW19TX";
+    if (window.gtag) return;
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://www.googletagmanager.com/gtag/js?id=" + ID_GA;
+    document.head.appendChild(script);
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    gtag("js", new Date());
+    gtag("config", ID_GA);
+  }
+
   // header.js se ejecuta ANTES que util.js en todas las páginas (así lo
   // requiere su propio comentario de carga), así que no puede depender de
   // que optimizarImagenCloudinary ya exista. Este guard usa la versión de
@@ -476,5 +493,9 @@
   // navegador lo corre en el momento exacto en que lo encuentra al
   // parsear el HTML — el placeholder ya existe, y el resto de scripts
   // de la página (que van después) van a encontrar el header ya listo.
+
+
+
+  inicializarAnalytics();
   inyectarHeader();
 })();
