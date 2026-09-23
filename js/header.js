@@ -62,6 +62,26 @@
     gtag("config", ID_GA);
   }
 
+
+    // ---------- Evento: clic a WhatsApp ----------
+  function inicializarEventoWhatsApp() {
+    document.addEventListener("click", function (evento) {
+      const enlace = evento.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+      if (!enlace) return;
+      if (typeof gtag !== "function") return;
+
+      const p = window.PRODUCTO_ACTUAL || null;
+
+      gtag("event", "click_whatsapp", {
+        sku: p ? p.sku : "(sin producto)",
+        nombre_producto: p ? p.nombre : "(sin producto)",
+        precio: p ? Number(p.precio) : 0,
+        origen: enlace.id || "enlace_generico",
+        pagina: location.pathname
+      });
+    }, true);
+  }
+
   // header.js se ejecuta ANTES que util.js en todas las páginas (así lo
   // requiere su propio comentario de carga), así que no puede depender de
   // que optimizarImagenCloudinary ya exista. Este guard usa la versión de
@@ -497,5 +517,6 @@
 
 
   inicializarAnalytics();
+  inicializarEventoWhatsApp();
   inyectarHeader();
 })();
