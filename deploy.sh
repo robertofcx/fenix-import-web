@@ -16,7 +16,7 @@ echo "==> Ejecutando generador de productos..."
 node generar-productos.js
 
 echo "==> Preparando cambios..."
-git add producto/ sitemap.xml
+git add producto/ sitemap.xml feed.xml
 
 if git diff --cached --quiet; then
   echo "==> Sin cambios reales que subir. Todo al dia."

@@ -30,12 +30,14 @@
 const fs = require("fs");
 const path = require("path");
 const { optimizarImagenCloudinary } = require("./js/util.js");
+const { generarFeed } = require("./generar-feed.js");
 
 // ==================== CONFIGURACIÓN ====================
 const URL_SITIO = process.env.URL_SITIO || "https://feniximportperu.com";
 const RUTA_PRODUCTOS_JSON = path.join(__dirname, "productos.json");
 const CARPETA_SALIDA = path.join(__dirname, "producto");
 const RUTA_SITEMAP = path.join(__dirname, "sitemap.xml");
+const RUTA_FEED = path.join(__dirname, "feed.xml");
 const NUMERO_WHATSAPP = "51978821080";
 // =========================================================
 
@@ -501,7 +503,13 @@ function main() {
   console.log(`\n✓ ${generados} páginas generadas en /producto`);
   if (omitidos > 0) console.log(`⚠ ${omitidos} productos omitidos (revisa los avisos arriba)`);
 
-  generarSitemap(productos.filter(p => p.sku && skusVistos.has(p.sku)));
+
+
+  const publicados = productos.filter(p => p.sku && skusVistos.has(p.sku));
+  generarSitemap(publicados);
+  generarFeed(publicados, URL_SITIO, RUTA_FEED, p => p.slug || generarSlugRespaldo(p.nombre));
+
+
 }
 
 main();
