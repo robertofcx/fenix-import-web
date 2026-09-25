@@ -908,7 +908,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Canguros</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para Celular</g:product_type>
   </item>
   <item>
     <g:id>BAT_022_NEG</g:id>
@@ -5944,7 +5944,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Cocina</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
   </item>
   <item>
     <g:id>HOG_116</g:id>
@@ -6976,7 +6976,7 @@
     <g:condition>new</g:condition>
     <g:brand>OPALUX</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Iluminacion &gt; Faro Pirata</g:product_type>
+    <g:product_type>Iluminacion &gt; Linternas Grandes</g:product_type>
   </item>
   <item>
     <g:id>ILU_158</g:id>
@@ -7800,7 +7800,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Cocina</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
   </item>
   <item>
     <g:id>BAT_034</g:id>
@@ -8067,7 +8067,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Cocina</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
   </item>
   <item>
     <g:id>CEL_153</g:id>
@@ -8236,7 +8236,7 @@
     <g:condition>new</g:condition>
     <g:brand>Truper</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Herramientas &gt; Espumas</g:product_type>
+    <g:product_type>Herramientas &gt; Espumas Expansivas</g:product_type>
   </item>
   <item>
     <g:id>HER_153</g:id>
@@ -8251,7 +8251,7 @@
     <g:condition>new</g:condition>
     <g:brand>Truper</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Herramientas &gt; Espumas</g:product_type>
+    <g:product_type>Herramientas &gt; Espumas Expansivas</g:product_type>
   </item>
   <item>
     <g:id>ILU_201</g:id>
@@ -9818,7 +9818,7 @@
     <g:condition>new</g:condition>
     <g:brand>Ewtto</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Tecnologia y accesorios &gt; Cigarreras</g:product_type>
+    <g:product_type>Tecnologia y accesorios &gt; Accesorios para Autos</g:product_type>
   </item>
   <item>
     <g:id>CEL_173</g:id>
@@ -9921,7 +9921,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Cocina</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
   </item>
   <item>
     <g:id>MOT_046</g:id>
@@ -10426,7 +10426,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Bandejas para Freidoras</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Electrodomésticos</g:product_type>
   </item>
   <item>
     <g:id>ILU_233</g:id>
@@ -10729,7 +10729,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Cocina</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
   </item>
   <item>
     <g:id>TEC_101</g:id>
@@ -12690,7 +12690,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Cocina</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -14100,7 +14100,7 @@
     <g:condition>new</g:condition>
     <g:brand>Opalux</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Iluminacion &gt; Faro Pirata</g:product_type>
+    <g:product_type>Iluminacion &gt; Linternas Grandes</g:product_type>
     <g:color>Blanco</g:color>
   </item>
   <item>
@@ -14387,7 +14387,7 @@
     <g:condition>new</g:condition>
     <g:brand>Schubert</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Herramientas &gt; Espumas</g:product_type>
+    <g:product_type>Herramientas &gt; Espumas Expansivas</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -16040,7 +16040,7 @@
     <g:condition>new</g:condition>
     <g:brand>Knauff</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Herramientas &gt; Espumas</g:product_type>
+    <g:product_type>Herramientas &gt; Espumas Expansivas</g:product_type>
     <g:color>Amarillo</g:color>
   </item>
   <item>
@@ -16713,7 +16713,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Cocina</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
     <g:color>Blanco</g:color>
   </item>
   <item>
@@ -17052,7 +17052,7 @@
     <g:condition>new</g:condition>
     <g:brand>Truper</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Herramientas &gt; Espumas</g:product_type>
+    <g:product_type>Herramientas &gt; Espumas Expansivas</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -17476,7 +17476,7 @@
     <g:condition>new</g:condition>
     <g:brand>Truper</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Cocina</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
   </item>
   <item>
     <g:id>HOG_314</g:id>
@@ -17494,7 +17494,7 @@
     <g:condition>new</g:condition>
     <g:brand>Truper</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Casa</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
   </item>
   <item>
     <g:id>HOG_315</g:id>
@@ -17512,7 +17512,7 @@
     <g:condition>new</g:condition>
     <g:brand>Truper</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Casa</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
   </item>
   <item>
     <g:id>HOG_316</g:id>
@@ -17530,7 +17530,7 @@
     <g:condition>new</g:condition>
     <g:brand>Pretul</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Casa</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
   </item>
   <item>
     <g:id>BAT_060</g:id>
@@ -19552,7 +19552,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Cocina</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
     <g:color>Varios</g:color>
   </item>
   <item>
@@ -20365,7 +20365,7 @@
     <g:condition>new</g:condition>
     <g:brand>FACUSA</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Accesorios para Cocina</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
   </item>
   <item>
     <g:id>HOG_348</g:id>
