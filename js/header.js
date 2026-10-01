@@ -63,7 +63,23 @@
     // "/" y "/index.html" son la misma portada: se reportan siempre como "/"
     // para que GA4 no la parta en dos filas.
     const ubicacion = location.href.replace(/\/index\.html(?=$|[?#])/, "/");
-    gtag("config", ID_GA, { page_location: ubicacion });
+
+    // ---------- Tráfico interno (tus locales / tu equipo) ----------
+    // En vez de depender de la IP (que el router cambia), se marca cada
+    // equipo UNA vez abriendo:  https://feniximportperu.com/?interno=1
+    // Para desmarcarlo:          https://feniximportperu.com/?interno=0
+    // GA4 descarta esas visitas con el filtro "Internal Traffic".
+    let esInterno = false;
+    try {
+      const marca = new URLSearchParams(location.search).get("interno");
+      if (marca === "1") localStorage.setItem("fenix_interno", "1");
+      if (marca === "0") localStorage.removeItem("fenix_interno");
+      esInterno = localStorage.getItem("fenix_interno") === "1";
+    } catch (e) { /* sin localStorage: se cuenta como visita normal */ }
+
+    const configGA = { page_location: ubicacion.replace(/([?&])interno=[01](&|$)/, "$1").replace(/[?&]$/, "") };
+    if (esInterno) configGA.traffic_type = "internal";
+    gtag("config", ID_GA, configGA);
   }
 
   // ---------- Helpers de e-commerce para GA4 ----------
