@@ -205,9 +205,14 @@ function generarJsonLd(producto, precio, url, imagenes) {
       color: v.color || undefined,
       offers: {
         "@type": "Offer",
+        url: `${url}?v=${encodeURIComponent(v.sku)}`,
         priceCurrency: "PEN",
         price: limpiarPrecio(v.precio),
-        availability: v.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+        // Sin campo stock = disponible (mismo criterio que el feed), para
+        // que la ficha y el feed nunca se contradigan ante Google.
+        availability: (typeof v.stock === "number" && v.stock <= 0)
+          ? "https://schema.org/OutOfStock"
+          : "https://schema.org/InStock"
       }
     }));
   }

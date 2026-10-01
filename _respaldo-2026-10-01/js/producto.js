@@ -39,14 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------- Selector de color (variantes) ----------
   if (window.PRODUCTO_ACTUAL && window.PRODUCTO_ACTUAL.variantes && window.PRODUCTO_ACTUAL.variantes.length > 0) {
     inicializarVariantes();
-
-    // ?v=SKU (links de Google Shopping) -> abre la ficha con esa variante
-    // ya elegida, para que precio y foto coincidan con el anuncio.
-    const skuPedido = new URLSearchParams(location.search).get("v");
-    if (skuPedido) {
-      const indice = window.PRODUCTO_ACTUAL.variantes.findIndex(v => String(v.sku).toUpperCase() === skuPedido.toUpperCase());
-      if (indice > 0) seleccionarVariante(indice);
-    }
   }
 
   // ---------- Precio en vivo ----------

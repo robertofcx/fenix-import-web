@@ -8,6 +8,18 @@
  * automáticamente cada vez que se publica el catálogo.
  *
  * Formato: RSS 2.0 + namespace de Google Shopping.
+ *
+ * CAMBIOS 2026-10-01:
+ *  - Productos con variantes (esGrupo) se publican como UN ítem por
+ *    variante (id = SKU de la variante, item_group_id = SKU del grupo),
+ *    con su propio color, precio, fotos y link (?v=SKU preselecciona
+ *    la variante en la ficha). Antes solo salía el grupo y Google veía
+ *    variantes en la página que no estaban en el feed.
+ *  - Lista de exclusión: productos que Google rechaza por política
+ *    (armas, defensa personal, cuchillos). Siguen en la web, solo no
+ *    se envían a Google para no acumular infracciones en la cuenta.
+ *  - Links con UTM para que GA4 muestre estas visitas como
+ *    "Organic Shopping" y no mezcladas con Google orgánico.
  * ------------------------------------------------------------
  */
 
@@ -15,6 +27,31 @@ const fs = require("fs");
 
 const MAX_TITULO = 150;
 const MAX_DESCRIPCION = 5000;
+
+// UTM de los links del feed (GA4 lo clasifica como "Organic Shopping"
+// porque la campaña contiene "shopping").
+const UTM_FEED = "utm_source=google&utm_medium=organic&utm_campaign=shopping_fichas_gratuitas";
+
+// SKUs (de grupo o sueltos) que NO se envían a Google por política.
+// Un SKU de grupo excluye también todas sus variantes (CAM_041 -> CAM_041_NEG).
+// Para agregar otro: suma su SKU aquí.
+const SKUS_EXCLUIDOS_GOOGLE = [
+  "ILU_176",  // Electroshock con linterna paralizador 801
+  "ILU_319",  // Electroshock tipo pistola TAC-PL6032
+  "ILU_251",  // Electroshock llavero TW-1602
+  "CAM_041",  // Gas pimienta 60 ml
+  "CAM_052",  // Gas pimienta 110 ml
+  "CAM_065",  // Gas pimienta 20 ml llavero
+  "CAM_037",  // Pulsera paracord con navaja
+  "CAM_125",  // Pulsera paracord con navaja, silbato, etc.
+  "CAM_056",  // Navaja táctica karambit
+  "CAM_047"   // Lapicero táctico rompe vidrio
+];
+
+function estaExcluido(sku) {
+  const s = String(sku || "").toUpperCase();
+  return SKUS_EXCLUIDOS_GOOGLE.some(x => s === x || s.startsWith(x + "_"));
+}
 
 function escaparXml(texto) {
   return String(texto || "")
@@ -55,40 +92,47 @@ function construirDescripcion(producto) {
   return recortar(partes.join(" "), MAX_DESCRIPCION);
 }
 
-function disponibilidad(producto) {
-  // Si el producto declara stock explícito lo respetamos; si no trae
-  // el campo, asumimos disponible (el catálogo solo publica vigentes).
-  if (typeof producto.stock === "number") {
-    return producto.stock > 0 ? "in_stock" : "out_of_stock";
+function disponibilidad(item) {
+  // Si declara stock explícito lo respetamos; si no trae el campo,
+  // asumimos disponible (el catálogo solo publica vigentes).
+  if (typeof item.stock === "number") {
+    return item.stock > 0 ? "in_stock" : "out_of_stock";
   }
   return "in_stock";
 }
 
-function generarItem(producto, urlSitio, slug) {
-  const precio = limpiarPrecio(producto.precio);
+function listaImagenes(obj) {
+  if (obj.imagenes && obj.imagenes.length > 0) return obj.imagenes;
+  return obj.imagen ? [obj.imagen] : [];
+}
 
-  const imagenes = (producto.imagenes && producto.imagenes.length > 0)
-    ? producto.imagenes
-    : (producto.imagen ? [producto.imagen] : []);
+function agregarParametros(url, params) {
+  return url + (url.includes("?") ? "&" : "?") + params;
+}
 
-  if (imagenes.length === 0) return null;   // Google exige imagen
-  if (!(Number(precio) > 0)) return null;   // y precio válido
-
-  const url = `${urlSitio}/producto/${encodeURIComponent(slug)}.html`;
+/**
+ * Arma un <item>. "datos" trae lo que cambia entre producto suelto y
+ * variante (id, título, precio, imágenes, link, color, talla, grupo).
+ */
+function armarItem(producto, datos) {
+  const precio = limpiarPrecio(datos.precio);
+  if (datos.imagenes.length === 0) return null;   // Google exige imagen
+  if (!(Number(precio) > 0)) return null;          // y precio válido
 
   const lineas = [];
-  lineas.push(`    <g:id>${escaparXml(producto.sku)}</g:id>`);
-  lineas.push(`    <g:title>${escaparXml(recortar(producto.nombre, MAX_TITULO))}</g:title>`);
+  lineas.push(`    <g:id>${escaparXml(datos.id)}</g:id>`);
+  if (datos.grupo) lineas.push(`    <g:item_group_id>${escaparXml(datos.grupo)}</g:item_group_id>`);
+  lineas.push(`    <g:title>${escaparXml(recortar(datos.titulo, MAX_TITULO))}</g:title>`);
   lineas.push(`    <g:description>${escaparXml(construirDescripcion(producto))}</g:description>`);
-  lineas.push(`    <g:link>${escaparXml(url)}</g:link>`);
-  lineas.push(`    <g:image_link>${escaparXml(imagenes[0])}</g:image_link>`);
+  lineas.push(`    <g:link>${escaparXml(agregarParametros(datos.link, UTM_FEED))}</g:link>`);
+  lineas.push(`    <g:image_link>${escaparXml(datos.imagenes[0])}</g:image_link>`);
 
   // Hasta 10 imágenes adicionales
-  imagenes.slice(1, 11).forEach((img) => {
+  datos.imagenes.slice(1, 11).forEach((img) => {
     lineas.push(`    <g:additional_image_link>${escaparXml(img)}</g:additional_image_link>`);
   });
 
-  lineas.push(`    <g:availability>${disponibilidad(producto)}</g:availability>`);
+  lineas.push(`    <g:availability>${datos.disponibilidad}</g:availability>`);
   lineas.push(`    <g:price>${precio} PEN</g:price>`);
   lineas.push(`    <g:condition>new</g:condition>`);
 
@@ -105,11 +149,52 @@ function generarItem(producto, urlSitio, slug) {
     lineas.push(`    <g:product_type>${escaparXml(tipoProducto)}</g:product_type>`);
   }
 
-  if (producto.color && !producto.esGrupo) {
-    lineas.push(`    <g:color>${escaparXml(producto.color)}</g:color>`);
-  }
+  if (datos.color) lineas.push(`    <g:color>${escaparXml(datos.color)}</g:color>`);
+  if (datos.talla) lineas.push(`    <g:size>${escaparXml(datos.talla)}</g:size>`);
 
   return `  <item>\n${lineas.join("\n")}\n  </item>`;
+}
+
+/**
+ * Devuelve uno o varios <item> para un producto: uno por variante si es
+ * grupo con más de una variante, o uno solo si es producto suelto.
+ */
+function generarItems(producto, urlSitio, slug) {
+  const urlBase = `${urlSitio}/producto/${encodeURIComponent(slug)}.html`;
+  const variantes = (producto.esGrupo && producto.variantes && producto.variantes.length > 1)
+    ? producto.variantes
+    : null;
+
+  if (!variantes) {
+    return [armarItem(producto, {
+      id: producto.sku,
+      titulo: producto.nombre,
+      precio: producto.precio,
+      imagenes: listaImagenes(producto),
+      link: urlBase,
+      disponibilidad: disponibilidad(producto),
+      color: producto.esGrupo ? "" : producto.color,
+      talla: producto.esGrupo ? "" : producto.talla
+    })];
+  }
+
+  return variantes
+    .filter(v => v.sku && !estaExcluido(v.sku))
+    .map(v => {
+      const extras = [v.color, v.talla].filter(Boolean).join(" ");
+      const imagenesVariante = listaImagenes(v);
+      return armarItem(producto, {
+        id: v.sku,
+        grupo: producto.sku,
+        titulo: extras ? `${producto.nombre} - ${extras}` : producto.nombre,
+        precio: v.precio != null && v.precio !== "" ? v.precio : producto.precio,
+        imagenes: imagenesVariante.length > 0 ? imagenesVariante : listaImagenes(producto),
+        link: `${urlBase}?v=${encodeURIComponent(v.sku)}`,
+        disponibilidad: disponibilidad(v),
+        color: v.color,
+        talla: v.talla
+      });
+    });
 }
 
 /**
@@ -121,12 +206,16 @@ function generarItem(producto, urlSitio, slug) {
 function generarFeed(productos, urlSitio, rutaSalida, obtenerSlug) {
   const items = [];
   let omitidos = 0;
+  let excluidos = 0;
 
   for (const producto of productos) {
     if (!producto.sku) { omitidos++; continue; }
-    const item = generarItem(producto, urlSitio, obtenerSlug(producto));
-    if (item) items.push(item);
-    else omitidos++;
+    if (estaExcluido(producto.sku)) { excluidos++; continue; }
+
+    for (const item of generarItems(producto, urlSitio, obtenerSlug(producto))) {
+      if (item) items.push(item);
+      else omitidos++;
+    }
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -140,7 +229,9 @@ ${items.join("\n")}
 </rss>`;
 
   fs.writeFileSync(rutaSalida, xml, "utf-8");
-  console.log(`✓ feed.xml generado (${items.length} productos${omitidos > 0 ? `, ${omitidos} omitidos sin imagen o precio` : ""})`);
+  console.log(`✓ feed.xml generado (${items.length} ítems` +
+    (omitidos > 0 ? `, ${omitidos} omitidos sin imagen o precio` : "") +
+    (excluidos > 0 ? `, ${excluidos} excluidos por política de Google` : "") + ")");
 }
 
 module.exports = { generarFeed };
