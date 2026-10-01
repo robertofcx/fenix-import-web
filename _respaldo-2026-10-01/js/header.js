@@ -59,35 +59,9 @@
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () { window.dataLayer.push(arguments); };
     gtag("js", new Date());
-
-    // "/" y "/index.html" son la misma portada: se reportan siempre como "/"
-    // para que GA4 no la parta en dos filas.
-    const ubicacion = location.href.replace(/\/index\.html(?=$|[?#])/, "/");
-    gtag("config", ID_GA, { page_location: ubicacion });
+    gtag("config", ID_GA);
   }
 
-  // ---------- Helpers de e-commerce para GA4 ----------
-  // Se exponen en window para que carrito.js, checkout.js y producto.js
-  // puedan registrar eventos sin repetir código.
-  function precioNumero(valor) {
-    return Number(String(valor == null ? "" : valor).replace(/[^0-9.]/g, "")) || 0;
-  }
-
-  window.fenixItemGA = function (p, cantidad) {
-    if (!p) return null;
-    return {
-      item_id: p.sku || "",
-      item_name: p.nombre || "",
-      item_category: p.categoria || undefined,
-      price: precioNumero(p.precio),
-      quantity: cantidad || p.cantidad || 1
-    };
-  };
-
-  window.fenixEvento = function (nombre, parametros) {
-    if (typeof gtag !== "function") return;
-    try { gtag("event", nombre, parametros || {}); } catch (e) { /* nunca romper la web por analytics */ }
-  };
 
     // ---------- Evento: clic a WhatsApp ----------
   function inicializarEventoWhatsApp() {
@@ -97,40 +71,15 @@
       if (typeof gtag !== "function") return;
 
       const p = window.PRODUCTO_ACTUAL || null;
-      const precio = p ? precioNumero(p.precio) : 0;
 
       gtag("event", "click_whatsapp", {
         sku: p ? p.sku : "(sin producto)",
         nombre_producto: p ? p.nombre : "(sin producto)",
-        precio: precio,
+        precio: p ? Number(p.precio) : 0,
         origen: enlace.id || "enlace_generico",
-        pagina: location.pathname,
-        // currency + value: GA4 suma el valor en soles de cada lead
-        currency: "PEN",
-        value: precio
+        pagina: location.pathname
       });
     }, true);
-  }
-
-  // ---------- Eventos automáticos por página ----------
-  // view_item en fichas de producto y search en el catálogo con ?buscar=
-  // (GA4 no reconoce "buscar" como parámetro de búsqueda por sí solo).
-  function inicializarEventosDePagina() {
-    document.addEventListener("DOMContentLoaded", function () {
-      const p = window.PRODUCTO_ACTUAL;
-      if (p && p.sku) {
-        window.fenixEvento("view_item", {
-          currency: "PEN",
-          value: precioNumero(p.precio),
-          items: [window.fenixItemGA(p)]
-        });
-      }
-
-      const termino = new URLSearchParams(location.search).get("buscar");
-      if (termino && location.pathname.indexOf("/catalogo") === 0) {
-        window.fenixEvento("search", { search_term: termino.trim().toLowerCase() });
-      }
-    });
   }
 
   // header.js se ejecuta ANTES que util.js en todas las páginas (así lo
@@ -151,7 +100,7 @@
       <button class="btn-hamburguesa" id="btn-abrir-drawer" aria-label="Abrir menú">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
-      <a class="logo-chip" href="/"><img src="/logo.webp" alt="Fenix Import Perú"></a>
+      <a class="logo-chip" href="/index.html"><img src="/logo.webp" alt="Fenix Import Perú"></a>
     </div>
 
     <div class="contenedor-buscador">
@@ -185,7 +134,7 @@
     <span class="logo-chip"><img src="/logo.webp" alt="Fenix Import Perú" style="height:26px;"></span>
     <button class="btn-cerrar-drawer" id="btn-cerrar-drawer">✕</button>
   </div>
-  <a class="drawer-link" href="/">Inicio</a>
+  <a class="drawer-link" href="/index.html">Inicio</a>
   <a class="drawer-link" href="/catalogo.html">Catálogo completo</a>
   <p class="drawer-seccion-titulo">Categorías</p>
   <div class="drawer-cat-buscador">
@@ -569,6 +518,5 @@
 
   inicializarAnalytics();
   inicializarEventoWhatsApp();
-  inicializarEventosDePagina();
   inyectarHeader();
 })();

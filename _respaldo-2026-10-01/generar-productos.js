@@ -253,7 +253,7 @@ function generarHtmlProducto(producto, todosLosProductos) {
   const seccion = (titulo, contenido) =>
     contenido ? `<div><p class="producto-seccion-titulo">${titulo}</p><p class="producto-seccion-texto">${escaparHtml(contenido)}</p></div>` : "";
 
-  let breadcrumbHtml = `<a href="/">Inicio</a>`;
+  let breadcrumbHtml = `<a href="/index.html">Inicio</a>`;
   if (producto.categoria) {
     breadcrumbHtml += ` <span class="sep">›</span> <a href="/catalogo.html?categoria=${encodeURIComponent(producto.categoria)}">${escaparHtml(producto.categoria)}</a>`;
   }

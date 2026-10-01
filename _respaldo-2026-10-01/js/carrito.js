@@ -43,15 +43,6 @@ function agregarProductoAlCarrito(producto) {
   else carrito.push({ sku: producto.sku, slug: producto.slug, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen, cantidad: 1 });
   guardarCarrito(carrito);
   mostrarToast("✓ Agregado a tu pedido");
-
-  // GA4: add_to_cart
-  if (window.fenixEvento && window.fenixItemGA) {
-    window.fenixEvento("add_to_cart", {
-      currency: "PEN",
-      value: extraerPrecioNumerico(producto.precio),
-      items: [window.fenixItemGA(producto, 1)]
-    });
-  }
 }
 
 // Botón principal de la ficha de producto (usa window.PRODUCTO_ACTUAL)
@@ -149,17 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnCerrar) btnCerrar.addEventListener("click", cerrarCarrito);
   if (fondo) fondo.addEventListener("click", cerrarCarrito);
   if (btnEnviar) btnEnviar.addEventListener("click", () => {
-    const carrito = obtenerCarrito();
-    if (carrito.length === 0) return;
-
-    // GA4: begin_checkout
-    if (window.fenixEvento && window.fenixItemGA) {
-      window.fenixEvento("begin_checkout", {
-        currency: "PEN",
-        value: Number(carrito.reduce((s, i) => s + extraerPrecioNumerico(i.precio) * i.cantidad, 0).toFixed(2)),
-        items: carrito.map(i => window.fenixItemGA(i, i.cantidad))
-      });
-    }
+    if (obtenerCarrito().length === 0) return;
     window.location.href = "/checkout.html";
   });
   if (btnVaciar) btnVaciar.addEventListener("click", () => {

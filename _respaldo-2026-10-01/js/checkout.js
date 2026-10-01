@@ -1206,23 +1206,6 @@ const NUMERO_WHATSAPP = "51978821080";
     // si se guardó bien o no).
     const promesaSheet = registrarPedidoEnSheet(datosPedido);
 
-    // GA4: pedido enviado (purchase). Se registra antes de abrir WhatsApp.
-    if (window.fenixEvento) {
-      window.fenixEvento("purchase", {
-        transaction_id: idPedido,
-        currency: "PEN",
-        value: Number(total.toFixed(2)),
-        shipping: tipoEntrega === "lima" ? Number(costoDeliveryConIgv) || 0 : 0,
-        tipo_entrega: tipoEntregaTexto,
-        items: carrito.map(item => ({
-          item_id: item.sku,
-          item_name: item.nombre,
-          price: Number(extraerPrecioNumerico(item.precio).toFixed(2)),
-          quantity: item.cantidad
-        }))
-      });
-    }
-
     const urlWhatsApp = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
 
     // Usamos la ventana que abrimos en blanco al inicio del clic. Si por lo

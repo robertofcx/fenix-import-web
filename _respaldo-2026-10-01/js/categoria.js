@@ -97,7 +97,7 @@ function sincronizarUrl() {
 }
 
 function actualizarBreadcrumb() {
-  let html = `<a href="/">Inicio</a>`;
+  let html = `<a href="index.html">Inicio</a>`;
   if (categoriaActiva !== "Todos") {
     if (subcategoriaActiva) {
       html += ` <span class="sep">›</span> <a href="catalogo.html?categoria=${encodeURIComponent(categoriaActiva)}">${categoriaActiva}</a>`;
