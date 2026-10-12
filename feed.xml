@@ -446,7 +446,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Coyote</g:color>
   </item>
   <item>
@@ -471,7 +471,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -496,7 +496,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Verde</g:color>
   </item>
   <item>
@@ -654,7 +654,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Coyote</g:color>
   </item>
   <item>
@@ -679,7 +679,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -699,7 +699,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Verde</g:color>
   </item>
   <item>
@@ -724,7 +724,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Coyote</g:color>
   </item>
   <item>
@@ -749,7 +749,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -774,7 +774,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Verde</g:color>
   </item>
   <item>
@@ -1888,7 +1888,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Mochilas</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Mochilas de Emergencia</g:product_type>
     <g:color>Naranja</g:color>
   </item>
   <item>
@@ -1910,7 +1910,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Mochilas</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Mochilas de Emergencia</g:product_type>
     <g:color>Rojo</g:color>
   </item>
   <item>
@@ -5023,7 +5023,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
   </item>
   <item>
     <g:id>CAM_116_VER</g:id>
@@ -5041,7 +5041,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
   </item>
   <item>
     <g:id>CAM_118_ROS</g:id>
@@ -6333,7 +6333,7 @@
     <g:condition>new</g:condition>
     <g:brand>Sport 8533</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Verde</g:color>
   </item>
   <item>
@@ -6354,7 +6354,7 @@
     <g:condition>new</g:condition>
     <g:brand>Sport 8533</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -7894,7 +7894,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
   </item>
   <item>
     <g:id>CAM_024</g:id>
@@ -8645,6 +8645,23 @@
     <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784706890/fenix/HER_052/8.png</g:additional_image_link>
     <g:availability>in_stock</g:availability>
     <g:price>60.00 PEN</g:price>
+    <g:condition>new</g:condition>
+    <g:brand>Truper</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:product_type>Herramientas &gt; Herramientas Manuales</g:product_type>
+  </item>
+  <item>
+    <g:id>HER_053</g:id>
+    <g:title>Pinza Sacabocados Truper PSA-9 - Código 17340</g:title>
+    <g:description>Un sacabocados​ es una herramienta de corte utilizada para perforar láminas de metal, madera, papel, cartón, cuero, concreto u otros materiales, con mínima distorsión.Cuenta con una excelente calidad de materiales y resistencia. Además, es bastante ligera y fácil de transportar. Marca: Truper Modelo: PSA-9 Materiales: PVC / Acero al carbono / Vinil Color: Negro con naranja Longitud: 9″ (228,6 mm) Mango recubierto de vinil para mayor comodidad Para perforaciones en cuero, lona, plástico y cartón. Pinza fabricada en acero al carbono y mango ergonómico para brindar mejor agarre. Puntas de corte fabricadas de acero templado para una mayor duración. Cuenta con soporte de desgaste lo que asegura que el material a cortar no sufra daños. Fácil selección del diámetro para perforar. Con depósito para desperdicios. Requiere poca fuerza para hacer los agujeros. Diámetros de perforaciones: 2, 2.5, 3, 3.5, 4 y 4.5 mm Dureza sacabocados: 45 HRc Dimensiones del producto: 2.5x24x6.3cm (Alto x Largo x Ancho) Dimensiones del empaque: 2.5x30x10cm (Alto x Largo x Ancho) Dimensiones del paquete: 4x33x11cm (Alto x Largo x Ancho) Peso: 0.37Kg Incluye: Presentación en tarjeta 1 Pinza sacabocados</g:description>
+    <g:link>https://feniximportperu.com/producto/pinza-sacabocados-truper-psa-9-codigo-17340.html?utm_source=google&amp;utm_medium=organic&amp;utm_campaign=shopping_fichas_gratuitas</g:link>
+    <g:image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784706893/fenix/HER_053/main.jpg</g:image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784706894/fenix/HER_053/2.png</g:additional_image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784706896/fenix/HER_053/3.png</g:additional_image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784706898/fenix/HER_053/4.png</g:additional_image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784706900/fenix/HER_053/5.png</g:additional_image_link>
+    <g:availability>in_stock</g:availability>
+    <g:price>46.00 PEN</g:price>
     <g:condition>new</g:condition>
     <g:brand>Truper</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
@@ -10347,7 +10364,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Hogar y seguridad &gt; Mochilas</g:product_type>
+    <g:product_type>Hogar y seguridad &gt; Mochilas de Emergencia</g:product_type>
   </item>
   <item>
     <g:id>HOG_146</g:id>
@@ -11578,7 +11595,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Maletas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -11597,7 +11614,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Maletas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -12473,7 +12490,8 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Gas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Sopletes y Gas Butano</g:product_type>
+    <g:color>Negro</g:color>
   </item>
   <item>
     <g:id>HER_154</g:id>
@@ -14434,7 +14452,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Mochilas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -14449,7 +14467,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Mochilas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -14464,7 +14482,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Mochilas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -14482,7 +14500,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Maletas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -14500,7 +14518,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Maletas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>A4</g:size>
   </item>
   <item>
@@ -14518,7 +14536,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Maletas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -14536,7 +14554,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Maletas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -14554,7 +14572,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Maletas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -14572,7 +14590,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Maletas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -15212,7 +15230,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Maletas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -15233,7 +15251,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Maletas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>A4</g:size>
   </item>
   <item>
@@ -15273,7 +15291,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Mochilas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>A4</g:size>
   </item>
   <item>
@@ -15292,7 +15310,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Mochilas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -15311,7 +15329,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Mochilas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:size>OFICIO</g:size>
   </item>
   <item>
@@ -15330,7 +15348,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_002</g:id>
@@ -15348,7 +15366,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_003</g:id>
@@ -15366,7 +15384,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_004</g:id>
@@ -15384,7 +15402,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_005</g:id>
@@ -15402,7 +15420,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_006</g:id>
@@ -15420,7 +15438,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_007</g:id>
@@ -15438,7 +15456,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_008</g:id>
@@ -15456,7 +15474,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_009</g:id>
@@ -15474,7 +15492,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_011</g:id>
@@ -15492,7 +15510,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_012</g:id>
@@ -15510,7 +15528,7 @@
     <g:condition>new</g:condition>
     <g:brand>MISSI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_022</g:id>
@@ -15526,7 +15544,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Rosado</g:color>
   </item>
   <item>
@@ -15543,7 +15561,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Verde</g:color>
   </item>
   <item>
@@ -15560,7 +15578,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Amarillo</g:color>
   </item>
   <item>
@@ -15581,7 +15599,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Celeste</g:color>
   </item>
   <item>
@@ -15602,7 +15620,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Celeste</g:color>
   </item>
   <item>
@@ -15623,7 +15641,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Rosado</g:color>
   </item>
   <item>
@@ -15644,7 +15662,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Rosado</g:color>
   </item>
   <item>
@@ -15663,7 +15681,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Azul</g:color>
   </item>
   <item>
@@ -15682,7 +15700,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Celeste</g:color>
   </item>
   <item>
@@ -15701,7 +15719,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Verde</g:color>
   </item>
   <item>
@@ -15720,7 +15738,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Celeste</g:color>
   </item>
   <item>
@@ -15739,7 +15757,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Celeste</g:color>
   </item>
   <item>
@@ -15758,7 +15776,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Celeste</g:color>
   </item>
   <item>
@@ -15777,7 +15795,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Celeste</g:color>
   </item>
   <item>
@@ -15796,7 +15814,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -15815,7 +15833,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Celeste</g:color>
   </item>
   <item>
@@ -15834,7 +15852,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Lila</g:color>
   </item>
   <item>
@@ -15853,7 +15871,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
     <g:color>Rosado</g:color>
   </item>
   <item>
@@ -15872,7 +15890,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_045</g:id>
@@ -15890,7 +15908,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_046</g:id>
@@ -15908,7 +15926,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_047</g:id>
@@ -15926,7 +15944,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Cartucheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>CEL_180</g:id>
@@ -17174,7 +17192,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Gas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Sopletes y Gas Butano</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -17830,7 +17848,7 @@
   <item>
     <g:id>ILU_272</g:id>
     <g:title>Linterna Led Frontal De Cabeza Recargable Lidimi LD-L1322C</g:title>
-    <g:description>La Linterna Frontal Recargable Lidimi LD-L122C es el aliado perfecto para quienes buscan iluminación confiable en cualquier entorno. Su diseño versátil y cómodo permite un ajuste seguro en la cabeza, dejando tus manos libres para explorar, trabajar o disfrutar de tus actividades al aire libre. Es recargable, cuenta con 3 modos de luz frontal con zoom y 4 modos de luz trasera. Marca: LIDIMI Modelo: LD-L1322C Tipo de empaque: en Caja Materiales: Aluminio + Plástico Uso recomendado: Camping, senderismo, seguridad, uso doméstico, profesional, emergencias, rescate, etc. Potencia / Lúmenes (lm): 10W Alcance: Hasta 400 metros Colores de luz: -Luz blanca -Luz roja de emergencia Modos de iluminación: Luz intensa, media, baja y estroboscópica. * Funciones adicionales: - Indicador LED para monitorear el nivel de batería en tiempo real. -Banco de energía (Power Bank) integrado, que permite cargar dispositivos móviles en emergencias -Función de zoom, que ajusta el haz de luz para enfoque amplio o puntual. Tipo de bombillo: LED Tipo de batería: 3 baterías recargables 18650 Método de carga: USB Tipo C Resistencia: Contiene protección IPX4, que la hace resistente al agua y polvo Autonomía / Tiempo de uso: Hasta 20 horas de duración Dimensiones del producto: 8.7x12.5x10.5cm (Alto x Largo x Ancho) Dimensiones del empaque: 9.3x11.2x10.6cm (Alto x Largo x Ancho) Dimensiones del paquete: 10x12x11cm (Alto x Largo x Ancho) Peso: 0.345Kg Incluye: 1 Linterna 1 Cable Tipo C 3 Baterías 18650</g:description>
+    <g:description>La Linterna Frontal Recargable Lidimi LD-L122C es el aliado perfecto para quienes buscan iluminación confiable en cualquier entorno. Su diseño versátil y cómodo permite un ajuste seguro en la cabeza, dejando tus manos libres para explorar, trabajar o disfrutar de tus actividades al aire libre. Es recargable, cuenta con 3 modos de luz frontal con zoom y 4 modos de luz trasera. Marca: CAFINI Modelo: LD-L1322C Tipo de empaque: en Caja Materiales: Aluminio + Plástico Uso recomendado: Camping, senderismo, seguridad, uso doméstico, profesional, emergencias, rescate, etc. Potencia / Lúmenes (lm): 10W Alcance: Hasta 400 metros Colores de luz: -Luz blanca -Luz roja de emergencia Modos de iluminación: Luz intensa, media, baja y estroboscópica. * Funciones adicionales: - Indicador LED para monitorear el nivel de batería en tiempo real. -Banco de energía (Power Bank) integrado, que permite cargar dispositivos móviles en emergencias -Función de zoom, que ajusta el haz de luz para enfoque amplio o puntual. Tipo de bombillo: LED Tipo de batería: 3 baterías recargables 18650 Método de carga: USB Tipo C Resistencia: Contiene protección IPX4, que la hace resistente al agua y polvo Autonomía / Tiempo de uso: Hasta 20 horas de duración Dimensiones del producto: 8.7x12.5x10.5cm (Alto x Largo x Ancho) Dimensiones del empaque: 9.3x11.2x10.6cm (Alto x Largo x Ancho) Dimensiones del paquete: 10x12x11cm (Alto x Largo x Ancho) Peso: 0.345Kg Incluye: 1 Linterna 1 Cable Tipo C 3 Baterías 18650</g:description>
     <g:link>https://feniximportperu.com/producto/linterna-led-frontal-de-cabeza-recargable-lidimi-ld-l1322c.html?utm_source=google&amp;utm_medium=organic&amp;utm_campaign=shopping_fichas_gratuitas</g:link>
     <g:image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784714691/fenix/ILU_272/main.png</g:image_link>
     <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784714695/fenix/ILU_272/2.png</g:additional_image_link>
@@ -17841,7 +17859,7 @@
     <g:availability>in_stock</g:availability>
     <g:price>70.00 PEN</g:price>
     <g:condition>new</g:condition>
-    <g:brand>LIDIMI</g:brand>
+    <g:brand>CAFINI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
     <g:product_type>Iluminacion &gt; Linternas Frontales</g:product_type>
     <g:color>Negro</g:color>
@@ -20628,7 +20646,8 @@
     <g:condition>new</g:condition>
     <g:brand>FIX</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Herramientas &gt; Accesorios tacticos</g:product_type>
+    <g:product_type>Herramientas &gt; Sopletes y Gas Butano</g:product_type>
+    <g:color>Negro</g:color>
   </item>
   <item>
     <g:id>HER_248</g:id>
@@ -20820,7 +20839,7 @@
     <g:condition>new</g:condition>
     <g:brand>FIX</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Gas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Sopletes y Gas Butano</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -20845,7 +20864,7 @@
   <item>
     <g:id>ILU_304</g:id>
     <g:title>Linterna Frontal Recargable con Sensor 10W 1200lm L1318C LIDIMI</g:title>
-    <g:description>Linterna frontal recargable de 10 W con sensor y zoom de la marca LIDIMI, es el aliado perfecto para quienes buscan iluminación confiable en cualquier entorno. Su diseño versátil y cómodo permite un ajuste seguro en la cabeza, dejando tus manos libres para explorar, trabajar o disfrutar de tus actividades al aire libre. Incorpora hasta 1200 lúmenes, protección IPX4, carga por USB tipo C y cuerpo de Aluminio + ABS para mayor resistencia. Marca: Lidimi Modelo: L1318C Tipo de empaque: En caja Materiales: Aluminio + Plástico ABS * Uso recomendado: Camping, senderismo, seguridad, uso doméstico, profesional, etc. * Potencia / Lúmenes (lm): 10W / 1200lm * Alcance: 300 metros * Colores de luz: Blanco y Rojo * Modos de iluminación: Alta, Baja, Intermitente, Roja e Intermitente Roja * Funciones adicionales: Encendido y apagado con sensor, zoom ajustable, banda elástica ajustable, antideslizante y ajuste de 80° * Tipo de batería: 18650 recargable 2500mAh * Método de carga: Recargable con cable Tipo C * Resistencia: IPX4 (salpicaduras) * Autonomía / Tiempo de uso: 8 horas de uso continuo Dimensiones del producto Min: 7x6.1x8.9cm (Alto x Largo x Ancho) Dimensiones del producto Max: 7x7.8x8.9cm (Alto x Largo x Ancho) Dimensiones del empaque: 9.5x11.5x10.5cm (Alto x Largo x Ancho) Dimensiones del paquete: 10x12x11cm (Alto x Largo x Ancho) Peso: 0.32Kg Incluye: 1 Linterna Frontal con sensor L1318C 1 Cable de carga Tipo C 3 Baterías 18650</g:description>
+    <g:description>Linterna frontal recargable de 10 W con sensor y zoom de la marca LIDIMI, es el aliado perfecto para quienes buscan iluminación confiable en cualquier entorno. Su diseño versátil y cómodo permite un ajuste seguro en la cabeza, dejando tus manos libres para explorar, trabajar o disfrutar de tus actividades al aire libre. Incorpora hasta 1200 lúmenes, protección IPX4, carga por USB tipo C y cuerpo de Aluminio + ABS para mayor resistencia. Marca: CAFINI Modelo: L1318C Tipo de empaque: En caja Materiales: Aluminio + Plástico ABS * Uso recomendado: Camping, senderismo, seguridad, uso doméstico, profesional, etc. * Potencia / Lúmenes (lm): 10W / 1200lm * Alcance: 300 metros * Colores de luz: Blanco y Rojo * Modos de iluminación: Alta, Baja, Intermitente, Roja e Intermitente Roja * Funciones adicionales: Encendido y apagado con sensor, zoom ajustable, banda elástica ajustable, antideslizante y ajuste de 80° * Tipo de batería: 18650 recargable 2500mAh * Método de carga: Recargable con cable Tipo C * Resistencia: IPX4 (salpicaduras) * Autonomía / Tiempo de uso: 8 horas de uso continuo Dimensiones del producto Min: 7x6.1x8.9cm (Alto x Largo x Ancho) Dimensiones del producto Max: 7x7.8x8.9cm (Alto x Largo x Ancho) Dimensiones del empaque: 9.5x11.5x10.5cm (Alto x Largo x Ancho) Dimensiones del paquete: 10x12x11cm (Alto x Largo x Ancho) Peso: 0.32Kg Incluye: 1 Linterna Frontal con sensor L1318C 1 Cable de carga Tipo C 3 Baterías 18650</g:description>
     <g:link>https://feniximportperu.com/producto/linterna-frontal-recargable-con-sensor-10w-1200lm-l1318c-lidimi.html?utm_source=google&amp;utm_medium=organic&amp;utm_campaign=shopping_fichas_gratuitas</g:link>
     <g:image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784717125/fenix/ILU_304/main.png</g:image_link>
     <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784717126/fenix/ILU_304/2.png</g:additional_image_link>
@@ -20856,7 +20875,7 @@
     <g:availability>in_stock</g:availability>
     <g:price>60.00 PEN</g:price>
     <g:condition>new</g:condition>
-    <g:brand>Lidimi</g:brand>
+    <g:brand>CAFINI</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
     <g:product_type>Iluminacion &gt; Linternas Frontales</g:product_type>
     <g:color>Negro</g:color>
@@ -21566,6 +21585,24 @@
     <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
   </item>
   <item>
+    <g:id>HOG_315</g:id>
+    <g:title>Afilador de Cuchillos Profesional de Acero Inoxidable Truper AFI-CUX 15147</g:title>
+    <g:description>El Afilador de Cuchillos Truper AFI-CUX 15147 es una herramienta práctica y eficiente diseñada para mantener tus cuchillos con filo óptimo y listos para cualquier tarea de cocina o corte. Su cuerpo de acero inoxidable reforzado con soportes de ABS y base antiderrapante le brinda robustez, estabilidad y durabilidad en el uso diario. Cuenta con dos niveles de afilado: una ranura con cuchillas de carburo de tungsteno para afilado grueso, ideal para restaurar filos muy desgastados, y otra con cuchillas de cerámica para afilado fino, perfecta para pulir y perfilar el filo de hojas lisas. Marca: Truper Modelo: AFI-CUX Tipo de empaque: En blíster Materiales: Acero Inoxidable + Plástico ABS + Antiderrapante Tipo de herramienta: Afilador de cuchillos manual Cuerpo: Acero inoxidable con soportes ABS Base: Antiderrapante Niveles de afilado: Grueso: Hojas de carburo de tungsteno (restaura filo desgastado) Fino: Hojas cerámicas (perfilado y pulido) Uso recomendado: Cuchillos de hoja lisa No apto para: Cuchillos con sierra ni tijeras Dimensiones del producto: 19x6.3x6.2cm (Alto x Largo x Ancho) Dimensiones del empaque: 16x13x7cm (Alto x Largo x Ancho) Dimensiones del paquete: 17x14x8cm (Alto x Largo x Ancho) Peso: 0.285Kg Incluye: 1 Afilador de cuchillos Truper AFI-CUX 15147</g:description>
+    <g:link>https://feniximportperu.com/producto/afilador-de-cuchillos-profesional-de-acero-inoxidable-truper-afi-cux-15147.html?utm_source=google&amp;utm_medium=organic&amp;utm_campaign=shopping_fichas_gratuitas</g:link>
+    <g:image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784717787/fenix/HOG_315/main.png</g:image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784717789/fenix/HOG_315/2.png</g:additional_image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784717791/fenix/HOG_315/3.png</g:additional_image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784717793/fenix/HOG_315/4.png</g:additional_image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784717794/fenix/HOG_315/5.png</g:additional_image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784717796/fenix/HOG_315/6.png</g:additional_image_link>
+    <g:availability>in_stock</g:availability>
+    <g:price>38.00 PEN</g:price>
+    <g:condition>new</g:condition>
+    <g:brand>Truper</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:product_type>Hogar y seguridad &gt; Accesorios para el Hogar</g:product_type>
+  </item>
+  <item>
     <g:id>HOG_316</g:id>
     <g:title>Destapacaños Manual de 4.5 m con guía Pretul DECA-15P 22880</g:title>
     <g:description>El Destapacaños manual Pretul DECA-15P 22880 es una herramienta esencial para mantenimiento de sistemas de drenaje en el hogar o negocio. Con una guía flexible de acero al carbono de 4.5 m de longitud, permite llegar y remover obstrucciones en tuberías de hasta 1 ½&quot; (38 mm) de diámetro. Su tambor con embobinado compacto evita deformaciones por torsión durante su uso y facilita el desplazamiento dentro de las cañerías. Incorpora una punta espiral eficaz para deshacer atascos y un seguro de liberación rápida que brinda control y seguridad durante la operación. Marca: Pretul Modelo: DECA-15P Tipo de empaque: En bolsa Materiales: Polipropileno + Acero al Carbono Tipo de herramienta: Destapacaños manual Longitud de la guía: 4.5 m Diámetro de tuberías compatibles: Hasta 1 ½&quot; / 38 mm Guía: Acero al carbono con embobinado compacto Punta: Punta espiral para desatascar obstrucciones Seguro: Seguro de liberación rápida Uso recomendado: Tuberías de lavabos, fregaderos, lavaplatos, tinas, regaderas y WC Dimensiones del producto: 13x13x18cm (Alto x Largo x Ancho) Dimensiones del empaque: 13x13x18cm (Alto x Largo x Ancho) Dimensiones del paquete: 14x14x19cm (Alto x Largo x Ancho) Peso: 0.695Kg Incluye: 1 Destapacaños De 4.5 metros</g:description>
@@ -21723,7 +21760,7 @@
     <g:condition>new</g:condition>
     <g:brand>Chenson</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Loncheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_050</g:id>
@@ -21741,7 +21778,7 @@
     <g:condition>new</g:condition>
     <g:brand>Scool</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Loncheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_051</g:id>
@@ -21759,7 +21796,7 @@
     <g:condition>new</g:condition>
     <g:brand>Scool</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Loncheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>ERA_053</g:id>
@@ -21777,7 +21814,7 @@
     <g:condition>new</g:condition>
     <g:brand>Scool</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Loncheras</g:product_type>
+    <g:product_type>Escolar &gt; Loncheras y Cartucheras</g:product_type>
   </item>
   <item>
     <g:id>CEL_220</g:id>
@@ -22368,29 +22405,6 @@
     <g:color>Negro</g:color>
   </item>
   <item>
-    <g:id>CEL_227</g:id>
-    <g:title>Cargador Godzilla 100W Y Cable 2Mt Tipo C A C Godzilla CR63</g:title>
-    <g:description>Cargador de alta potencia diseñado para ofrecer carga rápida, segura y estable en todo tipo de dispositivos. Su doble puerto USB Tipo C permite alimentar smartphones, tablets y laptops con máxima eficiencia, mientras que el cable reforzado en nylon garantiza mayor resistencia y durabilidad para uso intensivo diario. Ideal para hogar, oficina y viajes, brindando energía confiable cuando más la necesitas. Marca: Codzilla Modelo: CR63 Tipo de empaque: En caja Materiales: Nylon, Plástico ABS Uso recomendado: carga rápida de smartphones, tablets, laptops y dispositivos compatibles en hogar, oficina, viajes y uso profesional. Potencia máxima: 100 W de carga rápida Tipo de puerto: doble puerto USB Tipo C Entrada: conexión Tipo C Cable: USB Tipo C a Tipo C reforzado en nylon Compatibilidad: smartphones, tablets, laptops y dispositivos compatibles con carga rápida Protección: sistema de seguridad contra sobrevoltaje, cortocircuito y sobretemperatura Calidad: fabricación de alto rendimiento para uso intensivo Largo del cable: 2 metros Dimensiones del producto: 5x4.5x3cm (Alto x Largo x Ancho) Dimensiones del empaque: 18x9.5x4cm (Alto x Largo x Ancho) Dimensiones del paquete: 19x10x5cm (Alto x Largo x Ancho) Peso: 0.18Kg Incluye: 1 Cubo cargador 1 Cable tipo C a C</g:description>
-    <g:link>https://feniximportperu.com/producto/cargador-godzilla-100w-y-cable-2mt-tipo-c-a-c-godzilla-cr63.html?utm_source=google&amp;utm_medium=organic&amp;utm_campaign=shopping_fichas_gratuitas</g:link>
-    <g:image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784718776/fenix/CEL_227/main.png</g:image_link>
-    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784718778/fenix/CEL_227/2.png</g:additional_image_link>
-    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784718780/fenix/CEL_227/3.png</g:additional_image_link>
-    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784718782/fenix/CEL_227/4.png</g:additional_image_link>
-    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784718784/fenix/CEL_227/5.png</g:additional_image_link>
-    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784718785/fenix/CEL_227/6.png</g:additional_image_link>
-    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784718787/fenix/CEL_227/7.png</g:additional_image_link>
-    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784718789/fenix/CEL_227/8.png</g:additional_image_link>
-    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784718791/fenix/CEL_227/9.png</g:additional_image_link>
-    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784718793/fenix/CEL_227/10.png</g:additional_image_link>
-    <g:availability>in_stock</g:availability>
-    <g:price>50.00 PEN</g:price>
-    <g:condition>new</g:condition>
-    <g:brand>Codzilla</g:brand>
-    <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Celulares y Auto &gt; Cargadores de Pared</g:product_type>
-    <g:color>Negro</g:color>
-  </item>
-  <item>
     <g:id>CEL_229</g:id>
     <g:title>Audífonos Bluetooth Superbuds 20 IP54 24 horas</g:title>
     <g:description>Los Audífonos Bluetooth Superbuds 20 son audífonos totalmente inalámbricos diseñados para ofrecer una experiencia de audio cómoda y potente durante tu día a día. Con conexión Bluetooth estable, permiten escuchar música, podcasts o atender llamadas sin cables molestos. Su estuche de carga portátil proporciona autonomía adicional para horas de reproducción continua, y su diseño ergonómico asegura un ajuste seguro en tus oídos. Incorporan micrófono integrado para llamadas manos libres y controles táctiles que facilitan la gestión de música y llamadas con un simple toque. Ideales para uso diario, ejercicio, trabajo y movilidad urbana, los Superbuds 20 combinan rendimiento, confort y portabilidad en un formato moderno y fácil de llevar. Marca: Super Modelo: Superbuds 20 Tipo de empaque: En caja Materiales: Plástico ABS Resistencia: IP54 A prueba de Agua Asistente de Voz: Alcance de Trabajo: 10-15 metros Duración de carga: 1.5 horas Potencia de Transmisión: Class 2 Tiempo de Uso: - Una sola duración: 6 horas - Una duración total: 24 horas Operación Táctil: - Reproducción/Pausa - Adelantar y Retroceder Playlist - Invocación de SIRI - Recepción de Llamadas - Colgar Llamadas - Rechazar llamadas entrantes Versión Bluetooth: 5.4+EDR Capacidad de Batería: 30mAh/250mAh Voltaje de Carga: 5V/1A Dimensiones del producto: 4.5x4.5x3.2cm (Alto x Largo x Ancho) Dimensiones del empaque: 10x10x5cm (Alto x Largo x Ancho) Dimensiones del paquete: 14x10x10cm (Alto x Largo x Ancho) Peso: 0.12Kg Incluye: 1 Audífono de Vincha 1 Cable Tipo C de carga 1 Estuche 1Cable auxiliar</g:description>
@@ -22465,7 +22479,7 @@
     <g:condition>new</g:condition>
     <g:brand>SCOOL</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Escolar &gt; Maletas</g:product_type>
+    <g:product_type>Escolar &gt; Mochilas Escolares</g:product_type>
     <g:color>Rosado</g:color>
     <g:size>OFICIO</g:size>
   </item>
@@ -23089,7 +23103,7 @@
     <g:condition>new</g:condition>
     <g:brand>Genérico</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -23323,6 +23337,24 @@
     <g:color>Plateado</g:color>
   </item>
   <item>
+    <g:id>OFI_010</g:id>
+    <g:title>Caja Pequeña 10x14x10 cm Cartón Microcorrugado Pack 50 Unidades</g:title>
+    <g:description>Caja de cartón microcorrugado, ligera y resistente, ideal para transportar y proteger productos livianos. Sus dimensiones internas de 10 x 10 x 14 cm permiten optimizar el espacio, facilitar el almacenamiento y garantizar envíos seguros. Marca: Genérico Modelo: Caja Pequeña Tipo de empaque: en Bolsa Materiales: Cartón corrugado Resistencia: Estructura de microcorrugado que protege productos livianos. Uso: Ideal para envíos, ecommerce, courier y almacenamiento. Compatibilidad: Apta para etiquetado, codificación y logística. Material: Cartón microcorrugado ligero y resistente. Cierre: Requiere cinta adhesiva para sellado seguro. Apilable: Permite almacenamiento en pilas moderadas. Peso recomendado: Hasta 1.5 Kg sin deformar la caja. Dimensiones del producto: 10x10x14cm (Alto x Largo x Ancho) Dimensiones del empaque: 20x24x20cm (Alto x Largo x Ancho) Dimensiones del paquete: 21x25x21cm (Alto x Largo x Ancho) Peso: 1.98Kg Incluye: 50 unidades de cajas pequeñas (10x14x10)</g:description>
+    <g:link>https://feniximportperu.com/producto/caja-pequena-10x14x10-cm-carton-microcorrugado-pack-50-unidades.html?utm_source=google&amp;utm_medium=organic&amp;utm_campaign=shopping_fichas_gratuitas</g:link>
+    <g:image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784719791/fenix/OFI_010/main.png</g:image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784719792/fenix/OFI_010/2.png</g:additional_image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784719794/fenix/OFI_010/3.png</g:additional_image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784719795/fenix/OFI_010/4.png</g:additional_image_link>
+    <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1784719797/fenix/OFI_010/5.png</g:additional_image_link>
+    <g:availability>in_stock</g:availability>
+    <g:price>47.00 PEN</g:price>
+    <g:condition>new</g:condition>
+    <g:brand>Genérico</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:product_type>Articulos de Oficina &gt; Embalajes</g:product_type>
+    <g:color>Beige</g:color>
+  </item>
+  <item>
     <g:id>OFI_011</g:id>
     <g:title>Caja Mediana 14x19x10 cm Cartón Microcorrugado Pack 50 Unidades</g:title>
     <g:description>Caja de cartón microcorrugado, ligera y resistente, ideal para transportar y proteger productos livianos. Sus dimensiones internas de 10 x 14 x 19 cm permiten optimizar el espacio, facilitar el almacenamiento y garantizar envíos seguros. Marca: Genérico Modelo: Caja Mediana Tipo de empaque: En Bolsa Materiales: Cartón corrugado Resistencia: Estructura de microcorrugado que protege productos livianos. Uso: Ideal para envíos, ecommerce, courier y almacenamiento. Compatibilidad: Apta para etiquetado, codificación y logística. Material: Cartón microcorrugado ligero y resistente. Cierre: Requiere cinta adhesiva para sellado seguro. Apilable: Permite almacenamiento en pilas moderadas. Peso recomendado: Hasta 2 Kg sin deformar la caja. Dimensiones del producto: 10x14x19cm (Alto x Largo x Ancho) Dimensiones del empaque: 21x23x24cm (Alto x Largo x Ancho) Dimensiones del paquete: 22x24x25cm (Alto x Largo x Ancho) Peso: 2.82Kg Incluye: 50 unidades de cajas medianas (14x19x10)</g:description>
@@ -23415,7 +23447,7 @@
     <g:condition>new</g:condition>
     <g:brand>MOTOWOLF</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Camping y Supervivencia &gt; Mochilas</g:product_type>
+    <g:product_type>Camping y Supervivencia &gt; Mochilas Camperas</g:product_type>
     <g:color>Negro</g:color>
   </item>
   <item>
@@ -27079,13 +27111,13 @@
     <g:condition>new</g:condition>
     <g:brand>MOTOWOLF</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Implementos para Motos</g:product_type>
+    <g:product_type>Implementos para Motos &gt; Mochilas Camperas</g:product_type>
   </item>
   <item>
     <g:id>TEC_188</g:id>
-    <g:title>Supresor de Picos con 10 Tomas Universales 3 Puertos USB-A 3 Puertos USB-C PD Carga Rapida de hasta 33 W Proteccion contra Sobrecarga y Sobretension…</g:title>
+    <g:title>Supresor de Picos 10 Tomas 3 Puertos USB-A 3 Puertos USB-C PD Carga Rapida de hasta 33 W 2mLDNIO</g:title>
     <g:description>El LDNIO SC10610C es un supresor de picos y regleta de alimentación diseñado para conectar y alimentar múltiples dispositivos eléctricos y electrónicos desde un solo punto. Cuenta con 10 tomas universales de corriente, además de 3 puertos USB-A y 3 puertos USB-C, permitiendo cargar diferentes dispositivos sin necesidad de utilizar adaptadores adicionales. Su puerto USB-C principal admite Power Delivery de hasta 33 W, mientras que el sistema USB ofrece hasta 33 W de potencia total. Incorpora protección contra sobretensión y sobrecarga, interruptor general de encendido y cable de alimentación de 2 metros. Marca: Ldnio Modelo: SC10610C Tipo de empaque: en Caja Materiales: Plástico Resistente + Cobre Tipo: Supresor de picos / regleta / extensión eléctrica Cantidad de tomas AC: 10 Tipo de tomas: Universales Puertos USB-A: 3 (2 puertos A regulares - 1 puerto A 30W) Puertos USB-C: 3 (2 puertos C regulares - 1 Puerto C 33W) Potencia nominal AC: 2500 W Voltaje de entrada AC: 100–250 V Frecuencia: 50/60 Hz Corriente máxima: 10 A Protección contra sobretensión: Sí Protección contra sobrecarga: Sí Interruptor general: Sí Puesta a tierra: Sí Longitud del cable: 2 m Salidas combinadas USB-C1 + USB-A1: 5 V ⎓ 3.6 A, hasta 18 W Salidas combinadas USB-C1 + USB-C2: 20 W + 12 W, hasta 32 W Dimensiones del producto: 36x9x9cm (Alto x Largo x Ancho) Dimensiones del empaque: 36.4x9.5x9.5cm (Alto x Largo x Ancho) Dimensiones del paquete: 36.4x9.5x9.5cm (Alto x Largo x Ancho) Peso: 0.85Kg Incluye: 1 Supresor LDNIO SC10610C</g:description>
-    <g:link>https://feniximportperu.com/producto/supresor-de-picos-con-10-tomas-universales-3-puertos-usb-a-3-puertos-usb-c-pd-carga-rapida-de-hasta-33-w-proteccion-contra-sobrecarga-y-sobretension-cable-de-2-metros-ldnio-sc10610c.html?utm_source=google&amp;utm_medium=organic&amp;utm_campaign=shopping_fichas_gratuitas</g:link>
+    <g:link>https://feniximportperu.com/producto/supresor-de-picos-10-tomas-3-puertos-usb-a-3-puertos-usb-c-pd-carga-rapida-de-hasta-33-w-2mldnio.html?utm_source=google&amp;utm_medium=organic&amp;utm_campaign=shopping_fichas_gratuitas</g:link>
     <g:image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1790613731/fenix/TEC_188/main.png</g:image_link>
     <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1790613732/fenix/TEC_188/2.png</g:additional_image_link>
     <g:additional_image_link>https://res.cloudinary.com/vmkiq93n/image/upload/v1790613733/fenix/TEC_188/3.png</g:additional_image_link>
