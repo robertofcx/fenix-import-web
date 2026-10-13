@@ -1273,6 +1273,61 @@ const NUMERO_WHATSAPP = "51978821080";
       celularComprador,
       correoComprador
     });
+
+    // Reseñas de Clientes en Google: ofrece la encuesta solo si dejó correo.
+    mostrarOptInResenasGoogle(idPedido, correoComprador, tipoEntrega);
+  }
+
+  // ---------- Reseñas de Clientes en Google (opt-in de encuesta) ----------
+  // Google muestra un aviso para que el cliente acepte recibir una encuesta
+  // por correo después de la fecha estimada de entrega. Requiere correo.
+  const MERCHANT_ID_GOOGLE = 5858421959;
+
+  function sumarDiasHabiles(fecha, dias) {
+    const f = new Date(fecha);
+    let sumados = 0;
+    while (sumados < dias) {
+      f.setDate(f.getDate() + 1);
+      const dia = f.getDay();
+      if (dia !== 0 && dia !== 6) sumados++;
+    }
+    return f;
+  }
+
+  function mostrarOptInResenasGoogle(idPedido, correo, tipoEntrega) {
+    if (!correo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) return;
+
+    // Estimado conservador: Lima/recojo 2 días hábiles, provincia 5.
+    const diasEntrega = tipoEntrega === "provincia" ? 5 : 2;
+    const entrega = sumarDiasHabiles(new Date(), diasEntrega);
+    const fechaEntrega = entrega.getFullYear() + "-"
+      + String(entrega.getMonth() + 1).padStart(2, "0") + "-"
+      + String(entrega.getDate()).padStart(2, "0");
+
+    window.___gcfg = { lang: "es" };
+    window.renderOptIn = function () {
+      window.gapi.load("surveyoptin", function () {
+        window.gapi.surveyoptin.render({
+          merchant_id: MERCHANT_ID_GOOGLE,
+          order_id: idPedido,
+          email: correo,
+          delivery_country: "PE",
+          estimated_delivery_date: fechaEntrega,
+          opt_in_style: "CENTER_DIALOG"
+        });
+      });
+    };
+
+    if (window.gapi && window.gapi.load) {
+      window.renderOptIn();
+    } else if (!document.getElementById("gcr-platform-js")) {
+      const s = document.createElement("script");
+      s.id = "gcr-platform-js";
+      s.src = "https://apis.google.com/js/platform.js?onload=renderOptIn";
+      s.async = true;
+      s.defer = true;
+      document.head.appendChild(s);
+    }
   }
 
   // ---------- Pantalla final: resumen completo + reenvío + respaldos ----------
