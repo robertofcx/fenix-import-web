@@ -62,6 +62,21 @@
 
     // "/" y "/index.html" son la misma portada: se reportan siempre como "/"
     // para que GA4 no la parta en dos filas.
+    // URLs antiguas de la web anterior (WooCommerce): /producto/slug/ y
+    // parámetros como ?product_added_to_cart=9445&quantity=1. Se corrige
+    // la barra de direcciones (sin recargar) y se reporta la URL limpia,
+    // para que GA4 no parta una misma ficha en varias filas.
+    try {
+      const u = new URL(location.href);
+      let cambio = false;
+      const m = u.pathname.match(/^\/producto\/([^\/]+?)\/$/);
+      if (m) { u.pathname = "/producto/" + m[1] + ".html"; cambio = true; }
+      ["product_added_to_cart", "quantity", "add-to-cart"].forEach(p => {
+        if (u.searchParams.has(p)) { u.searchParams.delete(p); cambio = true; }
+      });
+      if (cambio) history.replaceState(null, "", u.pathname + u.search + u.hash);
+    } catch (e) { /* navegador muy antiguo: se deja la URL tal cual */ }
+
     const ubicacion = location.href.replace(/\/index\.html(?=$|[?#])/, "/");
 
     // ---------- Tráfico interno (tus locales / tu equipo) ----------
