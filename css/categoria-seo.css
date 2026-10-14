@@ -1,0 +1,83 @@
+/* ============================================================
+   categoria-seo.css — páginas estáticas /categoria/*.html
+   (reutiliza .barra-titulo, .grilla y .tarjeta de catalogo.css)
+   ============================================================ */
+
+.cat-seo-intro {
+  max-width: 820px;
+  margin: -4px 0 14px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--texto-muted);
+}
+
+.cat-seo-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 0 12px;
+  scrollbar-width: thin;
+}
+
+.cat-seo-chips-titulo {
+  flex-shrink: 0;
+  align-self: center;
+  font-size: 0.78rem;
+  color: var(--texto-muted);
+}
+
+.cat-seo-chip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  background: var(--bg-elevada);
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: border-color 0.15s ease;
+}
+
+.cat-seo-chip:hover { border-color: var(--azul); }
+
+.cat-seo-chip span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--texto-muted);
+}
+
+.cat-seo-contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6px 20px 40px;
+}
+
+.cat-seo-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+}
+
+.cat-seo-toolbar .contador { color: var(--texto-muted); margin: 0; }
+
+.cat-seo-filtros {
+  font-weight: 600;
+  color: var(--azul);
+  white-space: nowrap;
+}
+
+.cat-seo-filtros:hover { text-decoration: underline; }
+
+/* El nombre ahora es <h3> (mejor para SEO): mismo aspecto que el <p> del catálogo */
+h3.tarjeta-nombre { font-family: 'Inter', sans-serif; }
+
+@media (max-width: 600px) {
+  .cat-seo-contenido { padding: 4px 20px 32px; }
+  .cat-seo-intro { font-size: 0.85rem; }
+}

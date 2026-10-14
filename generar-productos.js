@@ -31,6 +31,7 @@ const fs = require("fs");
 const path = require("path");
 const { optimizarImagenCloudinary } = require("./js/util.js");
 const { generarFeed } = require("./generar-feed.js");
+const { generarPaginasCategoria, slugCategoria } = require("./generar-categorias.js");
 
 // ==================== CONFIGURACIÓN ====================
 const URL_SITIO = process.env.URL_SITIO || "https://feniximportperu.com";
@@ -222,7 +223,7 @@ function generarJsonLd(producto, precio, url, imagenes) {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Inicio", item: `${URL_SITIO}/` },
-      { "@type": "ListItem", position: 2, name: producto.categoria || "Catálogo", item: `${URL_SITIO}/catalogo.html` },
+      { "@type": "ListItem", position: 2, name: producto.categoria || "Catálogo", item: producto.categoria ? `${URL_SITIO}/categoria/${slugCategoria(producto.categoria)}.html` : `${URL_SITIO}/catalogo.html` },
       { "@type": "ListItem", position: 3, name: producto.nombre, item: url }
     ]
   };
@@ -260,10 +261,10 @@ function generarHtmlProducto(producto, todosLosProductos) {
 
   let breadcrumbHtml = `<a href="/">Inicio</a>`;
   if (producto.categoria) {
-    breadcrumbHtml += ` <span class="sep">›</span> <a href="/catalogo.html?categoria=${encodeURIComponent(producto.categoria)}">${escaparHtml(producto.categoria)}</a>`;
+    breadcrumbHtml += ` <span class="sep">›</span> <a href="/categoria/${slugCategoria(producto.categoria)}.html">${escaparHtml(producto.categoria)}</a>`;
   }
   if (producto.subcategoria) {
-    breadcrumbHtml += ` <span class="sep">›</span> <a href="/catalogo.html?categoria=${encodeURIComponent(producto.categoria)}&subcategoria=${encodeURIComponent(producto.subcategoria)}">${escaparHtml(producto.subcategoria)}</a>`;
+    breadcrumbHtml += ` <span class="sep">›</span> <a href="/categoria/${slugCategoria(producto.categoria)}/${slugCategoria(producto.subcategoria)}.html">${escaparHtml(producto.subcategoria)}</a>`;
   }
   breadcrumbHtml += ` <span class="sep">›</span> <span class="actual">${nombreEscapado}</span>`;
 
@@ -407,11 +408,12 @@ function generarHtmlProducto(producto, todosLosProductos) {
 </html>`;
 }
 
-function generarSitemap(productos) {
+function generarSitemap(productos, urlsCategorias = []) {
   const hoy = new Date().toISOString().slice(0, 10);
   const urls = [
     { loc: `${URL_SITIO}/`, priority: "1.0" },
     { loc: `${URL_SITIO}/catalogo.html`, priority: "0.9" },
+    ...urlsCategorias.map(loc => ({ loc, priority: "0.8" })),
     ...productos.filter(p => p.sku).map(p => ({ loc: `${URL_SITIO}/producto/${p.slug || generarSlugRespaldo(p.nombre)}.html`, priority: "0.7" }))
   ];
 
@@ -511,7 +513,9 @@ function main() {
 
 
   const publicados = productos.filter(p => p.sku && skusVistos.has(p.sku));
-  generarSitemap(publicados);
+  // Páginas estáticas por categoría/subcategoría (SEO) — antes del sitemap
+  const urlsCategorias = generarPaginasCategoria(publicados, URL_SITIO, __dirname, p => p.slug || generarSlugRespaldo(p.nombre));
+  generarSitemap(publicados, urlsCategorias);
   generarFeed(publicados, URL_SITIO, RUTA_FEED, p => p.slug || generarSlugRespaldo(p.nombre));
 
 

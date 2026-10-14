@@ -321,10 +321,21 @@
   let categoriasDrawer = [];
   let categoriaSeleccionadaDrawer = null;
 
+  // Igual que slugCategoria() de generar-categorias.js: los links del
+  // menú van a las páginas estáticas /categoria/... (indexables por Google).
+  function slugCategoria(texto) {
+    return String(texto || "")
+      .normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/&/g, " y ")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") || "otros";
+  }
+
   function urlCategoria(categoria, subcategoria) {
-    let url = "/catalogo.html?categoria=" + encodeURIComponent(categoria);
-    if (subcategoria) url += "&subcategoria=" + encodeURIComponent(subcategoria);
-    return url;
+    let url = "/categoria/" + slugCategoria(categoria);
+    if (subcategoria) url += "/" + slugCategoria(subcategoria);
+    return url + ".html";
   }
 
   function renderColumnaIzquierdaDrawer() {
