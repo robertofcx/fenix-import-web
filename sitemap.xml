@@ -356,11 +356,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/herramientas/multimetros.html</loc>
-    <lastmod>2026-11-18</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/categoria/herramientas/accesorios-electricos.html</loc>
     <lastmod>2026-11-18</lastmod>
     <priority>0.8</priority>
@@ -382,6 +377,11 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/herramientas/infladores.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/herramientas/multimetros.html</loc>
     <lastmod>2026-11-18</lastmod>
     <priority>0.8</priority>
   </url>
@@ -2092,11 +2092,6 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/multimetro-multitester-digital-profesional-truper-mut-39.html</loc>
-    <lastmod>2026-11-18</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/producto/multimetro-multitester-digital-truper-mut-33.html</loc>
     <lastmod>2026-11-18</lastmod>
     <priority>0.7</priority>
   </url>
