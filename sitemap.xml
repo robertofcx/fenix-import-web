@@ -556,11 +556,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/ventiladores.html</loc>
-    <lastmod>2026-11-19</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/relojes.html</loc>
     <lastmod>2026-11-19</lastmod>
     <priority>0.8</priority>
@@ -572,6 +567,11 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/repuestos.html</loc>
+    <lastmod>2026-11-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/ventiladores.html</loc>
     <lastmod>2026-11-19</lastmod>
     <priority>0.8</priority>
   </url>
@@ -1036,11 +1036,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/producto/ventilador-de-metal-20cm-usb-portatil-oficina-escritorio.html</loc>
-    <lastmod>2026-11-19</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/producto/funda-forro-para-lavadora-tapa-arriba-de-tela-gruesa-de-16-hasta-22kg.html</loc>
     <lastmod>2026-11-19</lastmod>
     <priority>0.7</priority>
@@ -1272,11 +1267,6 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/guantes-dart-2-tactil-ls2-antideslizantes-proteccion-motociclistas-talla-m-hombre.html</loc>
-    <lastmod>2026-11-19</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/producto/electroshock-tip-llavero-recargable-tw-1602.html</loc>
     <lastmod>2026-11-19</lastmod>
     <priority>0.7</priority>
   </url>
