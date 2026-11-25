@@ -160,7 +160,7 @@ function generarGaleriaHtml(producto, nombreEscapado) {
     <div class="galeria-miniaturas" id="galeria-miniaturas">
       ${imagenes.map((url, i) => `
         <div class="miniatura ${i === 0 ? "activa" : ""}" data-indice="${i}" onclick="irAImagen(${i})">
-          <img src="${optimizarImagenCloudinary(url, 'miniatura')}" alt="Vista ${i + 1}" loading="lazy">
+          <img src="${optimizarImagenCloudinary(url, 'miniatura')}" alt="${nombreEscapado} - vista ${i + 1}" loading="lazy">
         </div>`).join("")}
     </div>` : "";
 
@@ -179,7 +179,25 @@ function generarGaleriaHtml(producto, nombreEscapado) {
   return { galeriaHtml, imagenes };
 }
 
+// Política de devolución (igual a terminos-y-condiciones.html): 30 días,
+// por agencia/envío o en almacén, envío de retorno a cargo del cliente.
+const POLITICA_DEVOLUCION_LD = {
+  "@type": "MerchantReturnPolicy",
+  applicableCountry: "PE",
+  returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+  merchantReturnDays: 30,
+  returnMethod: "https://schema.org/ReturnByMail",
+  returnFees: "https://schema.org/ReturnFeesCustomerResponsibility"
+};
+
+// Sin campo stock = disponible (mismo criterio que el feed).
+function estaDisponible(item) {
+  return !(typeof item.stock === "number" && item.stock <= 0);
+}
+
 function generarJsonLd(producto, precio, url, imagenes) {
+  const variantes = (producto.esGrupo && producto.variantes && producto.variantes.length > 1) ? producto.variantes : null;
+  const disponible = variantes ? variantes.some(estaDisponible) : estaDisponible(producto);
   const productoLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -193,13 +211,14 @@ function generarJsonLd(producto, precio, url, imagenes) {
       url: url,
       priceCurrency: "PEN",
       price: precio,
-      availability: "https://schema.org/InStock",
-      seller: { "@type": "Organization", name: "Fenix Import Perú" }
+      availability: disponible ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      seller: { "@type": "Organization", name: "Fenix Import Perú" },
+      hasMerchantReturnPolicy: POLITICA_DEVOLUCION_LD
     }
   };
 
-  if (producto.esGrupo && producto.variantes && producto.variantes.length > 1) {
-    productoLd.hasVariant = producto.variantes.map(v => ({
+  if (variantes) {
+    productoLd.hasVariant = variantes.map(v => ({
       "@type": "Product",
       name: `${producto.nombre} - ${v.color}`,
       sku: v.sku,
@@ -209,11 +228,8 @@ function generarJsonLd(producto, precio, url, imagenes) {
         url: `${url}?v=${encodeURIComponent(v.sku)}`,
         priceCurrency: "PEN",
         price: limpiarPrecio(v.precio),
-        // Sin campo stock = disponible (mismo criterio que el feed), para
-        // que la ficha y el feed nunca se contradigan ante Google.
-        availability: (typeof v.stock === "number" && v.stock <= 0)
-          ? "https://schema.org/OutOfStock"
-          : "https://schema.org/InStock"
+        availability: estaDisponible(v) ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+        hasMerchantReturnPolicy: POLITICA_DEVOLUCION_LD
       }
     }));
   }
@@ -408,11 +424,23 @@ function generarHtmlProducto(producto, todosLosProductos) {
 </html>`;
 }
 
+// Páginas informativas que también deben estar en el sitemap.
+const PAGINAS_ESTATICAS = [
+  "nosotros.html",
+  "preguntas-frecuentes.html",
+  "metodos-de-pago.html",
+  "terminos-y-condiciones.html",
+  "politicas-de-privacidad.html",
+  "libro-de-reclamaciones.html"
+];
+
+// Sin <lastmod>: antes se ponía la fecha de cada corrida en TODAS las
+// URLs y Google termina ignorándolo. Mejor omitirlo que mandarlo falso.
 function generarSitemap(productos, urlsCategorias = []) {
-  const hoy = new Date().toISOString().slice(0, 10);
   const urls = [
     { loc: `${URL_SITIO}/`, priority: "1.0" },
     { loc: `${URL_SITIO}/catalogo.html`, priority: "0.9" },
+    ...PAGINAS_ESTATICAS.map(p => ({ loc: `${URL_SITIO}/${p}`, priority: "0.4" })),
     ...urlsCategorias.map(loc => ({ loc, priority: "0.8" })),
     ...productos.filter(p => p.sku).map(p => ({ loc: `${URL_SITIO}/producto/${p.slug || generarSlugRespaldo(p.nombre)}.html`, priority: "0.7" }))
   ];
@@ -421,13 +449,41 @@ function generarSitemap(productos, urlsCategorias = []) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url>
     <loc>${u.loc}</loc>
-    <lastmod>${hoy}</lastmod>
     <priority>${u.priority}</priority>
   </url>`).join("\n")}
 </urlset>`;
 
   fs.writeFileSync(RUTA_SITEMAP, xml, "utf-8");
   console.log(`✓ sitemap.xml actualizado (${urls.length} URLs)`);
+}
+
+/**
+ * Unifica la escritura de marcas ("OPALUX"/"Opalux", "Ldnio "/"LDNIO")
+ * para que web, categorías y feed muestren una sola. Elige la forma que
+ * no está toda en mayúsculas; si hay varias, la más usada.
+ */
+function normalizarMarcas(productos) {
+  const formas = new Map(); // clave minúscula -> Map(forma -> cantidad)
+  for (const p of productos) {
+    const m = String(p.marca || "").trim();
+    if (!m) continue;
+    const k = m.toLowerCase();
+    if (!formas.has(k)) formas.set(k, new Map());
+    formas.get(k).set(m, (formas.get(k).get(m) || 0) + 1);
+  }
+  const canonica = new Map();
+  for (const [k, cuenta] of formas) {
+    const lista = [...cuenta.entries()].sort((a, b) => {
+      const aMay = a[0] === a[0].toUpperCase(), bMay = b[0] === b[0].toUpperCase();
+      if (aMay !== bMay) return aMay ? 1 : -1;
+      return b[1] - a[1];
+    });
+    canonica.set(k, lista[0][0]);
+  }
+  for (const p of productos) {
+    const m = String(p.marca || "").trim();
+    if (m) p.marca = canonica.get(m.toLowerCase());
+  }
 }
 
 function main() {
@@ -440,6 +496,7 @@ function main() {
 
   const catalogo = JSON.parse(fs.readFileSync(RUTA_PRODUCTOS_JSON, "utf-8"));
   const productos = catalogo.productos || [];
+  normalizarMarcas(productos);
 
   if (productos.length === 0) {
     console.error("✗ productos.json no tiene productos (¿la clave se llama 'productos'?)");
