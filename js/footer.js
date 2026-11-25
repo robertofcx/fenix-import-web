@@ -46,6 +46,7 @@
       <h4>Acerca de</h4>
       <ul>
         <li><a href="/nosotros.html">Nosotros</a></li>
+        <li><a href="/envios.html">Envíos</a></li>
         <li><a href="/preguntas-frecuentes.html">Preguntas frecuentes</a></li>
         <li><a href="/metodos-de-pago.html">Métodos de pago</a></li>
       </ul>

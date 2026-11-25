@@ -175,3 +175,25 @@
 .pagina-hero .pagina-titulo { margin: 0 0 20px; }
 .pagina-hero .pagina-intro { text-align: center; }
 .pagina-hero .hero-botones { justify-content: center; margin: 22px 0 0; }
+
+
+/* ---------- Página de envíos (envios.html) ---------- */
+.grilla-3 { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 24px; }
+@media (min-width: 640px) { .grilla-3 { grid-template-columns: repeat(3, 1fr); } }
+.grilla-3 .tarjeta-destacada { margin-bottom: 0; }
+.tarjeta-destacada p + p { margin-top: 6px; }
+.buscar-distrito {
+  width: 100%; box-sizing: border-box; padding: 10px 14px; margin: 0 0 14px;
+  border: 1px solid var(--linea); border-radius: 10px; background: var(--bg-elevada);
+  color: var(--texto); font: inherit; font-size: .9rem;
+}
+.tarifa-fila { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--linea); }
+.tarifa-fila[hidden] { display: none; }
+.tarifa-precio { flex: 0 0 64px; font-weight: 700; color: var(--azul); font-size: .95rem; }
+.tarifa-distritos { font-size: .88rem; line-height: 1.6; color: var(--texto); }
+.sin-distrito { font-size: .88rem; color: var(--texto-muted); }
+#tarifas { margin-bottom: 18px; }
+.chips-agencias { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip-agencia { font-size: .82rem; font-weight: 600; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--linea); color: var(--texto); }
+.pasos-envio { margin: 0 0 12px; padding-left: 20px; }
+.pasos-envio li { font-size: .92rem; line-height: 1.7; color: var(--texto); margin-bottom: 4px; }

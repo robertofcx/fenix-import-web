@@ -32,6 +32,7 @@ const path = require("path");
 const { optimizarImagenCloudinary } = require("./js/util.js");
 const { generarFeed } = require("./generar-feed.js");
 const { generarPaginasCategoria, slugCategoria } = require("./generar-categorias.js");
+const { generarPaginaEnvios } = require("./generar-envios.js");
 
 // ==================== CONFIGURACIÓN ====================
 const URL_SITIO = process.env.URL_SITIO || "https://feniximportperu.com";
@@ -426,6 +427,7 @@ function generarHtmlProducto(producto, todosLosProductos) {
 
 // Páginas informativas que también deben estar en el sitemap.
 const PAGINAS_ESTATICAS = [
+  "envios.html",
   "nosotros.html",
   "preguntas-frecuentes.html",
   "metodos-de-pago.html",
@@ -572,6 +574,7 @@ function main() {
   const publicados = productos.filter(p => p.sku && skusVistos.has(p.sku));
   // Páginas estáticas por categoría/subcategoría (SEO) — antes del sitemap
   const urlsCategorias = generarPaginasCategoria(publicados, URL_SITIO, __dirname, p => p.slug || generarSlugRespaldo(p.nombre));
+  generarPaginaEnvios(URL_SITIO, __dirname);
   generarSitemap(publicados, urlsCategorias);
   generarFeed(publicados, URL_SITIO, RUTA_FEED, p => p.slug || generarSlugRespaldo(p.nombre));
 

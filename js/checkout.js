@@ -188,6 +188,7 @@ const NUMERO_WHATSAPP = "51978821080";
               <option value="">Selecciona una agencia...</option>
               <option value="Shalom">Shalom</option>
               <option value="Olva Courier">Olva Courier</option>
+              <option value="Urbano">Urbano</option>
               <option value="Hnos Flores">Hnos Flores</option>
               <option value="Marvisur">Marvisur</option>
               <option value="otro">Otra (especificar)</option>
@@ -198,7 +199,7 @@ const NUMERO_WHATSAPP = "51978821080";
             <label>¿Cuál agencia?</label>
             <input type="text" id="input-agencia-otro" placeholder="Nombre de la agencia">
           </div>
-          <p class="nota-provincia">💡 El costo de envío por agencia varía según peso/volumen y se paga directo ahí — nosotros dejamos el paquete listo en la agencia que elijas.</p>
+          <p class="nota-provincia">💡 El costo de envío por agencia varía según peso/volumen y se paga directo ahí — nosotros dejamos el paquete listo en la agencia que elijas. <a href="/envios.html" target="_blank" rel="noopener">Ver detalles de envío</a></p>
         </div>
         <div class="seccion-form">
           <p class="seccion-form-titulo">Tus datos</p>
@@ -473,7 +474,7 @@ const NUMERO_WHATSAPP = "51978821080";
     actualizarResumen();
   }
   // ---------- Estimado de entrega (según hora real y horarios de corte) ----------
-  const AGENCIAS_CON_CORTE = ["Shalom", "Olva Courier", "Hnos Flores", "Marvisur"];
+  const AGENCIAS_CON_CORTE = ["Shalom", "Olva Courier", "Urbano", "Hnos Flores", "Marvisur"];
   function pintarEstimado(idElemento, mensaje, aTiempo) {
     const el = document.getElementById(idElemento);
     if (!el) return;
