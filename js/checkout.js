@@ -484,12 +484,14 @@ const NUMERO_WHATSAPP = "51978821080";
   function actualizarEstimadosEntrega() {
     const ahora = new Date();
     const horaDecimal = ahora.getHours() + ahora.getMinutes() / 60;
-    // Recojo en almacén: hasta las 5:00 PM, sin tolerancia (no queda nadie después)
-    const corteRecojo = 17;
+    // Recojo en almacén (con cita): lun-vie hasta 5:00 PM, sábado hasta 1:00 PM, domingo cerrado
+    const dia = ahora.getDay();
+    const corteRecojo = dia === 0 ? 0 : (dia === 6 ? 13 : 17);
+    const textoCorte = dia === 6 ? "1:00 PM" : "5:00 PM";
     if (horaDecimal < corteRecojo) {
-      pintarEstimado("estimado-recojo", "Puedes recogerlo <strong>hoy mismo</strong> — atendemos hasta las 5:00 PM. Coordina el horario exacto por WhatsApp.", true);
+      pintarEstimado("estimado-recojo", `Puedes recogerlo <strong>hoy mismo</strong> — atendemos hasta las ${textoCorte}. Coordina tu cita por WhatsApp.`, true);
     } else {
-      pintarEstimado("estimado-recojo", "El horario de atención de hoy (hasta 5:00 PM) ya terminó. Podrás recogerlo el <strong>siguiente día hábil</strong>, coordinando antes por WhatsApp.", false);
+      pintarEstimado("estimado-recojo", "El horario de atención de hoy ya terminó. Podrás recogerlo el <strong>siguiente día de atención</strong>, coordinando tu cita por WhatsApp.", false);
     }
     // Delivery en Lima: pedidos hasta las 10:00 AM se procesan el mismo día
     const corteLima = 10;

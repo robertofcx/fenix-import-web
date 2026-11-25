@@ -65,7 +65,9 @@
       <h4>Contacto</h4>
       <p>+51 978 821 080</p>
       <p>ventas.fenixip@gmail.com</p>
-      <p>Lunes a Viernes, 9:00 AM – 5:00 PM</p>
+      <p>Lun a Vie: 10:00 AM – 5:00 PM</p>
+      <p>Sábado: 10:00 AM – 1:00 PM</p>
+      <p>Atención con cita previa</p>
     </div>
   </div>
 

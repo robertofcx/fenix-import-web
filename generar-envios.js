@@ -38,7 +38,7 @@ const PREGUNTAS = [
   },
   {
     p: "¿Puedo recoger mi pedido?",
-    r: `Sí, el recojo en almacén es gratis y con cita previa, de lunes a viernes hasta las 5:00 p. m. Estamos en ${DIRECCION_ALMACEN}.`
+    r: `Sí, el recojo en almacén es gratis y con cita previa, de lunes a viernes de 10:00 a. m. a 5:00 p. m. y sábados de 10:00 a. m. a 1:00 p. m. Estamos en ${DIRECCION_ALMACEN}.`
   },
   {
     p: "¿Los precios incluyen IGV?",
@@ -150,7 +150,8 @@ function generarPaginaEnvios(urlSitio, dirRaiz) {
         <div class="tarjeta-destacada">
           <h3>Recojo en almacén</h3>
           <p><strong>Gratis</strong>, con cita previa.</p>
-          <p>Lunes a viernes, hasta las 5:00 p. m.</p>
+          <p>Lun a vie: 10:00 a. m. – 5:00 p. m.</p>
+          <p>Sábado: 10:00 a. m. – 1:00 p. m.</p>
           <p>${escaparHtml(DIRECCION_ALMACEN)}</p>
         </div>
         <div class="tarjeta-destacada">
