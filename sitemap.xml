@@ -349,10 +349,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/herramientas/domotica.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/categoria/herramientas/pinturas.html</loc>
     <priority>0.8</priority>
   </url>
@@ -374,6 +370,10 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/herramientas/estabilizadores.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/herramientas/domotica.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -3006,10 +3006,6 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/carpa-para-3-personas-liviano-resistente-impermeable-2mx1-5m-yb10008.html</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/producto/medidor-infrarrojo-de-temperatura-portatil-truper-mete-500.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
