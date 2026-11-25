@@ -46,8 +46,18 @@ const SKUS_EXCLUIDOS_GOOGLE = [
   "CAM_125",  // Pulsera paracord con navaja, silbato, etc.
   "CAM_056",  // Navaja táctica karambit
   "CAM_047",  // Lapicero táctico rompe vidrio
-  "ILU_237"   // Puntero láser verde Cafini 3000 m (rechazado: armas)
+  "ILU_237",  // Puntero láser verde Cafini 3000 m (rechazado: armas)
+  "CAM_066_AZN" // Poncho ligero azulino: todas sus fotos llevan marca de agua (rechazado)
 ];
+
+// Foto principal alternativa SOLO para Google (la web no cambia).
+// Se usa cuando la "main" lleva marca de agua/sellos y Google la rechaza
+// por "superposición promocional". Valor = nombre del archivo a usar.
+const IMAGEN_PRINCIPAL_GOOGLE = {
+  "BAT_023": "3.png",      // Cargador Golisi Needle 2
+  "HOG_111": "4.png",      // Base soporte con ruedas
+  "CEL_045_NEG": "4.jpg"   // Cable OTG tipo C negro
+};
 
 function estaExcluido(sku) {
   const s = String(sku || "").toUpperCase();
@@ -115,7 +125,16 @@ function agregarParametros(url, params) {
  * Arma un <item>. "datos" trae lo que cambia entre producto suelto y
  * variante (id, título, precio, imágenes, link, color, talla, grupo).
  */
+function ordenarImagenesGoogle(sku, imagenes) {
+  const archivo = IMAGEN_PRINCIPAL_GOOGLE[String(sku || "").toUpperCase()];
+  if (!archivo) return imagenes;
+  const i = imagenes.findIndex(url => url.endsWith("/" + archivo));
+  if (i <= 0) return imagenes;
+  return [imagenes[i], ...imagenes.filter((_, j) => j !== i)];
+}
+
 function armarItem(producto, datos) {
+  datos.imagenes = ordenarImagenesGoogle(datos.id, datos.imagenes);
   const precio = limpiarPrecio(datos.precio);
   if (datos.imagenes.length === 0) return null;   // Google exige imagen
   if (!(Number(precio) > 0)) return null;          // y precio válido
