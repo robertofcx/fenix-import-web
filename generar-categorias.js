@@ -92,7 +92,7 @@ function textoIntro(nombre, productos, padre) {
   if (desde) t += `, desde S/ ${desde}`;
   t += ".";
   if (marcas.length) t += ` Marcas como ${escaparHtml(marcas.join(", "))}.`;
-  t += ` Precios sin IGV: si necesitas boleta o factura se agrega el 18 %. Recojo en tienda en Independencia (Lima), delivery en Lima y envíos a todo el Perú por Shalom.`;
+  t += ` Precios sin IGV. Recojo en tienda en Independencia (Lima), delivery en Lima y envíos a todo el Perú por Shalom.`;
   return t;
 }
 
