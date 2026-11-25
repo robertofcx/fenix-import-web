@@ -1,5 +1,5 @@
 const NUMERO_WHATSAPP = "51978821080";
-const URL_SITIO = "https://fenix-import-peru.onrender.com";
+const URL_SITIO = "https://feniximportperu.com";
 const POR_PAGINA = 24;
 let fuse = null;
 
