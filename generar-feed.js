@@ -45,7 +45,8 @@ const SKUS_EXCLUIDOS_GOOGLE = [
   "CAM_037",  // Pulsera paracord con navaja
   "CAM_125",  // Pulsera paracord con navaja, silbato, etc.
   "CAM_056",  // Navaja táctica karambit
-  "CAM_047"   // Lapicero táctico rompe vidrio
+  "CAM_047",  // Lapicero táctico rompe vidrio
+  "ILU_237"   // Puntero láser verde Cafini 3000 m (rechazado: armas)
 ];
 
 function estaExcluido(sku) {

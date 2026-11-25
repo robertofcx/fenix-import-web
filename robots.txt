@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fenix-import-peru.onrender.com/sitemap.xml
+Sitemap: https://feniximportperu.com/sitemap.xml

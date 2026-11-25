@@ -9,7 +9,7 @@
  * Google casi no lo posiciona. Estas páginas traen el título, un
  * texto corto y TODOS los productos ya escritos en el HTML, así
  * Google puede indexarlas para búsquedas tipo "linternas
- * recargables por mayor Lima".
+ * recargables Lima".
  *
  * Se invoca desde generar-productos.js (mismo momento que el
  * sitemap y el feed). Devuelve la lista de URLs creadas para que
@@ -80,7 +80,7 @@ function tarjetaProducto(p, urlSitio, slugProducto) {
 /**
  * Texto de introducción. Solo usa datos reales del catálogo y de cómo
  * trabaja Fenix (recojo en Independencia, delivery propio en Lima,
- * envíos a provincia por Shalom, venta a empresas con factura).
+ * envíos a provincia por Shalom, precios sin IGV).
  */
 function textoIntro(nombre, productos, padre) {
   const marcas = [...new Set(productos.map(p => p.marca).filter(m => m && !/gen[eé]rico/i.test(m)))].slice(0, 5);
@@ -92,7 +92,7 @@ function textoIntro(nombre, productos, padre) {
   if (desde) t += `, desde S/ ${desde}`;
   t += ".";
   if (marcas.length) t += ` Marcas como ${escaparHtml(marcas.join(", "))}.`;
-  t += ` Vendemos por unidad y por mayor a empresas y negocios, con boleta o factura. Recojo en tienda en Independencia (Lima), delivery en Lima y envíos a todo el Perú por Shalom.`;
+  t += ` Precios sin IGV: si necesitas boleta o factura se agrega el 18 %. Recojo en tienda en Independencia (Lima), delivery en Lima y envíos a todo el Perú por Shalom.`;
   return t;
 }
 
@@ -272,8 +272,8 @@ function generarPaginasCategoria(productos, urlSitio, carpetaRaiz, slugProducto)
       : "";
 
     fs.writeFileSync(path.join(carpeta, `${slugCat}.html`), paginaHtml({
-      titulo: `${cat} en Lima — venta por mayor y menor | Fenix Import Perú`,
-      descripcion: `${lista.length} productos de ${cat.toLowerCase()} con precios desde S/ ${Math.min(...lista.map(p => Number(limpiarPrecio(p.precio)) || Infinity)).toFixed(2)}. Venta a empresas con factura, delivery en Lima y envíos a todo el Perú.`,
+      titulo: `${cat} en Lima — delivery y envíos a todo el Perú | Fenix Import Perú`,
+      descripcion: `${lista.length} productos de ${cat.toLowerCase()} con precios desde S/ ${Math.min(...lista.map(p => Number(limpiarPrecio(p.precio)) || Infinity)).toFixed(2)}. Delivery en Lima y envíos a todo el Perú.`,
       urlCanonica: urlCat,
       breadcrumbHtml: `${migaInicio}<span class="actual">${escaparHtml(cat)}</span>`,
       h1: cat,
@@ -301,7 +301,7 @@ function generarPaginasCategoria(productos, urlSitio, carpetaRaiz, slugProducto)
 
       fs.writeFileSync(path.join(carpeta, slugCat, `${slugSub}.html`), paginaHtml({
         titulo: `${sub} — ${cat} en Lima | Fenix Import Perú`,
-        descripcion: `${listaSub.length} productos de ${sub.toLowerCase()}${isFinite(minimo) ? ` desde S/ ${minimo.toFixed(2)}` : ""}. Venta por unidad y por mayor, delivery en Lima y envíos a todo el Perú.`,
+        descripcion: `${listaSub.length} productos de ${sub.toLowerCase()}${isFinite(minimo) ? ` desde S/ ${minimo.toFixed(2)}` : ""}. Delivery en Lima y envíos a todo el Perú.`,
         urlCanonica: urlSub,
         breadcrumbHtml: `${migaInicio}<a href="/categoria/${slugCat}.html">${escaparHtml(cat)}</a><span class="sep">›</span><span class="actual">${escaparHtml(sub)}</span>`,
         h1: sub,
