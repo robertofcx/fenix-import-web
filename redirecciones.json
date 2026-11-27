@@ -1,0 +1,686 @@
+{
+  "_info": "Fichas de la web WooCommerce anterior (/producto/slug-viejo/) que se redirigen a la web nueva. destino producto (por defecto) = ficha del SKU; destino categoria = subcategoría de ese SKU. Se resuelve por SKU en cada corrida, así que sobrevive a cambios de nombre/slug. Si el SKU ya no existe, no se genera redirección.",
+  "redirecciones": {
+    "adaptador-convertidor-vga-a-hdmi-c-audio-fullhd-1080p": {
+      "sku": "ADA_026"
+    },
+    "adaptador-internacional-enchufe-universal-viajero-110v-220v": {
+      "sku": "HER_023"
+    },
+    "adaptador-x2-unid-enchufe-multiple-plano-op603-a3-opalux": {
+      "sku": "HER_218_BLA"
+    },
+    "adaptador-x2-unid-enchufe-multiple-redondo-ap-6049b-opalux": {
+      "sku": "HER_219"
+    },
+    "adaptador-x2-unid-enchufe-multiple-redondo-ap-6049b-opalux-delivery-gratis": {
+      "sku": "HER_219"
+    },
+    "adaptador-x2-unid-otg-de-microusb-v8-a-lightning-iphone": {
+      "sku": "CEL_171"
+    },
+    "aro-de-luz-led-16-cm-para-selfies-fotos-videos-delivery-gratis": {
+      "sku": "ILU_001"
+    },
+    "aro-de-luz-led-2-en-1-c-soporte-para-celular-videos-fotos-delivery-gratis": {
+      "sku": "ILU_002"
+    },
+    "aro-de-luz-led-26cm-c-soporte-para-celular-foto-selfie-delivery-gratis": {
+      "sku": "ILU_003"
+    },
+    "aro-de-luz-led-3-en-1-c-soporte-para-celular-y-microfono-delivery-gratis": {
+      "sku": "ILU_004"
+    },
+    "aro-de-luz-led-30-cm-c-soporte-para-celular-foto-selfie-delivery-gratis": {
+      "sku": "ILU_005"
+    },
+    "balanza-colgante-crane-scale-300kg-digital-gancho": {
+      "sku": "HOG_164"
+    },
+    "balanza-colgante-opalux-300kg-digital-gancho-alta-precision": {
+      "sku": "HOG_164"
+    },
+    "balanza-colgante-scale-tipo-reloj-500gr-100kg": {
+      "sku": "HOG_132"
+    },
+    "balanza-digital-tipo-romana-50kg-equipaje": {
+      "sku": "HOG_026"
+    },
+    "balanza-romana-50kg-carita-adriano": {
+      "sku": "HOG_026"
+    },
+    "bateria-pila-toshiba-9v-delivery": {
+      "sku": "BAT_041"
+    },
+    "bateria-pila-toshiba-9v-x3-unid": {
+      "sku": "BAT_041"
+    },
+    "bateria-recargable-golisi-g25-18650-2500mah-25a": {
+      "sku": "BAT_002"
+    },
+    "binoculares-20x50-bertshit-alcance-1000-m-negro": {
+      "sku": "CAM_080"
+    },
+    "binoculares-50x50-galileo": {
+      "sku": "CAM_029_BEI"
+    },
+    "binoculares-plegables-compacto-de-30x60-sakura": {
+      "sku": "CAM_075"
+    },
+    "botella-de-agua-2-en-1-portatil-multifuncional-550ml-para-perros-gatos": {
+      "sku": "HUE_014_ROS"
+    },
+    "cable-hdmi-enmallado-5-metros-full-hd-1080p": {
+      "sku": "ADA_052"
+    },
+    "cargador-de-baterias-x2-golisi-needle-2-original-18650-otros": {
+      "sku": "BAT_023"
+    },
+    "cargador-de-pared-apple-usb-tipo-c-20w-mhja3am-a": {
+      "sku": "CEL_205"
+    },
+    "cargador-de-pilas-aa-aaa-9v-opalux-op-bc8021": {
+      "sku": "BAT_057"
+    },
+    "cinta-antideslizante-opalux-negro-amarillo-an-18n-a": {
+      "sku": "HER_182"
+    },
+    "cinta-tira-led-rgb-5m-musica-bluetooth-usb-con-app-meseta-delivery-gratis": {
+      "sku": "ILU_132"
+    },
+    "combo-teclado-mouse-gamer-2-en-1-de-colores-35-teclas-g506-delivery-gratis": {
+      "sku": "TEC_039"
+    },
+    "fluorescente-recargable-lampara-led-45cm-opalux-op-8346l": {
+      "sku": "ILU_015"
+    },
+    "funda-forro-para-lavadoras-lona-grueso-10-15kg": {
+      "sku": "HOG_049_AZM"
+    },
+    "funda-forro-para-lavadoras-tela-delgada-16-22kg": {
+      "sku": "HOG_153_AZM"
+    },
+    "lampara-de-escritorio-clip-tactil-multifuncional-cn-l3801b-blanco": {
+      "sku": "HOG_190_VER"
+    },
+    "lampara-led-tipo-farol-con-asa-truper-laca-3d": {
+      "sku": "ILU_234"
+    },
+    "linterna-frontal-led-multifuncional-recargable-con-sensor-cn-l870c": {
+      "sku": "ILU_201"
+    },
+    "linterna-potente-cafini-30w-recargable-soporte-y-panel-solar": {
+      "sku": "ILU_153"
+    },
+    "linterna-recargable-70w-cafini": {
+      "sku": "ILU_175"
+    },
+    "llavero-linterna-uv-led-blanco-y-laser-rojo-3-en-1-x-24-und": {
+      "sku": "ILU_321_AZM"
+    },
+    "luz-led-x-3-cob-con-control-remoto-a-pilas-aaa-delivery-gratis": {
+      "sku": "ILU_007"
+    },
+    "memoria-usb-3-2-kingston-128gb-datatraveler-exodia-m-dtxm": {
+      "sku": "TEC_006"
+    },
+    "memoria-usb-kingston-128gb-dt100-g3-100-original": {
+      "sku": "TEC_006"
+    },
+    "mochila-de-emergencia-30l-con-cinta-reflectiva-botiquin": {
+      "sku": "HOG_139"
+    },
+    "mouse-gamer-usb-kripton-micronics-mic-gm801-3m": {
+      "sku": "TEC_164"
+    },
+    "pila-alcalina-23a-blister": {
+      "sku": "BAT_009"
+    },
+    "pilas-d-panasonic-x-2-unid-1-5v-zinc-carbon-linterna-juguetes-radio-etc": {
+      "sku": "BAT_054"
+    },
+    "pilas-sony-cr2032-x-5-und-litio-3v-balanza-reloj": {
+      "sku": "BAT_013"
+    },
+    "rack-tv-brazo-32-55-bta28-443": {
+      "sku": "HOG_073"
+    },
+    "reflector-150w-ip67-300-led": {
+      "sku": "ILU_113"
+    },
+    "reflector-opalux-50w-recargable-para-exteriores-ip65-80-leds": {
+      "sku": "ILU_156"
+    },
+    "reflector-portatil-100w-recargable-op-tg05-100w": {
+      "sku": "ILU_318"
+    },
+    "repedidor-wifi-xiaomi-n300": {
+      "sku": "TEC_075"
+    },
+    "resistencia-teflon-repuesto-de-selladora-de-30cm": {
+      "sku": "HER_154"
+    },
+    "set-mochila-ranger-deluxe-oficio-eva-3d-drangon-ball-scool": {
+      "sku": "MOC_008"
+    },
+    "soporte-de-camara-go-pro-base-manillar-tubo-mdl3519cb": {
+      "sku": "MOT_035"
+    },
+    "adaptador-x2-unid-otg-de-microusb-a-usb": {
+      "sku": "CEL_170",
+      "destino": "categoria"
+    },
+    "almohada-de-espuma-viscoelastica-de-viaje-para-cuello": {
+      "sku": "CAM_099_CEL",
+      "destino": "categoria"
+    },
+    "balanza-digital-gramera-para-joyas-200gr": {
+      "sku": "HOG_103",
+      "destino": "categoria"
+    },
+    "balanza-electronica-inteligente-con-bluetooth": {
+      "sku": "HOG_019_NEG",
+      "destino": "categoria"
+    },
+    "baston-guia-blanco-plegable-de-aluminio-para-personas-con-discapacidad-visual-con-cinta-reflectante-rojo-empunadura-antideslizante-4-secciones-123-cm": {
+      "sku": "HOG_032_AMA",
+      "destino": "categoria"
+    },
+    "baston-trekking-recto": {
+      "sku": "CAM_040_AMA",
+      "destino": "categoria"
+    },
+    "bateria-26650-recargable-4800mah-4-2v-bossney": {
+      "sku": "BAT_045",
+      "destino": "categoria"
+    },
+    "bateria-recargable-18650-r25-samsung-2500mah-3-7v": {
+      "sku": "BAT_002",
+      "destino": "categoria"
+    },
+    "bateria-recargable-efest-18650-3-7v-3000mah-35a": {
+      "sku": "BAT_045",
+      "destino": "categoria"
+    },
+    "bateria-recargable-golisi-g30-18650-3000mah-25a": {
+      "sku": "BAT_002",
+      "destino": "categoria"
+    },
+    "bateria-recargable-golisi-g30-18650-3000mah-30a": {
+      "sku": "BAT_002",
+      "destino": "categoria"
+    },
+    "bateria-recargable-golisi-s30-18650-3000mah-35a": {
+      "sku": "BAT_002",
+      "destino": "categoria"
+    },
+    "bateria-recargable-opalux-18650-2000mah-37v": {
+      "sku": "BAT_006",
+      "destino": "categoria"
+    },
+    "baterias-recargables-18650-marca-cafini": {
+      "sku": "BAT_008",
+      "destino": "categoria"
+    },
+    "baterias-recargables-18650-marca-ewtto": {
+      "sku": "BAT_008",
+      "destino": "categoria"
+    },
+    "bebedero-de-agua-portatil-mascotas": {
+      "sku": "HOG_127_AMA",
+      "destino": "categoria"
+    },
+    "binoculares-10x25-galileo-1000mt-largo-alcance": {
+      "sku": "CAM_103",
+      "destino": "categoria"
+    },
+    "binoculares-30x60-sakura": {
+      "sku": "CAM_010",
+      "destino": "categoria"
+    },
+    "bolsas-biodegradables-ecologicas-para-heces-de-mascotas-80un": {
+      "sku": "HUE_006",
+      "destino": "categoria"
+    },
+    "bolsas-desechables-para-heces-mascotas-perros-x3-paquetes": {
+      "sku": "HUE_021",
+      "destino": "categoria"
+    },
+    "cable-90-micro-ldnio-2m-2-4-a": {
+      "sku": "CEL_157",
+      "destino": "categoria"
+    },
+    "cable-adaptador-usb-tipo-c-a-hdmi-4k": {
+      "sku": "ADA_097",
+      "destino": "categoria"
+    },
+    "cable-de-datos-entrada-v8-de-2-metros-huavi": {
+      "sku": "CEL_163",
+      "destino": "categoria"
+    },
+    "cable-de-red-1-metro-cat-5": {
+      "sku": "ADA_106",
+      "destino": "categoria"
+    },
+    "cable-usb-tipo-c-sony-carga-rapida-100-original": {
+      "sku": "CEL_190",
+      "destino": "categoria"
+    },
+    "cable-vga-a-vga-10mts-15-pines-c-doble-filtro-macho-a-macho": {
+      "sku": "ADA_064",
+      "destino": "categoria"
+    },
+    "cable-vga-a-vga-x2-unid-1-5mt-15-pines-c-doble-filtro-macho-a-macho": {
+      "sku": "ADA_105",
+      "destino": "categoria"
+    },
+    "cargador-18650-doble-2-bateria-recargable-li-on-3-7v-4-2v": {
+      "sku": "BAT_005_AMA",
+      "destino": "categoria"
+    },
+    "cargador-baterias-18650-x-4und-ewtto-cafini-3-7-4-2v": {
+      "sku": "BAT_020",
+      "destino": "categoria"
+    },
+    "cargador-de-baterias-x-2-golisi-i2-original-18650-y-otros": {
+      "sku": "BAT_016",
+      "destino": "categoria"
+    },
+    "cargador-de-baterias-x-4-golisi-needle-4-original": {
+      "sku": "BAT_023",
+      "destino": "categoria"
+    },
+    "cargador-de-baterias-x-6-golisi-s6-18650-y-otros": {
+      "sku": "BAT_016",
+      "destino": "categoria"
+    },
+    "cargador-de-pilas-aa-aaa-energizer": {
+      "sku": "BAT_025",
+      "destino": "categoria"
+    },
+    "carpa-para-4-personas": {
+      "sku": "CAM_111",
+      "destino": "categoria"
+    },
+    "casco-de-moto-adulto-negro-mate-articulado-ls2-strobe-ff325": {
+      "sku": "MOT_097",
+      "destino": "categoria"
+    },
+    "casco-de-moto-para-adulto-unisex-articulado-ls2-strobe-ff325-talla-xl": {
+      "sku": "MOT_097",
+      "destino": "categoria"
+    },
+    "cepillo-quita-pelusa-removedor-de-pelo-mascota": {
+      "sku": "HOG_222_VER",
+      "destino": "categoria"
+    },
+    "cinta-adhesiva-impermeable-flex-tape-super-resistente": {
+      "sku": "HOG_123",
+      "destino": "categoria"
+    },
+    "cinta-de-luces-rgb-5050-kit-completo-5mts": {
+      "sku": "ILU_011",
+      "destino": "categoria"
+    },
+    "cinta-led-rgbw-5050-5m-kit-completo": {
+      "sku": "ILU_011",
+      "destino": "categoria"
+    },
+    "cinta-led-rgbw-5050-5m-kit-completo-delivery-gratis": {
+      "sku": "ILU_011",
+      "destino": "categoria"
+    },
+    "cocina-para-camping-k-202-gas-butano-fix-230g": {
+      "sku": "CAM_073",
+      "destino": "categoria"
+    },
+    "controlador-x2-unid-de-luces-para-cinta-led-rgb-5050": {
+      "sku": "ILU_322",
+      "destino": "categoria"
+    },
+    "controlador-x2-unid-de-luces-para-cinta-led-rgb-5050-delivery-gratis": {
+      "sku": "ILU_322",
+      "destino": "categoria"
+    },
+    "detector-de-soles-dolares-op-2138-opalux": {
+      "sku": "HOG_042",
+      "destino": "categoria"
+    },
+    "detector-portatil-de-billetes-falsos-delivery-gratis": {
+      "sku": "HOG_044",
+      "destino": "categoria"
+    },
+    "engrapadora-y-clavadora-truper-et-50-tapizar-1000-grapas": {
+      "sku": "HER_027",
+      "destino": "categoria"
+    },
+    "faro-de-induccion-linterna-frontal-cafini-cn-l75000c": {
+      "sku": "ILU_203",
+      "destino": "categoria"
+    },
+    "foco-led-15w-recargable-portatil-colgante-delivery": {
+      "sku": "ILU_184",
+      "destino": "categoria"
+    },
+    "foco-led-mata-mosquitos-zancudos-moscas-15w-delivery": {
+      "sku": "ILU_213",
+      "destino": "categoria"
+    },
+    "foco-led-multicolor-con-parlante-bluetooth-control-remoto": {
+      "sku": "ILU_021",
+      "destino": "categoria"
+    },
+    "foco-led-musical-bluetooth-tipo-flama-rgb-9w-op-bt11f": {
+      "sku": "ILU_021",
+      "destino": "categoria"
+    },
+    "foco-led-ritmico-bluetooth-parlante-c-socket": {
+      "sku": "ILU_021",
+      "destino": "categoria"
+    },
+    "gato-hidraulico-de-patin-truper-2-toneladas": {
+      "sku": "HER_251",
+      "destino": "categoria"
+    },
+    "grapadora-de-metal-engrapadora-para-madera-tapizar-delivery": {
+      "sku": "HER_026",
+      "destino": "categoria"
+    },
+    "grapadora-rapid-r23-engrapadora-de-metal-para-tapizar": {
+      "sku": "HER_026",
+      "destino": "categoria"
+    },
+    "guantes-antideslizantes-reforzados-motociclistas-scoyco-mc58-talla-l": {
+      "sku": "MOT_016_ROS",
+      "destino": "categoria"
+    },
+    "inflador-mini-bomba-truper-85-psi": {
+      "sku": "HER_155",
+      "destino": "categoria"
+    },
+    "insectocutor-electrico-mata-mosquito-20w-80m2-opalux-op-c220": {
+      "sku": "HOG_395",
+      "destino": "categoria"
+    },
+    "interruptor-inteligente-tactil-wifi-simple-blanco-compatible-con-alexa-google-assistant-siri-y-app-smart-life-opalux-op-am01bl": {
+      "sku": "TEC_181",
+      "destino": "categoria"
+    },
+    "kit-dispensador-6-rollos-bolsas-de-basura-para-mascotas": {
+      "sku": "HUE_002",
+      "destino": "categoria"
+    },
+    "lampara-de-escritorio-con-base": {
+      "sku": "ILU_210_FUC",
+      "destino": "categoria"
+    },
+    "lampara-de-escritorio-mesa-recargable-tactil-flexible-y-led": {
+      "sku": "ILU_037_ROS",
+      "destino": "categoria"
+    },
+    "lampara-led-para-escritorio-o-mesa-con-brazo-ajustable-regulable": {
+      "sku": "ILU_206",
+      "destino": "categoria"
+    },
+    "lente-optico-ojo-de-pez-235": {
+      "sku": "CEL_113_AZM",
+      "destino": "categoria"
+    },
+    "linterna-frontal-1-led-cafini-cn-7669c": {
+      "sku": "ILU_203",
+      "destino": "categoria"
+    },
+    "linterna-frontal-1-led-cafini-cn-l7642c": {
+      "sku": "ILU_203",
+      "destino": "categoria"
+    },
+    "linterna-frontal-1-led-cafini-cn-l7647c": {
+      "sku": "ILU_203",
+      "destino": "categoria"
+    },
+    "linterna-frontal-con-luces-cafini-cn-l7622cg": {
+      "sku": "ILU_203",
+      "destino": "categoria"
+    },
+    "linterna-frontal-con-reflector-cafini-cn-l7623c": {
+      "sku": "ILU_203",
+      "destino": "categoria"
+    },
+    "linterna-frontal-con-sensor-cn-l705c": {
+      "sku": "ILU_201",
+      "destino": "categoria"
+    },
+    "linterna-frontal-led-multifuncion-bossney": {
+      "sku": "ILU_207",
+      "destino": "categoria"
+    },
+    "linterna-frontal-minero-5w-cafini": {
+      "sku": "ILU_254",
+      "destino": "categoria"
+    },
+    "linterna-frontal-recargable-3-led-t6-glare-headlight-con-soporte-para-bicicleta": {
+      "sku": "ILU_171",
+      "destino": "categoria"
+    },
+    "linterna-minero-opalux-kj3-5lm-con-cargador": {
+      "sku": "ILU_248",
+      "destino": "categoria"
+    },
+    "maquina-corta-cabello-htc-recargable-5-en-1-at-1201": {
+      "sku": "HOG_229",
+      "destino": "categoria"
+    },
+    "maquina-corta-cabello-regulable-y-recargable-nhc-702": {
+      "sku": "HOG_056",
+      "destino": "categoria"
+    },
+    "maquina-corta-pelo-cabello-recargable-xiaguang-xg-2018": {
+      "sku": "HOG_056",
+      "destino": "categoria"
+    },
+    "maquina-corta-pelo-cabello-regulable-c-4-peinetas-gm-6053": {
+      "sku": "HOG_056",
+      "destino": "categoria"
+    },
+    "maquina-detector-de-billetes-falsos-electrico-mod-118": {
+      "sku": "HOG_040",
+      "destino": "categoria"
+    },
+    "memoria-usb-64gb": {
+      "sku": "TEC_187",
+      "destino": "categoria"
+    },
+    "microfono-c-clip-pechero-solapa-lavalier-3-5mm-laptop-pc": {
+      "sku": "ADA_090",
+      "destino": "categoria"
+    },
+    "microfono-inalambrico-guc-325-gaucho": {
+      "sku": "TEC_141",
+      "destino": "categoria"
+    },
+    "microfono-inalambrico-solapa-tipo-c-sx9-doble-audio-para-smartphone": {
+      "sku": "TEC_097",
+      "destino": "categoria"
+    },
+    "mini-balanza-de-bolsillo-digital-gramera-de-joyas-200gr": {
+      "sku": "HOG_198",
+      "destino": "categoria"
+    },
+    "mini-teclado-inalambrico-bluethooth-pegable": {
+      "sku": "TEC_071_PLA",
+      "destino": "categoria"
+    },
+    "mini-ventilador-portable-recargable-usb-3-velocidades-ofert": {
+      "sku": "HOG_397",
+      "destino": "categoria"
+    },
+    "mochila-de-hidratacion-tipo-camel-back-2-5-litros-deporte-aventura": {
+      "sku": "CAM_023",
+      "destino": "categoria"
+    },
+    "mouse-logitech-m280-wireless": {
+      "sku": "TEC_113",
+      "destino": "categoria"
+    },
+    "mouse-ranger-rx-gamer-m822xmicronics": {
+      "sku": "TEC_094",
+      "destino": "categoria"
+    },
+    "otg-microusb-a-usb-pack-2-und": {
+      "sku": "CEL_170",
+      "destino": "categoria"
+    },
+    "palo-selfie-stick-y-tripode-2-en-1-bluetooth-celular-360-verde": {
+      "sku": "CEL_219",
+      "destino": "categoria"
+    },
+    "palo-stick-selfie-doble-luz-led-usb-bluetooth-recargable": {
+      "sku": "CEL_189_NAR",
+      "destino": "categoria"
+    },
+    "parlante-bluetooth-movisun-power": {
+      "sku": "TEC_063_NEG",
+      "destino": "categoria"
+    },
+    "patas-para-baston-pack-x4-und": {
+      "sku": "HOG_268",
+      "destino": "categoria"
+    },
+    "pilas-recargables-aa-energizer-blister": {
+      "sku": "BAT_026",
+      "destino": "categoria"
+    },
+    "pilas-recargables-aaa-energizer-blister": {
+      "sku": "BAT_027",
+      "destino": "categoria"
+    },
+    "pilas-tianqiu-cr2032-blister": {
+      "sku": "BAT_013",
+      "destino": "categoria"
+    },
+    "plumon-con-luz-uv-detector-de-billetes-falsos-delivery": {
+      "sku": "HOG_069",
+      "destino": "categoria"
+    },
+    "plumon-detector-de-billetes-falsos-precio-oferta-delivery": {
+      "sku": "HOG_069",
+      "destino": "categoria"
+    },
+    "poncho-de-lluvia-impermeable-de-manga-larga-amarillo": {
+      "sku": "CAM_098_VER",
+      "destino": "categoria"
+    },
+    "poncho-para-lluvia-impermeable-termosellado": {
+      "sku": "CAM_066_ROS",
+      "destino": "categoria"
+    },
+    "pulsera-tactica-c-navaja": {
+      "sku": "CAM_037_CAM",
+      "destino": "categoria"
+    },
+    "puntero-verde-con-13-puntas-blister-par-de-pilas-aaa": {
+      "sku": "ILU_226",
+      "destino": "categoria"
+    },
+    "receptor-bluetooth-adaptador-3-5-para-autos-parlantes": {
+      "sku": "CEL_081",
+      "destino": "categoria"
+    },
+    "reflector-50w-para-exteriores-ip66-120-leds": {
+      "sku": "ILU_156",
+      "destino": "categoria"
+    },
+    "reflector-recargable-100w-para-exteriores-ip66": {
+      "sku": "ILU_112",
+      "destino": "categoria"
+    },
+    "resistencia-teflon-repuesto-para-selladora-20cm-marca-opalux": {
+      "sku": "HER_120",
+      "destino": "categoria"
+    },
+    "resistencia-teflon-repuesto-para-selladora-40cm-marca-opalux": {
+      "sku": "HER_132",
+      "destino": "categoria"
+    },
+    "rizadora-de-cabello-pinza-espiral-ondas": {
+      "sku": "HOG_265_ROS",
+      "destino": "categoria"
+    },
+    "selladora-de-bolsas-40-cm-opalux": {
+      "sku": "HER_063",
+      "destino": "categoria"
+    },
+    "set-maleta-oficio-scool-magic-hello-kitty-friends": {
+      "sku": "MOC_021",
+      "destino": "categoria"
+    },
+    "set-mochila-deluxe-a4-scool-ranger-granja-de-zenon": {
+      "sku": "MOC_025",
+      "destino": "categoria"
+    },
+    "set-mochila-ranger-2-bol-oficio-eva-3d-kuromi-scool": {
+      "sku": "MOC_008",
+      "destino": "categoria"
+    },
+    "set-mochila-ranger-2-bol-oficio-kitty-friends-scool": {
+      "sku": "MOC_004",
+      "destino": "categoria"
+    },
+    "set-mochila-ranger-2-bol-oficio-my-melody-scool": {
+      "sku": "MOC_032",
+      "destino": "categoria"
+    },
+    "set-mochila-ranger-2-bolsillos-oficio-eva-3d-sonic-scool": {
+      "sku": "MOC_032",
+      "destino": "categoria"
+    },
+    "soga-elastica-porta-equipaje-casco-para-moto-145-cm": {
+      "sku": "MOT_023",
+      "destino": "categoria"
+    },
+    "soporte-de-camara-go-pro-para-casco-mdl3520": {
+      "sku": "MOT_036",
+      "destino": "categoria"
+    },
+    "soporte-de-celular-con-cargador-puerto-usb-timon-manillar-mdl2824": {
+      "sku": "MOT_052",
+      "destino": "categoria"
+    },
+    "tienda-de-campana-plegable-automatica-para-6-personas": {
+      "sku": "CAM_096",
+      "destino": "categoria"
+    },
+    "transformador-de-12v-para-cinta-led-rgb-5050-delivery-gratis": {
+      "sku": "ILU_011",
+      "destino": "categoria"
+    },
+    "ventilador-recargable-360-usb-3-velocidades-opalux-op-l2814": {
+      "sku": "HOG_397",
+      "destino": "categoria"
+    },
+    "ventilador-usb-de-metal-uso-en-oficina-auto-hogar": {
+      "sku": "HOG_099_CEL",
+      "destino": "categoria"
+    },
+    "wincha-cinta-larga-metalica-30-mt-pretul-pro-30me": {
+      "sku": "HER_087",
+      "destino": "categoria"
+    },
+    "wincha-cinta-metrica-de-10-metros-de-metal-marca-adriano": {
+      "sku": "HER_176",
+      "destino": "categoria"
+    },
+    "wincha-cinta-metrica-de-5-metros-de-metal-marca-adriano": {
+      "sku": "HER_086",
+      "destino": "categoria"
+    },
+    "wincha-cinta-metrica-de-5-metros-de-metal-pretul": {
+      "sku": "HER_086",
+      "destino": "categoria"
+    },
+    "wincha-cinta-metrica-de-8-metros-de-metal-pretul": {
+      "sku": "HER_087",
+      "destino": "categoria"
+    }
+  }
+}

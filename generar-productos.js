@@ -13,7 +13,9 @@
  * por si quedó algún link o localStorage de un cliente apuntando
  * ahí de antes de este cambio.
  *
- * También regenera sitemap.xml con todas las URLs nuevas.
+ * También regenera sitemap.xml con todas las URLs nuevas y los
+ * stubs de redirección de la web WooCommerce anterior
+ * (ver generar-redirecciones.js y redirecciones.json).
  *
  * USO:
  *   1) Coloca este archivo en la raíz de tu proyecto, junto a
@@ -33,6 +35,7 @@ const { optimizarImagenCloudinary } = require("./js/util.js");
 const { generarFeed } = require("./generar-feed.js");
 const { generarPaginasCategoria, slugCategoria } = require("./generar-categorias.js");
 const { generarPaginaEnvios } = require("./generar-envios.js");
+const { generarRedirecciones } = require("./generar-redirecciones.js");
 
 // ==================== CONFIGURACIÓN ====================
 const URL_SITIO = process.env.URL_SITIO || "https://feniximportperu.com";
@@ -576,6 +579,8 @@ function main() {
   const urlsCategorias = generarPaginasCategoria(publicados, URL_SITIO, __dirname, p => p.slug || generarSlugRespaldo(p.nombre));
   generarPaginaEnvios(URL_SITIO, __dirname);
   generarSitemap(publicados, urlsCategorias);
+  // Fichas de la web WooCommerce anterior -> web nueva (no van al sitemap)
+  generarRedirecciones(publicados, URL_SITIO, CARPETA_SALIDA, p => p.slug || generarSlugRespaldo(p.nombre), archivosReales);
   generarFeed(publicados, URL_SITIO, RUTA_FEED, p => p.slug || generarSlugRespaldo(p.nombre));
 
 

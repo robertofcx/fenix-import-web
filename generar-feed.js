@@ -20,6 +20,12 @@
  *    se envían a Google para no acumular infracciones en la cuenta.
  *  - Links con UTM para que GA4 muestre estas visitas como
  *    "Organic Shopping" y no mezcladas con Google orgánico.
+ *
+ * CAMBIOS 2026-11-27:
+ *  - Marca adelante en el título si el nombre no la trae.
+ *  - "Genérico" ya no se manda como marca (Google no lo acepta).
+ *  - material, product_detail y product_highlight salen de
+ *    "caracteristicas"; edad/género por subcategoría (mochilas, etc.).
  * ------------------------------------------------------------
  */
 
@@ -58,6 +64,30 @@ const IMAGEN_PRINCIPAL_GOOGLE = {
   "HOG_111": "4.png",      // Base soporte con ruedas
   "CEL_045_NEG": "4.jpg"   // Cable OTG tipo C negro
 };
+
+// Marcas que Google no acepta como marca ("Genérico", "Sin marca"):
+// se omite <g:brand> en vez de mandarlas.
+const MARCAS_NO_VALIDAS = ["generico", "sin marca", "otros", "otro", "n/a"];
+
+// Marca propia: no se antepone al título.
+const MARCA_PROPIA = "fenix import peru";
+
+// Público por subcategoría (edad/género). Google los pide en mochilas,
+// maletas y similares; sin ellos marca "faltan detalles".
+const AUDIENCIA_POR_SUBCATEGORIA = {
+  "mochilas escolares":       { age_group: "kids",  gender: "unisex" },
+  "maletas":                  { age_group: "kids",  gender: "unisex" },
+  "loncheras y cartucheras":  { age_group: "kids",  gender: "unisex" },
+  "mochilas camperas":        { age_group: "adult", gender: "unisex" },
+  "mochilas de emergencia":   { age_group: "adult", gender: "unisex" }
+};
+
+// Claves de "caracteristicas" que no se mandan como detalle a Google
+// (son de empaque/logística o ya van en otro atributo).
+const CLAVES_SIN_DETALLE = ["marca", "color", "materiales", "dimensiones del empaque",
+  "dimensiones del paquete", "tipo de empaque"];
+const MAX_DETALLES = 12;
+const MAX_DESTACADOS = 6;
 
 function estaExcluido(sku) {
   const s = String(sku || "").toUpperCase();
@@ -103,6 +133,79 @@ function construirDescripcion(producto) {
   return recortar(partes.join(" "), MAX_DESCRIPCION);
 }
 
+function normalizar(texto) {
+  return String(texto || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+}
+
+function marcaValida(marca) {
+  const m = normalizar(marca);
+  return m && !MARCAS_NO_VALIDAS.includes(m);
+}
+
+/** Título con la marca adelante si el nombre no la trae (Google la usa para emparejar búsquedas). */
+function tituloConMarca(titulo, marca) {
+  if (!marcaValida(marca)) return titulo;
+  const m = normalizar(marca);
+  if (m === MARCA_PROPIA || normalizar(titulo).includes(m)) return titulo;
+  return `${String(marca).trim()} ${titulo}`;
+}
+
+/**
+ * Separa "caracteristicas" en pares Clave: Valor (detalles) y líneas
+ * sueltas (destacados). Ej.: "Capacidad: 45L" / "Cuerpo de acero y mango de PVC".
+ */
+function leerCaracteristicas(texto) {
+  const pares = [];
+  const sueltas = [];
+  for (const bruta of String(texto || "").split(/\r?\n/)) {
+    const linea = bruta.replace(/\s+/g, " ").trim();
+    if (!linea) continue;
+    const m = linea.match(/^([^:]{2,40}):\s*(.+)$/);
+    if (m) pares.push({ clave: m[1].trim(), valor: m[2].trim() });
+    else if (!linea.endsWith(":")) sueltas.push(linea);
+  }
+  return { pares, sueltas };
+}
+
+function esValorUtil(valor) {
+  const v = normalizar(valor);
+  return v && !v.startsWith("segun disponibilidad") && v !== "-" && v !== "n/a";
+}
+
+function lineasAtributosExtra(producto) {
+  const { pares, sueltas } = leerCaracteristicas(producto.caracteristicas);
+  const lineas = [];
+
+  const material = pares.find(p => normalizar(p.clave) === "materiales" || normalizar(p.clave) === "material");
+  if (material && esValorUtil(material.valor)) {
+    lineas.push(`    <g:material>${escaparXml(recortar(material.valor, 200))}</g:material>`);
+  }
+
+  pares
+    .filter(p => !CLAVES_SIN_DETALLE.includes(normalizar(p.clave)) && esValorUtil(p.valor))
+    .slice(0, MAX_DETALLES)
+    .forEach(p => {
+      lineas.push(`    <g:product_detail>
+      <g:section_name>Especificaciones</g:section_name>
+      <g:attribute_name>${escaparXml(recortar(p.clave, 140))}</g:attribute_name>
+      <g:attribute_value>${escaparXml(recortar(p.valor, 1000))}</g:attribute_value>
+    </g:product_detail>`);
+    });
+
+  const destacados = sueltas.filter(l => l.length >= 10 && l.length <= 150).slice(0, MAX_DESTACADOS);
+  if (destacados.length >= 2) {
+    destacados.forEach(d => lineas.push(`    <g:product_highlight>${escaparXml(d)}</g:product_highlight>`));
+  }
+
+  const audiencia = AUDIENCIA_POR_SUBCATEGORIA[normalizar(producto.subcategoria)];
+  if (audiencia) {
+    lineas.push(`    <g:age_group>${audiencia.age_group}</g:age_group>`);
+    lineas.push(`    <g:gender>${audiencia.gender}</g:gender>`);
+  }
+
+  return lineas;
+}
+
 function disponibilidad(item) {
   // Si declara stock explícito lo respetamos; si no trae el campo,
   // asumimos disponible (el catálogo solo publica vigentes).
@@ -142,7 +245,7 @@ function armarItem(producto, datos) {
   const lineas = [];
   lineas.push(`    <g:id>${escaparXml(datos.id)}</g:id>`);
   if (datos.grupo) lineas.push(`    <g:item_group_id>${escaparXml(datos.grupo)}</g:item_group_id>`);
-  lineas.push(`    <g:title>${escaparXml(recortar(datos.titulo, MAX_TITULO))}</g:title>`);
+  lineas.push(`    <g:title>${escaparXml(recortar(tituloConMarca(datos.titulo, producto.marca), MAX_TITULO))}</g:title>`);
   lineas.push(`    <g:description>${escaparXml(construirDescripcion(producto))}</g:description>`);
   lineas.push(`    <g:link>${escaparXml(agregarParametros(datos.link, UTM_FEED))}</g:link>`);
   lineas.push(`    <g:image_link>${escaparXml(datos.imagenes[0])}</g:image_link>`);
@@ -156,8 +259,8 @@ function armarItem(producto, datos) {
   lineas.push(`    <g:price>${precio} PEN</g:price>`);
   lineas.push(`    <g:condition>new</g:condition>`);
 
-  if (producto.marca) {
-    lineas.push(`    <g:brand>${escaparXml(producto.marca)}</g:brand>`);
+  if (marcaValida(producto.marca)) {
+    lineas.push(`    <g:brand>${escaparXml(String(producto.marca).trim())}</g:brand>`);
   }
 
   // Sin códigos de barras (GTIN/MPN) propios: se lo declaramos a Google
@@ -171,6 +274,8 @@ function armarItem(producto, datos) {
 
   if (datos.color) lineas.push(`    <g:color>${escaparXml(datos.color)}</g:color>`);
   if (datos.talla) lineas.push(`    <g:size>${escaparXml(datos.talla)}</g:size>`);
+
+  lineas.push(...lineasAtributosExtra(producto));
 
   return `  <item>\n${lineas.join("\n")}\n  </item>`;
 }

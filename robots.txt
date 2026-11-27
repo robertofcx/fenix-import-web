@@ -1,4 +1,27 @@
 User-agent: *
 Allow: /
 
+# URLs de la web WooCommerce anterior que ya no existen (filtros,
+# listados, carrito). Bloquearlas evita que Google gaste rastreo en
+# cientos de miles de combinaciones y se concentre en las fichas reales.
+# OJO: /producto/ (singular) NO se bloquea: ahí están las fichas nuevas
+# y las redirecciones de las fichas viejas.
+Disallow: /product-category/
+Disallow: /productos/
+Disallow: /marca/
+Disallow: /tienda/
+Disallow: /carrito/
+Disallow: /cart/
+Disallow: /mi-cuenta/
+Disallow: /wp-admin/
+Disallow: /wp-json/
+Disallow: /*?add-to-cart=
+Disallow: /*&add-to-cart=
+Disallow: /*?add-to-wishlist=
+Disallow: /*?product_added_to_cart=
+Disallow: /*?orderby=
+Disallow: /*&orderby=
+Disallow: /*?srch=
+Disallow: /*/feed/
+
 Sitemap: https://feniximportperu.com/sitemap.xml
