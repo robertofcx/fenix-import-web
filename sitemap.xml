@@ -465,6 +465,10 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/ventiladores.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/mochilas-de-emergencia.html</loc>
     <priority>0.8</priority>
   </url>
@@ -482,10 +486,6 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/repuestos.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/ventiladores.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -1246,6 +1246,10 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/adaptador-enchufe-multiple-redondo-3-en-linea-op603-l-opalux.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-portatil-recargable-3-en-1-con-soporte-de-celular-indicador-opalux-op-hf36.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -5858,6 +5862,14 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/conector-de-abs-34-sistema-click-antifugas-para-grifocano-manguera-truper-click-gr.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mini-ventilador-6-3-de-escritorio-usb-silencioso-recargable-3-velocidades-opalux-op-tf63-bl.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-6-portatil-de-5-velocidades-con-clip-luz-led-y-bateria-recargable-opalux-op-cf60-bl.html</loc>
     <priority>0.7</priority>
   </url>
 </urlset>
