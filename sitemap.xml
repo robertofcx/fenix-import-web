@@ -37,6 +37,62 @@
     <priority>0.4</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/audifonos-y-auriculares.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/accesorios-para-celular.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/cables-cargadores.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/tripodes.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/accesorios-electronicos.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/cargadores-de-baterias.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/cables.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/cargadores-de-pared.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/estabilizadores.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/accesorios-para-autos.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/microfonos.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/receptores-bluetooth.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/power-banks.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/categoria/accesorios-para-mascotas.html</loc>
     <priority>0.8</priority>
   </url>
@@ -197,62 +253,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/audifonos-y-auriculares.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/accesorios-para-celular.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/cables-cargadores.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/tripodes.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/accesorios-electronicos.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/cargadores-de-baterias.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/cables.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/cargadores-de-pared.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/estabilizadores.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/accesorios-para-autos.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/microfonos.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/receptores-bluetooth.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/celulares-y-auto/power-banks.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/categoria/escolar.html</loc>
     <priority>0.8</priority>
   </url>
@@ -349,6 +349,10 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/categoria/herramientas/domotica.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/categoria/herramientas/pinturas.html</loc>
     <priority>0.8</priority>
   </url>
@@ -370,10 +374,6 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/herramientas/estabilizadores.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/herramientas/domotica.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -609,51 +609,51 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos/guantes.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/guantes.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos/cobertores-de-vehiculos.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/cobertores-de-vehiculos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos/accesorios-para-motos.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/accesorios-para-motos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos/cascos.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/cascos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos/cuerdas-y-mallas.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/cuerdas-y-mallas.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos/accesorios-para-celular.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/accesorios-para-celular.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos/cajuela-para-moto.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/cajuela-para-moto.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos/accesorios-para-autos.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/accesorios-para-autos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos/candados.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/candados.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos/accesorios-para-motorizados.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/accesorios-para-motorizados.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-motos/mochilas-camperas.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/mochilas-camperas.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -734,6 +734,10 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/adaptadores-cables-de-audio-y-video.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/accesorios-electricos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -1969,6 +1973,10 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/producto/plumon-con-luz-uv-detector-de-billetes-falsos-soles-dolares-etc.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/producto/soporte-rack-tv-32-55-pulg-batblack-bta28-443-soporta-35kg.html</loc>
     <priority>0.7</priority>
   </url>
@@ -3009,6 +3017,10 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/producto/medidor-infrarrojo-de-temperatura-portatil-truper-mete-500.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/producto/cinta-antiderrapante-antideslizante-fotoluminiscente-rollo-de-5-metros-con-ancho-de-5-centimetros-truper.html</loc>
     <priority>0.7</priority>
   </url>
@@ -3549,6 +3561,10 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/producto/interruptor-horario-digital-programamable-opalux-op-15atc.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/producto/timbre-industrial-redondo-de-metal-8-opalux-72-08-220.html</loc>
     <priority>0.7</priority>
   </url>
@@ -3690,6 +3706,10 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/linterna-multifuncion-recargable-opalux-op-l9277la.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-frontal-recargable-con-4-funciones-op-3672.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -3894,6 +3914,10 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/rollo-cinta-delimitadora-peligro-de-100m-truper-cide-102.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/rollo-cinta-delimitadora-prohibido-de-100m-truper-cide-103.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -5161,7 +5185,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/producto/plantillas-para-zapatos-zapatillas-calzado-con-amortiguacion-diseno-ergonomico-conforti-eva-lite-talla-40.html</loc>
+    <loc>https://feniximportperu.com/producto/plantillas-para-zapato-calzado-con-amortiguador-ergonomico-confort-eva-lite-talla-40.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -5262,6 +5286,10 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/interruptor-metalico-simple-conmutador-linea-ejecutiva-con-dado-de-7-cm-10a-127-250v-ac-para-instalaciones-electricas-residenciales-y-comerciales-opalux-op-011-3.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/interruptor-inteligente-tactil-wifi-doble-blanco-compatible-con-alexa-google-assistant-siri-y-app-smart-life-opalux-op-am02bl.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -5806,6 +5834,30 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/espuma-expansiva-de-poliuretano-750-ml-para-sellado-y-aislamiento-knauf.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/fumigador-manual-domestico-2-litros-con-boquilla-de-laton-regulable-truper-fdo-2.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/aspersor-de-riego-giratorio-360-base-de-acero-y-aspas-de-aluminio-truper-asp-50.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/aspersor-de-riego-360-de-11-con-estaca-metalica-10-a-50-ps-truper-asp-p11.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/aspersor-de-riego-de-plastico-por-pulsaciones-360-dos-vias-truper-asp-p11x.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/conector-de-abs-34-para-manguera-y-accesorios-sistema-click-truper.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/conector-de-abs-34-sistema-click-antifugas-para-grifocano-manguera-truper-click-gr.html</loc>
     <priority>0.7</priority>
   </url>
 </urlset>
