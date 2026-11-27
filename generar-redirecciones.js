@@ -17,6 +17,10 @@
  * (Google lo trata como redirección permanente). Render sirve ese
  * archivo también para /producto/{slug-viejo}/ y sin la barra.
  *
+ * Además redirige los productos DESCONTINUADOS que manda el Apps Script
+ * (productos.json -> "descontinuados"): a su REEMPLAZO si tiene uno
+ * publicado, si no a su subcategoría (o categoría) si sigue existiendo.
+ *
  * Se invoca desde generar-productos.js DESPUÉS de escribir las
  * fichas reales: nunca pisa una ficha real con el mismo slug.
  * Estos archivos NO van al sitemap.
@@ -62,13 +66,25 @@ function paginaRedireccion(destino, titulo) {
  * @param {string}   carpetaSalida  carpeta /producto
  * @param {Function} obtenerSlug    slug actual de un producto
  * @param {Set}      slugsReales    slugs que ya son ficha real (no se pisan)
+ * @param {Array}    descontinuados [{ sku, slug, nombre, categoria, subcategoria, reemplazo }]
  */
-function generarRedirecciones(productos, urlSitio, carpetaSalida, obtenerSlug, slugsReales) {
+function generarRedirecciones(productos, urlSitio, carpetaSalida, obtenerSlug, slugsReales, descontinuados = []) {
+  const porSku = new Map();
+  productos.filter(p => p.sku).forEach(p => {
+    porSku.set(String(p.sku).toUpperCase(), p);
+    (p.variantes || []).forEach(v => porSku.set(String(v.sku).toUpperCase(), p));
+  });
+  const escritos = new Set();
+
+  generarDesdeMapa(productos, porSku, urlSitio, carpetaSalida, obtenerSlug, slugsReales, escritos);
+  generarDescontinuados(descontinuados, productos, porSku, urlSitio, carpetaSalida, obtenerSlug, slugsReales, escritos);
+}
+
+function generarDesdeMapa(productos, porSku, urlSitio, carpetaSalida, obtenerSlug, slugsReales, escritos) {
   const ruta = path.join(__dirname, "redirecciones.json");
   if (!fs.existsSync(ruta)) return;
 
   const mapa = JSON.parse(fs.readFileSync(ruta, "utf-8")).redirecciones || {};
-  const porSku = new Map(productos.filter(p => p.sku).map(p => [String(p.sku).toUpperCase(), p]));
 
   let generadas = 0, sinSku = 0, omitidas = 0;
 
@@ -86,12 +102,54 @@ function generarRedirecciones(productos, urlSitio, carpetaSalida, obtenerSlug, s
       : producto.nombre;
 
     fs.writeFileSync(path.join(carpetaSalida, `${slugViejo}.html`), paginaRedireccion(destino, titulo), "utf-8");
+    escritos.add(slugViejo);
     generadas++;
   }
 
   console.log(`✓ ${generadas} redirecciones de la web anterior` +
     (sinSku > 0 ? `, ${sinSku} sin generar (SKU ya no publicado)` : "") +
     (omitidas > 0 ? `, ${omitidas} omitidas (slug inválido o ya es ficha real)` : ""));
+}
+
+function generarDescontinuados(descontinuados, productos, porSku, urlSitio, carpetaSalida, obtenerSlug, slugsReales, escritos) {
+  if (descontinuados.length === 0) return;
+
+  // Solo se redirige a categorías que siguen teniendo página (algún producto publicado)
+  const categorias = new Set(productos.map(p => p.categoria).filter(Boolean));
+  const subcategorias = new Set(productos.filter(p => p.subcategoria).map(p => `${p.categoria}|${p.subcategoria}`));
+
+  let aReemplazo = 0, aCategoria = 0, sinDestino = 0;
+
+  for (const d of descontinuados) {
+    const slug = String(d.slug || "");
+    if (!/^[a-z0-9-]+$/.test(slug) || slugsReales.has(slug) || escritos.has(slug)) continue;
+
+    let destino = null, titulo = "";
+    const reemplazo = d.reemplazo ? porSku.get(String(d.reemplazo).toUpperCase()) : null;
+
+    if (reemplazo) {
+      destino = `${urlSitio}/producto/${encodeURIComponent(obtenerSlug(reemplazo))}.html`;
+      titulo = reemplazo.nombre;
+      aReemplazo++;
+    } else if (d.subcategoria && subcategorias.has(`${d.categoria}|${d.subcategoria}`)) {
+      destino = urlCategoriaDe(d, urlSitio);
+      titulo = d.subcategoria;
+      aCategoria++;
+    } else if (d.categoria && categorias.has(d.categoria)) {
+      destino = urlCategoriaDe({ categoria: d.categoria }, urlSitio);
+      titulo = d.categoria;
+      aCategoria++;
+    } else {
+      sinDestino++;
+      continue;
+    }
+
+    fs.writeFileSync(path.join(carpetaSalida, `${slug}.html`), paginaRedireccion(destino, titulo), "utf-8");
+    escritos.add(slug);
+  }
+
+  console.log(`✓ Descontinuados: ${aReemplazo} a su reemplazo, ${aCategoria} a su categoría` +
+    (sinDestino > 0 ? `, ${sinDestino} sin destino (su categoría ya no existe)` : ""));
 }
 
 module.exports = { generarRedirecciones };

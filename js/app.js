@@ -75,7 +75,7 @@ const NUMERO_WHATSAPP = "51978821080";
       if (!productos || productos.length === 0) return;
 
       // Muestra al azar (se ve distinto cada vez que alguien entra)
-      const muestra = [...productos].sort(() => Math.random() - 0.5).slice(0, 18);
+      const muestra = productos.filter(p => !p.agotado).sort(() => Math.random() - 0.5).slice(0, 18);
 
       const tarjetas = muestra.map(p => {
         const precio = Number(String(p.precio).replace(/[^0-9.]/g, "")).toFixed(2);

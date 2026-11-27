@@ -263,7 +263,7 @@ function obtenerVistos() {
 function registrarVisto(producto) {
   if (!producto || !producto.sku) return;
   let vistos = obtenerVistos().filter(p => p.sku !== producto.sku);
-  vistos.unshift({ sku: producto.sku, slug: producto.slug || producto.sku, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen });
+  vistos.unshift({ sku: producto.sku, slug: producto.slug || producto.sku, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen, agotado: !!producto.agotado });
   if (vistos.length > MAX_VISTOS) vistos = vistos.slice(0, MAX_VISTOS);
   localStorage.setItem(VISTOS_KEY, JSON.stringify(vistos));
 }
@@ -288,7 +288,9 @@ function renderizarVistos(skuActual) {
         <div class="franja-tarjeta-img">${imagenHtml}</div>
         <p class="franja-tarjeta-nombre">${p.nombre}</p>
         <p class="franja-tarjeta-precio">S/ ${precio}</p>
-        <button class="franja-tarjeta-agregar" onclick="event.preventDefault(); agregarProductoAlCarritoDesdeTarjeta('${productoJson}')">+ Agregar</button>
+        ${p.agotado
+          ? `<span class="franja-tarjeta-agregar btn-ver-agotado">Agotado</span>`
+          : `<button class="franja-tarjeta-agregar" onclick="event.preventDefault(); agregarProductoAlCarritoDesdeTarjeta('${productoJson}')">+ Agregar</button>`}
       </a>`;
   }).join("");
 

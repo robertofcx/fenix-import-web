@@ -86,6 +86,17 @@ function escaparJsonEnHtml(objeto) {
   return JSON.stringify(objeto).replace(/</g, "\\u003c");
 }
 
+/** Producto publicado sin stock que se va a reponer (lo marca el Apps Script). */
+function estaAgotado(producto) {
+  return producto.disponibilidad === "agotado";
+}
+
+/** WhatsApp para fichas agotadas: el cliente pide que le avisen. */
+function generarUrlAvisoWhatsApp(producto, url) {
+  const mensaje = `¡Hola, Fenix Import Perú!\nMe interesa este producto que figura agotado. ¿Me avisan cuando llegue?\n${producto.nombre}\nSKU: ${producto.sku}\n${url}`;
+  return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
+}
+
 function generarUrlWhatsApp(producto, precio, url) {
   const nombreConColor = producto.color ? `${producto.nombre} - ${producto.color}` : producto.nombre;
   const mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${nombreConColor}\nPrecio: S/ ${precio}\nSKU: ${producto.sku}\n${url}`;
@@ -102,7 +113,7 @@ function obtenerRelacionados(producto, todosLosProductos, limite) {
   const mismaCategoria = [];
 
   for (const p of todosLosProductos) {
-    if (p.sku === producto.sku) continue;
+    if (p.sku === producto.sku || estaAgotado(p)) continue;
     if (producto.subcategoria && p.subcategoria === producto.subcategoria && p.categoria === producto.categoria) {
       mismaSubcategoria.push(p);
     } else if (p.categoria === producto.categoria) {
@@ -196,6 +207,7 @@ const POLITICA_DEVOLUCION_LD = {
 
 // Sin campo stock = disponible (mismo criterio que el feed).
 function estaDisponible(item) {
+  if (estaAgotado(item)) return false;
   return !(typeof item.stock === "number" && item.stock <= 0);
 }
 
@@ -293,16 +305,19 @@ function generarHtmlProducto(producto, todosLosProductos) {
   const descripcionCorta = escaparHtml((producto.descripcion || producto.nombre).slice(0, 160));
   const imagenAbsoluta = producto.imagen || `${URL_SITIO}/logo.webp`;
 
+  const agotado = estaAgotado(producto);
   const relacionados = obtenerRelacionados(producto, todosLosProductos, 10);
   const relacionadosHtml = relacionados.length > 0
-    ? `<section class="franja-productos">
-        <h2 class="franja-titulo">También te puede interesar</h2>
+    ? `<section class="franja-productos" id="similares">
+        <h2 class="franja-titulo">${agotado ? "Similares disponibles ahora" : "También te puede interesar"}</h2>
         <div class="franja-scroll">${relacionados.map(tarjetaFranja).join("")}</div>
       </section>`
     : "";
 
   const { galeriaHtml, imagenes } = generarGaleriaHtml(producto, nombreEscapado);
-  const badgeOferta = producto.oferta ? `<span class="badge-oferta-producto">Oferta</span>` : "";
+  const badgeOferta = agotado
+    ? `<span class="badge-oferta-producto badge-agotado">Agotado</span>`
+    : (producto.oferta ? `<span class="badge-oferta-producto">Oferta</span>` : "");
 
   const metaChips = [];
   if (producto.marca) metaChips.push(`<span>${escaparHtml(producto.marca)}</span>`);
@@ -324,6 +339,12 @@ function generarHtmlProducto(producto, todosLosProductos) {
 
   const jsonLd = generarJsonLd(producto, precio, url, imagenes);
   const urlWhatsApp = generarUrlWhatsApp(producto, precio, url);
+  const accionesHtml = agotado
+    ? `<p class="aviso-agotado">Agotado por ahora. Escríbenos y te avisamos apenas vuelva a llegar.</p>
+      <a class="btn-whatsapp-producto" id="btn-whatsapp-producto" href="${generarUrlAvisoWhatsApp(producto, url)}" target="_blank" rel="noopener">Avísame cuando llegue</a>
+      ${relacionados.length > 0 ? `<a class="btn-ver-similares" href="#similares">Ver similares disponibles</a>` : ""}`
+    : `<button class="btn-agregar-carrito-producto" onclick="agregarAlCarritoActual()">+ Agregar al pedido</button>
+      <a class="btn-whatsapp-producto" id="btn-whatsapp-producto" href="${urlWhatsApp}" target="_blank" rel="noopener">Consultar por WhatsApp</a>`;
 
   // Datos mínimos que la página necesita en el navegador (carrito, WhatsApp, galería)
   const productoActualJs = escaparJsonEnHtml({
@@ -333,6 +354,7 @@ function generarHtmlProducto(producto, todosLosProductos) {
     precio: precio,
     imagen: producto.imagen || "",
     imagenes: imagenes,
+    agotado: agotado,
     variantes: (producto.esGrupo && producto.variantes) ? producto.variantes.map(v => ({
       sku: v.sku,
       color: v.color || "",
@@ -415,8 +437,7 @@ function generarHtmlProducto(producto, todosLosProductos) {
             </button>`).join("")}
         </div>
       </div>` : ""}
-      <button class="btn-agregar-carrito-producto" onclick="agregarAlCarritoActual()">+ Agregar al pedido</button>
-      <a class="btn-whatsapp-producto" id="btn-whatsapp-producto" href="${urlWhatsApp}" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+      ${accionesHtml}
       <p class="nota-entrega">Coordinamos entrega en Lima y envíos a todo el Perú.</p>
     </div>
   </div>
@@ -614,7 +635,8 @@ function main() {
   generarPaginaEnvios(URL_SITIO, __dirname);
   generarSitemap(publicados, urlsCategorias);
   // Fichas de la web WooCommerce anterior -> web nueva (no van al sitemap)
-  generarRedirecciones(publicados, URL_SITIO, CARPETA_SALIDA, p => p.slug || generarSlugRespaldo(p.nombre), archivosReales);
+  // y productos descontinuados (vienen del Apps Script) -> reemplazo o su categoría
+  generarRedirecciones(publicados, URL_SITIO, CARPETA_SALIDA, p => p.slug || generarSlugRespaldo(p.nombre), archivosReales, catalogo.descontinuados || []);
   generarFeed(publicados, URL_SITIO, RUTA_FEED, p => p.slug || generarSlugRespaldo(p.nombre));
 
 

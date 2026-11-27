@@ -217,3 +217,8 @@ main { max-width:1000px; margin:0 auto; padding:20px; }
 .variante-swatch.activo { border-color: var(--azul); }
 .variante-swatch img { width: 100%; height: 100%; object-fit: contain; }
 .variante-swatch-sin-foto { width: 100%; height: 100%; background: var(--linea); border-radius: 6px; }
+/* Producto agotado (se repone): mismo badge, en gris */
+.badge-agotado { background: var(--texto-muted) !important; color: #fff !important; }
+.btn-ver-agotado { display: flex; align-items: center; justify-content: center; background: var(--bg-elevada-hover, #eceff3) !important; color: var(--texto-muted) !important; cursor: pointer; }
+.aviso-agotado { font-size: .9rem; font-weight: 600; color: var(--texto-muted); margin: 0 0 12px; }
+.btn-ver-similares { display: block; text-align: center; font-weight: 600; color: var(--azul); padding: 10px; margin-bottom: 10px; }

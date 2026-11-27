@@ -468,7 +468,9 @@
       const imagenHtml = p.imagen
         ? `<img src="${_optImg(p.imagen, 'miniatura')}" alt="${p.nombre}">`
         : `<span class="sin-foto">Sin foto</span>`;
-      const ofertaHtml = p.oferta ? `<span class="resultado-badge-oferta">Oferta</span>` : "";
+      const ofertaHtml = p.agotado
+        ? `<span class="resultado-badge-oferta badge-agotado">Agotado</span>`
+        : (p.oferta ? `<span class="resultado-badge-oferta">Oferta</span>` : "");
 
       return `
         <a class="resultado-item" href="${urlProducto(p)}" data-sku="${p.sku}">

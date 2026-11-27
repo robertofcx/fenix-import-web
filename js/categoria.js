@@ -124,7 +124,9 @@ function urlWhatsApp(producto) {
   const precio = Number(String(producto.precio).replace(/[^0-9.]/g, "")).toFixed(2);
   // Usa el slug real (no el SKU): el SKU solo tiene página-puente de redirección
   const link = URL_SITIO + "/producto/" + encodeURIComponent(producto.slug || producto.sku) + ".html";
-  const mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${producto.nombre}\nPrecio: S/ ${precio}\nSKU: ${producto.sku}\n${link}`;
+  const mensaje = producto.agotado
+    ? `¡Hola, Fenix Import Perú!\nMe interesa este producto que figura agotado. ¿Me avisan cuando llegue?\n${producto.nombre}\nSKU: ${producto.sku}\n${link}`
+    : `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${producto.nombre}\nPrecio: S/ ${precio}\nSKU: ${producto.sku}\n${link}`;
   return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 }
 
@@ -133,7 +135,9 @@ function crearTarjeta(producto) {
   const imagenHtml = producto.imagen
     ? `<img src="${_optImg(producto.imagen, 'tarjeta')}" alt="${producto.nombre}" loading="lazy">`
     : `<span class="sin-foto">Sin foto</span>`;
-  const badge = producto.oferta ? `<span class="badge-oferta">Oferta</span>` : "";
+  const badge = producto.agotado
+    ? `<span class="badge-oferta badge-agotado">Agotado</span>`
+    : (producto.oferta ? `<span class="badge-oferta">Oferta</span>` : "");
   const productoJson = encodeURIComponent(JSON.stringify({ sku: producto.sku, slug: producto.slug, nombre: producto.nombre, precio: producto.precio, imagen: producto.imagen }));
 
   return `
@@ -144,9 +148,11 @@ function crearTarjeta(producto) {
         <p class="tarjeta-nombre" title="${producto.nombre}">${producto.nombre}</p>
         <p class="tarjeta-precio">S/ ${precio}</p>
         <div class="tarjeta-acciones">
-          <button class="btn-agregar-carrito" onclick="event.preventDefault(); agregarAlCarritoDesdeTarjeta('${productoJson}')">
+          ${producto.agotado
+            ? `<span class="btn-agregar-carrito btn-ver-agotado">Ver</span>`
+            : `<button class="btn-agregar-carrito" onclick="event.preventDefault(); agregarAlCarritoDesdeTarjeta('${productoJson}')">
             + Agregar
-          </button>
+          </button>`}
           <span class="btn-consultar-icono" onclick="event.preventDefault(); window.open('${urlWhatsApp(producto)}', '_blank')" aria-label="Consultar por WhatsApp">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.13-4.9-4.32-.14-.19-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.3.37-.43.5-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.31 2.35 1.45.29.15.46.13.63-.07.17-.2.72-.83.91-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
           </span>
@@ -215,7 +221,13 @@ function extraerPrecio(producto) {
   return Number(String(producto.precio).replace(/[^0-9.]/g, "")) || 0;
 }
 
+// Los agotados siempre van al final, con cualquier orden elegido.
 function ordenarProductos(lista) {
+  const ordenados = ordenarSegunSelector(lista);
+  return ordenados.filter(p => !p.agotado).concat(ordenados.filter(p => p.agotado));
+}
+
+function ordenarSegunSelector(lista) {
   const copia = lista.slice();
   switch (ordenActivo) {
     case "precio-asc":

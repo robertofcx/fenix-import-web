@@ -207,8 +207,10 @@ function lineasAtributosExtra(producto) {
 }
 
 function disponibilidad(item) {
+  // Agotado (se repone): lo marca el Apps Script en el producto.
+  if (item.disponibilidad === "agotado") return "out_of_stock";
   // Si declara stock explícito lo respetamos; si no trae el campo,
-  // asumimos disponible (el catálogo solo publica vigentes).
+  // asumimos disponible.
   if (typeof item.stock === "number") {
     return item.stock > 0 ? "in_stock" : "out_of_stock";
   }

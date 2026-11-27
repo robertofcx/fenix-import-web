@@ -37,6 +37,10 @@ function mostrarToast(mensaje) {
 // (objeto con sku, nombre, precio, imagen, imagenes) antes de cargar este script.
 function agregarProductoAlCarrito(producto) {
   if (!producto) return;
+  if (producto.agotado) {
+    mostrarToast("Producto agotado por ahora");
+    return;
+  }
   const carrito = obtenerCarrito();
   const existente = carrito.find(item => item.sku === producto.sku);
   if (existente) existente.cantidad += 1;

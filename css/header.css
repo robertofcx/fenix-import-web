@@ -228,3 +228,7 @@ html[data-tema="claro"] .icono-sol { display: none; }
   .drawer { max-width: 540px; }
   .drawer-cat-split { max-height: 760px; }
 }
+
+/* Producto agotado (se repone): mismo badge, en gris */
+.badge-agotado { background: var(--texto-muted) !important; color: #fff !important; }
+.btn-ver-agotado { display: flex; align-items: center; justify-content: center; background: var(--bg-elevada-hover, #eceff3) !important; color: var(--texto-muted) !important; cursor: pointer; }

@@ -57,9 +57,14 @@ function tarjetaProducto(p, urlSitio, slugProducto) {
   const imagenHtml = p.imagen
     ? `<img src="${optimizarImagenCloudinary(p.imagen, "tarjeta")}" alt="${nombre}" loading="lazy" width="300" height="300">`
     : `<span class="sin-foto">Sin foto</span>`;
-  const badge = p.oferta ? `<span class="badge-oferta">Oferta</span>` : "";
+  const agotado = p.disponibilidad === "agotado";
+  const badge = agotado
+    ? `<span class="badge-oferta badge-agotado">Agotado</span>`
+    : (p.oferta ? `<span class="badge-oferta">Oferta</span>` : "");
   const productoJson = encodeURIComponent(JSON.stringify({ sku: p.sku, slug, nombre: p.nombre, precio, imagen: p.imagen || "" }));
-  const mensaje = `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${p.nombre}\nPrecio: S/ ${precio}\nSKU: ${p.sku}\n${urlSitio}${urlFicha}`;
+  const mensaje = agotado
+    ? `¡Hola, Fenix Import Perú!\nMe interesa este producto que figura agotado. ¿Me avisan cuando llegue?\n${p.nombre}\nSKU: ${p.sku}\n${urlSitio}${urlFicha}`
+    : `¡Hola, Fenix Import Perú!\nMe gustaría realizar el siguiente pedido:\n${p.nombre}\nPrecio: S/ ${precio}\nSKU: ${p.sku}\n${urlSitio}${urlFicha}`;
   const urlWa = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 
   return `
@@ -70,7 +75,9 @@ function tarjetaProducto(p, urlSitio, slugProducto) {
           <h3 class="tarjeta-nombre" title="${nombre}">${nombre}</h3>
           <p class="tarjeta-precio">S/ ${precio}</p>
           <div class="tarjeta-acciones">
-            <button class="btn-agregar-carrito" onclick="event.preventDefault(); agregarProductoAlCarritoDesdeTarjeta('${productoJson}')">+ Agregar</button>
+            ${agotado
+              ? `<span class="btn-agregar-carrito btn-ver-agotado">Ver</span>`
+              : `<button class="btn-agregar-carrito" onclick="event.preventDefault(); agregarProductoAlCarritoDesdeTarjeta('${productoJson}')">+ Agregar</button>`}
             <span class="btn-consultar-icono" role="link" aria-label="Consultar por WhatsApp" onclick="event.preventDefault(); window.open('${escaparHtml(urlWa)}', '_blank')">${ICONO_WA}</span>
           </div>
         </div>
@@ -257,8 +264,12 @@ function generarPaginasCategoria(productos, urlSitio, carpetaRaiz, slugProducto)
     ]);
   }
 
-  // Ofertas primero, luego por nombre: orden estable entre publicaciones
-  const ordenar = lista => lista.slice().sort((a, b) => (b.oferta ? 1 : 0) - (a.oferta ? 1 : 0) || String(a.nombre).localeCompare(String(b.nombre), "es"));
+  // Disponibles antes que agotados; ofertas primero; luego por nombre (orden estable)
+  const agotadoAlFinal = p => (p.disponibilidad === "agotado" ? 1 : 0);
+  const ordenar = lista => lista.slice().sort((a, b) =>
+    agotadoAlFinal(a) - agotadoAlFinal(b) ||
+    (b.oferta ? 1 : 0) - (a.oferta ? 1 : 0) ||
+    String(a.nombre).localeCompare(String(b.nombre), "es"));
 
   for (const [cat, nodo] of [...arbol.entries()].sort((a, b) => a[0].localeCompare(b[0], "es"))) {
     const slugCat = slugCategoria(cat);
