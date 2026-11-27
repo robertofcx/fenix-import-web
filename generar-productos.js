@@ -199,43 +199,77 @@ function estaDisponible(item) {
   return !(typeof item.stock === "number" && item.stock <= 0);
 }
 
+// Google limita "name" a 150 caracteres en fichas de comerciantes.
+function nombreLd(texto) {
+  const t = String(texto || "").replace(/\s+/g, " ").trim();
+  return t.length <= 150 ? t : t.slice(0, 147).replace(/\s+\S*$/, "") + "...";
+}
+
+function ofertaLd(url, precio, disponible) {
+  return {
+    "@type": "Offer",
+    url: url,
+    priceCurrency: "PEN",
+    price: precio,
+    itemCondition: "https://schema.org/NewCondition",
+    availability: disponible ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+    seller: { "@type": "Organization", name: "Fenix Import Perú" },
+    hasMerchantReturnPolicy: POLITICA_DEVOLUCION_LD
+  };
+}
+
+// Producto simple → Product. Con variantes → ProductGroup (formato que
+// Google exige para hasVariant); cada variante es un Product completo
+// con su propia imagen, descripción y oferta.
 function generarJsonLd(producto, precio, url, imagenes) {
   const variantes = (producto.esGrupo && producto.variantes && producto.variantes.length > 1) ? producto.variantes : null;
-  const disponible = variantes ? variantes.some(estaDisponible) : estaDisponible(producto);
-  const productoLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: producto.nombre,
-    sku: producto.sku,
-    image: imagenes.length > 0 ? imagenes : undefined,
-    description: producto.descripcion || producto.nombre,
-    brand: producto.marca ? { "@type": "Brand", name: producto.marca } : undefined,
-    offers: {
-      "@type": "Offer",
-      url: url,
-      priceCurrency: "PEN",
-      price: precio,
-      availability: disponible ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-      seller: { "@type": "Organization", name: "Fenix Import Perú" },
-      hasMerchantReturnPolicy: POLITICA_DEVOLUCION_LD
-    }
-  };
+  const descripcion = producto.descripcion || producto.nombre;
+  const marca = producto.marca ? { "@type": "Brand", name: producto.marca } : undefined;
 
-  if (variantes) {
-    productoLd.hasVariant = variantes.map(v => ({
+  let productoLd;
+  if (!variantes) {
+    productoLd = {
+      "@context": "https://schema.org",
       "@type": "Product",
-      name: `${producto.nombre} - ${v.color}`,
-      sku: v.sku,
-      color: v.color || undefined,
-      offers: {
-        "@type": "Offer",
-        url: `${url}?v=${encodeURIComponent(v.sku)}`,
-        priceCurrency: "PEN",
-        price: limpiarPrecio(v.precio),
-        availability: estaDisponible(v) ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-        hasMerchantReturnPolicy: POLITICA_DEVOLUCION_LD
-      }
-    }));
+      name: nombreLd(producto.nombre),
+      sku: producto.sku,
+      image: imagenes.length > 0 ? imagenes : undefined,
+      description: descripcion,
+      brand: marca,
+      offers: ofertaLd(url, precio, estaDisponible(producto))
+    };
+  } else {
+    const variaPorTalla = variantes.some(v => v.talla);
+    const variaPorColor = variantes.some(v => v.color);
+    productoLd = {
+      "@context": "https://schema.org",
+      "@type": "ProductGroup",
+      name: nombreLd(producto.nombre),
+      productGroupID: String(producto.sku).replace(/_[^_]*$/, ""),
+      url: url,
+      image: imagenes.length > 0 ? imagenes : undefined,
+      description: descripcion,
+      brand: marca,
+      variesBy: [
+        variaPorColor ? "https://schema.org/color" : null,
+        variaPorTalla ? "https://schema.org/size" : null
+      ].filter(Boolean),
+      hasVariant: variantes.map(v => {
+        const fotos = (v.imagenes && v.imagenes.length > 0) ? v.imagenes : (v.imagen ? [v.imagen] : imagenes);
+        const detalle = [v.color, v.talla].filter(Boolean).join(" - ");
+        return {
+          "@type": "Product",
+          name: nombreLd(detalle ? `${producto.nombre} - ${detalle}` : producto.nombre),
+          sku: v.sku,
+          image: fotos.length > 0 ? fotos : undefined,
+          description: descripcion,
+          brand: marca,
+          color: v.color || undefined,
+          size: v.talla || undefined,
+          offers: ofertaLd(`${url}?v=${encodeURIComponent(v.sku)}`, limpiarPrecio(v.precio), estaDisponible(v))
+        };
+      })
+    };
   }
 
   const breadcrumbLd = {
