@@ -49,11 +49,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/cables-cargadores.html</loc>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/tripodes.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/tripodes.html</loc>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/cables-cargadores.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -65,7 +65,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/cables.html</loc>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/power-banks.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -73,7 +73,15 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/cables.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/categoria/accesorios-para-celular/estabilizadores.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/accesorios-para-pc.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -86,10 +94,6 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/accesorios-para-celular/receptores-bluetooth.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/accesorios-para-celular/power-banks.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -169,6 +173,10 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/mochilas-camperas.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/rescate-acuatico.html</loc>
     <priority>0.8</priority>
   </url>
@@ -177,15 +185,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/mochilas-camperas.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/carpas.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/colchones.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -197,19 +197,27 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/sopletes-y-gas-butano.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/navajas.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/ganchos-mosqueton.html</loc>
+    <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/accesorios-tacticos.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/sopletes-y-gas-butano.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/colchones.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/bastones-y-muletas.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/ganchos-mosqueton.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -218,10 +226,6 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/gas.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/camping-y-supervivencia/accesorios-tacticos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -309,11 +313,19 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/categoria/herramientas/multimetros.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/herramientas/winchas.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/categoria/herramientas/proteccion-personal.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/herramientas/multimetros.html</loc>
+    <loc>https://feniximportperu.com/categoria/herramientas/espumas-expansivas.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -337,15 +349,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/herramientas/winchas.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/herramientas/espumas-expansivas.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/categoria/herramientas/aceites.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/herramientas/estantes.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -358,10 +366,6 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/herramientas/calibradores.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/herramientas/estantes.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -417,11 +421,19 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/categoria/herramientas/ventiladores.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/categoria/hogar-y-seguridad.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/balanzas.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/cuidado-personal.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -433,11 +445,15 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/plantillas-para-calzado.html</loc>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/electrodomesticos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/electrodomesticos.html</loc>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/ventiladores.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/sensores.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -445,11 +461,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/cuidado-personal.html</loc>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/plantillas-para-calzado.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/sensores.html</loc>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/insectocutor-e-insectocaptor.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -465,7 +481,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/ventiladores.html</loc>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/repuestos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -485,7 +501,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/repuestos.html</loc>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/cintas.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -493,7 +509,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/insectocutor-e-insectocaptor.html</loc>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/antenas.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/encendedores.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -509,19 +529,15 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/antenas.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/senalizaciones.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/accesorios-para-mascotas.html</loc>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/selladoras-de-bolsa.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/encendedores.html</loc>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/accesorios-para-mascotas.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -530,10 +546,6 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/accesorios-para-bicicletas.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/cintas.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -546,6 +558,10 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/herramientas-manuales.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/hogar-y-seguridad/accesorios-para-pc.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -597,15 +613,19 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/iluminacion/detectores-de-billetes.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/categoria/iluminacion/accesorios-para-bicicletas.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/categoria/iluminacion/detectores-de-billetes.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/categoria/iluminacion/sensores.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/iluminacion/domotica.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -621,11 +641,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/accesorios-para-motos.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/cascos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/cascos.html</loc>
+    <loc>https://feniximportperu.com/categoria/implementos-para-vehiculos/accesorios-para-motos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -669,11 +689,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/radios-parlantes.html</loc>
+    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/memorias-de-almacenamiento.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/memorias-de-almacenamiento.html</loc>
+    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/radios-parlantes.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -689,11 +709,15 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/encendedores.html</loc>
+    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/extensiones.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/accesorios-para-autos.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/encendedores.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -721,10 +745,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/extensiones.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/sensores.html</loc>
     <priority>0.8</priority>
   </url>
@@ -741,6 +761,26 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/infladores.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/cargadores-de-pared.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/tecnologia-y-accesorios/accesorios-electronicos.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/varios-combos.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/categoria/varios-combos/sopletes-y-gas-butano.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://feniximportperu.com/producto/cable-optico-audio-digital-de-fibra-optica-toslink-1-5mt.html</loc>
     <priority>0.7</priority>
   </url>
@@ -750,6 +790,10 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/baston-trekking-antishock-mango-recto-viaje-montanas.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/brujula-lensatic-compass-estilo-militar-metal-camping.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -925,11 +969,11 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/producto/brujula-lensatic-compass-estilo-militar-metal-camping.html</loc>
+    <loc>https://feniximportperu.com/producto/cepillo-removedor-de-pelo-de-mascotas-y-pelusa-para-ropa-doble-cara.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/producto/cepillo-removedor-de-pelo-de-mascotas-y-pelusa-para-ropa-doble-cara.html</loc>
+    <loc>https://feniximportperu.com/producto/bracera-deportiva-armband-ajustable-para-celular-6-pulgadas.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -950,10 +994,6 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/lampara-porta-lapicero-lidimi.html</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://feniximportperu.com/producto/bracera-deportiva-armband-ajustable-para-celular-6-pulgadas.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -5301,10 +5341,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://feniximportperu.com/producto/interruptor-inteligente-tactil-wifi-simple-negro-compatible-con-alexa-google-assistant-siri-y-app-smart-life-opalux-op-am01ng.html</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://feniximportperu.com/producto/tomacorriente-para-mueble-color-plata-con-4-tomas-universales-tapa-deslizante-potencia-maxima-de-2500-w-y-diseno-empotrable-para-escritorios-oficinas-y-cocinas-opalux-op-uts4sl.html</loc>
     <priority>0.7</priority>
   </url>
@@ -5870,6 +5906,906 @@
   </url>
   <url>
     <loc>https://feniximportperu.com/producto/ventilador-6-portatil-de-5-velocidades-con-clip-luz-led-y-bateria-recargable-opalux-op-cf60-bl.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/navaja-karambit-tactica-para-supervivencia-combate-camping.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mochila-campera-impermeable-70l-para-viajes-trekking-camping.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-de-metal-20cm-usb-portatil-oficina-escritorio.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/luz-linterna-timbre-para-bicicleta-c-panel-solar-ly-17.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/luz-delantera-4-en-1-para-bicicleta-timbre-soporte-hdrt-1018.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/poncho-de-lluvia-impermeable-de-manga-larga.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/navaja-automatica-tipo-pistola-con-linterna-y-destapador.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/lampara-y-linterna-potente-recargable-y-solar-hw-319-1.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cable-otg-adaptador-de-usb-a-tipo-c-para-celularespack-x12-und.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/lampara-de-escritorio-con-base.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/casco-hoken-ff866-modular-doble-visor-talla-l.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-de-escritorio-silencioso-24cm-yr-s802.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/tripode-selfie-stick-bluetooth-con-2-aros-led-luz-calida.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mochila-campera-impermeable-70l-10lpara-viajes-trekking-camping-rojo.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/baston-trekking-antishock-mango-l-con-roseta-viaje-montanas.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/balanza-colgante-mini-crane-scale-200kg-digital.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/guante-de-cuero-para-motociclista-ls2-octane-talla-m.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/bateria-portatil-power-bank-20000-mah-con-linterna-ewtto-et-e2856.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mochila-campera-impermeable-expandible-trekking-80-10-litros-stevens.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cuerda-tensor-elastica-con-clip-mosqueton-para-moto-8mm-x-180-cm-brickell-sb-122.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-de-escritorio-silencioso-19-cm-yr-s602.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-cuadrado-circulador-50w-3-velocidades-12-miray-vmc-105-1-2.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mini-radio-amfm-dual-recargable-y-a-pilas-cafini-cn-r43.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/bolsa-de-dormir-delgado-200-x-70-cm-con-capucha-y-cremallera-lateral-ligero.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-de-pared-bossko-16-90w-con-control-remoto-y-3-velocidades-bk-16-8010pd.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/bateria-recargable-golisi-g30-18650-3000mah-30a-spin.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/bateria-recargable-golisi-s30-18650-3000mah-35a-spin.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cargador-de-baterias-x-2-golisi-i2-original-18650-y-otros.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cargador-de-baterias-x-4-golisi-s4-18650-y-otros.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cargador-de-baterias-x-6-golisi-s6-18650-y-otros.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/baterias-recargables-18650-4-2v-3500mah-litio-ewtto-ew-18650.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/binoculares-20x50-cafini-alcance-1000m-nitido.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/bolsa-de-dormir-sleeping-p-camping-acolchado-400g-megatech.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/almohada-de-viaje-3-en-1-de-espuma-viscoelastica-omni-pillow.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/xiaomi-redmi-power-bank-10000mah.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/holder-soporte-universal-magnetico-auto-hogar.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/holder-romax-celular-360-para-tablera-auto-tch115.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cubo-cargador-de-pared-universal-usb-dual-para-celular-etc.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/voltimetro-digital-220v-schubert-punta-desarmador.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/wincha-flexometro-cinta-metrica-de-10-metros-de-metal-adriano.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/wincha-flexometro-cinta-metrica-de-5-metros-de-metal-adriano.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cortadora-de-mayolica-ceramicos-baldosas-40cm-schubert.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/secador-de-cabello-frio-caliente-6000-w-um-877.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/sensor-de-movimiento-360-opalux-st-07.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-recargable-360-usb-3-velocidades-opalux-op-l2814.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-recargable-360-de-mano-y-escritorio-opalux-2804.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/insectocutor-electrico-mata-mosquito-20w-80m2-opalux-op-c220.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/insectocutor-mata-mosquitos-moscas-40w-150m2-opalux-op-c240.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/insectocaptor-adhesivo-mata-mosquitos-moscas-36w-150m-opalux-op-36.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/balanza-colgante-opalux-300kg-digital-gancho-alta-precision.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/proyector-de-luces-laser-inalambrico-ewtto.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/interruptor-led-imantado-a-pilas-aaa.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-tactica-mini-de-metal-con-zoom-a-pila-con-clip.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-y-lampara-imantada-ewtto-8513.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-de-mano-de-metal-con-zoom-ewtto-et-8614-15000w.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/reflector-50w-para-exteriores-ip66-120-leds.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-frontal-recargable-1-led-cafini-2-baterias-7670c.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/luz-exterior-verde-modelo-estaca-base-intercambiable-7w-550lm-ip65-30000horas-opalux-op-ld110n-v-2.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-frontal-ultra-brillante-300lm-5w-40m-a-pilas-opalux.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/socket-a-control-remoto-para-focos-led-e27-ahorro-de-energia.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/panel-circular-led-24w-fiji-luz-fria-ahorrador-de-energia.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-frontal-bossney-recargable-con-sensor-bs-38565-t6.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cooler-para-laptop-notebook-cybercool-2-ventiladores-ha-73.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mouse-pad-rgb-luces-led-gaming-iluminado-microfibra-2535.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-tactica-de-mano-recargable-usb-cafini-73031a.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-led-usb-recargable-3-en-1-naranja-15-led-schubert.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/brujula-profesional-multifuncion-con-regla-y-espejo-para-camping-senderismo.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/pilas-lithium-cr2032-x-5-unid-litio-3v-calculadora-reloj.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/foco-led-blanco-15w-con-sensor-de-movimiento-opalux-st-461c.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/manta-termica-diman-emergencia.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cinta-adhesiva-impermeable-flex-tape-super-resistente-7-2.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/soporte-de-camara-go-pro-para-casco-mdl3520jz.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/encendedor-infinito-piezoelectrico-portatil.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cocina-para-camping-k-202.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cocina-para-camping-k-202-gas-butano-fix-230g.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/papel-adhesivo-para-insectocutor-op36.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/poncho-para-lluvia-impermeable-pvc.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cinta-adhesiva-impermeable-flex-tape-super-resistente-12.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cable-adaptador-otg-de-microusb-a-usb-pack-x12-und.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/adaptador-otg-tipo-c-a-usb-para-celulares-y-otros-pack-x16-und.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/adaptador-otg-de-microusb-a-usb-pack-x16-und.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/controlador-de-luces-para-cinta-led-rgb-5050-pack-x16-und.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cinta-led-rgbw-5050-5m-kit-completo-pack-x3-und.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cinta-tira-led-rgb-5m-musica-bluetooth-usb-con-app-meseta-pack-x2-und.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/adaptador-x2-unid-enchufe-redondo-multiples-opalux-ap-6049-pack-x16-und.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/papel-desechable-para-freidora-de-aire-100und-resistentes-pack-x6-und.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/carpa-tipo-tienda-de-campana-plegable-para-3-personas.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/carpa-tipo-tienda-de-campana-plegable-para-6-personas.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/desatorador-de-lavaderobano-190-cm-flexible.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/microfono-inalambrico-solapa-tipo-c-sx9-doble-audio-para-smartphone.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/microfono-inalambrico-guc-325-gaucho.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/kit-de-limpieza-para-portatiles-pc-camaras-y-pantallas.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cortador-de-cabello-profesional-kemei-1949-maquina-inalambrica-clipper-plateado.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/maquina-afeitadora-rasuradora-shaver-profesional-kemei-3382.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/recortadora-de-nariz-recargable-kemei-3-en-1.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cigarrera-bluetooth-cargador-de-auto-usb-tipo-c-2500w.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/supresor-wi-fi-ldnio-extension-smart-power-strip.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/soporte-portatil-para-laptop-metalico-xo-c78-negro.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/palo-stick-selfie-doble-luz-led-usb-bluetooth-recargable.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/reflector-recargable-100w-para-exteriores-ip66.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/corrector-respingador-nasal-x-6-piezas-con-extractor-de-piezas.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/teclado-gamer-mecanico-usb-micronics-legacy-fk1002-rgb.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/selladora-automatica-de-bolsas-al-vacio-para-alimentos-y-mas-vacuum-sealer.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mouse-gamer-usb-kripton-micronics-mic-gm801-3m.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/maquina-afeitadora-rasuradora-profesional-shaver-kemei-km-2127.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-frontal-led-recargable-10w-lidimi-ld-1309c.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/balanza-colgante-150kg-scale-analogica-tipo-reloj.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/interruptor-inteligente-wifi-3-botones-alexa-google.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/carpa-plegable-automatica-para-6-personas-liviano-resistente-impermeable.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/carpa-para-4-personas-liviano-resistente-impermeable-2mx2m-yb10009.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cobertor-para-moto-talla-l-resistente-liviano-safari.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/supresor-de-picos-ldnio-sc10610-10-tomas-universales-2-metros-con-5-usb-a-y-1-usb-c.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/parlante-led-micronics-2-1-20w-3-5mm-usb-killer-mic-s600.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-electrico-girable-dual-base-con-gancho-2-velocidades-silencioso-guc-180c.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cintas-de-embalaje-transparente-schubert-2-x-110-yd-pack-de-6-und.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/palo-selfie-tripode-de-70cm-control-remoto-xo-ss14.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/insectocutor-mata-mosquitos-moscas-30w-100m2-opalux-op-c230.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/electroshock-de-defensa-personal-con-linterna-tipo-pistola-con-seguro.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/collar-antipulgas-graduable-proteccion-4-meses.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/audifonos-xiaomi-mi-in-ear-14273-negro.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/controlador-de-luces-philips-amazon-alexa-apple-home-y-google-assistant-hue-bridge-emea.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cable-usb-a-a-tipo-c-1m-blanco-xiaomi-sjx14zm.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cable-tipo-c-a-tipo-c-1-5m-xiaomi-sjx12zm.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/foco-wifi-inteligente-multicolor-rgb-tapo-l530e.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/audifonos-inalambricos-bluetooth-tune-flex-jbl.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/audifonos-inalambricos-bluetooth-live-pro-2-tws-jbl.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mini-enchufe-inteligente-wifi-plug-tapo-p100.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/tripode-y-selfie-stick-xiaomi-con-control-remoto-bluetooth.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/insectocaptor-adhesivo-electronico-mata-mosquitos-moscas-30w-100-m-opalux-op-g30.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/insectocutor-electronico-4w-50m2-opalux-op-6nbl.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cortador-de-vidrio-con-6-cuchillas-schubert.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/timbre-inalambrico-portatil-80m-shubert-bj-8522e-ac.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/timbre-inalambrico-portatil-80m-shubert-bj-610b-ac.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-frontal-multifuncional-y-potente-de-50w-ewtto-et-l5690.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/bateria-portatil-power-bank-20000-mah-con-linterna-movisun-rocket-x23.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/balanza-romana-digital-recargable-50kg-moderno.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/balanza-colgante-50kg-scale-analogica-tipo-reloj.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/selladora-al-vacio-vacuum-sealer-168.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/guantes-dart-2-tactil-ls2-antideslizantes-proteccion-motociclistas-talla-l-hombre.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/audifono-bluetooth-tipo-gamer-et-a4992bw-ewtto.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/tripode-selfiestick-2-en-1-bluetooth-q07.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/masajeador-corporal-relax-tone.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/lampara-foco-led-solar-recargable-colgante-con-control-zjv51.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-tactica-usb-c-recargable-portatil-cafini-cn-l457a.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mouse-ergonomico-inalambrico-vertical-con-adaptador-jsy-5dw.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/balanza-comercial-40kg88lb-hipocampo.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/estante-de-plastico-4-repisas-est-4ap-pretul.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/flameador-soplete-recargable-master-fix.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-multifuncional-recargable-1w-opalux-op-5915.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/pulsador-unipolar-timbre-bm1100-opalux.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/balanza-electronica-con-brazo-recargable-opalux-op-9095dd.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/maquina-corta-pelo-profesional-recargable-bossney-bs-h9835.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/soporte-para-laptop-con-dos-ventiladores-ajustable-y-antideslizante-bossney-bs-e6804.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/inflador-compresor-de-aire-portatil-multifuncional-bossney-sck619-3.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cronometro-deportivo-de-bolsillo-xl-5898.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/interruptor-inteligente-monopolar-con-conexion-wifi-amazon-alexa-y-google-assistant-nexxt-nhe-s100.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/balanza-de-mesa-con-brazo-40kg-op-208.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/maquina-cortadora-rasuradora-profesional-3-en1-htc-at-1322.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/extensor-inalambrico-hdmi-hasta-30-mts-dt269w-h.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cafetera-oster-para-12-tazas-digital-con-auto-apagado-bvstdcp12b.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cafetera-oster-para-4-tazas-bvstdcdr5b.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/tapa-para-licuadora-clasica-oster-4903.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/binoculares-90x80-bershilt-largo-alcance.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/antena-tv-digital-ajv-doble-entrada-modelo-ajb108.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cable-extension-usb-2-0-macho-a-hembra-10-metros-negro-liso.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cobertor-impermeable-para-mototaxi-torito-maxcover-cob-005.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/insectocutor-electronico-led-6w-150m-op-gm80l-opalux.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cable-usb-2-0-para-impresora-2-7-metros.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/detector-de-humo-con-alarma-9v-opalux-lx-98220v.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/audifonos-inalambricos-bluetooth-tune-flex-2-tws-jbl.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mini-enchufe-inteligente-wifi-plug-tapo-p105.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/guantes-para-motociclista-kratoz-modelo-war-negro-poliester-talla-l.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-frontal-recargable-650lm-10w-9-funciones-op-9102.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/luz-de-emergencia-60-led-450lm-opalux-op-918ls.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-portatil-recargable-opalux-azul-5-velocidades-con-luz-led-op-tf60-az.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cubo-cargador-uno-rg-100w-3-puertos-tipo-c-1-puerto-usb-ugreen-x688.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/foco-led-eco-luz-blanca-12w-ahorrador-larga-duracion-bestlux.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/espuma-expansiva-de-poliuretano-750-ml-truper-esex-750.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/insectocutor-mata-mosquitos-moscas-led-16w-50m2-opalux-op-c216l.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/extension-universal-siliconada-de-15-metros-3-tomas-op-fl1215.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mouse-ergonomico-inalambrico-2-4-ghz-romax-tpm0054.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-de-torre-giratorio-3-velocidades-35w-de-30-miray-vmtt-933.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/olla-arrocera-oster-10-tazas-1-8-litros-ckstrcb10dfblk-053.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/lonchera-escolar-termica-pokebola-pikachu-pokemon-ruz-chenson.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/lonchera-termica-oficio-magic-scool-hello-kitty-3d-eva-con-brillo.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/memoria-usb-3-2-kingston-128gb-datatraveler-exodia-m-dtxm.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/memoria-microsdhc-32gb-con-adaptador-sd-uhs-i-sandisk-ultra.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/memoria-usb-3-2-kingston-64gb-datatraveler-exodia-m-dtxm.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/brujula-de-bolsillo-portatil-con-tapa-protectora-abatible-para-camping-senderismo-supervivencia.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/flotador-salvavidas-boya-wave-modelo-torpedo-70cm-mg-ft155.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/el-detector-de-metales-garrett-superscanner-1165180-9v.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/pistola-lector-de-barras-codigos-inalambrico-usb-2-4-ghz-seisa-yhd-8300lw.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/power-bank15000mah-carga-inalambrica-25w-carga-inalambrica-magsafe-cp14.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/casco-con-visor-fotocromatico-ls2-solid-negro-mate-vphotocrom-ff802-talla-l-ece2206.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/casco-con-visor-fotocromatico-ls2-solid-negro-mate-vphotocrom-ff802-talla-m-ece2206.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cronometro-deportivo-con-alarma-calendario-qandq-hs43.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/microfono-inalambrico-serie-pro-bs-h9826-bossney.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/microfono-solapero-doble-con-entrada-tipo-c-y-adaptador-a-lightning-k11-pp12302.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-de-torre-giratorio-silencioso-3-velocidades-45w-de-70-220v-whiteline.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/freidora-de-aire-panel-tactil-9-litros-oster-ckstaf75wdssdf.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/freidora-de-aire-digital-10-litros-tipo-horno-con-panel-tactil-oster-ckstafov3.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/reflector-smd-168-led-recargable-con-panel-solar-y-control-remoto-cafini-cn-l3936t-3.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/megafono-bluetooth-usb-grabacion-sirena-recargable-50w-cafini-cn-h9304bt.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-tactica-de-mano10w-2000-metros-5800-mah-lidimi-ld-l415a.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/linterna-de-mano-con-puntero-laser-purpura-y-de-emergencia-10-w-1000m-iman-y-rompe-vidrio-lidimi-ld-l1511a.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mochila-tactica-tipo-militar-grande-de-45-litros-camping-6-compartimientos.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mochila-impermeable-30-litros-con-malla-para-casco-mdl0714-negro.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/memoria-usb-64gb-3-2-kingston-datatraveler-exodia-dtx.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/soporte-dual-articulado-para-monitores-1332-acero-klip-xtreme-kmm-410.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/pilas-recargables-aa-3500-mah-con-entrada-usb-tipo-c-1-5v.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mini-radio-portatil-bossney-bs-r8054.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/mini-radio-portatil-bossney-bs-8021fm.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/chaleco-salvavidas-aqua-vest-con-silbato-y-cintas-reflectivas-s.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/extractor-de-aire-12-pulgadas-para-ventilacion-de-ambientes-cocinas-talleres-almacenes-op-ac12.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/audifonos-inalambricos-bluetooth-5-3-con-cancelacion-activa-de-ruido-anc-50-horas-de-autonomia-urban-buds4-movisun.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/audifonos-inalambricos-earbox-buds9-bluetooth-6-0-con-cancelacion-activa-de-ruido-anc-modo-transparencia-y-20-horas-de-autonomia-movisun.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/cintas-de-embalaje-transparente-ekono-tape-45mm-x-100-metros-110-yd-rollo-x-6und.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/interruptor-inteligente-tactil-wifi-triple-blanco-compatible-con-alexa-google-assistant-siri-y-app-smart-life-opalux-op-am03bl.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/interruptor-inteligente-tactil-wifi-simple-blanco-compatible-con-alexa-google-assistant-siri-y-app-smart-life-opalux-op-am01bl.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/interruptor-inteligente-tactil-wifi-simple-negro-compatible-con-alexa-google-assistant-siri-y-app-smart-life-opalux-op-am01ng.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/pilas-alcalinas-a23-12v-blister-x-5-unidades-para-controles-alarmas-timbres-opalux-op-23p5.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/baston-guia-plegable-para-personas-con-discapacidad-visual-reflectante-rojo-antideslizante-123-cm.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-de-torre-miray-65w-vmtt-vita-con-control-remoto-3-velocidades-oscilacion-y-timer.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/ventilador-de-pedestal-oster-18-75w-eosvelist1631-6h-con-6-aspas-y-3-velocidades.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://feniximportperu.com/producto/caja-de-carton-microcorrugado-20x24x30-cm-pack-50-unidades.html</loc>
     <priority>0.7</priority>
   </url>
 </urlset>
